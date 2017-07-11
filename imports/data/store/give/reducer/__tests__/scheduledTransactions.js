@@ -1,4 +1,3 @@
-
 import { initial } from "../";
 
 import {
@@ -16,7 +15,10 @@ it("allows for setting a recovered schedule", () => {
 });
 
 it("allows for removing all recovered schedule", () => {
-  const changed = deleteRecoverableSchedule({...initial, ...{ scheduleToRecover: { 1: "TEST" } }});
+  const changed = deleteRecoverableSchedule({
+    ...initial,
+    ...{ scheduleToRecover: { 1: "TEST" } },
+  });
   expect(changed).toMatchSnapshot();
   expect(changed.scheduleToRecover).toBe(null);
 });
@@ -28,17 +30,22 @@ it("allows for setting multiple recoverable schedules", () => {
   expect(changed.recoverableSchedules).toEqual(recoverableSchedules);
 });
 
-
 it("allows for deleting recoverable schedules by 1", () => {
   const recoverableSchedules = { 1: "TEST", 2: "TESTING" };
-  const changed = deleteRecoverableSchedules({...initial, ...{ recoverableSchedules }}, { id: 1 });
+  const changed = deleteRecoverableSchedules(
+    { ...initial, ...{ recoverableSchedules } },
+    { id: 1 },
+  );
   expect(changed).toMatchSnapshot();
   expect(changed.recoverableSchedules).toEqual({ 2: "TESTING" });
 });
 
 it("doesn't delete anything if no id is found", () => {
   const recoverableSchedules = { 1: "TEST", 2: "TESTING" };
-  const changed = deleteRecoverableSchedules({...initial, ...{ recoverableSchedules }}, { id: "1" });
+  const changed = deleteRecoverableSchedules(
+    { ...initial, ...{ recoverableSchedules } },
+    { id: "1" },
+  );
   expect(changed).toMatchSnapshot();
   expect(changed.recoverableSchedules).toEqual(recoverableSchedules);
 });

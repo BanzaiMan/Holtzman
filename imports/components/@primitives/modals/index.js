@@ -38,13 +38,17 @@ class SideModalContainerWithoutData extends Component {
     ) {
       this.props.dispatch(navActions.setLevel("MODAL"));
       this.setState({ previous: this.props.navigation.level });
-    } else if (nextProps.modal.visible && nextProps.navigation.level === "DOWN") {
+    } else if (
+      nextProps.modal.visible &&
+      nextProps.navigation.level === "DOWN"
+    ) {
       this.setState({ previous: this.props.navigation.level });
     }
 
     if (
       !nextProps.modal.visible &&
-      (nextProps.navigation.level === "MODAL" || nextProps.navigation.level === "DOWN") &&
+      (nextProps.navigation.level === "MODAL" ||
+        nextProps.navigation.level === "DOWN") &&
       !this.props.modal.props.keepNav
     ) {
       let previous = this.state.previous;
@@ -71,7 +75,7 @@ class SideModalContainerWithoutData extends Component {
       if (!nextProps.modal.visible) {
         root.className = root.className
           .split(" ")
-          .filter((className) => className !== "modal--opened")
+          .filter(className => className !== "modal--opened")
           .join(" ");
       } else if (!this.props.modal.visible && nextProps.modal.visible) {
         root.className += " modal--opened";
@@ -83,7 +87,7 @@ class SideModalContainerWithoutData extends Component {
     if (Meteor.isClient) {
       document.removeEventListener("keyup", this.bindEsc, false);
     }
-   this.props.dispatch(navActions.resetColor());
+    this.props.dispatch(navActions.resetColor());
   }
 
   handleKeyPress = ({ keyCode }) => {
@@ -91,13 +95,15 @@ class SideModalContainerWithoutData extends Component {
     if (keyCode === 27) this.props.dispatch(modalActions.hide());
 
     // down arrow
-    if (keyCode === 40 && this.scrollElement) this.scrollElement.scrollTop += 10;
+    if (keyCode === 40 && this.scrollElement)
+      this.scrollElement.scrollTop += 10;
 
     // up arrow
-    if (keyCode === 38 && this.scrollElement) this.scrollElement.scrollTop -= 10;
+    if (keyCode === 38 && this.scrollElement)
+      this.scrollElement.scrollTop -= 10;
   };
 
-  close = (e) => {
+  close = e => {
     const { target } = e;
     const { id } = target;
     if (id !== "@@modal") return;
@@ -106,7 +112,7 @@ class SideModalContainerWithoutData extends Component {
     this.props.dispatch(modalActions.hide());
   };
 
-  captureRef = (ref) => {
+  captureRef = ref => {
     this.scrollElement = ref;
   };
 
@@ -139,7 +145,7 @@ class SideModalContainerWithoutData extends Component {
   }
 }
 
-const map = (state) => ({
+const map = state => ({
   navigation: state.nav,
   modal: state.modal,
   path: state.routing.path,

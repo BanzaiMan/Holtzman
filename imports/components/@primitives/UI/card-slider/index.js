@@ -22,7 +22,7 @@ const dynamicWidthContainer = (count: number) => {
   if (typeof window !== "undefined" && window !== null) {
     let itemSize = (window.innerWidth - 40) * getRatio(window.innerWidth); // four-fifths
     itemSize += 20; // account for margin
-    const width = (count * itemSize) + 40;
+    const width = count * itemSize + 40;
     return {
       width: `${width}px`,
     };
@@ -43,7 +43,7 @@ const dynamicWidth = () => {
   return {};
 };
 
-const map = (store) => ({
+const map = store => ({
   width: store.responsive.width,
 });
 
@@ -53,9 +53,7 @@ type ICardSlider = {
   children: React.Component<any, any, any>[],
 };
 
-const CardSlider = ({
-  children,
-}: ICardSlider) => {
+const CardSlider = ({ children }: ICardSlider) => {
   const childCount = React.Children.count(children);
   let count = 0;
   return (
@@ -71,7 +69,10 @@ const CardSlider = ({
           count += 1;
           return (
             <div
-              className={`card floating display-inline-block ${childCount !== count ? "push-right" : ""}`}
+              className={`card floating display-inline-block ${childCount !==
+              count
+                ? "push-right"
+                : ""}`}
               style={dynamicWidth()}
               key={key}
             >
@@ -79,7 +80,6 @@ const CardSlider = ({
             </div>
           );
         })}
-
       </section>
     </div>
   );

@@ -1,23 +1,44 @@
-
 import DayPicker, { DateUtils } from "react-day-picker";
 import DateStyles from "../../../@primitives/UI/forms/styles/date";
 
 const WEEKDAYS_LONG = {
-  en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+  en: [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ],
 };
 const MONTHS = {
-  en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+  en: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
 };
 const WEEKDAYS_SHORT = {
   en: ["S", "M", "T", "W", "T", "F", "S"],
 };
 
 const localUtils = {
-  formatMonthTitle: (d, locale) => `${MONTHS[locale][d.getMonth()]} ${d.getFullYear()}`,
+  formatMonthTitle: (d, locale) =>
+    `${MONTHS[locale][d.getMonth()]} ${d.getFullYear()}`,
   formatWeekdayShort: (i, locale) => WEEKDAYS_SHORT[locale][i],
   formatWeekdayLong: (i, locale) => WEEKDAYS_LONG[locale][i],
   getFirstDayOfWeek: () => 0,
-  formatDay: (d) => d.toDateString(),
+  formatDay: d => d.toDateString(),
 };
 
 type IDateProps = {
@@ -27,12 +48,7 @@ type IDateProps = {
   allTime: boolean,
 };
 
-export default ({
-  start,
-  onDayClick,
-  toggleDatePicker,
-  allTime,
-}: IDateProps) => (
+export default ({ start, onDayClick, toggleDatePicker, allTime }: IDateProps) =>
   <div>
     <DateStyles />
     <div id="datepicker">
@@ -53,15 +69,18 @@ export default ({
           locale="en"
           localeUtils={localUtils}
           modifiers={{
-            selected: (day) => DateUtils.isSameDay(start, day),
-            disabled: (day) => (
-              !allTime && (DateUtils.isPastDay(day) || DateUtils.isSameDay(day, new Date()))
-            ),
+            selected: day => DateUtils.isSameDay(start, day),
+            disabled: day =>
+              !allTime &&
+              (DateUtils.isPastDay(day) ||
+                DateUtils.isSameDay(day, new Date())),
           }}
           onDayClick={onDayClick}
         />
         <div className="background--light-secondary soft text-center">
-          <button className="btn flush btn--small" onClick={toggleDatePicker}>Done</button>
+          <button className="btn flush btn--small" onClick={toggleDatePicker}>
+            Done
+          </button>
         </div>
       </div>
       {/* eslint-disable */}
@@ -79,5 +98,4 @@ export default ({
       />
       {/* eslint-enable */}
     </div>
-  </div>
-);
+  </div>;

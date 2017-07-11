@@ -1,4 +1,3 @@
-
 import "regenerator-runtime/runtime";
 import { take, put, call, select } from "redux-saga/effects";
 
@@ -13,7 +12,6 @@ import CREATE_ORDER_MUTATION from "./createOrderMutation";
 import COMPLETE_ORDER_MUTATION from "./completeOrderMutation";
 import SAVE_PAYMENT_MUTATION from "./savePaymentMutation";
 import submitPersonDetails from "./submitPersonDetails";
-
 
 // handle the transactions
 export default function* chargeTransaction({ state }) {
@@ -58,7 +56,10 @@ export default function* chargeTransaction({ state }) {
   const token = give.url.split("/").pop();
 
   // if there is not a saved account, validate the payment
-  if (!formattedData.savedAccount && !routing.location.pathname.includes("give/review")) {
+  if (
+    !formattedData.savedAccount &&
+    !routing.location.pathname.includes("give/review")
+  ) {
     if (give.data.payment.type === "cc") {
       // saved accounts don't validate the payment by default
       // so we make 3 blocking requests to validate the card :(
@@ -117,7 +118,9 @@ export default function* chargeTransaction({ state }) {
       }
       if (data && data.data && data.data.response) data = data.data.response;
       if (data && data.error) error = data.error;
-    } catch (e) { error = e; }
+    } catch (e) {
+      error = e;
+    }
   }
 
   // set error states
@@ -153,7 +156,10 @@ export default function* chargeTransaction({ state }) {
     }
 
     // if we activated an inactive schedule, remove it
-    if (give.scheduleToRecover && give.recoverableSchedules[give.scheduleToRecover]) {
+    if (
+      give.scheduleToRecover &&
+      give.recoverableSchedules[give.scheduleToRecover]
+    ) {
       yield put(actions.deleteSchedule(give.scheduleToRecover));
       yield put(actions.deleteRecoverableSchedules(give.scheduleToRecover));
     }

@@ -1,4 +1,3 @@
-
 import { api } from "../../../util/rock";
 import makeNewGuid from "../../../util/guid";
 import { ScheduledTransactionReciepts } from "../collections/scheduledTransactions";
@@ -15,11 +14,13 @@ const ScheduledTransactions = () => {
           prevent a load balanced env from creating duplicated transactions
 
         */
-        if (ScheduledTransaction.__processing) { // eslint-disable-line
+        if (ScheduledTransaction.__processing) {
+          // eslint-disable-line
           return;
         }
 
-        ScheduledTransactionReciepts.update(ScheduledTransaction._id, { // eslint-disable-line
+        ScheduledTransactionReciepts.update(ScheduledTransaction._id, {
+          // eslint-disable-line
           $set: {
             __processing: true,
           },
@@ -39,11 +40,9 @@ const ScheduledTransactions = () => {
 
         */
 
-        const {
-          meta,
-          ScheduledTransactionDetails,
-          _id,
-        } = { ...ScheduledTransaction };
+        const { meta, ScheduledTransactionDetails, _id } = {
+          ...ScheduledTransaction,
+        };
 
         let { FinancialPaymentDetail } = { ...ScheduledTransaction };
 
@@ -60,7 +59,8 @@ const ScheduledTransactions = () => {
         delete Person.PrimaryAliasId;
 
         // Create Person
-        Person = { ...Person,
+        Person = {
+          ...Person,
           ...{
             Guid: makeNewGuid(),
             IsSystem: false,
@@ -89,22 +89,30 @@ const ScheduledTransactions = () => {
           upsertLocations(PersonId, Location);
         } catch (e) {
           // eslint-disable-next-line
-          console.error("@@SCHEDULE_TRANSACTION_ERROR", e, PersonId, PrimaryAliasId);
+          console.error(
+            "@@SCHEDULE_TRANSACTION_ERROR",
+            e,
+            PersonId,
+            PrimaryAliasId,
+          );
         }
 
-
         // Create FinancialPaymentDetail
-        FinancialPaymentDetail = { ...FinancialPaymentDetail, ...{ Guid: makeNewGuid() } };
+        FinancialPaymentDetail = {
+          ...FinancialPaymentDetail,
+          ...{ Guid: makeNewGuid() },
+        };
 
         const FinancialPaymentDetailId = api.post.sync(
-          "FinancialPaymentDetails", FinancialPaymentDetail
+          "FinancialPaymentDetails",
+          FinancialPaymentDetail,
         );
-
 
         if (FinancialPaymentDetailId.status) return;
 
         // Create ScheduledTransaction
-        ScheduledTransaction = { ...ScheduledTransaction,
+        ScheduledTransaction = {
+          ...ScheduledTransaction,
           ...{
             Guid: makeNewGuid(),
             AuthorizedPersonAliasId: PrimaryAliasId,
@@ -114,7 +122,6 @@ const ScheduledTransactions = () => {
           },
         };
 
-
         let ScheduledTransactionId;
         // either mark is active or create schedule
         if (ScheduledTransaction.Id) {
@@ -123,7 +130,8 @@ const ScheduledTransactions = () => {
           delete ScheduledTransaction.Guid;
 
           const response = api.patch.sync(
-            `FinancialScheduledTransactions/${ScheduledTransactionId}`, ScheduledTransaction
+            `FinancialScheduledTransactions/${ScheduledTransactionId}`,
+            ScheduledTransaction,
           );
           if (response.statusText) {
             ScheduledTransactionId = response;
@@ -132,15 +140,18 @@ const ScheduledTransactions = () => {
             // since new deatils were generated
             const details = api.get.sync(
               // eslint-disable-next-line max-len
-              `FinancialScheduledTransactionDetails?$filter=ScheduledTransactionId eq ${ScheduledTransactionId}`
+              `FinancialScheduledTransactionDetails?$filter=ScheduledTransactionId eq ${ScheduledTransactionId}`,
             );
             for (const oldSchedule of details) {
-              api.delete.sync(`FinancialScheduledTransactionDetails/${oldSchedule.Id}`);
+              api.delete.sync(
+                `FinancialScheduledTransactionDetails/${oldSchedule.Id}`,
+              );
             }
           }
         } else {
           ScheduledTransactionId = api.post.sync(
-            "FinancialScheduledTransactions", ScheduledTransaction
+            "FinancialScheduledTransactions",
+            ScheduledTransaction,
           );
         }
 
@@ -148,7 +159,8 @@ const ScheduledTransactions = () => {
 
         // Create ScheduledTransactionDetails
         for (let ScheduledTransactionDetail of ScheduledTransactionDetails) {
-          ScheduledTransactionDetail = { ...ScheduledTransactionDetail,
+          ScheduledTransactionDetail = {
+            ...ScheduledTransactionDetail,
             ...{
               AccountId: ScheduledTransactionDetail.AccountId,
               Amount: ScheduledTransactionDetail.Amount,
@@ -159,24 +171,32 @@ const ScheduledTransactions = () => {
             },
           };
 
-          api.post.sync("FinancialScheduledTransactionDetails", ScheduledTransactionDetail);
+          api.post.sync(
+            "FinancialScheduledTransactionDetails",
+            ScheduledTransactionDetail,
+          );
         }
 
-
-        if (FinancialPersonSavedAccounts && FinancialPersonSavedAccounts.ReferenceNumber) {
+        if (
+          FinancialPersonSavedAccounts &&
+          FinancialPersonSavedAccounts.ReferenceNumber
+        ) {
           // Create FinancialPaymentDetail
-          const SecondFinancialPaymentDetail = { ...FinancialPaymentDetail,
+          const SecondFinancialPaymentDetail = {
+            ...FinancialPaymentDetail,
             ...{ Guid: makeNewGuid() },
           };
 
           const SecondFinancialPaymentDetailId = api.post.sync(
-            "FinancialPaymentDetails", SecondFinancialPaymentDetail
+            "FinancialPaymentDetails",
+            SecondFinancialPaymentDetail,
           );
 
           if (SecondFinancialPaymentDetailId.status) return;
 
           // Create FinancialPersonSavedAccounts
-          FinancialPersonSavedAccounts = { ...FinancialPersonSavedAccounts,
+          FinancialPersonSavedAccounts = {
+            ...FinancialPersonSavedAccounts,
             ...{
               Guid: makeNewGuid(),
               PersonAliasId: PrimaryAliasId,
@@ -186,9 +206,11 @@ const ScheduledTransactions = () => {
             },
           };
 
-          api.post.sync("FinancialPersonSavedAccounts", FinancialPersonSavedAccounts);
+          api.post.sync(
+            "FinancialPersonSavedAccounts",
+            FinancialPersonSavedAccounts,
+          );
         }
-
 
         if (ScheduledTransactionId && !ScheduledTransactionId.statusText) {
           // remove record

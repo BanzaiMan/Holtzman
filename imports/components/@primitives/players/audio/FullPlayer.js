@@ -1,4 +1,3 @@
-
 import { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import { css } from "aphrodite";
@@ -11,7 +10,6 @@ import AudioTitle from "./Title";
 import Styles from "./styles/fullPlayer";
 
 class FullPlayerWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func,
     header: PropTypes.object, // eslint-disable-line
@@ -28,12 +26,12 @@ class FullPlayerWithoutData extends Component {
     repeatOne: PropTypes.func,
     state: PropTypes.string,
     repeat: PropTypes.string,
-  }
+  };
 
   state = {
     isShort: false,
     hadHeader: true,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(headerActions.hide({ statusBar: false }));
@@ -47,7 +45,9 @@ class FullPlayerWithoutData extends Component {
   }
 
   componentWillUnmount() {
-    this.props.dispatch(headerActions.show({ visible: this.state.hadHeader, statusBar: true }));
+    this.props.dispatch(
+      headerActions.show({ visible: this.state.hadHeader, statusBar: true }),
+    );
   }
 
   setArtworkState = () => {
@@ -56,12 +56,12 @@ class FullPlayerWithoutData extends Component {
       isShort: artworkContainer.clientWidth > artworkContainer.clientHeight,
     });
     return null;
-  }
+  };
 
   getArtist = () => {
     const { album, track } = this.props.playing;
     return track.artist || album.artist || "NewSpring";
-  }
+  };
 
   // XXX unused
   // getImageUrl = (images, blurred = false) => {
@@ -70,8 +70,7 @@ class FullPlayerWithoutData extends Component {
   //   return image.url;
   // };
 
-
-  getArtworkStyles = (album) => {
+  getArtworkStyles = album => {
     const artworkContainer = this.refs.artworkContainer;
     const awStyles = backgrounds.styles(album);
 
@@ -84,7 +83,7 @@ class FullPlayerWithoutData extends Component {
     return awStyles;
   };
 
-  getArtworkClasses = (album) => {
+  getArtworkClasses = album => {
     const classes = [
       "one-whole",
       "overlay--gradient",
@@ -119,7 +118,7 @@ class FullPlayerWithoutData extends Component {
     const { images } = data.content;
     const image = options.blurred ? images[1] : images[0];
     return image.url;
-  }
+  };
 
   toggle = () => {
     const { state } = this.props.audio;
@@ -149,7 +148,7 @@ class FullPlayerWithoutData extends Component {
       this.props.pause();
       return;
     }
-  }
+  };
 
   shuffle = () => {
     const { order } = this.props.audio;
@@ -160,7 +159,7 @@ class FullPlayerWithoutData extends Component {
     }
 
     this.props.shuffle();
-  }
+  };
 
   repeat = () => {
     const { repeat } = this.props.audio;
@@ -176,17 +175,16 @@ class FullPlayerWithoutData extends Component {
     }
 
     this.props.repeat();
-  }
+  };
 
-  hackBackgroundStyles = () =>
-    ({
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      zIndex: -1,
-    });
+  hackBackgroundStyles = () => ({
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    zIndex: -1,
+  });
 
   render() {
     const { state, playing } = this.props;
@@ -203,16 +201,22 @@ class FullPlayerWithoutData extends Component {
 
     return (
       <div style={bgColorStyle}>
-        <div className={collections.classes(album)} style={this.hackBackgroundStyles()} />
-        <style>{styles.overlay(album)}</style>
-        <style>{collections.backgroundStyles(album)}</style>
+        <div
+          className={collections.classes(album)}
+          style={this.hackBackgroundStyles()}
+        />
+        <style>
+          {styles.overlay(album)}
+        </style>
+        <style>
+          {collections.backgroundStyles(album)}
+        </style>
 
         <div
-          className={
-            `${css(Styles["player-flex"])} ${css(Styles["player-container"])}`
-          }
+          className={`${css(Styles["player-flex"])} ${css(
+            Styles["player-container"],
+          )}`}
         >
-
           <section
             ref="artworkContainer"
             className="hard"
@@ -226,11 +230,10 @@ class FullPlayerWithoutData extends Component {
           </section>
 
           <div
-            className={
-              `text-center soft-sides ${css(Styles["player-flex-one"])}`
-            }
+            className={`text-center soft-sides ${css(
+              Styles["player-flex-one"],
+            )}`}
           >
-
             <AudioTitle
               trackTitle={track.title}
               artistName={this.getArtist()}
@@ -240,31 +243,21 @@ class FullPlayerWithoutData extends Component {
               channelName={album.channelName}
             />
 
-            <AudioControls
-              audio={this.props}
-              isLight={isLight}
-            />
-
+            <AudioControls audio={this.props} isLight={isLight} />
           </div>
-
         </div>
       </div>
     );
   }
 }
 
-const map = ({ audio, header }) =>
-  ({
-    ...audio,
-    header,
-  });
+const map = ({ audio, header }) => ({
+  ...audio,
+  header,
+});
 
 const withRedux = connect(map);
 
 export default withRedux(FullPlayerWithoutData);
 
-export {
-  FullPlayerWithoutData,
-  map,
-  withRedux,
-};
+export { FullPlayerWithoutData, map, withRedux };

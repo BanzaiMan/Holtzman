@@ -1,4 +1,3 @@
-
 import { print } from "graphql-tag/printer";
 import withRecentLikes, { RECENT_LIKES_QUERY } from "../recents";
 

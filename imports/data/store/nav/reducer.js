@@ -8,7 +8,6 @@ import modalActions from "../modal";
 import shareActions from "../share";
 import Sections from "../../../components/shared/sections";
 
-
 import { routeActions } from "../routing";
 
 let sectionsVisible = false;
@@ -33,7 +32,8 @@ const discoverAction = () => {
   // eslint-disable-next-line
   const Discover = require("../../../components/discover");
   return modalActions.render(Discover, {
-    keepNav: true, layoutOverride: ["background--light-secondary"],
+    keepNav: true,
+    layoutOverride: ["background--light-secondary"],
   });
 };
 
@@ -56,7 +56,7 @@ let links = {
       label: "Home",
       link: homeLink,
       icon: "icon-logo",
-      isActive: ({ path, modal }) => (path === homeLink && !modal.visible),
+      isActive: ({ path, modal }) => path === homeLink && !modal.visible,
     },
     {
       id: 2,
@@ -70,7 +70,8 @@ let links = {
       label: "Groups",
       link: "/groups/finder",
       icon: "icon-groups",
-      isActive: ({ path, modal }) => (path.indexOf("/groups") === 0 && !modal.visible),
+      isActive: ({ path, modal }) =>
+        path.indexOf("/groups") === 0 && !modal.visible,
     },
     {
       id: 4,
@@ -84,7 +85,7 @@ let links = {
       label: "Profile",
       link: profileLink,
       icon: "icon-profile",
-      isActive: ({ path, modal }) => (path === profileLink && !modal.visible),
+      isActive: ({ path, modal }) => path === profileLink && !modal.visible,
     },
   ],
   CONTENT: [
@@ -95,19 +96,13 @@ let links = {
       action: false,
       icon: "icon-like",
       activeIcon: "icon-like-solid",
-      isActive: (props) => props.liked,
+      isActive: props => props.liked,
     },
     { id: 3, action: shareActions.share, icon: "icon-share" },
   ],
-  BASIC_CONTENT: [
-    { id: 1, action: back, icon: "icon-arrow-back" },
-  ],
-  MODAL: [
-    { id: 1, action: modalActions.hide, icon: "icon-close" },
-  ],
-  DOWN: [
-    { id: 1, action: modalActions.hide, icon: "icon-arrow-down" },
-  ],
+  BASIC_CONTENT: [{ id: 1, action: back, icon: "icon-arrow-back" }],
+  MODAL: [{ id: 1, action: modalActions.hide, icon: "icon-close" }],
+  DOWN: [{ id: 1, action: modalActions.hide, icon: "icon-arrow-down" }],
 };
 
 // use basic nav for web right now
@@ -120,7 +115,6 @@ if (process.env.WEB) {
     DOWN: links.DOWN,
   };
 }
-
 
 const initial = {
   level: "TOP",

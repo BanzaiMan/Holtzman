@@ -22,7 +22,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Billing { ...newProps } />;
+  return <Billing {...newProps} />;
 };
 
 beforeEach(() => {
@@ -41,9 +41,11 @@ it("renders with props", () => {
 
 it("streetAddress calls clear when no value", () => {
   const mockClear = jest.fn();
-  const wrapper = shallow(generateComponent({
-    clear: mockClear,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      clear: mockClear,
+    }),
+  );
   const result = wrapper.instance().streetAddress("");
   expect(result).toBeTruthy();
   expect(mockClear).toHaveBeenCalledTimes(1);
@@ -52,9 +54,11 @@ it("streetAddress calls clear when no value", () => {
 
 it("streetAddress calls save when value", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
   const result = wrapper.instance().streetAddress("test");
   expect(result).toBeTruthy();
   expect(mockSave).toHaveBeenCalledTimes(1);
@@ -67,9 +71,11 @@ it("streetAddress calls save when value", () => {
 
 it("streetAddress2 calls save", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
   const result = wrapper.instance().streetAddress2("test");
   expect(result).toBeTruthy();
   expect(mockSave).toHaveBeenCalledTimes(1);
@@ -82,9 +88,11 @@ it("streetAddress2 calls save", () => {
 
 it("saveState calls clear when no value", () => {
   const mockClear = jest.fn();
-  const wrapper = shallow(generateComponent({
-    clear: mockClear,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      clear: mockClear,
+    }),
+  );
   const result = wrapper.instance().saveState("");
   expect(result).toBeTruthy();
   expect(mockClear).toHaveBeenCalledTimes(1);
@@ -93,9 +101,11 @@ it("saveState calls clear when no value", () => {
 
 it("saveState calls save when value", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
   const result = wrapper.instance().saveState("test");
   expect(result).toBeTruthy();
   expect(mockSave).toHaveBeenCalledTimes(1);
@@ -108,9 +118,11 @@ it("saveState calls save when value", () => {
 
 it("saveCountry calls clear when no value", () => {
   const mockClear = jest.fn();
-  const wrapper = shallow(generateComponent({
-    clear: mockClear,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      clear: mockClear,
+    }),
+  );
   const result = wrapper.instance().saveCountry("");
   expect(result).toBeTruthy();
   expect(mockClear).toHaveBeenCalledTimes(1);
@@ -119,9 +131,11 @@ it("saveCountry calls clear when no value", () => {
 
 it("saveCountry calls save when value", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
   const result = wrapper.instance().saveCountry("test");
   expect(result).toBeTruthy();
   expect(mockSave).toHaveBeenCalledTimes(1);
@@ -134,9 +148,11 @@ it("saveCountry calls save when value", () => {
 
 it("city calls clear when no value", () => {
   const mockClear = jest.fn();
-  const wrapper = shallow(generateComponent({
-    clear: mockClear,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      clear: mockClear,
+    }),
+  );
   const result = wrapper.instance().city("");
   expect(result).toBeTruthy();
   expect(mockClear).toHaveBeenCalledTimes(1);
@@ -145,9 +161,11 @@ it("city calls clear when no value", () => {
 
 it("city calls save when value", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
   const result = wrapper.instance().city("test");
   expect(result).toBeTruthy();
   expect(mockSave).toHaveBeenCalledTimes(1);
@@ -160,9 +178,11 @@ it("city calls save when value", () => {
 
 it("zip calls clear when no value", () => {
   const mockClear = jest.fn();
-  const wrapper = shallow(generateComponent({
-    clear: mockClear,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      clear: mockClear,
+    }),
+  );
   const result = wrapper.instance().zip("");
   expect(result).toBeTruthy();
   expect(mockClear).toHaveBeenCalledTimes(1);
@@ -171,9 +191,11 @@ it("zip calls clear when no value", () => {
 
 it("zip calls save when value", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
   const result = wrapper.instance().zip("test");
   expect(result).toBeTruthy();
   expect(mockSave).toHaveBeenCalledTimes(1);

@@ -1,8 +1,6 @@
-
 import sagaHelper from "redux-saga-testing";
 import { takeLatest } from "redux-saga";
 import { put, select, call, cps, take } from "redux-saga/effects";
-
 
 import actions from "../../actions";
 
@@ -15,7 +13,6 @@ describe("clearing data when authorized", () => {
     expect(result).toBeUndefined();
   });
 });
-
 
 describe("clearing data when not authorized", () => {
   const it = sagaHelper(clearGiveData({ authorized: false }));

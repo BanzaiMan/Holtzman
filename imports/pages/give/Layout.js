@@ -7,14 +7,15 @@ import DashboardLayout from "../../components/@primitives/layout/dashboard";
 
 type ILayout = {
   children: React$Element<any>,
-}
+};
 
 class Layout extends Component {
   props: ILayout;
   state = {
     right: {
       props: {
-        background: "//s3.amazonaws.com/ns.images/newspring/christmasoffering/christmas_offering_1x1.png",
+        background:
+          "//s3.amazonaws.com/ns.images/newspring/christmasoffering/christmas_offering_1x1.png",
       },
     },
     subNav: [
@@ -37,7 +38,7 @@ class Layout extends Component {
         title: "History",
       },
     ],
-  }
+  };
 
   componentWillMount() {
     this.updateActive(this.props);
@@ -50,31 +51,33 @@ class Layout extends Component {
   updateActive = (props: Object) => {
     const { pathname } = props.location;
 
-    this.setState((state) => state.subNav.map((x) => {
-      const nav = x;
-      nav.isActive = false;
-      if (nav.linkUrl === pathname) {
-        nav.isActive = true;
-      }
+    this.setState(state =>
+      state.subNav.map(x => {
+        const nav = x;
+        nav.isActive = false;
+        if (nav.linkUrl === pathname) {
+          nav.isActive = true;
+        }
 
-      return nav;
-    }));
-  }
+        return nav;
+      }),
+    );
+  };
 
   getActive = (props: Object) => {
     const active = props.location.pathname.split("/");
     return find(propEq("path", active[2]), props.routes);
-  }
+  };
 
   getRightComponent = (props: Object) => {
     const { rightComponent } = this.getActive(props);
     // XXX handle function as children
     return rightComponent || null;
-  }
+  };
 
   setRightProps = (props: Object) => {
     this.setState({ right: { props } });
-  }
+  };
 
   render() {
     return (

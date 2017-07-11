@@ -1,4 +1,3 @@
-
 // @flow
 
 import React, { Component } from "react";
@@ -52,7 +51,7 @@ export class GivingActivity extends Component {
     //   return null;
     // });
 
-    transactions.map((transaction) => {
+    transactions.map(transaction => {
       if (transaction.details[0].amount !== 0) {
         if (activityToShow.length < 3) {
           activityToShow.push(transaction);
@@ -65,12 +64,16 @@ export class GivingActivity extends Component {
   };
 
   additionalAmount = (details: Object) => {
-    const amount = details.amount === parseInt(details.amount, 10)
-      ? details.amount
-      : details.amount.toFixed(2);
+    const amount =
+      details.amount === parseInt(details.amount, 10)
+        ? details.amount
+        : details.amount.toFixed(2);
 
     return (
-      <span>and <strong>${amount}</strong> to <strong>{details.account.name}</strong></span>
+      <span>
+        and <strong>${amount}</strong> to{" "}
+        <strong>{details.account.name}</strong>
+      </span>
     );
   };
 
@@ -83,20 +86,30 @@ export class GivingActivity extends Component {
     const scheduled = transaction.schedule !== null;
 
     // show .00 on whole-dollar amounts. Don't show on even dollars
-    const amount = transaction.details[0].amount === parseInt(transaction.details[0].amount, 10)
-      ? transaction.details[0].amount
-      : transaction.details[0].amount.toFixed(2);
+    const amount =
+      transaction.details[0].amount ===
+      parseInt(transaction.details[0].amount, 10)
+        ? transaction.details[0].amount
+        : transaction.details[0].amount.toFixed(2);
 
-    if ((transaction.status === null || transaction.status === "Success" || transaction.status === "Complete") && transaction.details.length) {
+    if (
+      (transaction.status === null ||
+        transaction.status === "Success" ||
+        transaction.status === "Complete") &&
+      transaction.details.length
+    ) {
       status = "success";
       linkText = "View Contribution";
       linkUrl = `/give/history/${transaction.id}`;
       message = (
         <p>
-          Your {scheduled ? "scheduled " : ""}contribution of <strong>${amount} </strong>
+          Your {scheduled ? "scheduled " : ""}contribution of{" "}
+          <strong>${amount} </strong>
           to <strong>{transaction.details[0].account.name} </strong>
-          {transaction.details.length > 1 ? this.additionalAmount(transaction.details[1]) : null}
-          {" "}was successful.
+          {transaction.details.length > 1
+            ? this.additionalAmount(transaction.details[1])
+            : null}{" "}
+          was successful.
         </p>
       );
     } else if (transaction.status === "Failed") {
@@ -106,10 +119,15 @@ export class GivingActivity extends Component {
           Your {scheduled ? "scheduled " : ""}contribution to
           <strong> {transaction.details[0].account.name} </strong>
           {transaction.details.length > 1
-            ? <span>and<strong> {transaction.details[1].name} </strong></span> : null}
-          {" "}was unsuccessful.
-          {transaction.statusMessage !== null && transaction.statusMessage !== ""
-            ? ` Unfortunately, ${transaction.statusMessage}.` : ""}
+            ? <span>
+                and<strong> {transaction.details[1].name} </strong>
+              </span>
+            : null}{" "}
+          was unsuccessful.
+          {transaction.statusMessage !== null &&
+          transaction.statusMessage !== ""
+            ? ` Unfortunately, ${transaction.statusMessage}.`
+            : ""}
         </p>
       );
     } else if (transaction.status === "Pending") {
@@ -119,8 +137,11 @@ export class GivingActivity extends Component {
           Your {scheduled ? "scheduled " : ""}contribution to
           <strong> {transaction.details[0].account.name} </strong>
           {transaction.details.length > 1
-            ? <span>and<strong> {transaction.details[1].name} </strong></span> : null}
-          {" "}is <strong>pending</strong>.
+            ? <span>
+                and<strong> {transaction.details[1].name} </strong>
+              </span>
+            : null}{" "}
+          is <strong>pending</strong>.
         </p>
       );
     } else {
@@ -129,7 +150,8 @@ export class GivingActivity extends Component {
 
     return (
       <ActivityCard
-        key={`${transaction.id.slice(0, -8)}_${transaction.details[0].account.name}`}
+        key={`${transaction.id.slice(0, -8)}_${transaction.details[0].account
+          .name}`}
         status={status}
         date={transaction.date}
         message={message}
@@ -147,13 +169,13 @@ export class GivingActivity extends Component {
       linkText={"Update it Now"}
       linkUrl={"/"}
       date={"2016-12-01"}
-    />
-  ;
+    />;
 
   renderActivity = (feedItems: ?[Object]): ?[any] => {
     if (Array.isArray(feedItems) && feedItems.length > 0) {
       return feedItems.map((feedItem: Object) => {
-        if (feedItem.__typename === "Transaction") { //eslint-disable-line
+        if (feedItem.__typename === "Transaction") {
+          //eslint-disable-line
           return this.renderTransaction(feedItem);
         }
         return this.renderExpiringAccount(feedItem);
@@ -199,7 +221,10 @@ export class GivingActivity extends Component {
                   here
                 </a>.
               </p>
-              <Link to="/give/now" className="btn one-whole@handheld flush-bottom">
+              <Link
+                to="/give/now"
+                className="btn one-whole@handheld flush-bottom"
+              >
                 Give Now
               </Link>
             </div>

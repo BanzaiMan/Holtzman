@@ -31,7 +31,8 @@ const fundData = [
 ];
 
 // -1 for rounding correction
-const generalFundAmountTotal = fundData.reduce(((acc, fund) => acc + fund.amount), 0) - 1;
+const generalFundAmountTotal =
+  fundData.reduce((acc, fund) => acc + fund.amount, 0) - 1;
 const stepUpFundTotal = "1792258.15";
 
 /* eslint-disable max-len */
@@ -42,7 +43,9 @@ export const Finances = () => {
       <Meta title="Finances" />
       {/* Header */}
       <div className="background--primary text-center text-light-primary soft-double-ends">
-        <h3 className="push-top soft-half-sides">General Tithes and Offerings</h3>
+        <h3 className="push-top soft-half-sides">
+          General Tithes and Offerings
+        </h3>
         <div className="push-half-bottom">
           <div className="display-inline-block">
             <FitText compressor={1.5} maxFontSize={18}>
@@ -61,9 +64,12 @@ export const Finances = () => {
           <div className="grid floating__item three-quarters@lap-wide-and-up nine-tenths@lap-and-up text-center">
             {fundData.map(({ campus, amount }, key) => {
               count += 1;
-              if (count === fundData.length && (count % 2 === 1)) {
+              if (count === fundData.length && count % 2 === 1) {
                 return (
-                  <div className="soft-left one-half@lap-and-up push-half-bottom" key={key}>
+                  <div
+                    className="soft-left one-half@lap-and-up push-half-bottom"
+                    key={key}
+                  >
                     <div className="grid__item one-whole">
                       <ProgressBar
                         theme={"dark"}
@@ -79,7 +85,10 @@ export const Finances = () => {
               }
               if (count <= fundData.length / 2) {
                 return (
-                  <div className="grid__item one-half@lap-and-up push-half-bottom" key={key}>
+                  <div
+                    className="grid__item one-half@lap-and-up push-half-bottom"
+                    key={key}
+                  >
                     <div className="grid__item one-whole">
                       <ProgressBar
                         theme={"dark"}
@@ -94,7 +103,10 @@ export const Finances = () => {
                 );
               }
               return (
-                <div className="grid__item one-half@lap-and-up push-half-bottom" key={key}>
+                <div
+                  className="grid__item one-half@lap-and-up push-half-bottom"
+                  key={key}
+                >
                   <div className="grid__item one-whole">
                     <ProgressBar
                       theme={"dark"}
@@ -111,9 +123,13 @@ export const Finances = () => {
           </div>
         </div>
         <div className="soft-sides">
-          <small className="text-center"><em>Lexington campus merged with Columbia campus on Oct. 30.</em></small>
+          <small className="text-center">
+            <em>Lexington campus merged with Columbia campus on Oct. 30.</em>
+          </small>
           <br />
-          <small className="text-center"><em>Financials have been audited.</em></small>
+          <small className="text-center">
+            <em>Financials have been audited.</em>
+          </small>
         </div>
       </div>
       <div className="background--light-primary text-center soft-double-top">
@@ -131,7 +147,10 @@ export const Finances = () => {
         </div>
         <div className="floating">
           <div className="soft-double-sides soft-sides@handheld text-center three-quarters@lap-wide-and-up nine-tenths@lap floating__item">
-            <hr className="push-ends" style={{ borderTop: "1px solid #dddddd" }} />
+            <hr
+              className="push-ends"
+              style={{ borderTop: "1px solid #dddddd" }}
+            />
             <div className="soft-ends">
               <div className="grid push-ends">
                 <div className="grid__item one-half@lap-and-up one-whole">
@@ -175,7 +194,9 @@ export const Finances = () => {
                     </h1>
                   </FitText>
                   <div className="floating text-center">
-                    <h3 className="floating__item push-half-bottom">households gave.</h3>
+                    <h3 className="floating__item push-half-bottom">
+                      households gave.
+                    </h3>
                   </div>
                 </div>
               </div>
@@ -185,7 +206,9 @@ export const Finances = () => {
       </div>
       <div className="background--dark-primary soft floating">
         <div className="floating__item two-thirds@lap-and-up">
-          <h3 className="push-double-top text-light-primary">Christmas Offering</h3>
+          <h3 className="push-double-top text-light-primary">
+            Christmas Offering
+          </h3>
           <FitText compressor={1.5} maxFontSize={18}>
             <Currency
               amount={"1125052.43"}
@@ -196,15 +219,53 @@ export const Finances = () => {
               roundCurrency
             />
           </FitText>
-          <hr className="visuallyhidden@handheld push-ends" style={{ borderTop: "1px solid #ffffff" }} />
+          <hr
+            className="visuallyhidden@handheld push-ends"
+            style={{ borderTop: "1px solid #ffffff" }}
+          />
           <div className="text-light-primary text-left push-top@lap-and-up soft-double-top@lap-and-up push-double-bottom">
             <div className="floating">
               <div className="floating__item three-quarters@lap-and-up text-left">
-                <p>This year&#39;s Christmas Offering will support these three projects:</p>
+                <p>
+                  This year&#39;s Christmas Offering will support these three
+                  projects:
+                </p>
                 <ul>
-                  <li>Campus expansion to help our <a href={"https://newspring.cc/locations"} target={"_blank"} alt={"link to locations page"} className={"text-light-primary"}>current campuses</a> take their next step.</li>
-                  <li>Global missions to support <a href={"http://www.freedomchurch.cc/"} target={"_blank"} alt={"link to Freedom Church"} className={"text-light-primary"}>Freedom Church</a> as they launch three new campuses in 2017.</li>
-                  <li>Local missions in the communities where we have <a href={"https://newspring.cc/locations"} target={"_blank"} alt={"link to locations page"} className={"text-light-primary"}>campuses</a>.</li>
+                  <li>
+                    Campus expansion to help our{" "}
+                    <a
+                      href={"https://newspring.cc/locations"}
+                      target={"_blank"}
+                      alt={"link to locations page"}
+                      className={"text-light-primary"}
+                    >
+                      current campuses
+                    </a>{" "}
+                    take their next step.
+                  </li>
+                  <li>
+                    Global missions to support{" "}
+                    <a
+                      href={"http://www.freedomchurch.cc/"}
+                      target={"_blank"}
+                      alt={"link to Freedom Church"}
+                      className={"text-light-primary"}
+                    >
+                      Freedom Church
+                    </a>{" "}
+                    as they launch three new campuses in 2017.
+                  </li>
+                  <li>
+                    Local missions in the communities where we have{" "}
+                    <a
+                      href={"https://newspring.cc/locations"}
+                      target={"_blank"}
+                      alt={"link to locations page"}
+                      className={"text-light-primary"}
+                    >
+                      campuses
+                    </a>.
+                  </li>
                 </ul>
               </div>
             </div>
@@ -213,7 +274,20 @@ export const Finances = () => {
       </div>
       <div className="background--light-primary soft">
         <h3 className="text-center push-top">Annual Audit</h3>
-        <p className="constrain-copy push-bottom">NewSpring is audited annually by an external accounting firm according to Generally Accepted Accounting Principles. God calls His people to live above reproach, so for us, the annual audit is a financial and spiritual responsibility (<a href={"https://www.bible.com/search/bible?q=philippians%202:15&version_id=111"} alt={"Philippians 2:15"} target={"_blank"}>Philippians 2:15</a>).</p>
+        <p className="constrain-copy push-bottom">
+          NewSpring is audited annually by an external accounting firm according
+          to Generally Accepted Accounting Principles. God calls His people to
+          live above reproach, so for us, the annual audit is a financial and
+          spiritual responsibility (<a
+            href={
+              "https://www.bible.com/search/bible?q=philippians%202:15&version_id=111"
+            }
+            alt={"Philippians 2:15"}
+            target={"_blank"}
+          >
+            Philippians 2:15
+          </a>).
+        </p>
         <div className="text-center">
           <a
             className="btn push-bottom"
@@ -227,8 +301,14 @@ export const Finances = () => {
       </div>
       <div className="background--primary text-center text-light-primary soft">
         <h3 className="push-double-top">Keep Reading</h3>
-        <p>Up next in the NewSpring 2016 Annual Report is information on Next Steps.</p>
-        <Link className="btn--light push-double-bottom" to="/annualreport/next-steps">
+        <p>
+          Up next in the NewSpring 2016 Annual Report is information on Next
+          Steps.
+        </p>
+        <Link
+          className="btn--light push-double-bottom"
+          to="/annualreport/next-steps"
+        >
           Go To Next Steps Report
         </Link>
       </div>

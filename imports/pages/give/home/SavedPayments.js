@@ -1,4 +1,3 @@
-
 // @flow
 
 import React, { Component } from "react";
@@ -20,7 +19,6 @@ type ISavedPaymentsList = {
 };
 
 export class SavedPaymentsList extends Component {
-
   props: ISavedPaymentsList;
   hasScrolled: boolean;
   element: Object;
@@ -42,7 +40,7 @@ export class SavedPaymentsList extends Component {
     // set transaction type
     this.props.dispatch(giveActions.setTransactionType("savedPayment"));
     this.props.dispatch(modal.render(Give, null));
-  }
+  };
 
   // XXX turn this back on once NMI fixes their bug
   // they turned off the feature to saved payments which we were using
@@ -58,8 +56,8 @@ export class SavedPaymentsList extends Component {
 
   renderPayments(payments: Object) {
     if (!Array.isArray(payments)) return null;
-    return payments.map((payment) =>
-      <SavedPaymentWithAction payment={payment} key={payment.id} />
+    return payments.map(payment =>
+      <SavedPaymentWithAction payment={payment} key={payment.id} />,
     );
   }
 
@@ -79,15 +77,19 @@ export class SavedPaymentsList extends Component {
     if (!this.props.payments || !this.props.payments.savedPayments) {
       return (
         <div className={wrapper}>
-          <SectionHeader title="Saved Accounts" link={<this.SavedPaymentsButton />} />
+          <SectionHeader
+            title="Saved Accounts"
+            link={<this.SavedPaymentsButton />}
+          />
           <div className="card">
             <div className="card__item soft">
               <h4 className="text-dark-primary">
                 Adding a saved account makes giving even easier!
               </h4>
               <p>
-                We can’t wait for you to take your next step in giving.
-                After you have given your first contribution, you’ll see your activity here.
+                We can’t wait for you to take your next step in giving. After
+                you have given your first contribution, you’ll see your activity
+                here.
               </p>
               <button
                 onClick={this.openModal}
@@ -102,7 +104,12 @@ export class SavedPaymentsList extends Component {
     }
 
     return (
-      <div className={wrapper} ref={(e) => { this.element = e; }}>
+      <div
+        className={wrapper}
+        ref={e => {
+          this.element = e;
+        }}
+      >
         <SectionHeader
           title="Saved Accounts"
           link={<this.SavedPaymentsButton />}

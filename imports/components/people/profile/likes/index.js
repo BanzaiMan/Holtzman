@@ -1,4 +1,3 @@
-
 import { PropTypes } from "react";
 
 import Loading from "../../../@primitives/UI/loading";
@@ -9,7 +8,11 @@ import withUserLikes from "../../../@enhancers/likes/userLikes";
 
 const RenderLikes = ({ likes, recentLikes }) => {
   if (!likes || !recentLikes || likes.loading || recentLikes.loading) {
-    return <div className="text-center"><Loading /></div>;
+    return (
+      <div className="text-center">
+        <Loading />
+      </div>
+    );
   }
   if (likes && !likes.loading && likes.userFeed && likes.userFeed.length > 0) {
     return <LikesList likes={likes.userFeed} />;
@@ -18,9 +21,7 @@ const RenderLikes = ({ likes, recentLikes }) => {
     <div>
       <p className="soft text-center">
         <em>
-          <small>
-            Check out some of the latest things from NewSpring
-          </small>
+          <small>Check out some of the latest things from NewSpring</small>
         </em>
       </p>
       <LikesList likes={recentLikes.recentlyLiked} />
@@ -33,7 +34,7 @@ RenderLikes.propTypes = {
   recentLikes: PropTypes.array,
 };
 
-const LikesContainer = (props) => {
+const LikesContainer = props => {
   const { likes, recentLikes } = props;
 
   return (
@@ -54,9 +55,6 @@ LikesContainer.propTypes = {
   recentLikes: PropTypes.array,
 };
 
-export {
-  LikesContainer,
-  RenderLikes,
-};
+export { LikesContainer, RenderLikes };
 
 export default withUserLikes(withRecentLikes(LikesContainer));

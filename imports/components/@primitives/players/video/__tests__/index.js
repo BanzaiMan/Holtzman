@@ -26,7 +26,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <VideoPlayer { ...newProps } />;
+  return <VideoPlayer {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -40,7 +40,10 @@ it("calls createPlayer on mount", () => {
   wrapper.instance().createPlayer = mockCreatePlayer;
   wrapper.instance().componentDidMount();
   expect(mockCreatePlayer).toHaveBeenCalledTimes(1);
-  expect(mockCreatePlayer).toHaveBeenCalledWith(defaultProps.id, defaultProps.success);
+  expect(mockCreatePlayer).toHaveBeenCalledWith(
+    defaultProps.id,
+    defaultProps.success,
+  );
 });
 
 it("calls setEmbedCode if current id is not next id", () => {
@@ -121,9 +124,11 @@ it("createPlayer sets up player", () => {
   };
   const mockDispatch = jest.fn();
   audioActions.pause = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   const mockCallback = jest.fn();
   wrapper.instance().createPlayer("2", mockCallback);
   expect(mockReady).toHaveBeenCalledTimes(1);
@@ -148,7 +153,9 @@ it("createPlayer sets up player", () => {
   const mockDestroy = jest.fn();
   wrapper.instance().destroy = mockDestroy;
   // PLAYED callback
-  expect(mockPlayer.mb.subscribe.mock.calls[0][0]).toBe(window.OO.EVENTS.PLAYED);
+  expect(mockPlayer.mb.subscribe.mock.calls[0][0]).toBe(
+    window.OO.EVENTS.PLAYED,
+  );
   expect(mockPlayer.mb.subscribe.mock.calls[0][1]).toBe("Video");
   mockPlayer.mb.subscribe.mock.calls[0][2]();
   expect(mockDestroy).toHaveBeenCalledTimes(1);
@@ -159,7 +166,9 @@ it("createPlayer sets up player", () => {
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(audioActions.pause).toHaveBeenCalledTimes(2);
   // PLAY_FAILED callback
-  expect(mockPlayer.mb.subscribe.mock.calls[2][0]).toBe(window.OO.EVENTS.PLAY_FAILED);
+  expect(mockPlayer.mb.subscribe.mock.calls[2][0]).toBe(
+    window.OO.EVENTS.PLAY_FAILED,
+  );
   expect(mockPlayer.mb.subscribe.mock.calls[2][1]).toBe("Video");
   mockPlayer.mb.subscribe.mock.calls[2][2]();
   expect(mockDestroy).toHaveBeenCalledTimes(2);
@@ -204,9 +213,11 @@ it("show calls createPlayer if destroyed player", () => {
 it("show pauses audio and calls play if player", () => {
   const mockDispatch = jest.fn();
   audioActions.pause = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.setState({ hide: true });
   const mockPlay = jest.fn();
   const mockPlayer = {

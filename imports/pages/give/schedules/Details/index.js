@@ -16,7 +16,6 @@ import Confirm from "./Confirm";
 import Layout from "./Layout";
 
 class DetailsWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     data: PropTypes.shape({
@@ -25,12 +24,12 @@ class DetailsWithoutData extends Component {
     }),
     entries: PropTypes.object,
     cancel: PropTypes.func.isRequired,
-  }
+  };
 
   state = {
     isActive: true,
     removed: null,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(navActions.setLevel("BASIC_CONTENT"));
@@ -50,19 +49,21 @@ class DetailsWithoutData extends Component {
     }
   }
 
-  stop = (e) => {
+  stop = e => {
     e.preventDefault();
 
-    this.props.dispatch(modalActions.render(Confirm, {
-      onFinished: () => {
-        const { id } = this.props.data.transaction;
+    this.props.dispatch(
+      modalActions.render(Confirm, {
+        onFinished: () => {
+          const { id } = this.props.data.transaction;
 
-        this.setState({ isActive: false, removed: id });
-        // XXX error states
-        this.props.cancel(id);
-      },
-    }));
-  }
+          this.setState({ isActive: false, removed: id });
+          // XXX error states
+          this.props.cancel(id);
+        },
+      }),
+    );
+  };
 
   render() {
     let complete = false;
@@ -70,7 +71,10 @@ class DetailsWithoutData extends Component {
     if (!transaction) {
       transaction = false;
     }
-    if (new Date(transaction.next) < new Date() && transaction.schedule.value === "One-Time") {
+    if (
+      new Date(transaction.next) < new Date() &&
+      transaction.schedule.value === "One-Time"
+    ) {
       complete = true;
     }
 
@@ -92,18 +96,32 @@ class DetailsWithoutData extends Component {
 }
 
 const ENTRIES_QUERY = gql`
-  query GetTaggedContent($tagName: String!, $limit: Int, $includeChannels: [String]) {
+  query GetTaggedContent(
+    $tagName: String!
+    $limit: Int
+    $includeChannels: [String]
+  ) {
     entries: taggedContent(
-      tagName: $tagName,
-      limit: $limit,
+      tagName: $tagName
+      limit: $limit
       includeChannels: $includeChannels
     ) {
       entryId: id
       title
       channelName
       status
-      meta { summary, urlTitle }
-      content { images(sizes: ["large"]) { fileName, fileType, fileLabel, url } }
+      meta {
+        summary
+        urlTitle
+      }
+      content {
+        images(sizes: ["large"]) {
+          fileName
+          fileType
+          fileLabel
+          url
+        }
+      }
     }
   }
 `;
@@ -131,16 +149,40 @@ const SCHEDULE_TRANSACTION_QUERY = gql`
         gateway
         start
         date
-        details { amount, account { name, description } }
-        payment { paymentType, accountNumber, id }
-        schedule { value, description }
+        details {
+          amount
+          account {
+            name
+            description
+          }
+        }
+        payment {
+          paymentType
+          accountNumber
+          id
+        }
+        schedule {
+          value
+          description
+        }
         transactions {
           id
           date
           status
           summary
-          person { firstName, lastName, photo }
-          details { id, amount, account { id, name } }
+          person {
+            firstName
+            lastName
+            photo
+          }
+          details {
+            id
+            amount
+            account {
+              id
+              name
+            }
+          }
         }
       }
     }
@@ -148,7 +190,7 @@ const SCHEDULE_TRANSACTION_QUERY = gql`
 `;
 
 const withScheduleTransaction = graphql(SCHEDULE_TRANSACTION_QUERY, {
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { scheduleTransactionId: ownProps.params.id },
     forceFetch: true,
   }),
@@ -171,18 +213,12 @@ const withCancelSchedule = graphql(CANCEL_SCHEDULE_QUERY, {
   props: ({ mutate }) => ({
     // XXX add in optimistic reponse and remove need for state management
     // XXX add in updateQueries to remove need for refetch on schedules pages
-    cancel: (id) => mutate({ variables: { id } }),
+    cancel: id => mutate({ variables: { id } }),
   }),
 });
 
 const Details = connect()(
-  withEntries(
-    withScheduleTransaction(
-      withCancelSchedule(
-        DetailsWithoutData
-      )
-    )
-  )
+  withEntries(withScheduleTransaction(withCancelSchedule(DetailsWithoutData))),
 );
 
 const Routes = [
@@ -198,6 +234,4 @@ export default {
   Routes,
 };
 
-export {
-  DetailsWithoutData,
-};
+export { DetailsWithoutData };

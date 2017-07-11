@@ -7,13 +7,9 @@ import styles from "./panel-css";
 import Right from "./Right";
 import Left from "./Left";
 
-export {
-  Right,
-  Left,
-};
+export { Right, Left };
 
 class SplitContainerWithoutData extends Component {
-
   static propTypes = {
     classes: PropTypes.array,
     theme: PropTypes.string,
@@ -21,18 +17,14 @@ class SplitContainerWithoutData extends Component {
     nav: PropTypes.bool,
     navigation: PropTypes.object,
     children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]),
-  }
+  };
 
   static defaultProps = {
     styles: {},
-  }
+  };
 
   layoutClasses = () => {
-    let classes = [
-      "panel",
-      "fixed@lap-and-up",
-      css(styles.panel),
-    ];
+    let classes = ["panel", "fixed@lap-and-up", css(styles.panel)];
 
     if (this.props.classes) {
       classes = classes.concat(this.props.classes);
@@ -43,7 +35,7 @@ class SplitContainerWithoutData extends Component {
     }
 
     return classes.join(" ");
-  }
+  };
 
   render() {
     return (
@@ -57,11 +49,8 @@ class SplitContainerWithoutData extends Component {
   }
 }
 
-const map = (state) => ({ navigation: state.nav });
+const map = state => ({ navigation: state.nav });
 const withRedux = connect(map);
 export default withRedux(SplitContainerWithoutData);
 
-export {
-  SplitContainerWithoutData,
-  map,
-};
+export { SplitContainerWithoutData, map };

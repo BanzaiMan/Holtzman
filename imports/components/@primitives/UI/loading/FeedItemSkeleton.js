@@ -3,7 +3,6 @@ import { css } from "aphrodite";
 import Styles from "./FeedItemSkeleton-css";
 
 export default class FeedItemSkeleton extends Component {
-
   backgroundStyles = () => {
     const classes = [
       "rounded-top",
@@ -13,7 +12,7 @@ export default class FeedItemSkeleton extends Component {
     ];
 
     return classes.join(" ");
-  }
+  };
 
   titleStyles = () => {
     const classes = [
@@ -24,7 +23,7 @@ export default class FeedItemSkeleton extends Component {
     ];
 
     return classes.join(" ");
-  }
+  };
 
   subtitleStyles = () => {
     const classes = [
@@ -35,7 +34,7 @@ export default class FeedItemSkeleton extends Component {
     ];
 
     return classes.join(" ");
-  }
+  };
 
   subsubtitleStyles = () => {
     const classes = [
@@ -45,7 +44,7 @@ export default class FeedItemSkeleton extends Component {
     ];
 
     return classes.join(" ");
-  }
+  };
 
   render() {
     return (

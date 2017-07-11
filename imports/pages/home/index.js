@@ -41,18 +41,18 @@ class HomeWithoutData extends Component {
     if (data && data.feed) {
       feedItems = data.feed.slice(0);
     }
-    return feedItems.map((item, i) => (
+    return feedItems.map((item, i) =>
       <div
         className={
           "grid__item one-half@palm-wide-and-up flush-bottom@palm " +
-            "push-half-bottom@palm-wide push-bottom@portable push-bottom@anchored"
+          "push-half-bottom@palm-wide push-bottom@portable push-bottom@anchored"
         }
         key={i}
       >
         {typeof item === "number" && <FeedItemSkeleton />}
         {typeof item !== "number" && <FeedItem item={item} />}
-      </div>
-    ));
+      </div>,
+    );
   };
 
   render() {
@@ -62,7 +62,7 @@ class HomeWithoutData extends Component {
           <section
             className={
               "background--light-secondary soft-half@palm " +
-                "soft@palm-wide-and-up soft-double@anchored"
+              "soft@palm-wide-and-up soft-double@anchored"
             }
           >
             <div className="grid">
@@ -117,7 +117,7 @@ const CONTENT_FEED_QUERY = gql`
   ${contentFragment}
 `;
 
-const getTopics = (opts) => {
+const getTopics = opts => {
   let channels = opts.topics;
 
   // only include what user hasn't excluded
@@ -127,11 +127,11 @@ const getTopics = (opts) => {
   if (channels.length === 0 || !Meteor.userId()) channels = [...topics];
 
   // return for the graphql call
-  return channels.map((x) => x.toLowerCase());
+  return channels.map(x => x.toLowerCase());
 };
 
 const withFeedContent = graphql(CONTENT_FEED_QUERY, {
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: {
       filters: ["CONTENT"],
       options: JSON.stringify({ content: { channels: getTopics(ownProps) } }),
@@ -150,14 +150,18 @@ const withFeedContent = graphql(CONTENT_FEED_QUERY, {
           if (!fetchMoreResult.data) {
             return previousResult;
           }
-          return { feed: [...previousResult.feed, ...fetchMoreResult.data.feed] };
+          return {
+            feed: [...previousResult.feed, ...fetchMoreResult.data.feed],
+          };
         },
       }),
   }),
 });
 
-export default connect((state) => ({ topics: state.topics.topics }))(
-  withFeedContent(infiniteScroll()(ReactMixin.decorate(Headerable)(HomeWithoutData)))
+export default connect(state => ({ topics: state.topics.topics }))(
+  withFeedContent(
+    infiniteScroll()(ReactMixin.decorate(Headerable)(HomeWithoutData)),
+  ),
 );
 
 export { HomeWithoutData };

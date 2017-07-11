@@ -11,9 +11,7 @@ const defaultProps = {
 };
 
 it("should render web action button", () => {
-  const result = renderer.create(
-    <ActionButton { ...defaultProps } />
-  );
+  const result = renderer.create(<ActionButton {...defaultProps} />);
   expect(result).toMatchSnapshot();
 });
 
@@ -22,9 +20,7 @@ it("should render iOS action button", () => {
   global.cordova = {
     platformId: "ios",
   };
-  const result = renderer.create(
-    <ActionButton { ...defaultProps } />
-  );
+  const result = renderer.create(<ActionButton {...defaultProps} />);
   expect(result).toMatchSnapshot();
 });
 
@@ -41,8 +37,6 @@ it("should only show the iOS messages if there isn't a schedule start", () => {
     },
     schedule: { start: "2017-01-10" },
   };
-  const result = renderer.create(
-    <ActionButton { ...theData } />
-  );
+  const result = renderer.create(<ActionButton {...theData} />);
   expect(result).toMatchSnapshot();
-})
+});

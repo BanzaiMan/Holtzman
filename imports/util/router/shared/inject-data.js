@@ -16,5 +16,4 @@ InjectData._decode = function decode(encodedEjson) {
   return JSON.parse(decodedEjsonString);
 };
 
-
 export default InjectData;

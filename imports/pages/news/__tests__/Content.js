@@ -25,9 +25,7 @@ describe("StoryImage", () => {
     },
   };
 
-  const generateComponent = () => (
-    <StoryImage { ...defaultProps } />
-  );
+  const generateComponent = () => <StoryImage {...defaultProps} />;
 
   it("renders non tablet version", () => {
     window.isTablet = false;
@@ -37,7 +35,7 @@ describe("StoryImage", () => {
 
   // XXX mocking isTablet doesn't work here or some reason
   xit("renders tablet version", () => {
-    window.isTablet = true
+    window.isTablet = true;
     const wrapper = shallow(generateComponent());
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
@@ -76,7 +74,7 @@ describe("StoriesContent", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <StoriesContent { ...newProps } />;
+    return <StoriesContent {...newProps} />;
   };
 
   it("renders with props", () => {

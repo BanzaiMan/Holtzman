@@ -11,7 +11,7 @@ type IPromptModal = {
   component: Function,
   heroImage: string, // assuming this is the url to the image
   profileImage: string, // assuming this is the url to the image
-  visible: boolean
+  visible: boolean,
 };
 
 export default class PromptModal extends Component {
@@ -38,7 +38,11 @@ export default class PromptModal extends Component {
   }
 
   layoutClasses = (): string => {
-    const classList = ["hard", "flush", "background--light-primary rounded-top"];
+    const classList = [
+      "hard",
+      "flush",
+      "background--light-primary rounded-top",
+    ];
 
     classList.push(css(offsetStyles.offset));
     classList.push(css(styles["prompt-panel"]));
@@ -78,7 +82,10 @@ export default class PromptModal extends Component {
         id="@@modal"
       >
         <VelocityComponent animation={slide} duration={300} runOnMount>
-          <section id="letsShowSomethingSection" className={this.layoutClasses()}>
+          <section
+            id="letsShowSomethingSection"
+            className={this.layoutClasses()}
+          >
             <div>
               {this.props.heroImage &&
                 this.props.heroImage.length > 0 &&
@@ -123,11 +130,19 @@ export default class PromptModal extends Component {
               {!this.props.heroImage &&
                 this.props.profileImage &&
                 <div className="text-center">
-                  <img src={this.props.profileImage} alt="default" width={size} height={size} />
+                  <img
+                    src={this.props.profileImage}
+                    alt="default"
+                    width={size}
+                    height={size}
+                  />
                 </div>}
               <div
                 style={{ marginTop: "-40px", backgroundColor: "white" }}
-                className={`soft-double-top soft-bottom soft-sides text-center ${this.props.heroImage ? "" : "rounded-top"}`}
+                className={`soft-double-top soft-bottom soft-sides text-center ${this
+                  .props.heroImage
+                  ? ""
+                  : "rounded-top"}`}
               >
                 <ChildComponent close={this.props.close} />
               </div>

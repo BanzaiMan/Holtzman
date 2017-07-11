@@ -1,7 +1,7 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import { reset, startBuffering } from "aphrodite/lib/inject";
-import { NextSteps } from "../"
+import { NextSteps } from "../";
 
 const generateComponent = () => {
   return <NextSteps />;

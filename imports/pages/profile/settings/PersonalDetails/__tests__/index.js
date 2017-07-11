@@ -1,9 +1,7 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import mockDate from "mockdate";
-import {
-  nav,
-} from "../../../../../data/store";
+import { nav } from "../../../../../data/store";
 import {
   PersonalDetailsWithoutData as PersonalDetails,
   CAMPUSES_QUERY,
@@ -11,7 +9,7 @@ import {
 } from "../";
 
 // XXX god bless you
-mockDate.set('1/1/2000');
+mockDate.set("1/1/2000");
 
 jest.mock("../../../../../deprecated/methods/accounts/browser", () => ({
   update: jest.fn(),
@@ -47,7 +45,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <PersonalDetails { ...newProps } />;
+  return <PersonalDetails {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -84,9 +82,11 @@ it("parses person query", () => {
 it("updates nav on mount", () => {
   const mockDispatch = jest.fn();
   nav.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(nav.setLevel).toHaveBeenCalledTimes(1);
   expect(nav.setLevel).lastCalledWith("BASIC_CONTENT");
@@ -95,9 +95,11 @@ it("updates nav on mount", () => {
 it("updates nav on unmount", () => {
   const mockDispatch = jest.fn();
   nav.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.unmount();
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(nav.setLevel).toHaveBeenCalledTimes(2);

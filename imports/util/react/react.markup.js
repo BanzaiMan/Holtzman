@@ -1,5 +1,3 @@
-
-
 function createMarkup(contentItem, prop = "body") {
   let content = contentItem.content[prop];
   if (content === "false") {

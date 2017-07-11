@@ -3,7 +3,9 @@
 import AccountType from "../../account-type";
 
 export const obfuscateAccount = (account: string) => {
-  const accountFistEight = account.slice(0, account.length - 4).replace(/./gmi, "*");
+  const accountFistEight = account
+    .slice(0, account.length - 4)
+    .replace(/./gim, "*");
   const accountLastFour = account.slice(-4);
 
   return accountFistEight + accountLastFour;
@@ -35,7 +37,7 @@ type IPaymentCard = {
   paymentAccount: string,
   selectedAccountId: string,
   paymentType: string,
-}
+};
 
 export default ({
   accountName,
@@ -44,10 +46,9 @@ export default ({
   selectedAccountId,
   paymentType,
   onClick,
-}: IPaymentCard) => (
+}: IPaymentCard) =>
   <div style={cardStyle} id={accountId} onClick={onClick}>
     <div className="soft-ends push-double-left text-left hard-right outlined--light outlined--bottom relative">
-
       <div className="display-inline-block soft-half-ends one-whole">
         <h6 className="flush-bottom float-left text-dark-tertiary">
           {accountName}
@@ -57,14 +58,9 @@ export default ({
       <h5 className="hard one-whole flush-bottom text-dark-tertiary">
         {obfuscateAccount(paymentAccount)}
         <span className="float-right soft-half-left">
-          <AccountType
-            width="40px"
-            height="25px"
-            type={paymentType}
-          />
+          <AccountType width="40px" height="25px" type={paymentType} />
         </span>
       </h5>
-
     </div>
 
     <div className="locked-ends locked-sides">
@@ -75,10 +71,6 @@ export default ({
         checked={Number(accountId) === Number(selectedAccountId)}
         style={inputStyle}
       />
-      <label
-        htmlFor={`label${accountId}`}
-        style={labelStyle}
-      />
+      <label htmlFor={`label${accountId}`} style={labelStyle} />
     </div>
-  </div>
-);
+  </div>;

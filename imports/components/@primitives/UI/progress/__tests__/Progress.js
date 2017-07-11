@@ -1,22 +1,21 @@
-
 import { mount } from "enzyme";
 import { mountToJson } from "enzyme-to-json";
 
 import ProgressBar, { themeStyles } from "../Progress";
 
-const generateComponent = (additionalProps) =>
-  <ProgressBar {...additionalProps} />
+const generateComponent = additionalProps =>
+  <ProgressBar {...additionalProps} />;
 
-describe ("ProgressBar", () => {
+describe("ProgressBar", () => {
   it("should render with minimal props", () => {
     const component = mount(<ProgressBar />);
 
     expect(mountToJson(component)).toMatchSnapshot();
   });
 
-  it ("should generate a proper percentDone style", () => {
+  it("should generate a proper percentDone style", () => {
     const percentStylesDark = themeStyles("dark", 25);
-    const percentStylesLight =  themeStyles("light", 20);
+    const percentStylesLight = themeStyles("light", 20);
 
     expect(percentStylesDark).toMatchSnapshot();
     expect(percentStylesLight).toMatchSnapshot();
@@ -24,15 +23,19 @@ describe ("ProgressBar", () => {
     expect(percentStylesLight.progress.width).toEqual("20%");
   });
 
-  it ("should default to dark theme", () => {
+  it("should default to dark theme", () => {
     const percentStylesDark = themeStyles();
-    expect(percentStylesDark.progressBackground.backgroundColor).toEqual("#2a4930");
+    expect(percentStylesDark.progressBackground.backgroundColor).toEqual(
+      "#2a4930",
+    );
   });
 
-  it ("should accept custom height as prop", () => {
-    const component = mount(generateComponent({
-      height: "10px",
-    }));
+  it("should accept custom height as prop", () => {
+    const component = mount(
+      generateComponent({
+        height: "10px",
+      }),
+    );
 
     expect(component.find(".one-whole").html()).toMatchSnapshot();
   });

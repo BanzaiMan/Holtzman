@@ -8,11 +8,7 @@ type ISavedAccount = {
   savedAccount: Object,
 };
 
-const SavedAccount = ({
-  account,
-  choose,
-  savedAccount,
-}: ISavedAccount) => (
+const SavedAccount = ({ account, choose, savedAccount }: ISavedAccount) =>
   <div
     style={{ position: "relative", cursor: "pointer" }}
     id={account.id}
@@ -64,7 +60,6 @@ const SavedAccount = ({
         }}
       />
     </div>
-  </div>
-);
+  </div>;
 
 export default SavedAccount;

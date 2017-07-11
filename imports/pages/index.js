@@ -22,14 +22,8 @@ if (process.env.NATIVE) {
   import Welcome from "./welcome";
 }
 
-
 let Routes = [];
-Routes = Routes.concat(
-  Profile,
-  Give,
-  Groups.Routes,
-  Celebrate.Routes
-);
+Routes = Routes.concat(Profile, Give, Groups.Routes, Celebrate.Routes);
 
 if (process.env.NATIVE) {
   Routes = Routes.concat(
@@ -51,8 +45,6 @@ if (process.env.NATIVE) {
 
 Routes = Routes.concat(Signup.Routes, Util.Routes);
 
-export {
-  Routes,
-};
+export { Routes };
 
 export default Routes;

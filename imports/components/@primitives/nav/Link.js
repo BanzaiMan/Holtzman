@@ -12,13 +12,12 @@ import { routeActions } from "../../../data/store/routing";
 import styles from "./nav-css";
 
 export default class NavLink extends Component {
-
   static propTypes = {
     navItem: PropTypes.object.isRequired,
     fgColor: PropTypes.string,
     reset: PropTypes.func.isRequired,
     handleAction: PropTypes.func.isRequired,
-  }
+  };
 
   linkClasses = () => {
     const { navItem } = this.props;
@@ -42,21 +41,16 @@ export default class NavLink extends Component {
       classes.push("text-brand");
     }
 
-
     return classes.join(" ");
-  }
+  };
 
   containerClasses = () => {
-    const classes = [
-      "floating",
-      "locked-ends@palm",
-      "locked-sides@palm",
-    ];
+    const classes = ["floating", "locked-ends@palm", "locked-sides@palm"];
 
     return classes.join(" ");
-  }
+  };
 
-  handleAction = (e) => {
+  handleAction = e => {
     e.preventDefault();
     const { navItem } = this.props;
 
@@ -67,17 +61,20 @@ export default class NavLink extends Component {
       return;
     }
 
-    if (navItem.link && (window.location.search || navItem.link !== window.location.pathname)) {
-      const navigate = () => (
-        routeActions.push(navItem.link)
-      );
+    if (
+      navItem.link &&
+      (window.location.search || navItem.link !== window.location.pathname)
+    ) {
+      const navigate = () => routeActions.push(navItem.link);
       this.props.handleAction(navigate);
       return;
     }
 
     // XXX this was making the nav jump since its in the body...
-    if (navItem.link && (navItem.link === window.location.pathname)) {
-      const containers = document.querySelectorAll("[data-status-scroll=\"true\"]");
+    if (navItem.link && navItem.link === window.location.pathname) {
+      const containers = document.querySelectorAll(
+        '[data-status-scroll="true"]',
+      );
       if (containers && containers.length) {
         // eslint-disable-next-line no-undef
         velocity(containers[0], "scroll", {
@@ -87,7 +84,7 @@ export default class NavLink extends Component {
         }); // smooth scroll to the top
       }
     }
-  }
+  };
 
   render() {
     let icon = this.props.navItem.icon;
@@ -124,7 +121,6 @@ export default class NavLink extends Component {
       containerStyles = { paddingBottom: "3px" };
     }
 
-
     const active = navItem.isActive && navItem.isActive(this.props);
     return (
       <button
@@ -140,7 +136,9 @@ export default class NavLink extends Component {
                 return (
                   <h7 className="display-block">
                     <small
-                      className={`text-center ${active ? "text-brand" : "text-light-primary"}`}
+                      className={`text-center ${active
+                        ? "text-brand"
+                        : "text-light-primary"}`}
                     >
                       {navItem.label}
                     </small>
@@ -149,9 +147,7 @@ export default class NavLink extends Component {
               }
               return null;
             })()}
-
           </div>
-
         </div>
       </button>
     );

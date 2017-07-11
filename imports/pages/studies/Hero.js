@@ -4,12 +4,11 @@ import collections from "../../util/collections";
 import backgrounds from "../../util/backgrounds";
 
 export default class StudyHero extends Component {
-
   static propTypes = {
     study: PropTypes.object.isRequired,
-  }
+  };
 
-  backgroundClasses = () => (
+  backgroundClasses = () =>
     [
       "one-whole",
       "overlay--gradient",
@@ -17,8 +16,7 @@ export default class StudyHero extends Component {
       "ratio--landscape@palm-wide",
       "background--fill",
       collections.classes(this.props.study),
-    ].join(" ")
-  )
+    ].join(" ");
 
   render() {
     const study = this.props.study;
@@ -38,7 +36,11 @@ export default class StudyHero extends Component {
           className={this.backgroundClasses()}
           style={backgrounds.styles(study, imageLabel)}
         >
-          <div className={`overlay__item ${study.content.isLight ? "text-light-primary" : "text-dark-primary"} text-center soft-sides push-top`} />
+          <div
+            className={`overlay__item ${study.content.isLight
+              ? "text-light-primary"
+              : "text-dark-primary"} text-center soft-sides push-top`}
+          />
         </div>
       </section>
     );

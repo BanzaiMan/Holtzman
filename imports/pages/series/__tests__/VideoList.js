@@ -19,7 +19,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SeriesVideoList { ...newProps } />;
+  return <SeriesVideoList {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -28,14 +28,16 @@ it("renders with props", () => {
 });
 
 it("renders loading", () => {
-  const wrapper = shallow(generateComponent({
-    sermons: {
-      loading: true,
-      content: {
-        sermons: [],
+  const wrapper = shallow(
+    generateComponent({
+      sermons: {
+        loading: true,
+        content: {
+          sermons: [],
+        },
       },
-    },
-  }));
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 

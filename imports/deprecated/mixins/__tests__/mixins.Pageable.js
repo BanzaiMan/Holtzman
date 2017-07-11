@@ -21,7 +21,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <CWithPageable { ...newProps } />;
+  return <CWithPageable {...newProps} />;
 };
 
 it("binds scrolling events on mount", () => {
@@ -30,19 +30,27 @@ it("binds scrolling events on mount", () => {
   wrapper.instance().componentDidMount();
   expect(wrapper.instance()._bindPageOnScroll).toBeTruthy();
   expect(window.addEventListener).toHaveBeenCalledTimes(1);
-  expect(window.addEventListener).toHaveBeenCalledWith("scroll", wrapper.instance()._bindPageOnScroll);
+  expect(window.addEventListener).toHaveBeenCalledWith(
+    "scroll",
+    wrapper.instance()._bindPageOnScroll,
+  );
 });
 
 it("removes listener and rests paging store on unmount", () => {
   window.removeEventListener = jest.fn();
   pagingActions.reset = jest.fn();
   const mockDispatch = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().componentWillUnmount();
   expect(window.removeEventListener).toHaveBeenCalledTimes(1);
-  expect(window.removeEventListener).toHaveBeenCalledWith("scroll", wrapper.instance()._bindPageOnScroll);
+  expect(window.removeEventListener).toHaveBeenCalledWith(
+    "scroll",
+    wrapper.instance()._bindPageOnScroll,
+  );
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(pagingActions.reset).toHaveBeenCalledTimes(1);
 });
@@ -76,13 +84,15 @@ it("_pageOnScroll should update if conditions are right", () => {
   pagingActions.pause = jest.fn();
   pagingActions.increment = jest.fn();
   pagingActions.resume = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    paging: {
-      done: false,
-      shouldUpdate: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      paging: {
+        done: false,
+        shouldUpdate: true,
+      },
+    }),
+  );
   wrapper.instance()._pageOnScroll();
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(pagingActions.pause).toHaveBeenCalledTimes(1);
@@ -101,13 +111,15 @@ it("_pageOnScroll does not update if scroll not past threshold", () => {
   pagingActions.pause = jest.fn();
   pagingActions.increment = jest.fn();
   pagingActions.resume = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    paging: {
-      done: false,
-      shouldUpdate: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      paging: {
+        done: false,
+        shouldUpdate: true,
+      },
+    }),
+  );
   wrapper.instance()._pageOnScroll();
   expect(mockDispatch).not.toHaveBeenCalled();
   expect(pagingActions.pause).not.toHaveBeenCalled();
@@ -123,13 +135,15 @@ it("_pageOnScroll does not update if shouldn't update", () => {
   pagingActions.pause = jest.fn();
   pagingActions.increment = jest.fn();
   pagingActions.resume = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    paging: {
-      done: false,
-      shouldUpdate: false,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      paging: {
+        done: false,
+        shouldUpdate: false,
+      },
+    }),
+  );
   wrapper.instance()._pageOnScroll();
   expect(mockDispatch).not.toHaveBeenCalled();
   expect(pagingActions.pause).not.toHaveBeenCalled();
@@ -145,13 +159,15 @@ it("_pageOnScroll does not update if done", () => {
   pagingActions.pause = jest.fn();
   pagingActions.increment = jest.fn();
   pagingActions.resume = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    paging: {
-      done: true,
-      shouldUpdate: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      paging: {
+        done: true,
+        shouldUpdate: true,
+      },
+    }),
+  );
   wrapper.instance()._pageOnScroll();
   expect(mockDispatch).not.toHaveBeenCalled();
   expect(pagingActions.pause).not.toHaveBeenCalled();

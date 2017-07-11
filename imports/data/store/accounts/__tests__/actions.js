@@ -7,11 +7,11 @@ it("includes types in the export", () => {
 });
 
 it("setAccount", () => {
-  expect(actions.setAccount({ 1: { name: "test" }})).toMatchSnapshot();
+  expect(actions.setAccount({ 1: { name: "test" } })).toMatchSnapshot();
 });
 
 it("save", () => {
-  expect(actions.save({ personal: { firstName: "James "}})).toMatchSnapshot();
+  expect(actions.save({ personal: { firstName: "James " } })).toMatchSnapshot();
 });
 
 it("clear", () => {
@@ -67,11 +67,13 @@ it("remember", () => {
 });
 
 it("authorize", () => {
-  expect(actions.authorize({ "authorized": true })).toMatchSnapshot();
+  expect(actions.authorize({ authorized: true })).toMatchSnapshot();
 });
 
 it("person", () => {
-  expect(actions.person({ "person": { "firstName": "John", "lastName": "Doe" }})).toMatchSnapshot();
+  expect(
+    actions.person({ person: { firstName: "John", lastName: "Doe" } }),
+  ).toMatchSnapshot();
 });
 
 it("showWelcome", () => {
@@ -83,7 +85,11 @@ it("setAlternateAccounts", () => {
 });
 
 it("peopleWithoutAccountEmails", () => {
-  expect(actions.peopleWithoutAccountEmails([{ "email": "web@newspring.cc", "person": "John Doe" }])).toMatchSnapshot();
+  expect(
+    actions.peopleWithoutAccountEmails([
+      { email: "web@newspring.cc", person: "John Doe" },
+    ]),
+  ).toMatchSnapshot();
 });
 
 it("completeAccount", () => {
@@ -93,5 +99,3 @@ it("completeAccount", () => {
 it("resetAccount", () => {
   expect(actions.resetAccount()).toMatchSnapshot();
 });
-
-

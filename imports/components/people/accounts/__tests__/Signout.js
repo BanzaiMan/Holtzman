@@ -11,7 +11,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SignOut { ...newProps } />;
+  return <SignOut {...newProps} />;
 };
 
 it("renders with props", () => {

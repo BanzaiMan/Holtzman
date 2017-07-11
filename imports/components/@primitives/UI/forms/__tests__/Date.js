@@ -18,7 +18,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <DateComponent { ...newProps } />;
+  return <DateComponent {...newProps} />;
 };
 
 // XXX god bless you
@@ -67,16 +67,14 @@ it("toggle updates state", () => {
 it("fixPickerPosition sets style to -250 if global 0 or greater", () => {
   const mockChild = {
     getBoundingClientRect: jest.fn(() => ({
-      top: 0
+      top: 0,
     })),
     style: {
       marginTop: null,
     },
   };
   document.getElementById = jest.fn(() => ({
-    children: [
-      mockChild,
-    ],
+    children: [mockChild],
   }));
   const wrapper = shallow(generateComponent());
   wrapper.instance().fixPickerPosition();
@@ -93,9 +91,7 @@ it("fixPickerPosition adjust style based on current margin if global less than 0
     },
   };
   document.getElementById = jest.fn(() => ({
-    children: [
-      mockChild,
-    ],
+    children: [mockChild],
   }));
   const wrapper = shallow(generateComponent());
   wrapper.instance().fixPickerPosition();

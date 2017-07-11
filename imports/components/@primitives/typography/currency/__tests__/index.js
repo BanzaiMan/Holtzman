@@ -1,16 +1,16 @@
 import renderer from "react-test-renderer";
 import { reset } from "aphrodite/lib/inject";
-import Currency,
-  { getCurrencySymbol,
-    getNegative,
-    getDollars,
-    getCents,
-    currencySizeCalc,
-    BaseCurrencySize,
-    ReducedHeadingSize,
-    roundCurrency,
-    textTheme,
-  } from "../";
+import Currency, {
+  getCurrencySymbol,
+  getNegative,
+  getDollars,
+  getCents,
+  currencySizeCalc,
+  BaseCurrencySize,
+  ReducedHeadingSize,
+  roundCurrency,
+  textTheme,
+} from "../";
 
 describe("Currency", () => {
   beforeEach(() => {
@@ -74,71 +74,43 @@ describe("Currency", () => {
   });
 
   it("properly returns a positive number", () => {
-    const tree = renderer.create(
-      <Currency
-        amount="$420.00"
-      />
-    );
+    const tree = renderer.create(<Currency amount="$420.00" />);
     expect(tree).toMatchSnapshot();
   });
 
   it("correctly returns a negative value.", () => {
-    const tree = renderer.create(
-      <Currency
-        amount="$-420.00"
-      />
-    );
+    const tree = renderer.create(<Currency amount="$-420.00" />);
     expect(tree).toMatchSnapshot();
   });
 
   it("correctly returns when no currency symbol is provided.", () => {
-    const tree = renderer.create(
-      <Currency
-        amount="420.00"
-      />
-    )
+    const tree = renderer.create(<Currency amount="420.00" />);
 
     expect(tree).toMatchSnapshot();
   });
 
   it("correctly returns when no cents are provided.", () => {
-    const tree = renderer.create(
-      <Currency
-        amount="$420"
-      />
-    )
+    const tree = renderer.create(<Currency amount="$420" />);
 
     expect(tree).toMatchSnapshot();
   });
 
   it("correctly returns when no amount is provided.", () => {
-    const tree = renderer.create(
-      <Currency
-        amount=""
-      />
-    )
+    const tree = renderer.create(<Currency amount="" />);
 
     expect(tree).toMatchSnapshot();
   });
 
   it("correctly returns when no heading is provided.", () => {
-    const tree = renderer.create(
-      <Currency
-        amount=""
-        baseHeadingSize=""
-      />
-    )
+    const tree = renderer.create(<Currency amount="" baseHeadingSize="" />);
 
     expect(tree).toMatchSnapshot();
   });
 
   it("correctly returns when a heading size is provided.", () => {
     const tree = renderer.create(
-      <Currency
-        amount="$420.00"
-        baseHeadingSize="2"
-      />
-    )
+      <Currency amount="$420.00" baseHeadingSize="2" />,
+    );
 
     expect(tree).toMatchSnapshot();
   });

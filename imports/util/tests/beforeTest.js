@@ -11,10 +11,12 @@ global.__meteor_runtime_config__ = true;
 
 /* eslint-enable no-underscore-dangle */
 
-window.matchMedia = window.matchMedia || function matchMedia() {
-  return {
-    matches: false,
-    addListener: () => {},
-    removeListener: () => {},
+window.matchMedia =
+  window.matchMedia ||
+  function matchMedia() {
+    return {
+      matches: false,
+      addListener: () => {},
+      removeListener: () => {},
+    };
   };
-};

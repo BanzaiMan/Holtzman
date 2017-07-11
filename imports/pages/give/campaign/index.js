@@ -14,13 +14,15 @@ import {
 
 import Layout from "./Layout";
 
-const Loading = () => (
-  <div className="floating" style={{ position: "fixed", top: 0, bottom: 0, width: "100%" }}>
+const Loading = () =>
+  <div
+    className="floating"
+    style={{ position: "fixed", top: 0, bottom: 0, width: "100%" }}
+  >
     <div className="floating__item">
       <Spinner />;
     </div>
-  </div>
-);
+  </div>;
 
 const FINANCIAL_ACCOUNTS_QUERY = gql`
   query GetFinancialAccounts {
@@ -42,7 +44,9 @@ const FINANCIAL_ACCOUNTS_QUERY = gql`
   }
 `;
 
-const withFinancialAccounts = graphql(FINANCIAL_ACCOUNTS_QUERY, { name: "accounts" });
+const withFinancialAccounts = graphql(FINANCIAL_ACCOUNTS_QUERY, {
+  name: "accounts",
+});
 
 type ITemplate = {
   dispatch: Function,
@@ -91,15 +95,11 @@ class TemplateWithoutData extends Component {
 
 const Template = withFinancialAccounts(connect()(TemplateWithoutData));
 
-const Routes = [
-  { path: "campaign/:name", component: Template },
-];
+const Routes = [{ path: "campaign/:name", component: Template }];
 
 export default {
   Template,
   Routes,
 };
 
-export {
-  TemplateWithoutData,
-};
+export { TemplateWithoutData };

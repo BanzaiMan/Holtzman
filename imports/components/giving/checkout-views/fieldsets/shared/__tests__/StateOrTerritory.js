@@ -15,7 +15,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <StateOrTerritory { ...newProps } />;
+  return <StateOrTerritory {...newProps} />;
 };
 
 beforeEach(() => {
@@ -33,37 +33,45 @@ it("renders with default state as SC", () => {
 });
 
 it("renders with predefined state", () => {
-  const result = renderer.create(generateComponent({
-    billing: {
-      state: "NC",
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      billing: {
+        state: "NC",
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("renders if country is `CA`", () => {
-  const result = renderer.create(generateComponent({
-    billing: {
-      country: "CA",
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      billing: {
+        country: "CA",
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("renders if no country", () => {
-  const result = renderer.create(generateComponent({
-    billing: {
-      country: null,
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      billing: {
+        country: null,
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("does not render if country without states", () => {
-  const result = renderer.create(generateComponent({
-    billing: {
-      country: "UK",
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      billing: {
+        country: "UK",
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });

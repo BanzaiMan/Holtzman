@@ -17,23 +17,19 @@ describe("Layout", () => {
     const schedules = {
       map: jest.fn(),
     };
-    const tree = renderer.create(
-      <Layout schedules={schedules} />
-    );
+    const tree = renderer.create(<Layout schedules={schedules} />);
     expect(tree).toMatchSnapshot();
   });
 
   it("should render the Remind component if state is set to 'remind'", () => {
-    const tree = renderer.create(
-      <Layout state={"remind"} />
-    );
+    const tree = renderer.create(<Layout state={"remind"} />);
     expect(tree).toMatchSnapshot();
   });
 
   it("should render the Later component if state is set to 'later'", () => {
     const dateToUse = moment("19740101");
     const tree = renderer.create(
-      <Layout state={"later"} reminderDate={dateToUse} />
+      <Layout state={"later"} reminderDate={dateToUse} />,
     );
     expect(tree).toMatchSnapshot();
   });

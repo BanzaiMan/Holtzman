@@ -23,7 +23,7 @@ const generateComponent = (additionalProps = {}) => {
     ...additionalProps,
   };
 
-  return <Give { ...newProps } />;
+  return <Give {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -34,23 +34,27 @@ it("renders with props", () => {
 it("calls dispatch on mount if saved account", () => {
   const mockDispatch = jest.fn();
   giveActions.setProgress = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    give: {
-      savedAccount: {
-        id: "1",
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      give: {
+        savedAccount: {
+          id: "1",
+        },
       },
-    },
-  }));
+    }),
+  );
 
   expect(mockDispatch).toHaveBeenCalledTimes(1);
 });
 
 it("does not call dispatch on mount if no saved account", () => {
   const mockDispatch = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   expect(mockDispatch).toHaveBeenCalledTimes(0);
   expect(giveActions.setProgress).toHaveBeenCalledTimes(1);
@@ -58,15 +62,17 @@ it("does not call dispatch on mount if no saved account", () => {
 });
 
 it("calls updateData with next props hwne loading changes", () => {
-  const wrapper = shallow(generateComponent({
-    data: {
-      campuses: [],
-      countries: [],
-      loading: true,
-      savedPayments: [],
-      states: [],
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        campuses: [],
+        countries: [],
+        loading: true,
+        savedPayments: [],
+        states: [],
+      },
+    }),
+  );
   const mockUpdateData = jest.fn();
   wrapper.instance().updateData = mockUpdateData;
 
@@ -87,9 +93,11 @@ it("calls dispatch twice when unmounting if state not default", () => {
   const mockDispatch = jest.fn();
   giveActions.clearData = jest.fn();
   giveActions.clearSchedules = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.setState({
     give: {
@@ -108,9 +116,11 @@ it("onSubmit prevents default and calls dispatch", () => {
   const mockDispatch = jest.fn();
   const mockPreventDefault = jest.fn();
   giveActions.submit = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.instance().onSubmit({
     preventDefault: mockPreventDefault,
@@ -123,9 +133,11 @@ it("onSubmit prevents default and calls dispatch", () => {
 
 it("updateData does nothing if loading", () => {
   const mockDispatch = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.instance().updateData({
     data: {
@@ -138,9 +150,11 @@ it("updateData does nothing if loading", () => {
 
 it("updateData does nothing if no person", () => {
   const mockDispatch = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.instance().updateData({
     data: {
@@ -154,9 +168,11 @@ it("updateData does nothing if no person", () => {
 it("updateData calls dispatch with updates", () => {
   const mockDispatch = jest.fn();
   giveActions.save = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   const newData = {
     data: {
       loading: false,
@@ -205,9 +221,11 @@ it("updateData calls dispatch with updates", () => {
 it("updateData calls dispatch with nickname", () => {
   const mockDispatch = jest.fn();
   giveActions.save = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   const newData = {
     data: {
       loading: false,
@@ -256,9 +274,11 @@ it("updateData calls dispatch with nickname", () => {
 it("updateData works without home or campus", () => {
   const mockDispatch = jest.fn();
   giveActions.save = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   const newData = {
     data: {
       loading: false,
@@ -296,9 +316,11 @@ it("next calls prevent default and dispatch", () => {
   const mockPreventDefault = jest.fn();
   const mockDispatch = jest.fn();
   giveActions.next = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.instance().next({
     preventDefault: mockPreventDefault,
@@ -315,9 +337,11 @@ it("goToStepOne calls prevent default and dispatch 3 times", () => {
   giveActions.clearAccount = jest.fn();
   giveActions.setState = jest.fn();
   giveActions.setProgress = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.instance().goToStepOne({
     preventDefault: mockPreventDefault,
@@ -336,9 +360,11 @@ it("changeSavedAccount calls dispatch and give actions", () => {
   const mockDispatch = jest.fn();
   giveActions.setAccount = jest.fn();
   const account = "test";
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.instance().changeSavedAccount(account);
 
@@ -351,13 +377,15 @@ it("back calls prevent default and dispatch", () => {
   const mockPreventDefault = jest.fn();
   const mockDispatch = jest.fn();
   giveActions.previous = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    give: {
-      step: 2,
-      savedAccount: {},
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      give: {
+        step: 2,
+        savedAccount: {},
+      },
+    }),
+  );
 
   wrapper.instance().back({
     preventDefault: mockPreventDefault,
@@ -372,13 +400,15 @@ it("back calls prevent default hides modal if first step", () => {
   const mockPreventDefault = jest.fn();
   const mockDispatch = jest.fn();
   modal.hide = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    give: {
-      step: 1,
-      savedAccount: {},
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      give: {
+        step: 1,
+        savedAccount: {},
+      },
+    }),
+  );
 
   wrapper.instance().back({
     preventDefault: mockPreventDefault,
@@ -392,19 +422,21 @@ it("back calls prevent default hides modal if first step", () => {
 it("goToAccounts renders modal with data", () => {
   const mockDispatch = jest.fn();
   modal.render = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    give: {
-      data: {
-        personal: {
-          email: "test@test.com",
-          firstName: "Jim",
-          lastName: "Bob",
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      give: {
+        data: {
+          personal: {
+            email: "test@test.com",
+            firstName: "Jim",
+            lastName: "Bob",
+          },
         },
+        savedAccount: {},
       },
-      savedAccount: {},
-    },
-  }));
+    }),
+  );
 
   wrapper.instance().goToAccounts();
 
@@ -425,9 +457,11 @@ it("goToAccounts renders modal with data", () => {
 it("save dispatches give save with args", () => {
   const mockDispatch = jest.fn();
   giveActions.save = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.instance().save("one", "two");
 
@@ -439,9 +473,11 @@ it("save dispatches give save with args", () => {
 it("clear dispatches give clear with args", () => {
   const mockDispatch = jest.fn();
   giveActions.clear = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.instance().clear("one", "two");
 
@@ -454,9 +490,11 @@ it("clearData dispatches give clear and modal hide", () => {
   const mockDispatch = jest.fn();
   giveActions.clearData = jest.fn();
   modal.hide = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.instance().clearData();
 

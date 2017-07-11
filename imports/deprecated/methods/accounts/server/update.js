@@ -4,7 +4,9 @@ import { api } from "../../../../util/rock";
 Meteor.methods({
   "rock/accounts/update": function updateAccount(data) {
     if (!this.userId) {
-      throw new Meteor.Error("You must be logged in to change your information");
+      throw new Meteor.Error(
+        "You must be logged in to change your information",
+      );
     }
 
     const user = Meteor.users.findOne(this.userId);
@@ -12,7 +14,8 @@ Meteor.methods({
     const Person = { ...data };
 
     // clean up data
-    for (const key in Person) { // eslint-disable-line
+    for (const key in Person) {
+      // eslint-disable-line
       if (!Person[key]) {
         delete Person[key];
       }
@@ -46,7 +49,6 @@ Meteor.methods({
         result = api.patch.sync(`Groups/${GroupId}`, { CampusId: Campus });
       }
     }
-
 
     result = api.patch.sync(`People/${user.services.rock.PersonId}`, Person);
 

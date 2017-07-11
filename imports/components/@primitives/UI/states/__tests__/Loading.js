@@ -14,7 +14,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Loading { ...newProps } />;
+  return <Loading {...newProps} />;
 };
 
 it("renders with props", () => {

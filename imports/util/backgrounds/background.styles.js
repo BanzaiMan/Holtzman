@@ -1,4 +1,3 @@
-
 import backgroundImage from "./background.image";
 
 function backgroundStyles(contentItem, label = "1:1") {

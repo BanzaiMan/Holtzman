@@ -4,9 +4,7 @@ import { reset, startBuffering } from "aphrodite/lib/inject";
 import { shallow, mount } from "enzyme";
 import { shallowToJson, mountToJson } from "enzyme-to-json";
 
-import {
-  StudyEntrySingleWithoutData as StudyEntry,
-} from "../index";
+import { StudyEntrySingleWithoutData as StudyEntry } from "../index";
 
 import {
   header as headerActions,
@@ -48,7 +46,7 @@ const defaultProps = {
     },
   },
   study: {},
-  params: {}
+  params: {},
 };
 
 beforeEach(() => {
@@ -61,17 +59,16 @@ afterEach(() => {
 });
 
 const mockHeaderAction = jest.fn();
-const MockHeaderAction = (Component) => (
+const MockHeaderAction = Component =>
   class MockHeaderAction extends React.Component {
-    constructor () {
+    constructor() {
       super(...arguments);
       this.headerAction = mockHeaderAction;
     }
     render() {
-      return <Component { ...this.props } { ...this.state } />
+      return <Component {...this.props} {...this.state} />;
     }
-  }
-);
+  };
 
 const generateMockedComponent = (additionalProps = {}) => {
   const newProps = {
@@ -79,16 +76,16 @@ const generateMockedComponent = (additionalProps = {}) => {
     ...additionalProps,
   };
   const MockedStudyEntry = MockHeaderAction(StudyEntry);
-  return <MockedStudyEntry { ...newProps } />;
+  return <MockedStudyEntry {...newProps} />;
 };
 
 const generateComponent = (additionalProps = {}) => {
   const newProps = {
-      ...defaultProps,
-      ...additionalProps,
-    };
+    ...defaultProps,
+    ...additionalProps,
+  };
 
-  return <StudyEntry { ...newProps } />;
+  return <StudyEntry {...newProps} />;
 };
 
 it("renders without scripture or image", () => {
@@ -97,9 +94,11 @@ it("renders without scripture or image", () => {
 });
 
 it("renders loading with no studyEntry", () => {
-  const wrapper = shallow(generateComponent({
-    StudyEntry: {},
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      StudyEntry: {},
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -107,9 +106,11 @@ it("dispatches to the store on mount", () => {
   const mockDispatch = jest.fn();
   liveActions.hide = jest.fn();
   headerActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(liveActions.hide).toHaveBeenCalledTimes(1);
 });
@@ -134,14 +135,18 @@ xit("updates when next content is different", () => {
       },
     },
   };
-  const result = wrapper.instance().shouldComponentUpdate(nextProps, wrapper.state());
+  const result = wrapper
+    .instance()
+    .shouldComponentUpdate(nextProps, wrapper.state());
   expect(result).toBe(true);
   expect(wrapper.state().selectedIndex).toBe(1);
 });
 
 xit("does not update when content is the same", () => {
   const wrapper = shallow(generateComponent());
-  const result = wrapper.instance().shouldComponentUpdate(defaultProps, wrapper.state());
+  const result = wrapper
+    .instance()
+    .shouldComponentUpdate(defaultProps, wrapper.state());
   expect(result).toBe(false);
 });
 
@@ -156,9 +161,11 @@ xit("updates live bar when component updates", () => {
 xit("unfloats the live bar on unmount", () => {
   const mockDispatch = jest.fn();
   liveActions.unfloat = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().componentWillUnmount();
   expect(mockDispatch).toHaveBeenCalledTimes(6);
   expect(liveActions.unfloat).toHaveBeenCalledTimes(1);
@@ -183,11 +190,13 @@ xit("getLiveClasses returns blank if not live", () => {
 });
 
 xit("getLiveClasses returns styles if live and livePush", () => {
-  const wrapper = shallow(generateComponent({
-    live: {
-      live: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      live: {
+        live: true,
+      },
+    }),
+  );
   wrapper.setState({ livePush: true });
   const result = wrapper.instance().getLiveClasses();
   expect(result).toEqual(["push-double-top"]);
@@ -196,11 +205,13 @@ xit("getLiveClasses returns styles if live and livePush", () => {
 xit("updates live bar if live", () => {
   jest.useFakeTimers();
   liveActions.show = jest.fn();
-  const wrapper = shallow(generateComponent({
-    live: {
-      live: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      live: {
+        live: true,
+      },
+    }),
+  );
   expect(wrapper.state().liveSet).toBe(true);
   jest.runAllTimers();
   expect(liveActions.show).toHaveBeenCalledTimes(1);
@@ -210,23 +221,23 @@ xit("updates live bar with push if scripture", () => {
   jest.useFakeTimers();
   liveActions.float = jest.fn();
   liveActions.show = jest.fn();
-  const wrapper = shallow(generateComponent({
-    studyEntry: {
-      content: {
-        id: "1",
+  const wrapper = shallow(
+    generateComponent({
+      studyEntry: {
         content: {
-          body: "<h1>devotion</h1>",
-          images: [],
-          scripture: [
-            { book: "Job", passage: "2" },
-          ],
+          id: "1",
+          content: {
+            body: "<h1>devotion</h1>",
+            images: [],
+            scripture: [{ book: "Job", passage: "2" }],
+          },
         },
       },
-    },
-    live: {
-      live: true,
-    },
-  }));
+      live: {
+        live: true,
+      },
+    }),
+  );
   expect(wrapper.state().liveSet).toBe(true);
   jest.runAllTimers();
   expect(wrapper.state().livePush).toBe(true);

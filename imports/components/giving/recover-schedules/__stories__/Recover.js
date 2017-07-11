@@ -1,8 +1,6 @@
 /* eslint-disable */
 import { storiesOf } from "@kadira/storybook";
-import {
-  withKnobs,
-} from "@kadira/storybook-addon-knobs";
+import { withKnobs } from "@kadira/storybook-addon-knobs";
 import withReadme from "storybook-readme/with-readme";
 import backgrounds from "react-storybook-addon-backgrounds";
 import centered from "/.storybook/decorators/centered";
@@ -14,11 +12,13 @@ import Recover, { RecoverableSchedule } from "../Recover";
 const story = storiesOf("Schedules", module)
   .addDecorator(withKnobs)
   .addDecorator(centered)
-  .addDecorator(backgrounds([{ name: "light-secondary", value: "#f7f7f7", default: true }]))
-  ;
+  .addDecorator(
+    backgrounds([{ name: "light-secondary", value: "#f7f7f7", default: true }]),
+  );
 
-story
-  .add("Transfer Your Schedule", withReadme(Readme, () => {
+story.add(
+  "Transfer Your Schedule",
+  withReadme(Readme, () => {
     const schedules = [
       {
         details: [
@@ -34,16 +34,19 @@ story
         },
       },
     ];
-    return(
+    return (
       <div className={"floating"}>
-        <div className={"grid__item soft background--light-primary"} style={{ maxWidth: "375px" }}>
+        <div
+          className={"grid__item soft background--light-primary"}
+          style={{ maxWidth: "375px" }}
+        >
           <Recover
             schedules={schedules}
-            hide={(e) => {
+            hide={e => {
               e.preventDefault();
               alert("clicked the primary action button");
             }}
-            onClick={(e) => {
+            onClick={e => {
               e.preventDefault();
               alert("clicked the secondary action button");
             }}
@@ -51,4 +54,5 @@ story
         </div>
       </div>
     );
-  }));
+  }),
+);

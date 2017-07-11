@@ -1,4 +1,3 @@
-
 import sagaHelper from "redux-saga-testing";
 import { takeLatest } from "redux-saga";
 import { put, select, call, cps, take } from "redux-saga/effects";
@@ -12,32 +11,41 @@ import types from "../../types";
 import { submitPaymentDetails } from "../";
 
 describe("early return without cc info", () => {
-  const it = sagaHelper(submitPaymentDetails({
-    payment: { type: "cc" },
-  }));
+  const it = sagaHelper(
+    submitPaymentDetails({
+      payment: { type: "cc" },
+    }),
+  );
   it("exits on wrong state", result => {
     expect(result).toBeUndefined();
   });
 });
 
 describe("early return without ach info", () => {
-  const it = sagaHelper(submitPaymentDetails({
-    payment: { type: "ach" },
-  }));
+  const it = sagaHelper(
+    submitPaymentDetails({
+      payment: { type: "ach" },
+    }),
+  );
   it("exits on wrong state", result => {
     expect(result).toBeUndefined();
   });
 });
 
 describe("using a credit card", () => {
-  const it = sagaHelper(submitPaymentDetails({
-    payment: {
-      type: "cc",
-      cardNumber: 4111111111111111,
-      expiration: "07/19",
-      ccv: "001"
-    },
-  }, "http://example.com/TOKEN"));
+  const it = sagaHelper(
+    submitPaymentDetails(
+      {
+        payment: {
+          type: "cc",
+          cardNumber: 4111111111111111,
+          expiration: "07/19",
+          ccv: "001",
+        },
+      },
+      "http://example.com/TOKEN",
+    ),
+  );
 
   window.fetch = jest.fn(() => new Promise(resolve => resolve()));
 
@@ -58,19 +66,23 @@ describe("using a credit card", () => {
   it("should end the submission", result => {
     expect(result).toBeUndefined();
   });
-
 });
 
 describe("using a bank card", () => {
-  const it = sagaHelper(submitPaymentDetails({
-    payment: {
-      type: "ach",
-      accountNumber: 4111111111111111,
-      routingNumber: 4111111111111112,
-      type: "Bank",
-    },
-    personal: { firstName: "James", lastName: "Baxley" },
-  }, "http://example.com/TOKEN"));
+  const it = sagaHelper(
+    submitPaymentDetails(
+      {
+        payment: {
+          type: "ach",
+          accountNumber: 4111111111111111,
+          routingNumber: 4111111111111112,
+          type: "Bank",
+        },
+        personal: { firstName: "James", lastName: "Baxley" },
+      },
+      "http://example.com/TOKEN",
+    ),
+  );
 
   window.fetch = jest.fn(() => new Promise(resolve => resolve()));
 
@@ -91,5 +103,4 @@ describe("using a bank card", () => {
   it("should end the submission", result => {
     expect(result).toBeUndefined();
   });
-
 });

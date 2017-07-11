@@ -1,4 +1,3 @@
-
 import Checkbox from "../../../@primitives/UI/forms/Checkbox";
 import TagSelect from "../../../@primitives/UI/forms/TagSelect";
 
@@ -15,7 +14,7 @@ type ILayoutProps = {
   startClick: Function,
   toggleDatePicker: Function,
   toggleSchedule: Function,
-}
+};
 
 export default ({
   GIVING_SCHEDULES,
@@ -28,7 +27,7 @@ export default ({
   startClick,
   toggleDatePicker,
   toggleSchedule,
-}: ILayoutProps) => (
+}: ILayoutProps) =>
   <div>
     <Checkbox
       name="schedule"
@@ -38,7 +37,7 @@ export default ({
     >
       <span className="soft-half-top">Schedule This Contribution</span>
     </Checkbox>
-    {checked && (
+    {checked &&
       <div>
         <div className="display-block soft-half-ends">
           <h7>Frequency</h7>
@@ -52,10 +51,12 @@ export default ({
             <TagSelect items={START_DATES} onClick={startClick} />
           </div>
         </div>
-      </div>
-    )}
-    {checked && showDatePicker && (
-      <Date start={start} onDayClick={onDayClick} toggleDatePicker={toggleDatePicker} />
-    )}
-  </div>
-);
+      </div>}
+    {checked &&
+      showDatePicker &&
+      <Date
+        start={start}
+        onDayClick={onDayClick}
+        toggleDatePicker={toggleDatePicker}
+      />}
+  </div>;

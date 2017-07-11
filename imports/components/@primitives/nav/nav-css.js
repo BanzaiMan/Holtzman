@@ -52,7 +52,5 @@ export default StyleSheet.create({
       display: "block",
       margin: "0 auto",
     },
-
   },
-
 });

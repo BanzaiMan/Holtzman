@@ -5,11 +5,8 @@ type IMetricCard = {
   label: string,
 };
 
-const MetricCard = ({
-  count,
-  label,
-}: IMetricCard) => (
-  <div className="floating__item one-whole soft" >
+const MetricCard = ({ count, label }: IMetricCard) =>
+  <div className="floating__item one-whole soft">
     <h1
       className="uppercase flush-bottom soft-half-bottom"
       style={{
@@ -21,7 +18,6 @@ const MetricCard = ({
     <h5 className="flush-bottom">
       {label}
     </h5>
-  </div>
-);
+  </div>;
 
 export default MetricCard;

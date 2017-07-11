@@ -1,4 +1,3 @@
-
 // @flow
 
 import React, { Component } from "react";
@@ -26,18 +25,24 @@ export class SchedulesList extends Component {
   renderSchedules(schedules: Object) {
     if (!Array.isArray(schedules)) return null;
 
-    return schedules.map((schedule) =>
+    return schedules.map(schedule =>
       <ScheduleCard
         classes="grid__item one-whole"
         key={schedule.id}
-        amount={schedule.details.reduce((i, { amount }) => i + amount, 0).toFixed(2)}
+        amount={schedule.details
+          .reduce((i, { amount }) => i + amount, 0)
+          .toFixed(2)}
         fund={schedule.details[0].account.name}
         frequency={schedule.schedule.description}
         started={schedule.start}
         latest={schedule.transactions[0] ? schedule.transactions[0].date : ""}
-        onEditClick={() => { this.props.router.push(`/give/schedules/edit/${schedule.id}`); }}
-        onDetailClick={() => { this.props.router.push(`/give/schedules/${schedule.id}`); }}
-      />
+        onEditClick={() => {
+          this.props.router.push(`/give/schedules/edit/${schedule.id}`);
+        }}
+        onDetailClick={() => {
+          this.props.router.push(`/give/schedules/${schedule.id}`);
+        }}
+      />,
     );
   }
 
@@ -66,13 +71,13 @@ export class SchedulesList extends Component {
           <Link
             className="one-whole ratio--landscape background--fill"
             style={{
-              backgroundImage: "url(//s3.amazonaws.com/ns.assets/apollos/42835.marketing.cen.webad.scheduleyourgiving_2x1.jpg)",
+              backgroundImage:
+                "url(//s3.amazonaws.com/ns.assets/apollos/42835.marketing.cen.webad.scheduleyourgiving_2x1.jpg)",
             }}
             to="/give/now?schedule=true"
           >
             <div className="ratio__item" />
           </Link>
-
         </div>
       );
     }
@@ -80,15 +85,19 @@ export class SchedulesList extends Component {
     /* eslint-disable max-len */
     return (
       <div className={wrapper}>
-        <SectionHeader
-          title="Active Schedules"
-          link={<SchedulesButton />}
-        />
+        <SectionHeader title="Active Schedules" link={<SchedulesButton />} />
         <div className="grid">
           {this.renderSchedules(this.props.schedules.scheduledTransactions)}
         </div>
         <p className="soft-double-top soft-half-sides text-left@handheld text-center">
-          <small><em>To change details about a schedule, please cancel the current one and create a new schedule with the desired information. We are sorry for any inconvenience this may cause and are working to provide the ability to edit contribution schedules in the future.</em></small>
+          <small>
+            <em>
+              To change details about a schedule, please cancel the current one
+              and create a new schedule with the desired information. We are
+              sorry for any inconvenience this may cause and are working to
+              provide the ability to edit contribution schedules in the future.
+            </em>
+          </small>
         </p>
       </div>
     );

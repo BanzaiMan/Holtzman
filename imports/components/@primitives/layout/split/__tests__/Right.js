@@ -17,11 +17,10 @@ describe("DefaultWrapper", () => {
     imageclasses: ["one", "two"],
   };
 
-  const generateComponent = () => (
-    <DefaultWrapper { ...defaultProps }>
+  const generateComponent = () =>
+    <DefaultWrapper {...defaultProps}>
       <h1>test</h1>
-    </DefaultWrapper>
-  );
+    </DefaultWrapper>;
 
   it("renders with props", () => {
     const wrapper = shallow(generateComponent());
@@ -54,7 +53,7 @@ describe("Right", () => {
       ...additionalProps,
     };
     return (
-      <Right { ...newProps }>
+      <Right {...newProps}>
         <h1>test</h1>
       </Right>
     );
@@ -66,50 +65,62 @@ describe("Right", () => {
   });
 
   it("overrides with theme", () => {
-    const wrapper = shallow(generateComponent({
-      theme: "override me",
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        theme: "override me",
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it("overrides styles", () => {
-    const wrapper = shallow(generateComponent({
-      styles: {
-        color: "red",
-      },
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        styles: {
+          color: "red",
+        },
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it("renders linked version", () => {
-    const wrapper = shallow(generateComponent({
-      link: "http://test.com",
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        link: "http://test.com",
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it("renders linked version with theme override", () => {
-    const wrapper = shallow(generateComponent({
-      link: "http://test.com",
-      theme: "override link",
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        link: "http://test.com",
+        theme: "override link",
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it("renders linked version with style override", () => {
-    const wrapper = shallow(generateComponent({
-      link: "http://test.com",
-      styles: {
-        color: "blue",
-      },
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        link: "http://test.com",
+        styles: {
+          color: "blue",
+        },
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it("renders background image version", () => {
-    const wrapper = shallow(generateComponent({
-      background: "//test.com/background.jpg",
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        background: "//test.com/background.jpg",
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
@@ -135,55 +146,69 @@ describe("Right", () => {
   });
 
   it("layoutClasses adds hover classes for web links", () => {
-    const wrapper = shallow(generateComponent({
-      link: "http://test.com",
-      web: true,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        link: "http://test.com",
+        web: true,
+      }),
+    );
     expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
   });
 
   it("layoutClasses adds ratio class for mobile and not aspect", () => {
-    const wrapper = shallow(generateComponent({
-      mobile: true,
-      aspect: null,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        mobile: true,
+        aspect: null,
+      }),
+    );
     expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
   });
 
   it("layoutClasses adds ratio classes for mobil and aspect", () => {
-    const wrapper = shallow(generateComponent({
-      mobile: true,
-      aspect: "my-aspect",
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        mobile: true,
+        aspect: "my-aspect",
+      }),
+    );
     expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
   });
 
   it("layoutClasses adds scrollable class", () => {
-    const wrapper = shallow(generateComponent({
-      scroll: true,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        scroll: true,
+      }),
+    );
     expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
   });
 
   it("layoutClasses adds width class", () => {
-    const wrapper = shallow(generateComponent({
-      width: "my-width",
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        width: "my-width",
+      }),
+    );
     expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
   });
 
   it("layoutClasses background fill class", () => {
-    const wrapper = shallow(generateComponent({
-      background: "//test.com/test.jpg",
-      backgroundFill: true,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        background: "//test.com/test.jpg",
+        backgroundFill: true,
+      }),
+    );
     expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
   });
 
   it("layoutClasses appends additional classes", () => {
-    const wrapper = shallow(generateComponent({
-      classes: ["three", "four"],
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        classes: ["three", "four"],
+      }),
+    );
     expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
   });
 
@@ -193,9 +218,11 @@ describe("Right", () => {
   });
 
   it("styles returns background styles if background", () => {
-    const wrapper = shallow(generateComponent({
-      background: "//test.com/test.jpg",
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        background: "//test.com/test.jpg",
+      }),
+    );
     expect(wrapper.instance().styles()).toEqual({
       backgroundImage: "url('//test.com/test.jpg')",
     });
@@ -207,9 +234,11 @@ describe("Right", () => {
   });
 
   it("ratioClasses appends additional classes", () => {
-    const wrapper = shallow(generateComponent({
-      ratioClasses: "rat io",
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        ratioClasses: "rat io",
+      }),
+    );
     expect(wrapper.instance().ratioClasses()).toEqual("ratio__item rat io");
   });
 
@@ -217,11 +246,13 @@ describe("Right", () => {
     const wrapper = shallow(generateComponent());
     expect(wrapper.instance().renderInsideRatio()).toMatchSnapshot();
   });
-  
+
   it("renderInsideRatio can be overrided with theme", () => {
-    const wrapper = shallow(generateComponent({
-      ratioTheme: "override ratio",
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        ratioTheme: "override ratio",
+      }),
+    );
     expect(wrapper.instance().renderInsideRatio()).toMatchSnapshot();
   });
 
@@ -231,16 +262,20 @@ describe("Right", () => {
   });
 
   it("renderOutSideRatio renders outsideRatio prop", () => {
-    const wrapper = shallow(generateComponent({
-      outsideRatio: jest.fn(() => <h1>outside</h1>),
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        outsideRatio: jest.fn(() => <h1>outside</h1>),
+      }),
+    );
     expect(wrapper.instance().renderOutSideRatio()).toMatchSnapshot();
   });
 
   it("renderOutSideRatio renders blur styles if blur", () => {
-    const wrapper = shallow(generateComponent({
-      blur: true,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        blur: true,
+      }),
+    );
     expect(wrapper.instance().renderOutSideRatio()).toMatchSnapshot();
   });
 });

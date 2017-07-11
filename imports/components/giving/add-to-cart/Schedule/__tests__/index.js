@@ -10,18 +10,22 @@ import { map, Schedule, withGiveActions } from "../";
 jest.useFakeTimers();
 
 jest.mock("react-redux", () => ({
-  connect: jest.fn(() => (component) => <component />),
+  connect: jest.fn(() => component => <component />),
 }));
 
-jest.mock("moment", () => (date) => ({
-  endOf: (time) => ({
+jest.mock("moment", () => date => ({
+  endOf: time => ({
     add: (amount, time) => ({
-      format: (style) => `${date || "now"}.endOf(${time}).add(${amount}, ${time}).format(${style})`,
-      toISOString: () => `${date || "now"}.endOf(${time}).add(${amount}, ${time}).toISOString()`,
+      format: style =>
+        `${date ||
+          "now"}.endOf(${time}).add(${amount}, ${time}).format(${style})`,
+      toISOString: () =>
+        `${date || "now"}.endOf(${time}).add(${amount}, ${time}).toISOString()`,
     }),
   }),
   add: (amount, time) => ({
-    toISOString: (style) => `${date || "now"}.endOf(${time}).add(${amount}, ${time}).toISOString()`,
+    toISOString: style =>
+      `${date || "now"}.endOf(${time}).add(${amount}, ${time}).toISOString()`,
   }),
   isValid: date => date !== "custom",
   isSame: date => false,
@@ -36,9 +40,7 @@ const generateComponent = (additionalProps = {}) => {
     setCanCheckout: jest.fn(),
     bindSubComponentReset: jest.fn(),
   };
-  return (
-    <Schedule {...defaultProps} {...additionalProps} />
-  );
+  return <Schedule {...defaultProps} {...additionalProps} />;
 };
 
 it("is mapped to the store as expected", () => {
@@ -55,7 +57,6 @@ it("should render nothing if not authorized", () => {
   expect(shallowToJson(component)).toEqual(null);
 });
 
-
 describe("Class", () => {
   describe("lifecycle events", () => {
     it("attaches to window a listener on mount", () => {
@@ -65,30 +66,39 @@ describe("Class", () => {
       const wrapper = mount(generateComponent());
       const { fixPickerPosition } = wrapper.instance();
 
-      expect(window.addEventListener).toBeCalledWith("resize", fixPickerPosition);
+      expect(window.addEventListener).toBeCalledWith(
+        "resize",
+        fixPickerPosition,
+      );
       window.addEventListener = originalListen;
     });
     it("disables checkout from state change", () => {
       const spy = jest.fn();
-      const wrapper = mount(generateComponent({
-        setCanCheckout: spy,
-      }));
+      const wrapper = mount(
+        generateComponent({
+          setCanCheckout: spy,
+        }),
+      );
       wrapper.setState({ checked: true });
       expect(spy).toBeCalledWith(false);
     });
     it("enables checkout if start and frequency are set", () => {
       const spy = jest.fn();
-      const wrapper = mount(generateComponent({
-        setCanCheckout: spy,
-      }));
+      const wrapper = mount(
+        generateComponent({
+          setCanCheckout: spy,
+        }),
+      );
       wrapper.setState({ start: "now", frequency: "one-time" });
       expect(spy).toBeCalledWith(true);
     });
     it("disableds checkout if start or frequency are missing", () => {
       const spy = jest.fn();
-      const wrapper = mount(generateComponent({
-        setCanCheckout: spy,
-      }));
+      const wrapper = mount(
+        generateComponent({
+          setCanCheckout: spy,
+        }),
+      );
       wrapper.setState({ start: "now" });
       wrapper.setState({ start: null });
       expect(spy).toBeCalledWith(false);
@@ -104,7 +114,10 @@ describe("Class", () => {
       const wrapper = mount(generateComponent());
       const { fixPickerPosition } = wrapper.instance();
       wrapper.unmount();
-      expect(window.removeEventListener).toBeCalledWith("resize", fixPickerPosition);
+      expect(window.removeEventListener).toBeCalledWith(
+        "resize",
+        fixPickerPosition,
+      );
       window.removeEventListener = originalRemove;
     });
   });
@@ -143,9 +156,11 @@ describe("Class", () => {
     });
     it("resets a schedule", () => {
       const saveSchedule = jest.fn();
-      const wrapper = mount(generateComponent({
-        saveSchedule,
-      }));
+      const wrapper = mount(
+        generateComponent({
+          saveSchedule,
+        }),
+      );
       const { toggleSchedule } = wrapper.instance();
       wrapper.setState({ checked: true });
 
@@ -157,9 +172,11 @@ describe("Class", () => {
     });
     it("resets the state and makes checked true", () => {
       const saveSchedule = jest.fn();
-      const wrapper = mount(generateComponent({
-        saveSchedule,
-      }));
+      const wrapper = mount(
+        generateComponent({
+          saveSchedule,
+        }),
+      );
       const { toggleSchedule } = wrapper.instance();
       wrapper.setState({ checked: true });
 
@@ -273,7 +290,7 @@ describe("Class", () => {
         start: "9000-01-01",
         frequency: "one-time",
         activeStartTag: "Custom",
-        checked: true
+        checked: true,
       };
       wrapper.setState(s => initialState);
       startClick("custom");
@@ -323,7 +340,7 @@ describe("Class", () => {
   describe("reset-binding", () => {
     it("resets when called", () => {
       let reset = null;
-      const bindSubComponentReset = (fn) => reset = jest.fn(fn);
+      const bindSubComponentReset = fn => (reset = jest.fn(fn));
 
       const wrapper = mount(generateComponent({ bindSubComponentReset }));
       const originalState = wrapper.state();

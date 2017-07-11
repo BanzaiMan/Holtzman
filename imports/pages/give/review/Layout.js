@@ -22,32 +22,33 @@ export default class Layout extends Component {
         Hi {personal.firstName}! Here are your contribution details.
       </h4>
     );
-  }
+  };
 
-  listItem = (transaction: Object, key: number) => (
+  listItem = (transaction: Object, key: number) =>
     <div key={key} className="soft-half-ends hard-sides">
-
       <div className="grid" style={{ verticalAlign: "middle" }}>
-
-        <div className="grid__item two-thirds" style={{ verticalAlign: "middle" }}>
+        <div
+          className="grid__item two-thirds"
+          style={{ verticalAlign: "middle" }}
+        >
           <h5 className="text-dark-secondary flush text-left">
             {transaction.label}
           </h5>
         </div>
 
-        <div className="grid__item one-third text-right" style={{ verticalAlign: "middle" }}>
+        <div
+          className="grid__item one-third text-right"
+          style={{ verticalAlign: "middle" }}
+        >
           <h5 className="text-dark-secondary flush">
             {monetize(transaction.value)}
           </h5>
         </div>
-
       </div>
-    </div>
-  )
+    </div>;
 
-  icon = (icon: string): any => (
-    <AccountType width="30px" height="21px" type={icon} />
-  )
+  icon = (icon: string): any =>
+    <AccountType width="30px" height="21px" type={icon} />;
 
   render() {
     if (!this.props.data) return null;
@@ -73,29 +74,34 @@ export default class Layout extends Component {
 
         <div className="soft">
           <h5 className="text-dark-secodary text-left">
-            <small><em>{personal.campus} Campus</em></small>
+            <small>
+              <em>
+                {personal.campus} Campus
+              </em>
+            </small>
           </h5>
           <div className="outlined--light outlined--bottom one-whole push-bottom" />
-          {transactions.map((transaction, key) => (
-            this.listItem(transaction, key)
-          ))}
+          {transactions.map((transaction, key) =>
+            this.listItem(transaction, key),
+          )}
 
           <div className="soft-ends hard-sides">
-
             <div className="grid" style={{ verticalAlign: "middle" }}>
-
-              <div className="grid__item one-half" style={{ verticalAlign: "middle" }}>
-                <h5 className="text-dark-secondary flush text-left">
-                  Total
-                </h5>
+              <div
+                className="grid__item one-half"
+                style={{ verticalAlign: "middle" }}
+              >
+                <h5 className="text-dark-secondary flush text-left">Total</h5>
               </div>
 
-              <div className="grid__item one-half text-right" style={{ verticalAlign: "middle" }}>
+              <div
+                className="grid__item one-half text-right"
+                style={{ verticalAlign: "middle" }}
+              >
                 <h3 className="text-primary flush">
                   {monetize(this.props.total)}
                 </h3>
               </div>
-
             </div>
           </div>
           <div className="one-whole text-center">

@@ -1,10 +1,8 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
-import EditSchedule from "../"
+import EditSchedule from "../";
 
-const generateComponent = () => (
-  <EditSchedule.EditSchedule />
-);
+const generateComponent = () => <EditSchedule.EditSchedule />;
 
 describe("Index", () => {
   it("renders", () => {
@@ -15,4 +13,4 @@ describe("Index", () => {
   it("has routes", () => {
     expect(EditSchedule.Routes).toMatchSnapshot();
   });
-})
+});

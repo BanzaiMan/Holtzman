@@ -1,4 +1,3 @@
-
 import "regenerator-runtime/runtime";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -53,10 +52,9 @@ export default function* submitPaymentDetails(data, url) {
     method: "POST",
     body: new FormData(form),
     mode: "no-cors",
-  })
-    .catch(() => {
-      // @TODO error handling
-    });
+  }).catch(() => {
+    // @TODO error handling
+  });
 
   return;
 }

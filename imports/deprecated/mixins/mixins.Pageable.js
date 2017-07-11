@@ -1,7 +1,6 @@
 import { paging as pagingActions } from "../../data/store";
 
 const Pageable = {
-
   componentDidMount() {
     this._bindPageOnScroll = this._pageOnScroll.bind(this); // eslint-disable-line
     window.addEventListener("scroll", this._bindPageOnScroll); // eslint-disable-line
@@ -39,7 +38,6 @@ const Pageable = {
       }, 1000);
     }
   },
-
 };
 
 export default Pageable;

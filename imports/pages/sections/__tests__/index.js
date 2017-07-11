@@ -4,9 +4,7 @@ import { Template } from "../";
 
 jest.mock("../../../deprecated/mixins/mixins.Header", () => {});
 
-const generateComponent = () => (
-  <Template />
-);
+const generateComponent = () => <Template />;
 
 it("renders", () => {
   const wrapper = shallow(generateComponent());

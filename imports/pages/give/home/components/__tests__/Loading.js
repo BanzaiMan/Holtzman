@@ -4,7 +4,7 @@ import Loading from "../Loading";
 
 describe("Loading", () => {
   const defaultProps = {
-    type: "update"
+    type: "update",
   };
 
   const generateComponent = (additionalProps = {}) => {
@@ -12,7 +12,7 @@ describe("Loading", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Loading { ...newProps }/>
+    return <Loading {...newProps} />;
   };
 
   it("renders with default props", () => {
@@ -24,4 +24,4 @@ describe("Loading", () => {
     const wrapper = shallow(generateComponent({ type: "ohheckno" }));
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
-})
+});

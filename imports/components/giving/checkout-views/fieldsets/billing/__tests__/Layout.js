@@ -12,9 +12,8 @@ afterEach(() => {
 });
 
 describe("Header", () => {
-  const generateComponent = (additionalProps = {}) => (
-    <Header { ...additionalProps } />
-  );
+  const generateComponent = (additionalProps = {}) =>
+    <Header {...additionalProps} />;
 
   it("renders default if no override", () => {
     const result = renderer.create(generateComponent());
@@ -22,9 +21,11 @@ describe("Header", () => {
   });
 
   it("renders override if override", () => {
-    const result = renderer.create(generateComponent({
-      override: <span>meow</span>,
-    }));
+    const result = renderer.create(
+      generateComponent({
+        override: <span>meow</span>,
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
@@ -43,7 +44,7 @@ describe("NextButton", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <NextButton { ...newProps } />;
+    return <NextButton {...newProps} />;
   };
 
   it("renders enabled styles when billing information present", () => {
@@ -52,20 +53,24 @@ describe("NextButton", () => {
   });
 
   it("renders disabled styles when no streetAddress", () => {
-    const result = renderer.create(generateComponent({
-      billing: {
-        city: "Someville",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        billing: {
+          city: "Someville",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 
   it("renders disabled styles when no city", () => {
-    const result = renderer.create(generateComponent({
-      billing: {
-        streetAddress: "123 Some St.",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        billing: {
+          streetAddress: "123 Some St.",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
@@ -96,7 +101,7 @@ describe("Layout", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Layout { ...newProps } />;
+    return <Layout {...newProps} />;
   };
 
   it("renders US by default", () => {
@@ -105,14 +110,16 @@ describe("Layout", () => {
   });
 
   it("renders your country instead", () => {
-    const result = renderer.create(generateComponent({
-      billing: {
-        streetAddress: "123 Some St.",
-        streetAddress2: "Apt. 1",
-        city: "Someville",
-        country: "CA",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        billing: {
+          streetAddress: "123 Some St.",
+          streetAddress2: "Apt. 1",
+          city: "Someville",
+          country: "CA",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });

@@ -1,4 +1,3 @@
-
 // @flow
 
 import { AccountNumber, Icon, cardType } from "../shared/";
@@ -9,11 +8,7 @@ type IHeader = {
 
 const Header = ({ override }: IHeader) => {
   if (override) return override;
-  return (
-    <h4 className="text-center">
-      Review
-    </h4>
-  );
+  return <h4 className="text-center">Review</h4>;
 };
 
 type ISavedPaymentLayout = {
@@ -45,26 +40,38 @@ export default ({
       {children}
 
       <div className="soft-sides text-left">
-
         <h7 className="display-block text-dark-tertiary">Billing Address</h7>
-        <h6>{billing.streetAddress}</h6>
+        <h6>
+          {billing.streetAddress}
+        </h6>
         <h6>{`${billing.city}, ${billing.state} ${billing.zip}`}</h6>
 
         <hr />
 
         <h7 className="display-block text-dark-tertiary">Account Details</h7>
         <h6>
-          <AccountNumber accountNumber={payment.cardNumber || payment.accountNumber} />
+          <AccountNumber
+            accountNumber={payment.cardNumber || payment.accountNumber}
+          />
           &nbsp;&nbsp;
           <Icon width="19px" height="12px" cardType={cardType(paymentInfo)} />
         </h6>
-        <h6>{payment.expiration || payment.routingNumber}</h6>
-        <h6>{payment.ccv}</h6>
-        <h6>{payment.name}</h6>
+        <h6>
+          {payment.expiration || payment.routingNumber}
+        </h6>
+        <h6>
+          {payment.ccv}
+        </h6>
+        <h6>
+          {payment.name}
+        </h6>
 
         <hr />
 
-        <button className="btn one-whole push-double-top soft-sides push-half-bottom" type="submit">
+        <button
+          className="btn one-whole push-double-top soft-sides push-half-bottom"
+          type="submit"
+        >
           Create Account
         </button>
 

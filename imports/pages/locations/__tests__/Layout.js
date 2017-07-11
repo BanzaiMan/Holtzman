@@ -31,9 +31,7 @@ const defaultProps = {
     ],
   },
   client: {
-    query: jest.fn().mockReturnValue(
-      new Promise(p => p({ data: {} }))
-    ),
+    query: jest.fn().mockReturnValue(new Promise(p => p({ data: {} }))),
   },
 };
 
@@ -47,7 +45,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -81,11 +79,13 @@ it("dynamicItemWidth returns tablet item size", () => {
 });
 
 it("dynamicWidth returns blank object if no campuses", () => {
-  const wrapper = shallow(generateComponent({
-    data: {
-      campuses: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        campuses: null,
+      },
+    }),
+  );
   const result = wrapper.instance().dynamicWidth();
   expect(result).toEqual({});
 });

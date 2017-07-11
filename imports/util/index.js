@@ -1,5 +1,3 @@
-
-
 import { inherit } from "./inherit";
 import { base64Encode, base64Decode } from "./encode";
 import makeNewGuid from "./guid";

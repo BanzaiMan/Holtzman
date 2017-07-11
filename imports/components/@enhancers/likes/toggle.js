@@ -1,4 +1,3 @@
-
 // @flow
 
 // $FlowMeteor
@@ -33,13 +32,13 @@ const withToggleLike = graphql(TOGGLE_LIKE_MUTATION, {});
 
 export const classWrapper = (
   propsReducer: Function = () => null,
-  updateNav: boolean = true
+  updateNav: boolean = true,
 ) => (WrappedComponent: any) => {
   type ILikesWrapper = {
     dispatch: Function,
     mutate: Function,
     modal: Object,
-    likes: string[]
+    likes: string[],
   };
 
   class LikesWrapper extends Component {
@@ -48,15 +47,18 @@ export const classWrapper = (
     componentWillMount() {
       if (!process.env.WEB && updateNav) {
         this.props.dispatch(navActions.setLevel("CONTENT"));
-        this.props.dispatch(navActions.setAction("CONTENT", {
-          id: 2,
-          action: this.toggleLike,
-        }));
+        this.props.dispatch(
+          navActions.setAction("CONTENT", {
+            id: 2,
+            action: this.toggleLike,
+          }),
+        );
       }
     }
 
     componentWillUnmount() {
-      if (!process.env.WEB && updateNav) this.props.dispatch(navActions.setLevel("TOP"));
+      if (!process.env.WEB && updateNav)
+        this.props.dispatch(navActions.setLevel("TOP"));
     }
 
     // has a default propsReducer that returns null if not passed
@@ -65,9 +67,11 @@ export const classWrapper = (
     toggleLike = () => {
       const { dispatch, mutate } = this.props;
       // may still be open from user logging in.
-      if (Meteor.userId() && this.props.modal && this.props.modal.visible) dispatch(modal.hide());
+      if (Meteor.userId() && this.props.modal && this.props.modal.visible)
+        dispatch(modal.hide());
 
-      if (!Meteor.userId()) { // if not logged in, show login modal
+      if (!Meteor.userId()) {
+        // if not logged in, show login modal
         /*
           XXX removing the auto-like after login because...
           1. User clicks login in modal
@@ -77,11 +81,14 @@ export const classWrapper = (
           XXX until we can fix this, I think it'd be better not to auto-like
         */
         // onFinished: this.toggleLike,
-        dispatch(modal.render(OnBoard, {
-          coverHeader: true,
-          modalBackground: "light",
-        }));
-      } else { // if logged in, toggle like state in redux, remote with gql query
+        dispatch(
+          modal.render(OnBoard, {
+            coverHeader: true,
+            modalBackground: "light",
+          }),
+        );
+      } else {
+        // if logged in, toggle like state in redux, remote with gql query
         const nodeId = this.getNodeId();
         if (nodeId) {
           dispatch(likedActions.toggle({ entryId: nodeId }));
@@ -90,12 +97,15 @@ export const classWrapper = (
       }
 
       return { type: "FALSY", payload: {} };
-    }
+    };
 
     render() {
       const id = this.getNodeId(this.props);
       const { likes } = this.props;
-      const isLiked = Boolean(id) && likes.length > 0 && likes.filter((x) => id === x).length !== 0;
+      const isLiked =
+        Boolean(id) &&
+        likes.length > 0 &&
+        likes.filter(x => id === x).length !== 0;
       return (
         <WrappedComponent
           {...this.props}
@@ -107,18 +117,12 @@ export const classWrapper = (
   }
 
   return LikesWrapper;
-
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   modal: state.modal,
   likes: state.liked.likes,
 });
 
-export default (...args: any[]) => (component: any) => connect(mapStateToProps)(
-  withToggleLike(
-    classWrapper(...args)(
-      component
-    )
-  )
-);
+export default (...args: any[]) => (component: any) =>
+  connect(mapStateToProps)(withToggleLike(classWrapper(...args)(component)));

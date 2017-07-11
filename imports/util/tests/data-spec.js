@@ -1,4 +1,3 @@
-
 export const DATA_SPEC_ATTRIBUTE_NAME = "data-spec";
 
 /**
@@ -16,11 +15,15 @@ export const getSpecWrappers = (componentWrapper, specName, typeFilter) => {
   let specWrappers;
 
   if (!typeFilter) {
-    specWrappers = componentWrapper.find(`[${DATA_SPEC_ATTRIBUTE_NAME}="${specName}"]`);
+    specWrappers = componentWrapper.find(
+      `[${DATA_SPEC_ATTRIBUTE_NAME}="${specName}"]`,
+    );
   } else {
-    specWrappers = componentWrapper.findWhere((wrapper) => (
-      wrapper.prop(DATA_SPEC_ATTRIBUTE_NAME) === specName && wrapper.type() === typeFilter
-    ));
+    specWrappers = componentWrapper.findWhere(
+      wrapper =>
+        wrapper.prop(DATA_SPEC_ATTRIBUTE_NAME) === specName &&
+        wrapper.type() === typeFilter,
+    );
   }
 
   return specWrappers;
@@ -37,11 +40,17 @@ export const getSpecWrappers = (componentWrapper, specName, typeFilter) => {
     (Optional) Expected type of the wrappers (defaults to all HTML tags)
 * @returns {ReactComponent} Single matching DOM component
 */
-export const getSingleSpecWrapper = (componentWrapper, specName, typeFilter) => {
+export const getSingleSpecWrapper = (
+  componentWrapper,
+  specName,
+  typeFilter,
+) => {
   const specWrappers = getSpecWrappers(componentWrapper, specName, typeFilter);
 
   if (specWrappers.length !== 1) {
-    throw new Error(`Expected single "${specName}" spec wrapper. Received: ${specWrappers.length}.`);
+    throw new Error(
+      `Expected single "${specName}" spec wrapper. Received: ${specWrappers.length}.`,
+    );
   }
 
   return specWrappers.first();

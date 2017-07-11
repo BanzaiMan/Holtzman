@@ -32,7 +32,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 beforeEach(() => {
@@ -45,105 +45,119 @@ afterEach(() => {
 });
 
 it("renders Personal form", () => {
-  const result = renderer.create(generateComponent({
-    campuses: ["hey"],
-  }));
+  const result = renderer.create(
+    generateComponent({
+      campuses: ["hey"],
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("renders Billing form", () => {
-  const result = renderer.create(generateComponent({
-    give: {
-      data: {
-        personal: {},
-        billing: {},
+  const result = renderer.create(
+    generateComponent({
+      give: {
+        data: {
+          personal: {},
+          billing: {},
+        },
+        state: "SC",
+        step: 2,
       },
-      state: "SC",
-      step: 2,
-    },
-    campuses: ["hey"],
-    states: ["SC","NC"],
-    countries: ["USA","Others"],
-  }));
+      campuses: ["hey"],
+      states: ["SC", "NC"],
+      countries: ["USA", "Others"],
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("renders Payment form", () => {
-  const result = renderer.create(generateComponent({
-    give: {
-      data: {
-        personal: {},
-        payment: {},
+  const result = renderer.create(
+    generateComponent({
+      give: {
+        data: {
+          personal: {},
+          payment: {},
+        },
+        savedAccount: {},
+        schedule: { start: null, frequency: null },
+        state: "default",
+        step: 3,
       },
-      savedAccount: {},
-      schedule: { start: null, frequency: null },
-      state: "default",
-      step: 3,
-    },
-    campuses: ["hey"],
-  }));
+      campuses: ["hey"],
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("renders Confirm form", () => {
-  const result = renderer.create(generateComponent({
-    give: {
-      data: {
-        personal: {},
-        payment: {
-          type: "ach",
+  const result = renderer.create(
+    generateComponent({
+      give: {
+        data: {
+          personal: {},
+          payment: {
+            type: "ach",
+          },
         },
+        savedAccount: {},
+        schedule: { start: null, frequency: null },
+        state: "default",
+        step: 4,
+        transactions: {},
       },
-      savedAccount: {},
-      schedule: { start: null, frequency: null },
-      state: "default",
-      step: 4,
-      transactions: {},
-    },
-    campuses: ["hey"],
-  }));
+      campuses: ["hey"],
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("renders Loading", () => {
-  const result = renderer.create(generateComponent({
-    give: {
-      state: "loading",
-    },
-    campuses: ["hey"],
-  }));
+  const result = renderer.create(
+    generateComponent({
+      give: {
+        state: "loading",
+      },
+      campuses: ["hey"],
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("renders Error", () => {
-  const result = renderer.create(generateComponent({
-    give: {
-      state: "error",
-      errors: { "123": "error" },
-    },
-    campuses: ["hey"],
-  }));
+  const result = renderer.create(
+    generateComponent({
+      give: {
+        state: "error",
+        errors: { "123": "error" },
+      },
+      campuses: ["hey"],
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("renders Success", () => {
-  const result = renderer.create(generateComponent({
-    give: {
-      data: {
-        personal: {
-          email: "test@test.com",
+  const result = renderer.create(
+    generateComponent({
+      give: {
+        data: {
+          personal: {
+            email: "test@test.com",
+          },
         },
+        // schedule: { start: null, frequency: null },
+        state: "success",
+        total: 12,
       },
-      // schedule: { start: null, frequency: null },
-      state: "success",
-      total: 12,
-    },
-    campuses : ["yo"],
-  }));
+      campuses: ["yo"],
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("should show loading state with no campus info", () => {
-  const component = renderer.create(generateComponent({campuses: []}));
+  const component = renderer.create(generateComponent({ campuses: [] }));
   expect(component).toMatchSnapshot();
 });

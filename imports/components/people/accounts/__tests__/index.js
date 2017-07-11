@@ -2,10 +2,7 @@ import { Meteor } from "meteor/meteor";
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 
-import AccountsContainerWithData, {
-  AccountsContainer,
-  Accounts,
-} from "../";
+import AccountsContainerWithData, { AccountsContainer, Accounts } from "../";
 
 jest.mock("../../../../data/store/accounts", () => jest.fn());
 jest.mock("../../../../data/store/modal", () => jest.fn());
@@ -15,7 +12,7 @@ describe("redirect after sign in", () => {
     // make window.location.href writable
     Object.defineProperty(window.location, "href", {
       writable: true,
-      value: "/"
+      value: "/",
     });
     // mock Meteor.user
     Meteor.user = jest.fn();
@@ -32,7 +29,7 @@ describe("redirect after sign in", () => {
         accounts={accountsMock}
         location={locationMock}
         hide={hideMock}
-      />
+      />,
     );
 
     wrapper.setProps({
@@ -56,7 +53,7 @@ describe("redirect after sign in", () => {
         accounts={accountsMock}
         location={locationMock}
         hide={hideMock}
-      />
+      />,
     );
 
     wrapper.setProps({
@@ -81,7 +78,7 @@ describe("redirect after sign in", () => {
         accounts={accountsMock}
         location={locationMock}
         hide={hideMock}
-      />
+      />,
     );
 
     wrapper.setProps({
@@ -95,7 +92,7 @@ describe("redirect after sign in", () => {
   });
 });
 
-const mockAccountsStore = (overrides) => {
+const mockAccountsStore = overrides => {
   const defaults = {
     data: {},
     errors: {},
@@ -115,13 +112,11 @@ const mockAccountsStore = (overrides) => {
   };
 };
 
-const mockLocationStore = (redirect) => (
-  {
-    query: {
-      redirect
-    },
-  }
-);
+const mockLocationStore = redirect => ({
+  query: {
+    redirect,
+  },
+});
 
 describe("Accounts", () => {
   const defaultProps = {
@@ -135,7 +130,7 @@ describe("Accounts", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Accounts { ...newProps } />
+    return <Accounts {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -147,11 +142,13 @@ describe("Accounts", () => {
     const mockSetAccount = jest.fn();
     const mockSave = jest.fn();
     const mockPeopleWithoutAccountEmails = jest.fn();
-    const wrapper = shallow(generateComponent({
-      setAccount: mockSetAccount,
-      save: mockSave,
-      peopleWithoutAccountEmails: mockPeopleWithoutAccountEmails,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        setAccount: mockSetAccount,
+        save: mockSave,
+        peopleWithoutAccountEmails: mockPeopleWithoutAccountEmails,
+      }),
+    );
     const nextProps = {
       data: {
         loading: false,
@@ -164,18 +161,22 @@ describe("Accounts", () => {
     expect(mockSave).toHaveBeenCalledTimes(1);
     expect(mockSave).toHaveBeenCalledWith(nextProps.data.person);
     expect(mockPeopleWithoutAccountEmails).toHaveBeenCalledTimes(1);
-    expect(mockPeopleWithoutAccountEmails).toHaveBeenCalledWith([nextProps.data.person]);
+    expect(mockPeopleWithoutAccountEmails).toHaveBeenCalledWith([
+      nextProps.data.person,
+    ]);
   });
 
   it("does not call all the functions when loading", () => {
     const mockSetAccount = jest.fn();
     const mockSave = jest.fn();
     const mockPeopleWithoutAccountEmails = jest.fn();
-    const wrapper = shallow(generateComponent({
-      setAccount: mockSetAccount,
-      save: mockSave,
-      peopleWithoutAccountEmails: mockPeopleWithoutAccountEmails,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        setAccount: mockSetAccount,
+        save: mockSave,
+        peopleWithoutAccountEmails: mockPeopleWithoutAccountEmails,
+      }),
+    );
     const nextProps = {
       data: {
         loading: true,
@@ -192,11 +193,13 @@ describe("Accounts", () => {
     const mockSetAccount = jest.fn();
     const mockSave = jest.fn();
     const mockPeopleWithoutAccountEmails = jest.fn();
-    const wrapper = shallow(generateComponent({
-      setAccount: mockSetAccount,
-      save: mockSave,
-      peopleWithoutAccountEmails: mockPeopleWithoutAccountEmails,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        setAccount: mockSetAccount,
+        save: mockSave,
+        peopleWithoutAccountEmails: mockPeopleWithoutAccountEmails,
+      }),
+    );
     const nextProps = {
       data: {
         loading: false,

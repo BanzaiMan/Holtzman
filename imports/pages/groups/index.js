@@ -29,9 +29,7 @@ import Finder from "./finder/index";
 // const defaultArray = [];
 // withTransactions
 // @connect()
-const Template = () => (
-  <h1>Lets find some groups!</h1>
-);
+const Template = () => <h1>Lets find some groups!</h1>;
 
 const Routes = [
   { path: "groups", component: Template },

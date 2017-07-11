@@ -21,7 +21,7 @@ const generateComponent = (additionalProps = {}) => {
     ...additionalProps,
   };
   return (
-    <Form { ...newProps }>
+    <Form {...newProps}>
       <h1>test</h1>
     </Form>
   );
@@ -33,15 +33,19 @@ it("renders with props", () => {
 });
 
 it("overrides with theme if theme", () => {
-  const wrapper = shallow(generateComponent({
-    theme: "override",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      theme: "override",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("appends classes if present", () => {
-  const wrapper = shallow(generateComponent({
-    classes: ["append", "me"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      classes: ["append", "me"],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

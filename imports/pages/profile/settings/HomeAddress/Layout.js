@@ -9,9 +9,9 @@ export default class Layout extends Component {
   static propTypes = {
     home: PropTypes.object,
     update: PropTypes.func,
-  }
+  };
 
-  submit = (e) => {
+  submit = e => {
     e.preventDefault();
 
     const data = {};
@@ -27,18 +27,12 @@ export default class Layout extends Component {
     }
 
     this.props.update(data);
-  }
+  };
 
   render() {
     const { home } = this.props;
 
-    const {
-      city,
-      zip,
-      state,
-      street1,
-      street2,
-    } = home;
+    const { city, zip, state, street1, street2 } = home;
 
     return (
       <div
@@ -62,9 +56,7 @@ export default class Layout extends Component {
           submit={this.submit}
         >
           <div className="push-double">
-            <h4 className="text-center">
-              My Home Address
-            </h4>
+            <h4 className="text-center">My Home Address</h4>
           </div>
 
           <Forms.Input
@@ -82,7 +74,6 @@ export default class Layout extends Component {
             defaultValue={street2}
           />
           <div className="grid">
-
             <div className="grid__item two-fifths">
               <Forms.Input
                 name="City"
@@ -93,9 +84,7 @@ export default class Layout extends Component {
             </div>
 
             <div className="grid__item three-fifths">
-
               <div className="grid">
-
                 <div className="grid__item one-half">
                   <Forms.Input
                     name="State"
@@ -103,7 +92,6 @@ export default class Layout extends Component {
                     defaultValue={state}
                     ref="State"
                   />
-
                 </div>
                 <div className="grid__item one-half">
                   <Forms.Input
@@ -126,14 +114,8 @@ export default class Layout extends Component {
               btnClasses.push("btn");
             }
 
-            return (
-              <button className={btnClasses.join(" ")}>
-                Update
-              </button>
-            );
+            return <button className={btnClasses.join(" ")}>Update</button>;
           })()}
-
-
         </Forms.Form>
       </div>
     );

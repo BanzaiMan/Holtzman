@@ -5,7 +5,6 @@
 */
 
 const initial = {
-
   content: {}, // Items to be rendered in section modal
   props: {
     classes: [], // classes to be added to modal
@@ -24,17 +23,18 @@ export default function modal(state = initial, action) {
         },
       };
     case "SECTIONS.SET_CONTENT":
-
       // deep merge
 
       // eslint-disable-next-line
       for (const section in action.content) {
         if (state.content[section]) {
           // eslint-disable-next-line
-          action.content[section] = { ...state.content[section], ...action.content[section] };
+          action.content[section] = {
+            ...state.content[section],
+            ...action.content[section],
+          };
         }
       }
-
 
       return {
         ...state,

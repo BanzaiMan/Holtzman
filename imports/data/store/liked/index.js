@@ -19,8 +19,7 @@ addReducer({
 });
 
 export default {
-  toggle: (props) => ({ type: "LIKED.TOGGLE", props }),
+  toggle: props => ({ type: "LIKED.TOGGLE", props }),
 
-  set: (content) => ({ type: "LIKED.SET", content }),
-
+  set: content => ({ type: "LIKED.SET", content }),
 };

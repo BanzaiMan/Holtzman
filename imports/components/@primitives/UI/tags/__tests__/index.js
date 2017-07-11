@@ -32,7 +32,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Tag { ...newProps } />;
+  return <Tag {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -41,9 +41,11 @@ it("renders with props", () => {
 });
 
 it("renders unclickable version", () => {
-  const wrapper = shallow(generateComponent({
-    clickAble: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      clickAble: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -62,9 +64,11 @@ it("renders cordova active version", () => {
 });
 
 it("works with val", () => {
-  const wrapper = shallow(generateComponent({
-    label: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      label: null,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -74,18 +78,22 @@ it("updates active state on mount if active", () => {
 });
 
 it("doesn't active state on mount if not active", () => {
-  const wrapper = shallow(generateComponent({
-    active: false,
-    canBeActive: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      active: false,
+      canBeActive: false,
+    }),
+  );
   expect(wrapper.state().isActive).toBe(false);
 });
 
 it("updates active state when recieving new props", () => {
-  const wrapper = shallow(generateComponent({
-    active: true,
-    canBeActive: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      active: true,
+      canBeActive: false,
+    }),
+  );
   wrapper.setProps({
     canBeActive: true,
   });
@@ -107,10 +115,12 @@ it("calls stopPropagation on click", () => {
 
 it("doesn't do anything if not clickable", () => {
   const mockOnClick = jest.fn();
-  const wrapper = shallow(generateComponent({
-    clickAble: false,
-    onClick: mockOnClick,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      clickAble: false,
+      onClick: mockOnClick,
+    }),
+  );
   wrapper.instance().onClick();
   expect(wrapper.state().isActive).toBe(true);
   expect(mockOnClick).not.toHaveBeenCalled();
@@ -127,13 +137,15 @@ it("calls onClick prop if available", () => {
   const mockCreatePath = jest.fn();
   const mockReplace = jest.fn();
   const mockOnClick = jest.fn();
-  const wrapper = shallow(generateComponent({
-    onClick: mockOnClick,
-    router: {
-      createPath: mockCreatePath,
-      replace: mockReplace,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      onClick: mockOnClick,
+      router: {
+        createPath: mockCreatePath,
+        replace: mockReplace,
+      },
+    }),
+  );
 
   wrapper.instance().onClick();
 
@@ -145,13 +157,15 @@ it("calls onClick prop if available", () => {
 it("calls router with location and path if no onClick function", () => {
   const mockCreatePath = jest.fn().mockReturnValue("testNewPath");
   const mockReplace = jest.fn();
-  const wrapper = shallow(generateComponent({
-    onClick: null,
-    router: {
-      createPath: mockCreatePath,
-      replace: mockReplace,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      onClick: null,
+      router: {
+        createPath: mockCreatePath,
+        replace: mockReplace,
+      },
+    }),
+  );
 
   wrapper.instance().onClick();
 
@@ -209,10 +223,12 @@ it("isInQueryString return true if query contains urlKey", () => {
 });
 
 it("should not show the icon span if icon shouldn't show", () => {
-  const wrapper = shallow(generateComponent({
-    active: false,
-    canBeActive: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      active: false,
+      canBeActive: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 
   const iconSpan = getSpecWrappers(wrapper, "iconSpan");
@@ -220,11 +236,13 @@ it("should not show the icon span if icon shouldn't show", () => {
 });
 
 it("should show the icon span if iconClass is used", () => {
-  const wrapper = shallow(generateComponent({
-    active: false,
-    canBeActive: false,
-    iconClass: "icon-arrow-up",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      active: false,
+      canBeActive: false,
+      iconClass: "icon-arrow-up",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 
   const iconSpan = getSpecWrappers(wrapper, "iconSpan");

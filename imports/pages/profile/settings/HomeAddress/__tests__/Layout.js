@@ -18,7 +18,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -29,9 +29,11 @@ it("renders with props", () => {
 it("submit calls update with values from inputs", () => {
   const mockPreventDefault = jest.fn();
   const mockUpdate = jest.fn();
-  const wrapper = mount(generateComponent({
-    update: mockUpdate,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      update: mockUpdate,
+    }),
+  );
   wrapper.instance().submit({
     preventDefault: mockPreventDefault,
   });
@@ -43,6 +45,6 @@ it("submit calls update with values from inputs", () => {
     PostalCode: 22222,
     State: "SC",
     Street1: "test street",
-    Street2: "apt. 1"
+    Street2: "apt. 1",
   });
 });

@@ -1,4 +1,3 @@
-
 import collectionColor from "./collections.color";
 
 function collectionClass(contentItem) {

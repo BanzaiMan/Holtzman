@@ -31,21 +31,10 @@ const Layout = ({
   }
 
   if (state === "remind") {
-    return (
-      <Remind
-        onSubmit={onSubmit}
-        back={back}
-      />
-    );
+    return <Remind onSubmit={onSubmit} back={back} />;
   }
 
-  return (
-    <Recover
-      schedules={schedules}
-      hide={hide}
-      onClick={recoverOnClick}
-    />
-  );
+  return <Recover schedules={schedules} hide={hide} onClick={recoverOnClick} />;
 };
 
 export default Layout;

@@ -1,4 +1,3 @@
-
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import { reset, startBuffering } from "aphrodite/lib/inject";
@@ -20,7 +19,7 @@ const generateComponent = (additionalProps = {}) => {
     toggleDatePicker: jest.fn(() => {}),
   };
 
-  return <Date {...defaultProps} {...additionalProps} />
+  return <Date {...defaultProps} {...additionalProps} />;
 };
 
 beforeEach(() => {

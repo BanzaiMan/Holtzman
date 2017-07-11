@@ -23,21 +23,14 @@ function getClasses(mergeClasses) {
   return classes.join(" ");
 }
 
-const Loading = ({ theme, classes, styles, children }) => (
-  <div
-    className={theme || getClasses(classes)}
-    style={getStyles(styles)}
-  >
+const Loading = ({ theme, classes, styles, children }) =>
+  <div className={theme || getClasses(classes)} style={getStyles(styles)}>
     {children}
-  </div>
-);
+  </div>;
 
 Loading.propTypes = {
   theme: PropTypes.string,
-  classes: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.array,
-  ]),
+  classes: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   styles: PropTypes.object, // eslint-disable-line
   children: PropTypes.any, //eslint-disable-line
 };

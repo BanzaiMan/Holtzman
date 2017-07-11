@@ -1,4 +1,3 @@
-
 import accounts from "./accounts";
 import audio from "./audio";
 import give from "./give";
@@ -37,12 +36,9 @@ export {
   sections,
   share,
   topics,
-
   wrapper,
   createReduxStore,
-
   addMiddleware,
-
   addReducer,
   createReducer,
 };

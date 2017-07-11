@@ -11,23 +11,21 @@ const initial = {
 };
 
 export default createReducer(initial, {
-
   "LIKED.TOGGLE": (state, action) => {
     const entryId = action.props.entryId;
     const previousLikes = state.likes;
-    const nextLikes = _.contains(previousLikes, entryId) ?
-      _.without(previousLikes, entryId) :
-      _.union(previousLikes, [entryId]);
+    const nextLikes = _.contains(previousLikes, entryId)
+      ? _.without(previousLikes, entryId)
+      : _.union(previousLikes, [entryId]);
 
-    return { ...state,
+    return {
+      ...state,
       likes: nextLikes,
     };
   },
 
-  "LIKED.SET": (state, action) => (
-    { ...state,
-      likes: action.content,
-    }
-  ),
-
+  "LIKED.SET": (state, action) => ({
+    ...state,
+    likes: action.content,
+  }),
 });

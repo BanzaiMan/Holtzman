@@ -16,7 +16,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <ArticlesContent { ...newProps } />;
+  return <ArticlesContent {...newProps} />;
 };
 
 it("renders without authors", () => {
@@ -25,14 +25,16 @@ it("renders without authors", () => {
 });
 
 it("renders with authors", () => {
-  const result = renderer.create(generateComponent({
-    article: {
-      authors: ["jim", "bob"],
-      title: "test",
-      content: {
-        body: "<h1>test</h1>",
+  const result = renderer.create(
+    generateComponent({
+      article: {
+        authors: ["jim", "bob"],
+        title: "test",
+        content: {
+          body: "<h1>test</h1>",
+        },
       },
-    },
-  }));
+    }),
+  );
   expect(result).toMatchSnapshot();
 });

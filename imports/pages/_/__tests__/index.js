@@ -2,17 +2,12 @@ import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import { print } from "graphql-tag/printer";
 import { GraphQL } from "../../../data/graphql";
-import {
-  Template,
-  CASH_TAG_QUERY,
-  matchAccountToCashTag,
-} from "../";
+import { Template, CASH_TAG_QUERY, matchAccountToCashTag } from "../";
 
-const generateComponent = () => (
+const generateComponent = () =>
   <Template>
     <h1>test</h1>
-  </Template>
-);
+  </Template>;
 
 it("renders with children", () => {
   const wrapper = shallow(generateComponent());
@@ -31,7 +26,7 @@ it("matchAccountToCashTag queries based of url", () => {
   const mockLocation = {
     params: {
       splat: "$test/10",
-    }
+    },
   };
   const mockReplaceState = jest.fn();
   const mockCallback = jest.fn();
@@ -55,7 +50,7 @@ it("matchAccountToCashTag queries based of url", () => {
   expect(mockReplaceState).toHaveBeenCalledTimes(1);
   expect(mockReplaceState).toHaveBeenCalledWith(
     null,
-    "/give/campaign/test?test=10"
+    "/give/campaign/test?test=10",
   );
   expect(mockCallback).toHaveBeenCalledTimes(1);
 });

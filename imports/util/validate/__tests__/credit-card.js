@@ -1,8 +1,4 @@
-import {
-  creditCard,
-  creditExpiry,
-  creditCVV,
-} from "../credit-card";
+import { creditCard, creditExpiry, creditCVV } from "../credit-card";
 
 describe("creditCard", () => {
   it("returns true for Visa, Mastercard, AmEx, and Discover", () => {
@@ -12,7 +8,7 @@ describe("creditCard", () => {
       "3782-8224-6310-005",
       "6011-1111-1111-1117",
     ];
-    cards.map((card) => {
+    cards.map(card => {
       const result = creditCard(card);
       expect(result).toBe(true);
     });

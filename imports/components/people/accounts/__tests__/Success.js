@@ -14,7 +14,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Success { ...newProps } />;
+  return <Success {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -24,10 +24,12 @@ it("renders with props", () => {
 
 // XXX it doesn't actually work without first name
 it("works without nick name", () => {
-  const wrapper = shallow(generateComponent({
-    person: {
-      firstName: "jim",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      person: {
+        firstName: "jim",
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

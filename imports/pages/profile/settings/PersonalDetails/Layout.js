@@ -7,7 +7,6 @@ import Validate from "../../../../util/validate";
 import Back from "../Back";
 
 export default class Layout extends Component {
-
   static propTypes = {
     submit: PropTypes.func.isRequired,
     person: PropTypes.object,
@@ -16,9 +15,9 @@ export default class Layout extends Component {
     days: PropTypes.array.isRequired,
     years: PropTypes.array.isRequired,
     campuses: PropTypes.array,
-  }
+  };
 
-  submit = (e) => {
+  submit = e => {
     e.preventDefault();
 
     const data = {};
@@ -38,7 +37,7 @@ export default class Layout extends Component {
     }
 
     this.props.submit(data);
-  }
+  };
 
   render() {
     const { person, months, saveMonth, days, years, campuses } = this.props;
@@ -76,9 +75,7 @@ export default class Layout extends Component {
           submit={this.submit}
         >
           <div className="push-double">
-            <h4 className="text-center">
-              My Personal Details
-            </h4>
+            <h4 className="text-center">My Personal Details</h4>
           </div>
 
           <h6 className="soft-bottom">Name</h6>
@@ -92,7 +89,6 @@ export default class Layout extends Component {
 
           <div className="grid">
             <div className="grid__item one-half">
-
               <Forms.Input
                 name="FirstName"
                 label="First Name"
@@ -102,7 +98,6 @@ export default class Layout extends Component {
               />
             </div>
             <div className="grid__item one-half">
-
               <Forms.Input
                 name="LastName"
                 label="Last Name"
@@ -112,7 +107,6 @@ export default class Layout extends Component {
               />
             </div>
           </div>
-
 
           <h6 className="soft-bottom">Contact</h6>
           <Forms.Input
@@ -153,9 +147,7 @@ export default class Layout extends Component {
                     items={days}
                   />
                 </div>
-
               </div>
-
             </div>
             <div className="grid__item two-fifths">
               <Forms.Select
@@ -198,11 +190,7 @@ export default class Layout extends Component {
               btnClasses.push("btn");
             }
 
-            return (
-              <button className={btnClasses.join(" ")}>
-                Update
-              </button>
-            );
+            return <button className={btnClasses.join(" ")}>Update</button>;
           })()}
         </Forms.Form>
       </div>

@@ -11,7 +11,7 @@ type ITagGallery = {
   disabledColor: string,
   tags: Object[],
   breakpoints: Array<string>,
-}
+};
 
 class TagGalleryWithoutData extends Component {
   props: ITagGallery;
@@ -24,7 +24,7 @@ class TagGalleryWithoutData extends Component {
     activeLabel: this.props.tags[0].label,
     activeValue: this.props.tags[0].value,
     activeCopy: this.props.tags[0].copy,
-  }
+  };
 
   componentWillMount() {
     this.activeImage(this.props);
@@ -40,13 +40,12 @@ class TagGalleryWithoutData extends Component {
     }
 
     return this.setState({ displayImage: this.state.activeImage1x1 });
-  }
+  };
 
   tagClick = (value: string) => {
     this.setState(() => {
-      const activeButton = this.props.tags.find((item) => (
-        item.value === value
-      )) || {};
+      const activeButton =
+        this.props.tags.find(item => item.value === value) || {};
 
       return {
         displayImage: activeButton.image2x1,
@@ -58,18 +57,20 @@ class TagGalleryWithoutData extends Component {
         activeCopy: activeButton.copy,
       };
     });
-  }
+  };
 
   render() {
     return (
       <div>
         <style>
-          {
-            `#${this.props.id} .tag--clickable:hover { background-color: ${this.props.buttonColor}; }
-            #${this.props.id} .tag--active { background-color: ${this.props.buttonColor}; }
-            #${this.props.id} .tag--disabled { background-color: ${this.props.disabledColor}; }
-            #${this.props.id} .tag--nohover--active { background-color: ${this.props.buttonColor}; }`
-          }
+          {`#${this.props.id} .tag--clickable:hover { background-color: ${this
+            .props.buttonColor}; }
+            #${this.props.id} .tag--active { background-color: ${this.props
+            .buttonColor}; }
+            #${this.props.id} .tag--disabled { background-color: ${this.props
+            .disabledColor}; }
+            #${this.props.id} .tag--nohover--active { background-color: ${this
+            .props.buttonColor}; }`}
         </style>
         <TagSelect
           items={this.props.tags}
@@ -79,10 +80,20 @@ class TagGalleryWithoutData extends Component {
         />
         <div className="one-whole three-fourths@lap-and-up text-center display-inline-block soft-ends">
           <div className="ratio--landscape@lap-and-up ratio--square soft@handheld one-whole constrain-copy">
-            <div className="ratio__item floating one-whole rounded" style={{ background: `linear-gradient(${this.props.overlay}, ${this.props.overlay}), url('${this.state.displayImage}') center 20%` }}>
+            <div
+              className="ratio__item floating one-whole rounded"
+              style={{
+                background: `linear-gradient(${this.props.overlay}, ${this.props
+                  .overlay}), url('${this.state.displayImage}') center 20%`,
+              }}
+            >
               <div className="floating__item one-half@lap-and-up text-light-primary one-whole soft">
-                <h1 className="" style={{ fontWeight: "900" }}>{this.state.activeLabel}</h1>
-                <h3 className="flush">{this.state.activeCopy}</h3>
+                <h1 className="" style={{ fontWeight: "900" }}>
+                  {this.state.activeLabel}
+                </h1>
+                <h3 className="flush">
+                  {this.state.activeCopy}
+                </h3>
               </div>
             </div>
           </div>
@@ -92,13 +103,11 @@ class TagGalleryWithoutData extends Component {
   }
 }
 
-const map = (store) => ({
+const map = store => ({
   breakpoints: store.responsive.breakpoints,
 });
 
 const TagGallery = connect(map)(TagGalleryWithoutData);
 export default TagGallery;
 
-export {
-  TagGalleryWithoutData,
-};
+export { TagGalleryWithoutData };

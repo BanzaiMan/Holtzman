@@ -18,7 +18,7 @@ describe("Header", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Header { ...newProps } />;
+    return <Header {...newProps} />;
   };
 
   it("renders default if no override", () => {
@@ -27,9 +27,11 @@ describe("Header", () => {
   });
 
   it("renders override if override", () => {
-    const result = renderer.create(generateComponent({
-      override: <span>override</span>,
-    }));
+    const result = renderer.create(
+      generateComponent({
+        override: <span>override</span>,
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
@@ -49,7 +51,7 @@ describe("NextButton", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <NextButton { ...newProps } />;
+    return <NextButton {...newProps} />;
   };
 
   it("renders enabled styles if everything present", () => {
@@ -58,35 +60,41 @@ describe("NextButton", () => {
   });
 
   it("renders disabled styles if no email", () => {
-    const result = renderer.create(generateComponent({
-      personal: {
-        email: null,
-        firstName: "Jim",
-        campusId: "2",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        personal: {
+          email: null,
+          firstName: "Jim",
+          campusId: "2",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 
   it("renders disabled styles if no firstName", () => {
-    const result = renderer.create(generateComponent({
-      personal: {
-        email: "test@test.com",
-        firstName: null,
-        campusId: "2",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        personal: {
+          email: "test@test.com",
+          firstName: null,
+          campusId: "2",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 
   it("renders disabled styles if no campusId", () => {
-    const result = renderer.create(generateComponent({
-      personal: {
-        email: "test@test.com",
-        firstName: "Jim",
-        campusId: null,
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        personal: {
+          email: "test@test.com",
+          firstName: "Jim",
+          campusId: null,
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
@@ -113,7 +121,7 @@ describe("Layout", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Layout { ...newProps } />;
+    return <Layout {...newProps} />;
   };
 
   it("renders with props", () => {

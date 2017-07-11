@@ -2,36 +2,32 @@
 
 import { Success as SuccessIcon } from "../../../../components/@primitives/UI/icons";
 
-const CONTACT_MESSAGE_1 = "If you have any questions please call our Finance Team at 864-965-9990 or";
+const CONTACT_MESSAGE_1 =
+  "If you have any questions please call our Finance Team at 864-965-9990 or";
 const CONTACT_MESSAGE_2 = "and someone will be happy to assist you.";
 
-export const ContactLink = () => (
+export const ContactLink = () =>
   <a
     target="_blank"
     rel="noopener noreferrer"
     href="//rock.newspring.cc/workflows/152?Topic=Stewardship"
   >
     contact us
-  </a>
-);
+  </a>;
 
-export const ContactUs = () => (
+export const ContactUs = () =>
   <p className="test-dark-tertiary text-left">
     <em>
       {CONTACT_MESSAGE_1} <ContactLink /> {CONTACT_MESSAGE_2}
     </em>
-  </p>
-);
+  </p>;
 
 type ISuccess = {
   type: string,
   onClick?: Function,
 };
 
-export default ({
-  onClick,
-  type,
-}: ISuccess) => (
+export default ({ onClick, type }: ISuccess) =>
   <div className="soft soft-double-ends push-double-top@anchored one-whole text-center">
     <div className="push-double-top">
       <SuccessIcon />
@@ -46,5 +42,4 @@ export default ({
 
       <ContactUs />
     </div>
-  </div>
-);
+  </div>;

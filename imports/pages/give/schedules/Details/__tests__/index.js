@@ -48,7 +48,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Details { ...newProps } />;
+  return <Details {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -57,36 +57,42 @@ it("renders with props", () => {
 });
 
 it("renders without transaction", () => {
-  const wrapper = shallow(generateComponent({
-    data: {
-      loading: false,
-      transaction: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        loading: false,
+        transaction: null,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders when complete", () => {
-  const wrapper = shallow(generateComponent({
-    data: {
-      loading: false,
-      transaction: {
-        next: "2012-12-12",
-        schedule: {
-          value: "One-Time",
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        loading: false,
+        transaction: {
+          next: "2012-12-12",
+          schedule: {
+            value: "One-Time",
+          },
         },
       },
-    },
-  }));
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("adjusts nav level on mount", () => {
   const mockDispatch = jest.fn();
   navActions.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledWith("BASIC_CONTENT");
@@ -95,9 +101,11 @@ it("adjusts nav level on mount", () => {
 it("adjusts nav level on unmount", () => {
   const mockDispatch = jest.fn();
   navActions.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.unmount();
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(navActions.setLevel).toHaveBeenCalledTimes(2);
@@ -107,9 +115,11 @@ it("adjusts nav level on unmount", () => {
 it("adjusts state on unmount if removed", () => {
   const mockDispatch = jest.fn();
   giveActions.deleteSchedule = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.setState({ removed: true });
   wrapper.unmount();
 
@@ -123,10 +133,12 @@ it("stop renders the modal with Confirm", () => {
   const mockCancel = jest.fn();
   modalActions.render = jest.fn();
 
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    cancel: mockCancel
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      cancel: mockCancel,
+    }),
+  );
 
   wrapper.instance().stop({
     preventDefault: mockPreventDefault,

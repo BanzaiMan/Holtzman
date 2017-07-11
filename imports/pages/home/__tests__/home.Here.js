@@ -17,7 +17,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <HomeHero { ...newProps } />;
+  return <HomeHero {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -26,8 +26,10 @@ it("renders with props", () => {
 });
 
 it("renders unready version", () => {
-  const wrapper = shallow(generateComponent({
-    item: {},
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      item: {},
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

@@ -41,7 +41,11 @@ export const YTDMetrics = ({ data, linkUrl }: IYTDMetrics) => {
           axisStyles={styles.axisStyles}
         />
       </div>
-      <YTDTotal amount={data.total.toFixed(2)} className="text-left text-light-primary" baseHeadingSize="1" />
+      <YTDTotal
+        amount={data.total.toFixed(2)}
+        className="text-left text-light-primary"
+        baseHeadingSize="1"
+      />
       <div className="text-left">
         <Link to={linkUrl} className="text-left">
           <h6 className="soft-top display-inline-block text-light-primary">

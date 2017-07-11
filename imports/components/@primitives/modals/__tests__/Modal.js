@@ -28,7 +28,7 @@ const generateComponent = (additionalClasses = {}) => {
     ...defaultProps,
     ...additionalClasses,
   };
-  return <SideModal { ...newProps } />;
+  return <SideModal {...newProps} />;
 };
 
 beforeEach(() => {
@@ -46,23 +46,29 @@ it("renders with props", () => {
 });
 
 it("does not render if not visible", () => {
-  const wrapper = shallow(generateComponent({
-    visible: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      visible: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("does not render if no component", () => {
-  const wrapper = shallow(generateComponent({
-    component: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      component: null,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("overrides with theme", () => {
-  const wrapper = shallow(generateComponent({
-    theme: "mytheme",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      theme: "mytheme",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -113,11 +119,13 @@ it("getContainerStyle returns non mini style", () => {
 });
 
 it("getContainerStyle returns mini style", () => {
-  const wrapper = shallow(generateComponent({
-    props: {
-      coverMiniPlayer: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      props: {
+        coverMiniPlayer: true,
+      },
+    }),
+  );
   expect(wrapper.instance().getContainerStyle()).toEqual({
     zIndex: 102,
     position: "fixed",
@@ -130,16 +138,20 @@ it("childClasses returns default", () => {
 });
 
 it("childClasses appends additional childClasses", () => {
-  const wrapper = shallow(generateComponent({
-    childClasses: ["one", "two"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      childClasses: ["one", "two"],
+    }),
+  );
   expect(wrapper.instance().childClasses()).toMatchSnapshot();
 });
 
 it("childClasses adjusts for float", () => {
-  const wrapper = shallow(generateComponent({
-    float: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      float: true,
+    }),
+  );
   expect(wrapper.instance().childClasses()).toMatchSnapshot();
 });
 
@@ -149,58 +161,70 @@ it("layoutClasses returns default", () => {
 });
 
 it("layoutClasses appends additional classes", () => {
-  const wrapper = shallow(generateComponent({
-    modal: {
-      props: {
-        classes: ["one", "two"],
+  const wrapper = shallow(
+    generateComponent({
+      modal: {
+        props: {
+          classes: ["one", "two"],
+        },
       },
-    },
-  }));
+    }),
+  );
   expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
 });
 
 it("layoutClasses has dark version", () => {
-  const wrapper = shallow(generateComponent({
-    modal: {
-      props: {
-        modalBackground: "dark",
+  const wrapper = shallow(
+    generateComponent({
+      modal: {
+        props: {
+          modalBackground: "dark",
+        },
       },
-    },
-  }));
+    }),
+  );
   expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
 });
 
 it("layoutClasses appends layout overrides", () => {
-  const wrapper = shallow(generateComponent({
-    modal: {
-      props: {
-        layoutOverride: "three four",
+  const wrapper = shallow(
+    generateComponent({
+      modal: {
+        props: {
+          layoutOverride: "three four",
+        },
       },
-    },
-  }));
+    }),
+  );
   expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
 });
 
 it("layoutClasses handles float", () => {
-  const wrapper = shallow(generateComponent({
-    float: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      float: true,
+    }),
+  );
   expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
 });
 
 it("layoutClasses handles offset", () => {
-  const wrapper = shallow(generateComponent({
-    offset: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      offset: true,
+    }),
+  );
   expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
 });
 
 it("styles returns styles if styles", () => {
-  const wrapper = shallow(generateComponent({
-    styles: {
-      color: "red",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      styles: {
+        color: "red",
+      },
+    }),
+  );
   expect(wrapper.instance().styles()).toMatchSnapshot();
 });
 

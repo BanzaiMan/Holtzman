@@ -1,4 +1,3 @@
-
 const progress = (state, action) => {
   if (!action.step && !action.increment) return state;
 
@@ -11,20 +10,20 @@ const progress = (state, action) => {
       return state;
     }
 
-    return { ...state,
+    return {
+      ...state,
       ...{
         step: state.step + action.increment,
       },
     };
   }
 
-
-  return { ...state,
+  return {
+    ...state,
     ...{
       step: action.step,
     },
   };
 };
-
 
 export default progress;

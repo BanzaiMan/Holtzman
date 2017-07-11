@@ -22,9 +22,7 @@ const defaultProps = {
       content: {
         isLight: false,
         description: "<h1>test</h1>",
-        colors: [
-          { description: "primary", value: "0000ff" },
-        ],
+        colors: [{ description: "primary", value: "0000ff" }],
         images: [
           {
             fileLabel: "1:1",
@@ -46,7 +44,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SeriesSingle { ...newProps } />;
+  return <SeriesSingle {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -55,11 +53,13 @@ it("renders with props", () => {
 });
 
 it("renders loading", () => {
-  const wrapper = shallow(generateComponent({
-    series: {
-      content: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      series: {
+        content: null,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -70,9 +70,11 @@ it("parses query", () => {
 it("handleHeaderStyle updates the header", () => {
   const mockDispatch = jest.fn();
   headerActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().handleHeaderStyle(defaultProps);
   // once on mount
   expect(headerActions.set).toHaveBeenCalledTimes(2);

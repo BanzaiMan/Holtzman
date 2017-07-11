@@ -1,11 +1,7 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
-import {
-  modal as modalActions,
-} from "../../../../data/store";
-import {
-  NavContainerWithoutData as NavContainer,
-} from "../";
+import { modal as modalActions } from "../../../../data/store";
+import { NavContainerWithoutData as NavContainer } from "../";
 
 jest.mock("../Link", () => jest.fn());
 
@@ -24,7 +20,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <NavContainer { ...newProps } />;
+  return <NavContainer {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -33,19 +29,23 @@ it("renders with props", () => {
 });
 
 it("does not render if not visible", () => {
-  const wrapper = shallow(generateComponent({
-    state: {
-      visible: false,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      state: {
+        visible: false,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("handleAction calls action passed", () => {
   const mockDispatch = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   const mockAction = jest.fn();
   wrapper.instance().handleAction(mockAction);
   expect(mockDispatch).toHaveBeenCalledTimes(1);
@@ -55,9 +55,11 @@ it("handleAction calls action passed", () => {
 it("reset hides the modal", () => {
   modalActions.hide = jest.fn();
   const mockDispatch = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().reset();
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(modalActions.hide).toHaveBeenCalledTimes(1);

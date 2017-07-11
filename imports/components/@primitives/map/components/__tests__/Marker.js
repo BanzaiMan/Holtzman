@@ -13,7 +13,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Marker { ...newProps } />;
+  return <Marker {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -22,22 +22,28 @@ it("renders with props", () => {
 });
 
 it("renders $hover version", () => {
-  const wrapper = shallow(generateComponent({
-    $hover: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      $hover: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders hover version", () => {
-  const wrapper = shallow(generateComponent({
-    hover: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      hover: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders active version", () => {
-  const wrapper = shallow(generateComponent({
-    active: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      active: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

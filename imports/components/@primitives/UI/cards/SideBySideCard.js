@@ -7,15 +7,11 @@ import { ImageLoader } from "../../UI/loading";
 import Styles from "../../UI/loading/FeedItemSkeleton-css";
 
 export default class Card extends Component {
-
   static propTypes = {
     classes: PropTypes.array, // eslint-disable-line
     theme: PropTypes.string,
     link: PropTypes.string,
-    itemClasses: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-    ]),
+    itemClasses: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     images: PropTypes.array, // eslint-disable-line
     styles: PropTypes.object, // eslint-disable-line
     ratio: PropTypes.string,
@@ -23,12 +19,15 @@ export default class Card extends Component {
     itemTheme: PropTypes.string,
     itemStyles: PropTypes.object, // eslint-disable-line
     children: PropTypes.any, //eslint-disable-line
-  }
+  };
 
   // context from ImageLoader
-  preloader() { // eslint-disable-line
+  preloader() {
+    // eslint-disable-line
     return (
-      <div className={`${this.imageclasses.join(" ")} ${css(Styles["load-item"])}`}>
+      <div
+        className={`${this.imageclasses.join(" ")} ${css(Styles["load-item"])}`}
+      >
         <div className="ratio__item" />
       </div>
     );
@@ -61,19 +60,17 @@ export default class Card extends Component {
     }
 
     return classes.join(" ");
-  }
+  };
 
   cardClasses = () => {
-    let classes = [
-      "card",
-    ];
+    let classes = ["card"];
 
     if (this.props.classes) {
       classes = classes.concat(this.props.classes);
     }
 
     return classes.join(" ");
-  }
+  };
 
   styles = () => {
     const defaultStyles = {
@@ -85,7 +82,7 @@ export default class Card extends Component {
     // }
 
     return defaultStyles;
-  }
+  };
 
   getResponsiveImage = () => {
     const { images } = this.props;
@@ -115,7 +112,7 @@ export default class Card extends Component {
     }
 
     return src;
-  }
+  };
 
   createImage = () => {
     let { ratio } = this.props;
@@ -148,12 +145,10 @@ export default class Card extends Component {
         style={style}
       />
     );
-  }
-
+  };
 
   render() {
     const { link, theme, styles, itemTheme, itemStyles } = this.props;
-
 
     const wrapperClasses = [
       "relative@lap",
@@ -170,7 +165,6 @@ export default class Card extends Component {
       "one-half@anchored",
     ].join(" ");
 
-
     if (link) {
       return (
         <div
@@ -180,13 +174,9 @@ export default class Card extends Component {
           <Link className={wrapperClasses} to={link}>
             {this.createImage()}
           </Link>
-          <div
-            className={itemTheme || this.itemClasses()}
-            style={itemStyles}
-          >
+          <div className={itemTheme || this.itemClasses()} style={itemStyles}>
             {this.props.children}
           </div>
-
         </div>
       );
     }
@@ -199,16 +189,10 @@ export default class Card extends Component {
         <div className={wrapperClasses}>
           {this.createImage()}
         </div>
-        <div
-          className={itemTheme || this.itemClasses()}
-          style={itemStyles}
-        >
+        <div className={itemTheme || this.itemClasses()} style={itemStyles}>
           {this.props.children}
         </div>
-
       </div>
-
     );
   }
-
 }

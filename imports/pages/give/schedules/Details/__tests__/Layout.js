@@ -10,8 +10,8 @@ const defaultProps = {
       {
         amount: 2,
         account: {
-          name: "test account"
-        }
+          name: "test account",
+        },
       },
     ],
     payment: {
@@ -57,9 +57,7 @@ const defaultProps = {
         urlTitle: "test-summary",
       },
       content: {
-        images: [
-          { url: "http://test.com/test.jpg" },
-        ],
+        images: [{ url: "http://test.com/test.jpg" }],
       },
     },
     {
@@ -70,9 +68,7 @@ const defaultProps = {
         urlTitle: "test-summary",
       },
       content: {
-        images: [
-          { url: "http://test.com/test.jpg" },
-        ],
+        images: [{ url: "http://test.com/test.jpg" }],
       },
     },
   ],
@@ -84,7 +80,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -93,16 +89,20 @@ it("renders with props", () => {
 });
 
 it("renders loading if no schedule", () => {
-  const wrapper = shallow(generateComponent({
-    schedule: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      schedule: null,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders loading if not ready", () => {
-  const wrapper = shallow(generateComponent({
-    ready: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ready: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -121,23 +121,29 @@ it("works with credit card", () => {
 });
 
 it("renders complete message", () => {
-  const wrapper = shallow(generateComponent({
-    complete: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      complete: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders stopped message", () => {
-  const wrapper = shallow(generateComponent({
-    active: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      active: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders without schedule", () => {
-  const wrapper = shallow(generateComponent({
-    schedule: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      schedule: null,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -149,9 +155,11 @@ it("renders no contributions message", () => {
 });
 
 it("renders loading if no entries", () => {
-  const wrapper = shallow(generateComponent({
-    loadingEntries: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      loadingEntries: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 

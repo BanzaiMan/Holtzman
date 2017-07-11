@@ -26,7 +26,7 @@ describe("ScheduleOverview", () => {
         latest="2017-02-02"
         onEditClick={jest.fn()}
         onDetailClick={jest.fn()}
-      />
+      />,
     );
     expect(tree).toMatchSnapshot();
   });
@@ -42,7 +42,7 @@ describe("ScheduleOverview", () => {
         latest="2017-02-02"
         onEditClick={jest.fn()}
         onDetailClick={jest.fn()}
-      />
+      />,
     );
     expect(tree).toMatchSnapshot();
   });
@@ -57,8 +57,8 @@ describe("ScheduleOverview", () => {
         started="2017-02-01"
         onEditClick={jest.fn()}
         onDetailClick={jest.fn()}
-      />
-    )
+      />,
+    );
 
     expect(tree).toMatchSnapshot();
   });
@@ -73,8 +73,8 @@ describe("ScheduleOverview", () => {
         started="2017-02-01"
         onEditClick={jest.fn()}
         onDetailClick={jest.fn()}
-      />
-    )
+      />,
+    );
 
     expect(tree).toMatchSnapshot();
   });
@@ -89,8 +89,8 @@ describe("ScheduleOverview", () => {
         started="2017-02-01"
         onEditClick={jest.fn()}
         onDetailClick={jest.fn()}
-      />
-    )
+      />,
+    );
 
     expect(tree).toMatchSnapshot();
   });
@@ -105,8 +105,8 @@ describe("ScheduleOverview", () => {
         started="2017-02-01"
         onEditClick={jest.fn()}
         onDetailClick={jest.fn()}
-      />
-    )
+      />,
+    );
 
     expect(tree).toMatchSnapshot();
   });
@@ -120,8 +120,8 @@ describe("ScheduleOverview", () => {
         started="2017-02-01"
         onEditClick={jest.fn()}
         onDetailClick={jest.fn()}
-      />
-    )
+      />,
+    );
 
     expect(tree).toMatchSnapshot();
   });

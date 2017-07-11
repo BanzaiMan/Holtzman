@@ -12,12 +12,11 @@ import {
 } from "../../../../data/store";
 
 class AudioPlayerWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func,
     audio: PropTypes.object, // eslint-disable-line
     modal: PropTypes.object, // eslint-disable-line
-  }
+  };
 
   componentWillMount() {
     // XXX currently unused
@@ -57,10 +56,12 @@ class AudioPlayerWithoutData extends Component {
     const modalClosing = modalVis && !modalNextVis;
 
     const triggerModal = () => {
-      this.props.dispatch(modalActions.render(FullPlayer, {
-        coverHeader: true,
-        audioPlayer: true,
-      }));
+      this.props.dispatch(
+        modalActions.render(FullPlayer, {
+          coverHeader: true,
+          audioPlayer: true,
+        }),
+      );
 
       // if phone, change to down arrow and make nav transparent
       if (window.isPhone) {
@@ -94,7 +95,7 @@ class AudioPlayerWithoutData extends Component {
     const { file } = track;
 
     const show = ["dock", "fade"];
-    return (show.indexOf(visibility) >= 0 && file);
+    return show.indexOf(visibility) >= 0 && file;
   };
 
   render() {
@@ -117,6 +118,4 @@ const withRedux = connect(map);
 
 export default withRedux(AudioPlayerWithoutData);
 
-export {
-  AudioPlayerWithoutData,
-};
+export { AudioPlayerWithoutData };

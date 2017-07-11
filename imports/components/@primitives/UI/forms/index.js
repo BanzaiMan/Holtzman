@@ -1,4 +1,3 @@
-
 import Checkbox from "./Checkbox";
 import Input from "./Input";
 import Select from "./Select";
@@ -7,7 +6,6 @@ import Fieldset from "./Fieldset";
 import Date from "./Date";
 import TextArea from "./TextArea";
 import Label from "./Label";
-
 
 export default {
   Checkbox,
@@ -20,13 +18,4 @@ export default {
   TextArea,
 };
 
-export {
-  Checkbox,
-  Input,
-  Select,
-  Form,
-  Fieldset,
-  Label,
-  Date,
-  TextArea,
-};
+export { Checkbox, Input, Select, Form, Fieldset, Label, Date, TextArea };

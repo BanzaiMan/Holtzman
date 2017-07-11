@@ -70,7 +70,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -79,9 +79,11 @@ it("renders with props", () => {
 });
 
 it("renders leader version", () => {
-  const wrapper = shallow(generateComponent({
-    isLeader: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      isLeader: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 

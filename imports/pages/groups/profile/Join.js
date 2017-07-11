@@ -2,7 +2,10 @@
 import { Component } from "react";
 
 import Forms from "../../../components/@primitives/UI/forms";
-import { Error as Err, Loading } from "../../../components/@primitives/UI/states";
+import {
+  Error as Err,
+  Loading,
+} from "../../../components/@primitives/UI/states";
 
 type IShowTextArea = {
   phonesLoading: boolean,
@@ -10,7 +13,7 @@ type IShowTextArea = {
   show: boolean,
   onChange: Function,
   validatePhoneNumber: Function,
-}
+};
 
 export const ShowPhoneTextArea = (props: IShowTextArea) => {
   if (props.phonesLoading) return null;
@@ -38,10 +41,9 @@ type IJoin = {
   onChange: Function,
   validatePhoneNumber: Function,
   onCommunicationPreferenceChange: Function,
-}
+};
 
 export default class Join extends Component {
-
   props: IJoin;
 
   state = {
@@ -53,7 +55,7 @@ export default class Join extends Component {
   onClick = (e: Event) => {
     this.setState({ state: "loading" });
 
-    this.props.onClick(e, (err) => {
+    this.props.onClick(e, err => {
       if (err) {
         this.setState({ state: "error", err: err.message });
         return setTimeout(() => {
@@ -63,7 +65,7 @@ export default class Join extends Component {
       this.setState({ state: "success" });
       return null;
     });
-  }
+  };
 
   showPhoneBox = (value: string) => {
     let shouldShowPhoneBox = false;
@@ -72,12 +74,16 @@ export default class Join extends Component {
     }
     this.setState({ showPhoneBox: shouldShowPhoneBox });
     this.props.onCommunicationPreferenceChange(value);
-  }
+  };
 
   render() {
     const { group, onExit } = this.props;
-    const leaders = group.members.filter((x) => (x.role.toLowerCase() === "leader"));
-    const firstNames = leaders.map((x) => (x.person.nickName || x.person.firstName)).join(", ");
+    const leaders = group.members.filter(
+      x => x.role.toLowerCase() === "leader",
+    );
+    const firstNames = leaders
+      .map(x => x.person.nickName || x.person.firstName)
+      .join(", ");
     const communicationPreferences = [
       { label: "No Preference", value: "No Preference" },
       { label: "Email", value: "Email" },
@@ -85,24 +91,31 @@ export default class Join extends Component {
       { label: "Text", value: "Text" },
     ];
 
-    const message = `\nHey ${firstNames},\n\nI'm interested in learning more about your group and ` +
+    const message =
+      `\nHey ${firstNames},\n\nI'm interested in learning more about your group and ` +
       "looking forward to hearing from you soon!\n\nThanks!";
     switch (this.state.state) {
       case "loading":
         return <Loading msg="We're sending your message!" />;
       case "error":
-        return <Err msg="There was a problem sending your message" error={this.state.err} />;
+        return (
+          <Err
+            msg="There was a problem sending your message"
+            error={this.state.err}
+          />
+        );
       case "success":
         return (
           <div className="soft soft-double-ends one-whole text-center">
-            <h4 className="text-center push-ends">
-              Message Sent!
-            </h4>
+            <h4 className="text-center push-ends">Message Sent!</h4>
             <p>
-              We have sent your request for more information
-              about {group.name} to the group leaders!
+              We have sent your request for more information about {group.name}{" "}
+              to the group leaders!
             </p>
-            <button className="btn--thin btn--small btn--dark-tertiary one-whole" onClick={onExit}>
+            <button
+              className="btn--thin btn--small btn--dark-tertiary one-whole"
+              onClick={onExit}
+            >
               Close
             </button>
           </div>
@@ -143,12 +156,16 @@ export default class Join extends Component {
               </div>
               <div className="grid">
                 <div className="grid__item one-half">
-                  <button data-spec="cancel" className="btn--thin btn--small btn--dark-tertiary one-whole" onClick={onExit}>
+                  <button
+                    data-spec="cancel"
+                    className="btn--thin btn--small btn--dark-tertiary one-whole"
+                    onClick={onExit}
+                  >
                     Cancel
                   </button>
                 </div>
                 <div className="grid__item one-half">
-                  <button type="submit" className="one-whole btn" >
+                  <button type="submit" className="one-whole btn">
                     Send
                   </button>
                 </div>

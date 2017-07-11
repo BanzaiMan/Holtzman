@@ -15,7 +15,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <ChangePassword { ...newProps } />;
+  return <ChangePassword {...newProps} />;
 };
 
 it("renders Layout by default", () => {

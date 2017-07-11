@@ -2,9 +2,8 @@ import { Meteor } from "meteor/meteor";
 import renderer from "react-test-renderer";
 import PrimaryButton, { buttonClasses } from "../Primary";
 
-const generateComponent = (additionalProps={}) => (
-  <PrimaryButton { ...additionalProps } />
-);
+const generateComponent = (additionalProps = {}) =>
+  <PrimaryButton {...additionalProps} />;
 
 beforeEach(() => {
   Meteor.userId = jest.fn();
@@ -17,58 +16,70 @@ describe("PrimaryButton", () => {
   });
 
   it("overrides classes with theme if theme", () => {
-    const tree = renderer.create(generateComponent({
-      theme: "my cool theme",
-    }));
+    const tree = renderer.create(
+      generateComponent({
+        theme: "my cool theme",
+      }),
+    );
     expect(tree).toMatchSnapshot();
   });
 
   it("passes the onClick function", () => {
-    const tree = renderer.create(generateComponent({
-      onClick: () => {},
-    }));
+    const tree = renderer.create(
+      generateComponent({
+        onClick: () => {},
+      }),
+    );
     expect(tree).toMatchSnapshot();
   });
 
-  it("calls onClick when clicked", () => {
-
-  });
+  it("calls onClick when clicked", () => {});
 
   it("has enabled styles when enabled", () => {
-    const tree = renderer.create(generateComponent({
-      disabled: false,
-    }));
+    const tree = renderer.create(
+      generateComponent({
+        disabled: false,
+      }),
+    );
     expect(tree).toMatchSnapshot();
   });
 
   it("has default styles when disabled but not logged in", () => {
-    const tree = renderer.create(generateComponent({
-      disabled: true,
-    }));
+    const tree = renderer.create(
+      generateComponent({
+        disabled: true,
+      }),
+    );
     expect(tree).toMatchSnapshot();
   });
 
   it("has disabled style when disabled and logged in", () => {
     Meteor.userId = jest.fn(() => "test");
-    const tree = renderer.create(generateComponent({
-      disabled: true,
-    }));
+    const tree = renderer.create(
+      generateComponent({
+        disabled: true,
+      }),
+    );
     expect(tree).toMatchSnapshot();
   });
 
   it("passes a value", () => {
-    const tree = renderer.create(generateComponent({
-      value: "test",
-    }));
+    const tree = renderer.create(
+      generateComponent({
+        value: "test",
+      }),
+    );
     expect(tree).toMatchSnapshot();
   });
 
   it("passes a style object", () => {
-    const tree = renderer.create(generateComponent({
-      style: {
-        background: "red",
-      },
-    }));
+    const tree = renderer.create(
+      generateComponent({
+        style: {
+          background: "red",
+        },
+      }),
+    );
     expect(tree).toMatchSnapshot();
   });
 });

@@ -1,4 +1,3 @@
-
 /*
 
   Audio player state management
@@ -45,12 +44,10 @@ const initial = {
       file: null, // String (url)
       artist: null, // String
     },
-
   },
 };
 
 export default createReducer(initial, {
-
   [types.SET_VISIBILITY](state, action) {
     const visibility = action.visibility.trim();
     const visiblityTypes = ["default", "fade", "hide", "dock", "expand"];
@@ -102,7 +99,13 @@ export default createReducer(initial, {
   [types.SET_STATE](state, action) {
     const playerState = action.state.trim();
     const playerStateTypes = [
-      "default", "playing", "paused", "ready", "loading", "next", "previous",
+      "default",
+      "playing",
+      "paused",
+      "ready",
+      "loading",
+      "next",
+      "previous",
     ];
 
     if (playerStateTypes.indexOf(playerState) === -1) {
@@ -128,7 +131,7 @@ export default createReducer(initial, {
       }
     }
 
-    if ((number < 0) || (number > 100)) {
+    if (number < 0 || number > 100) {
       return state;
     }
 
@@ -152,7 +155,7 @@ export default createReducer(initial, {
       }
     }
 
-    if ((number < 0) || (number > 100)) {
+    if (number < 0 || number > 100) {
       return state;
     }
 
@@ -166,7 +169,7 @@ export default createReducer(initial, {
   },
 
   [types.SET_PLAYLIST](state, action) {
-    const playlist = action.playlist.map((x) => {
+    const playlist = action.playlist.map(x => {
       const { title, duration, file } = x;
       return { title, duration, file };
     });
@@ -188,8 +191,7 @@ export default createReducer(initial, {
           ...action.playing,
         },
         state: action.state || state.state,
-        visibility: state.visibility === "hide" ?
-        "dock" : state.visibility,
+        visibility: state.visibility === "hide" ? "dock" : state.visibility,
       },
     };
   },
@@ -197,5 +199,4 @@ export default createReducer(initial, {
   [types.RESET_ALL]() {
     return initial;
   },
-
 });

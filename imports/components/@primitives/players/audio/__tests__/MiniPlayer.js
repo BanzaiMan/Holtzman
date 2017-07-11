@@ -43,7 +43,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <MiniPlayer { ...newProps } />;
+  return <MiniPlayer {...newProps} />;
 };
 
 beforeEach(() => {
@@ -68,9 +68,11 @@ it("works without fileLabel", () => {
 });
 
 it("overrides with theme", () => {
-  const wrapper = shallow(generateComponent({
-    theme: "override",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      theme: "override",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -122,9 +124,11 @@ it("layoutClasses returns default classes by default", () => {
 });
 
 it("layoutClasses appends classes from props", () => {
-  const wrapper = shallow(generateComponent({
-    classes: ["one", "two"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      classes: ["one", "two"],
+    }),
+  );
   expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
 });
 
@@ -164,9 +168,11 @@ it("toggle stops event and starts play if not playing", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   const mockPlay = jest.fn();
-  const wrapper = shallow(generateComponent({
-    play: mockPlay,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      play: mockPlay,
+    }),
+  );
   wrapper.instance().toggle({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -182,10 +188,12 @@ it("toggle stops event and pauses if playing", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   const mockPause = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    pause: mockPause,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      pause: mockPause,
+    }),
+  );
   wrapper.instance().toggle({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -200,11 +208,13 @@ it("startHideTimer eventually pauses hides and resets the player", () => {
   const mockPause = jest.fn();
   const mockHide = jest.fn();
   const mockReset = jest.fn();
-  const wrapper = shallow(generateComponent({
-    pause: mockPause,
-    hide: mockHide,
-    reset: mockReset,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      pause: mockPause,
+      hide: mockHide,
+      reset: mockReset,
+    }),
+  );
   expect(wrapper.instance().timeout).toBeFalsy();
   wrapper.instance().startHideTimer();
   expect(wrapper.instance().timeout).toBeTruthy();
@@ -231,9 +241,11 @@ it("removeHideTimer prevents player from eventually being killed", () => {
 it("openFullPlayer sets audio visiblity to expand", () => {
   const mockDispatch = jest.fn();
   audioActions.setVisibility = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().openFullPlayer();
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(audioActions.setVisibility).toHaveBeenCalledTimes(1);
@@ -242,9 +254,7 @@ it("openFullPlayer sets audio visiblity to expand", () => {
 
 it("touchStart updates state from event", () => {
   const mockEvent = {
-    touches: [
-      { clientX: 2 },
-    ],
+    touches: [{ clientX: 2 }],
   };
   const wrapper = shallow(generateComponent());
   wrapper.setState({ transition: true });
@@ -254,13 +264,11 @@ it("touchStart updates state from event", () => {
 });
 
 it("touchMove updates state from event", () => {
-  const mockEvent ={
+  const mockEvent = {
     currentTarget: {
       offsetWidth: 100,
     },
-    touches: [
-      { clientX: 2 },
-    ],
+    touches: [{ clientX: 2 }],
   };
   const wrapper = shallow(generateComponent());
   wrapper.instance().touchMove(mockEvent);
@@ -280,11 +288,13 @@ it("touchEnd pauses and eventually fades, hides, and resets if > decider", () =>
   const mockPause = jest.fn();
   const mockHide = jest.fn();
   const mockReset = jest.fn();
-  const wrapper = shallow(generateComponent({
-    pause: mockPause,
-    hide: mockHide,
-    reset: mockReset,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      pause: mockPause,
+      hide: mockHide,
+      reset: mockReset,
+    }),
+  );
   wrapper.setState({ lastPercent: 26 });
   wrapper.instance().touchEnd();
   expect(wrapper.state().lastPercent).toBe(100);

@@ -23,18 +23,15 @@ const mockData = {
       { month: "November", amount: 0, tick: "N" },
       { month: "December", amount: 0, tick: "D" },
     ],
-  }
+  },
 };
 
 describe("FundBreakdown", () => {
-
   it("should render properly with data.", () => {
     const tree = renderer.create(
-      <FundBreakdown
-        data={mockData.givingSummary}
-      />
+      <FundBreakdown data={mockData.givingSummary} />,
     );
 
     expect(tree).toMatchSnapshot();
   });
-})
+});

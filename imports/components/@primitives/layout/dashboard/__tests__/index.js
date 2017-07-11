@@ -4,7 +4,6 @@ import { Dashboard } from "../";
 import Activity from "../../../../giving/cards/ActivityCard";
 
 describe("Dashboard", () => {
-
   const defaultProps = {
     title: "Your Giving",
     subNav: [
@@ -30,9 +29,7 @@ describe("Dashboard", () => {
   };
 
   const generateComponent = (additionalProps = {}) => {
-    return (
-      <Dashboard {...defaultProps} {...additionalProps} />
-    );
+    return <Dashboard {...defaultProps} {...additionalProps} />;
   };
 
   it("should render with the default set of props", () => {
@@ -50,7 +47,7 @@ describe("Dashboard", () => {
           linkText="You KNOW You Want To Click This"
           linkUrl="https://my.newspring.cc"
         />
-      </Dashboard>
+      </Dashboard>,
     );
     expect(shallowToJson(component)).toMatchSnapshot();
   });

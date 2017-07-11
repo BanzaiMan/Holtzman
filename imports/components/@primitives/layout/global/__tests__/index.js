@@ -48,7 +48,7 @@ global.FCMPlugin = {
   onTokenRefresh: jest.fn(),
 };
 
- beforeEach(() => {
+beforeEach(() => {
   reset();
   startBuffering();
 });
@@ -58,9 +58,7 @@ afterEach(() => {
 });
 
 describe("Watermark", () => {
-  const generateComponent = () => (
-    <Watermark />
-  );
+  const generateComponent = () => <Watermark />;
 
   it("renders", () => {
     const wrapper = shallow(generateComponent());
@@ -81,7 +79,7 @@ describe("App", () => {
     };
 
     return (
-      <App { ...newProps }>
+      <App {...newProps}>
         <h1>test</h1>
       </App>
     );
@@ -93,17 +91,17 @@ describe("App", () => {
   });
 
   it("renders header when native", () => {
-    const wrapper = shallow(generateComponent({
-      native: true,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        native: true,
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
 
 describe("Blank", () => {
-  const generateComponent = () => (
-    <Blank />
-  );
+  const generateComponent = () => <Blank />;
 
   it("is blank", () => {
     const wrapper = shallow(generateComponent());
@@ -124,7 +122,7 @@ describe("GlobalData", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <GlobalData { ...newProps } />;
+    return <GlobalData {...newProps} />;
   };
 
   it("sets Raven user context if no user", () => {
@@ -141,9 +139,7 @@ describe("GlobalData", () => {
     };
     Meteor.userId = jest.fn(() => 1);
     Meteor.user = jest.fn(() => ({
-      emails: [
-        { address: "test@gmail.com" },
-      ],
+      emails: [{ address: "test@gmail.com" }],
     }));
     const wrapper = shallow(generateComponent());
     expect(global.Raven.setUserContext).toHaveBeenCalledTimes(1);
@@ -172,9 +168,7 @@ describe("GlobalData", () => {
   it("calls Fabric when user with email and userId", () => {
     Meteor.userId = jest.fn(() => 2);
     Meteor.user = jest.fn(() => ({
-      emails: [
-        { address: "test@gmail.com" },
-      ],
+      emails: [{ address: "test@gmail.com" }],
     }));
     const mockSetUserEmail = jest.fn();
     const mockSetUserIdentifier = jest.fn();
@@ -203,18 +197,18 @@ describe("GlobalData", () => {
     const mockResetStore = jest.fn();
     Meteor.userId = jest.fn(() => 2);
     Meteor.user = jest.fn(() => ({
-      emails: [
-        { address: "test@gmail.com" },
-      ],
+      emails: [{ address: "test@gmail.com" }],
     }));
     const wrapper = shallow(generateComponent());
     Meteor.userId = jest.fn(() => false);
     Meteor.user = jest.fn(() => false);
-    const wrapper2 = shallow(generateComponent({
-      client: {
-        resetStore: mockResetStore,
-      },
-    }));
+    const wrapper2 = shallow(
+      generateComponent({
+        client: {
+          resetStore: mockResetStore,
+        },
+      }),
+    );
     expect(accountsActions.authorize).toHaveBeenCalledTimes(2);
     expect(accountsActions.authorize).toHaveBeenCalledWith(false);
     expect(accountsActions.signout).toHaveBeenCalledTimes(1);
@@ -227,7 +221,7 @@ describe("GlobalData", () => {
     Meteor.user = jest.fn(() => ({
       topics: [{}, {}],
     }));
-    
+
     topicActions.set = jest.fn();
     const wrapper = shallow(generateComponent());
 
@@ -242,22 +236,20 @@ describe("GlobalWithoutData", () => {
   const defaultProps = {
     dispatch: jest.fn(),
     client: {
-      query: jest.fn().mockReturnValue(
-        new Promise(p => p({ data: {} }))
-      ),
+      query: jest.fn().mockReturnValue(new Promise(p => p({ data: {} }))),
     },
   };
 
   afterEach(() => {
-      defaultProps.client.query.mockClear();
-  })
+    defaultProps.client.query.mockClear();
+  });
 
   const generateComponent = (additionalProps = {}) => {
     const newProps = {
       ...defaultProps,
       ...additionalProps,
     };
-    return <GlobalWithoutData { ...newProps } />;
+    return <GlobalWithoutData {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -273,7 +265,10 @@ describe("GlobalWithoutData", () => {
     document.addEventListener = jest.fn();
     const wrapper = shallow(generateComponent());
     expect(document.addEventListener).toHaveBeenCalledTimes(2);
-    expect(document.addEventListener).toHaveBeenCalledWith("click", linkListener);
+    expect(document.addEventListener).toHaveBeenCalledWith(
+      "click",
+      linkListener,
+    );
     expect(document.addEventListener.mock.calls.length).toBe(2);
     expect(document.addEventListener.mock.calls[0]).toMatchSnapshot();
     expect(document.addEventListener.mock.calls[0][0]).toBe("click");
@@ -298,7 +293,7 @@ describe("GlobalWithoutData", () => {
     Meteor.isCordova = true;
     let eventData = {
       path: "/groups/finder",
-    }
+    };
     const isQueryRoute = jest.fn();
     const wrapper = shallow(generateComponent());
     expect(wrapper.state().universalLinkLoading).toBe(false);
@@ -341,9 +336,8 @@ describe("GlobalWithoutData", () => {
         childChannel: "",
         childUrl: "",
         hasChild: "",
-      }
+      },
     });
-
   });
 
   it("tests the /sermons/forsc route", () => {
@@ -362,7 +356,7 @@ describe("GlobalWithoutData", () => {
         childChannel: "",
         childUrl: "",
         hasChild: "",
-      }
+      },
     });
   });
 
@@ -382,7 +376,7 @@ describe("GlobalWithoutData", () => {
         childChannel: "sermons",
         childUrl: "growing-people-change1",
         hasChild: "forsc",
-      }
+      },
     });
   });
 

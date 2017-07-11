@@ -12,10 +12,11 @@ import Offline from "../";
 const story = storiesOf("Status", module)
   .addDecorator(withKnobs)
   .addDecorator(centered)
-  .addDecorator(backgrounds(defaultColors("light-primary", "light-secondary")))
-  ;
+  .addDecorator(backgrounds(defaultColors("light-primary", "light-secondary")));
 
-story
-  .add("Offline", withReadme(Readme,
-    () => <Offline link={text("Link", "hello@newspring.cc")} />
-  ));
+story.add(
+  "Offline",
+  withReadme(Readme, () =>
+    <Offline link={text("Link", "hello@newspring.cc")} />,
+  ),
+);

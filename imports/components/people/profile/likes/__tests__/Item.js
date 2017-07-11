@@ -25,7 +25,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <LikesItem { ...newProps } />;
+  return <LikesItem {...newProps} />;
 };
 
 beforeEach(() => {
@@ -53,9 +53,11 @@ it("containerClasses returns non native version", () => {
 });
 
 it("containerClasses returns native version", () => {
-  const wrapper = shallow(generateComponent({
-    native: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      native: true,
+    }),
+  );
   expect(wrapper.instance().containerClasses()).toMatchSnapshot();
 });
 

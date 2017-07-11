@@ -18,7 +18,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <BankFields { ...newProps } />;
+  return <BankFields {...newProps} />;
 };
 
 beforeEach(() => {
@@ -36,11 +36,13 @@ it("should render with props", () => {
 });
 
 it("should not render if not ach type", () => {
-  const result = renderer.create(generateComponent({
-    payment: {
-      type: "card",
-      cardNumber: "123456789",
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      payment: {
+        type: "card",
+        cardNumber: "123456789",
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });

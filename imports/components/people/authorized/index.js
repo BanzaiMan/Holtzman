@@ -6,26 +6,27 @@ import { accounts as accountsActions, modal } from "../../../data/store";
 import { routeActions } from "../../../data/store/routing";
 import OnBoard from "../accounts";
 
-const map = (state) => ({
+const map = state => ({
   auth: state.accounts.authorized,
   modal: state.modal,
   previous: state.routing.location.previous,
 });
 @connect(map)
 export default class Authorized extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func,
     auth: PropTypes.bool,
     modal: PropTypes.object,
     children: PropTypes.object,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(modal.update({ modalBackground: "light" }));
     const authorized = Meteor.userId();
     if (!authorized) {
-      this.props.dispatch(modal.render(OnBoard, { coverHeader: true, forceOpen: true }));
+      this.props.dispatch(
+        modal.render(OnBoard, { coverHeader: true, forceOpen: true }),
+      );
     }
 
     // fail safe if for some reason we are logged in but not authorized in
@@ -37,7 +38,11 @@ export default class Authorized extends Component {
 
   componentWillReceiveProps(nextProps) {
     // if the modal is closing, but the user is not authorized
-    if (this.props.modal.visible && !nextProps.modal.visible && !nextProps.auth) {
+    if (
+      this.props.modal.visible &&
+      !nextProps.modal.visible &&
+      !nextProps.auth
+    ) {
       // use last route instead of goBack() to force update of active nav item
       // handle case where a protected route is the first page visited
       const protectedRegEx = /^\/profile|\/give\/history|\/give\/home/gi;
@@ -48,17 +53,18 @@ export default class Authorized extends Component {
     }
 
     if (this.props.auth && !nextProps.auth) {
-      this.props.dispatch(modal.render(OnBoard, {
-        coverHeader: true,
-        forceOpen: true,
-      }));
+      this.props.dispatch(
+        modal.render(OnBoard, {
+          coverHeader: true,
+          forceOpen: true,
+        }),
+      );
     }
 
     // if (!this.props.auth && nextProps.auth) {
     //   this.props.dispatch(modal.hide())
     // }
   }
-
 
   render() {
     if (Meteor.userId()) {

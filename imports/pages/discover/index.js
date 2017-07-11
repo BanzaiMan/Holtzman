@@ -8,11 +8,10 @@ import Discover from "../../components/discover";
 import styles from "../../components/@primitives/nav/offset-css";
 
 class DiscoverWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     audio: PropTypes.object.isRequired,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(liveActions.hide());
@@ -22,11 +21,9 @@ class DiscoverWithoutData extends Component {
     this.props.dispatch(liveActions.show());
   }
 
-  containerStyles = () => (
-    {
-      paddingBottom: this.props.audio.state === "default" ? "10px" : "50px",
-    }
-  )
+  containerStyles = () => ({
+    paddingBottom: this.props.audio.state === "default" ? "10px" : "50px",
+  });
 
   render() {
     return (
@@ -50,7 +47,7 @@ class DiscoverWithoutData extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({ audio: state.audio });
+const mapStateToProps = state => ({ audio: state.audio });
 const Template = connect(mapStateToProps)(DiscoverWithoutData);
 
 const Routes = [
@@ -64,6 +61,4 @@ export default {
   Routes,
 };
 
-export {
-  DiscoverWithoutData,
-};
+export { DiscoverWithoutData };

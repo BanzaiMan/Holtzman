@@ -20,15 +20,14 @@ describe("CardSlider", () => {
     return (
       <CardSlider>
         {defaultProps.cardData.map(({ count, label }, key) => {
-          return <MetricCard count={count} label={label} key={key} />
+          return <MetricCard count={count} label={label} key={key} />;
         })}
       </CardSlider>
-    )
+    );
   };
 
   it("should render with default props", () => {
     const wrapper = shallow(generateComponent());
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
-
 });

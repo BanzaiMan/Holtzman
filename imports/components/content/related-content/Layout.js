@@ -35,35 +35,31 @@ type ILayout = {
   loading: boolean,
 };
 
-const Layout = ({
-  title,
-  content,
-  loading,
-}: ILayout) => (
+const Layout = ({ title, content, loading }: ILayout) =>
   <section className="soft-half-sides@palm soft-double@palm-wide soft-top soft-half-bottom background--light-secondary">
     <div className="one-whole text-center">
-      <h5 className="flush soft-bottom">{title}</h5>
+      <h5 className="flush soft-bottom">
+        {title}
+      </h5>
     </div>
     <LoadingContent loading={loading} />
     <div>
-      {content && content.map((c, key) => (
-        <div
-          key={key}
-          className="soft-half-bottom@palm-wide"
-          style={{
-            maxWidth: "480px",
-            margin: "0 auto",
-          }}
-        >
-          <MiniCard {...cardPropsReducer(c)} />
-        </div>
-      ))}
+      {content &&
+        content.map((c, key) =>
+          <div
+            key={key}
+            className="soft-half-bottom@palm-wide"
+            style={{
+              maxWidth: "480px",
+              margin: "0 auto",
+            }}
+          >
+            <MiniCard {...cardPropsReducer(c)} />
+          </div>,
+        )}
     </div>
-  </section>
-);
+  </section>;
 
 export default Layout;
 
-export {
-  LoadingContent,
-};
+export { LoadingContent };

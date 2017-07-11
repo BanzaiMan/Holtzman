@@ -28,7 +28,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Filter { ...newProps } />;
+  return <Filter {...newProps} />;
 };
 
 document.getElementById = jest.fn().mockReturnValue({
@@ -41,34 +41,42 @@ it("renders with props", () => {
 });
 
 it("renders without tags", () => {
-  const wrapper = shallow(generateComponent({
-    attributes: {
-      tags: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      attributes: {
+        tags: null,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders without campuses", () => {
-  const wrapper = shallow(generateComponent({
-    campusLocations: {
-      campuses: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      campusLocations: {
+        campuses: null,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("hides tags when false", () => {
-  const wrapper = shallow(generateComponent({
-    showTags: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      showTags: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("hides search when false", () => {
-  const wrapper = shallow(generateComponent({
-    showSearch: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      showSearch: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -103,11 +111,13 @@ it("findByQuery sets query state to null", () => {
 
 it("findByQuery updates router with location", () => {
   const mockPush = jest.fn();
-  const wrapper = shallow(generateComponent({
-    router: {
-      push: mockPush,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      router: {
+        push: mockPush,
+      },
+    }),
+  );
   wrapper.instance().findByQuery();
   expect(mockPush).toHaveBeenCalledTimes(1);
   expect(mockPush).toHaveBeenCalledWith({
@@ -119,11 +129,13 @@ it("findByQuery updates router with location", () => {
 
 it("findByQuery updates router with location from state", () => {
   const mockPush = jest.fn();
-  const wrapper = shallow(generateComponent({
-    router: {
-      push: mockPush,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      router: {
+        push: mockPush,
+      },
+    }),
+  );
   wrapper.setState({ query: "thing" });
   wrapper.instance().findByQuery();
   expect(mockPush).toHaveBeenCalledTimes(1);
@@ -136,12 +148,14 @@ it("findByQuery updates router with location from state", () => {
 
 it("findByQuery updates router with blank object if no location query", () => {
   const mockPush = jest.fn();
-  const wrapper = shallow(generateComponent({
-    location: {},
-    router: {
-      push: mockPush,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      location: {},
+      router: {
+        push: mockPush,
+      },
+    }),
+  );
   wrapper.instance().findByQuery();
   expect(mockPush).toHaveBeenCalledTimes(1);
   expect(mockPush).toHaveBeenCalledWith({
@@ -160,9 +174,11 @@ it("removeQuery calls preventDefault", () => {
 
 it("removeQuery calls toggleSearch", () => {
   const mockToggleSearch = jest.fn();
-  const wrapper = shallow(generateComponent({
-    toggleSearch: mockToggleSearch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      toggleSearch: mockToggleSearch,
+    }),
+  );
   wrapper.instance().removeQuery();
   expect(mockToggleSearch).toHaveBeenCalledTimes(1);
 });
@@ -176,11 +192,13 @@ it("removeQuery set state to null", () => {
 
 it("removeQuery updates router with blank object", () => {
   const mockPush = jest.fn();
-  const wrapper = shallow(generateComponent({
-    router: {
-      push: mockPush,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      router: {
+        push: mockPush,
+      },
+    }),
+  );
   wrapper.instance().removeQuery();
   expect(mockPush).toHaveBeenCalledTimes(1);
   expect(mockPush).toHaveBeenCalledWith({

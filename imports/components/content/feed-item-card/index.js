@@ -8,10 +8,10 @@ import content from "../../../util/content";
 import collections from "../../../util/collections";
 import categories from "../../../util/categories";
 
-const isCollectionChild = (channelName) =>
+const isCollectionChild = channelName =>
   channelName === "sermons" || channelName === "study_entries";
 
-const isCollectionParent = (channelName) =>
+const isCollectionParent = channelName =>
   channelName === "series_newspring" || channelName === "studies";
 
 const getImage = (item: Object) => {
@@ -30,13 +30,15 @@ const isCollectionItem = (item: Object): boolean => {
 const isLight = (item: Object): boolean => {
   if (!isCollectionItem(item)) return true;
   const { channelName } = item;
-  if (isCollectionChild(channelName) && item.parent) return item.parent.content.isLight;
+  if (isCollectionChild(channelName) && item.parent)
+    return item.parent.content.isLight;
   return item.content.isLight;
 };
 
 const overlayStyles = (item: Object): string => {
   const { channelName } = item;
-  if (isCollectionChild(channelName) && item.parent) return styles.overlay(item.parent);
+  if (isCollectionChild(channelName) && item.parent)
+    return styles.overlay(item.parent);
   return styles.overlay(item);
 };
 
@@ -53,7 +55,13 @@ const cardClasses = (item: Object): string[] => {
 };
 
 const itemTheme = (item: Object): string => {
-  const classes = ["card__item", "soft", "text-center", "soft-bottom", "rounded-bottom"];
+  const classes = [
+    "card__item",
+    "soft",
+    "text-center",
+    "soft-bottom",
+    "rounded-bottom",
+  ];
 
   if (isCollectionItem(item)) {
     classes.push("overlay__item", "outlined--none", "soft-half-top");
@@ -64,22 +72,25 @@ const itemTheme = (item: Object): string => {
 };
 
 const h4Classes = (item: Object): string =>
-  [!isLight(item) ? "text-light-primary" : "text-dark-primary", "capitalize"].join(" ");
+  [
+    !isLight(item) ? "text-light-primary" : "text-dark-primary",
+    "capitalize",
+  ].join(" ");
 
 const categoryClasses = (item: Object): string =>
   !isLight(item) ? "text-light-primary" : "text-dark-secondary";
 
 const likeClasses = (item: Object, isLiked): string => {
   const classes = ["text-right", "float-right", "flush-bottom", "icon-like"];
-  if (!isLight(item)) {		
+  if (!isLight(item)) {
     classes.push("text-light-primary");
-  } else {		
+  } else {
     classes.push("text-dark-secondary");
   }
 
-  if (isLiked) classes.push("icon-like-solid");	
+  if (isLiked) classes.push("icon-like-solid");
 
-  return classes.join(" ");		
+  return classes.join(" ");
 };
 
 const iconClasses = (item: Object): string => {
@@ -121,7 +132,8 @@ const itemStyles = (item: Object): Object => {
   }
 
   if (!collection) return {};
-  const color = collection.content.colors[0] && collection.content.colors[0].value;
+  const color =
+    collection.content.colors[0] && collection.content.colors[0].value;
   if (!color) return {};
 
   return {
@@ -132,7 +144,7 @@ const itemStyles = (item: Object): Object => {
 type IFeedItem = {
   item: {
     entryId: string,
-    title: string
+    title: string,
   },
   isLiked: boolean,
   toggleLike: () => void,
@@ -166,33 +178,43 @@ export const FeedItem = ({
   disableLike,
   onClick,
   link,
-}: IFeedItem) => (
+}: IFeedItem) =>
   <Card
     link={link || content.links(item)}
     onClick={onClick}
     classes={cardClasses(item)}
     imageclasses={["rounded-top"]}
-    image={{ url: getImage(item), ratio: "square", full: isCollectionItem(item) }}
+    image={{
+      url: getImage(item),
+      ratio: "square",
+      full: isCollectionItem(item),
+    }}
     itemTheme={itemTheme(item)}
     wrapperClasses={wrapperClasses(item)}
     itemStyles={itemStyles(item)}
     linkAll
   >
-    <style>{overlayStyles(item)}</style>
+    <style>
+      {overlayStyles(item)}
+    </style>
 
     <div className="text-left">
-      <h4 className={h4Classes(item)}>{item.title}</h4>
+      <h4 className={h4Classes(item)}>
+        {item.title}
+      </h4>
       <i className={iconClasses(item)} />
-      <h7 className={categoryClasses(item)}>{categories.name(item)}</h7>
-      {!disableLike && (
+      <h7 className={categoryClasses(item)}>
+        {categories.name(item)}
+      </h7>
+      {!disableLike &&
         <h7
           onClick={stopClick(toggleLike)}
           style={likeStyles}
           className={likeClasses(item, isLiked)}
-        />
-      )}
+        />}
     </div>
-  </Card>
-);
+  </Card>;
 
-export default canLike(({ item: { entryId } }: IFeedItem) => entryId, false)(FeedItem);
+export default canLike(({ item: { entryId } }: IFeedItem) => entryId, false)(
+  FeedItem,
+);

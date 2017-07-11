@@ -16,7 +16,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Spinner { ...newProps } />;
+  return <Spinner {...newProps} />;
 };
 
 beforeEach(() => {
@@ -34,16 +34,20 @@ it("renders with props", () => {
 });
 
 it("overrides with theme", () => {
-  const wrapper = shallow(generateComponent({
-    theme: "my theme",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      theme: "my theme",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("appends classes", () => {
-  const wrapper = shallow(generateComponent({
-    classes: "one two",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      classes: "one two",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 

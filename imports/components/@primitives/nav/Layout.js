@@ -5,7 +5,6 @@ import NavLink from "./Link";
 import styles from "./nav-css";
 
 export default class NavLayout extends React.Component {
-
   static propTypes = {
     classes: PropTypes.string,
     bgColor: PropTypes.string,
@@ -17,7 +16,7 @@ export default class NavLayout extends React.Component {
     modal: PropTypes.object,
     handleAction: PropTypes.func,
     liked: PropTypes.object,
-  }
+  };
 
   layoutClasses = () => {
     let classes = [
@@ -31,7 +30,6 @@ export default class NavLayout extends React.Component {
       "hard-sides@palm-wide-and-up",
       "soft-half-top@palm-wide-and-up",
     ];
-
 
     if (this.props.classes) {
       classes = classes.concat(this.props.classes);
@@ -47,7 +45,7 @@ export default class NavLayout extends React.Component {
     }
 
     return classes.join(" ");
-  }
+  };
 
   isLiked = () => {
     if (typeof window !== "undefined" && window != null) {
@@ -57,7 +55,7 @@ export default class NavLayout extends React.Component {
     }
 
     return false;
-  }
+  };
 
   render() {
     const { handleAction, reset, path } = this.props;
@@ -68,7 +66,7 @@ export default class NavLayout extends React.Component {
           backgroundColor: this.props.bgColor,
         }}
       >
-        {this.props.links.map((item, i) => (
+        {this.props.links.map((item, i) =>
           <NavLink
             navItem={item}
             key={i}
@@ -78,8 +76,8 @@ export default class NavLayout extends React.Component {
             liked={this.isLiked()}
             path={path}
             fgColor={this.props.fgColor}
-          />
-        ))}
+          />,
+        )}
       </section>
     );
   }

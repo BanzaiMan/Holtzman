@@ -17,11 +17,10 @@ import { nav as navActions } from "../../data/store";
 import Single from "./Single";
 
 class TemplateWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(navActions.setLevel("TOP"));
@@ -31,33 +30,28 @@ class TemplateWithoutData extends Component {
   }
 
   handleRefresh = (resolve, reject) => {
-    this.props.data.refetch()
-      .then(resolve)
-      .catch(reject);
-  }
+    this.props.data.refetch().then(resolve).catch(reject);
+  };
 
   renderItems = () => {
     const { content } = this.props.data;
     let items = [1, 2, 3, 4, 5];
     if (content) items = content;
-    return (
-      items.map((item, i) => (
-        <div
-          className={
-            "grid__item one-half@palm-wide one-third@portable one-quarter@anchored " +
-            "flush-bottom@handheld push-bottom@portable push-bottom@anchored"
-          }
-          key={i}
-        >
-          {(() => {
-            if (typeof item === "number") return <FeedItemSkeleton />;
-            return <FeedItem item={item} />;
-          })()}
-        </div>
-      ))
+    return items.map((item, i) =>
+      <div
+        className={
+          "grid__item one-half@palm-wide one-third@portable one-quarter@anchored " +
+          "flush-bottom@handheld push-bottom@portable push-bottom@anchored"
+        }
+        key={i}
+      >
+        {(() => {
+          if (typeof item === "number") return <FeedItemSkeleton />;
+          return <FeedItem item={item} />;
+        })()}
+      </div>,
     );
-  }
-
+  };
 
   render() {
     return (
@@ -104,7 +98,7 @@ const STORIES_QUERY = gql`
 `;
 
 const withNews = graphql(STORIES_QUERY, {
-  options: (state) => ({
+  options: state => ({
     variables: {
       limit: state.paging.pageSize * state.paging.page,
       skip: state.paging.skip,
@@ -112,16 +106,14 @@ const withNews = graphql(STORIES_QUERY, {
   }),
 });
 
-const mapStateToProps = (state) => ({ paging: state.paging });
+const mapStateToProps = state => ({ paging: state.paging });
 
 const Template = connect(mapStateToProps)(
   withNews(
     ReactMixin.decorate(Pageable)(
-      ReactMixin.decorate(Headerable)(
-        TemplateWithoutData
-      )
-    )
-  )
+      ReactMixin.decorate(Headerable)(TemplateWithoutData),
+    ),
+  ),
 );
 
 const Routes = [
@@ -134,7 +126,4 @@ export default {
   Routes,
 };
 
-export {
-  TemplateWithoutData,
-  STORIES_QUERY,
-};
+export { TemplateWithoutData, STORIES_QUERY };

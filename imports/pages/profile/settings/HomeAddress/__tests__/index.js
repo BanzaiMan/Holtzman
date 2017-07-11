@@ -1,12 +1,7 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
-import {
-  nav,
-} from "../../../../../data/store";
-import {
-  HomeAddressWithoutData as HomeAddress,
-  PERSON_HOME_QUERY,
-} from "../";
+import { nav } from "../../../../../data/store";
+import { HomeAddressWithoutData as HomeAddress, PERSON_HOME_QUERY } from "../";
 
 jest.mock("../../../../../deprecated/methods/accounts/browser", () => ({
   updateHome: jest.fn(),
@@ -32,7 +27,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <HomeAddress { ...newProps } />;
+  return <HomeAddress {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -41,13 +36,15 @@ it("renders with props", () => {
 });
 
 it("renders without person home", () => {
-  const wrapper = shallow(generateComponent({
-    data: {
-      person: {
-        home: null,
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        person: {
+          home: null,
+        },
       },
-    },
-  }));
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -76,9 +73,11 @@ it("parses query", () => {
 it("updates nav on mount", () => {
   const mockDispatch = jest.fn();
   nav.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(nav.setLevel).toHaveBeenCalledTimes(1);
   expect(nav.setLevel).toHaveBeenCalledWith("BASIC_CONTENT");
@@ -87,9 +86,11 @@ it("updates nav on mount", () => {
 it("updates nav on unmount", () => {
   const mockDispatch = jest.fn();
   nav.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.unmount();
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(nav.setLevel).toHaveBeenCalledTimes(2);

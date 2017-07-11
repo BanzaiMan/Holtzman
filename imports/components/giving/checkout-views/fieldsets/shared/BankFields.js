@@ -7,11 +7,7 @@ type IBankFields = {
   validate: Function,
 };
 
-const BankFields = ({
-  payment,
-  saveData,
-  validate,
-}: IBankFields) => {
+const BankFields = ({ payment, saveData, validate }: IBankFields) => {
   if (payment.type !== "ach") return null;
   return (
     <div>
@@ -38,9 +34,7 @@ const BankFields = ({
         validation={validate}
       />
 
-
       <div className="grid">
-
         <div className="grid__item one-whole">
           <Forms.Select
             name="billing-account-type"

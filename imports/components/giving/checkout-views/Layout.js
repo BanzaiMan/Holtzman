@@ -66,9 +66,16 @@ const Layout = ({
     switch (state) {
       case "loading":
         copiedSchedules = { ...schedule };
-        return <Loading isSchedule={copiedSchedules.start} isSavedPayment={transactionType === "savedPayment"} />;
+        return (
+          <Loading
+            isSchedule={copiedSchedules.start}
+            isSavedPayment={transactionType === "savedPayment"}
+          />
+        );
       case "error":
-        return <Err msg={errors[Object.keys(errors)[0]]} goToStepOne={goToStepOne} />;
+        return (
+          <Err msg={errors[Object.keys(errors)[0]]} goToStepOne={goToStepOne} />
+        );
       case "success":
         return (
           <Success
@@ -124,10 +131,7 @@ const Layout = ({
         transactionType={transactionType}
         url={url}
       >
-        <Progress
-          steps={FORM_STEPS.length}
-          active={step}
-        />
+        <Progress steps={FORM_STEPS.length} active={step} />
       </Step>
     </Forms.Form>
   );

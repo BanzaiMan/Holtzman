@@ -8,12 +8,12 @@ import { Meteor } from "meteor/meteor";
 
 const addMediaListeners = () => {
   if (!Meteor.isCordova) return;
-  document.addEventListener("deviceready", (event) => {
-    Media.prototype.timeupdate = function (callback) {
+  document.addEventListener("deviceready", event => {
+    Media.prototype.timeupdate = function(callback) {
       return setInterval(() => {
-        this.getCurrentPosition((position) => {
+        this.getCurrentPosition(position => {
           if (position > -1) {
-              // Convert position to minutes and seconds
+            // Convert position to minutes and seconds
             const mins = Math.floor(position / 60);
             const seconds = (position % 60).toFixed(0);
 
@@ -29,7 +29,7 @@ const addMediaListeners = () => {
       this.endedCallbacks.push(callback);
     };
 
-    Media.prototype.playPause = function () {
+    Media.prototype.playPause = function() {
       if (this.isPlaying) {
         this.pause();
         this.isPlaying = false;
@@ -45,22 +45,18 @@ const addMediaListeners = () => {
 addMediaListeners();
 
 class Audio {
-
   constructor(src, success, error, status) {
     try {
       this._audio5 = new Audio5({
         ready(player) {
           this.load(src);
         },
-
       });
     } catch (e) {
       console.error(e);
     }
 
-
     this._audio5.on("canplay", success);
-
 
     this._audio5.on("timeupdate", () => {
       this.position = this._audio5.position;
@@ -70,42 +66,63 @@ class Audio {
     this.duration = this._audio5.duration;
   }
 
-  getCurrentPosition = () => { this._audio5.position; }
+  getCurrentPosition = () => {
+    this._audio5.position;
+  };
 
-  timeupdate = (callback) => {
+  timeupdate = callback => {
     this._audio5.on("timeupdate", () => {
       callback(this.position);
     });
+  };
+
+  getDuration = () => {
+    this._audio5.duration;
+  };
+
+  play = () => {
+    this._audio5.play();
+  };
+
+  pause = () => {
+    this._audio5.pause();
+  };
+  playPause = () => {
+    this._audio5.playPause();
+  };
+
+  // native only
+  release() {
+    return;
   }
 
-  getDuration = () => { this._audio5.duration; }
+  seekTo = pos => {
+    this._audio5.seek(pos / 1000);
+  };
 
-  play = () => { this._audio5.play(); }
+  setVolume = vol => {
+    this._audio5.volume(vol);
+  };
 
-  pause = () => { this._audio5.pause(); }
-  playPause = () => { this._audio5.playPause(); }
-
-    // native only
-  release() { return; }
-
-
-  seekTo = (pos) => { this._audio5.seek(pos / 1000); }
-
-  setVolume = (vol) => { this._audio5.volume(vol); }
-
-  startRecord() { return; }
-  stopRecord() { return; }
-
-  stop = () => { this._audio5.pause(); }
-  release = () => { this._audio5.destroy(); }
-
-  ended = (callback) => { this._audio5.on("ended", callback); }
-
+  startRecord() {
+    return;
+  }
+  stopRecord() {
+    return;
   }
 
-export {
-  Audio,
-  addMediaListeners,
-};
+  stop = () => {
+    this._audio5.pause();
+  };
+  release = () => {
+    this._audio5.destroy();
+  };
+
+  ended = callback => {
+    this._audio5.on("ended", callback);
+  };
+}
+
+export { Audio, addMediaListeners };
 
 export default Audio;

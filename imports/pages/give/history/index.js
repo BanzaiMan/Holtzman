@@ -34,27 +34,28 @@ class TemplateWithoutData extends Component {
 
   componentWillMount() {
     this.props.setRightProps({
-      background: "////dg0ddngxdz549.cloudfront.net/images/cached/images/remote/http_s3.amazonaws.com/ns.images/newspring/_fpo/NScollege-cip-0033_1700_1133_90_c1.jpg",
+      background:
+        "////dg0ddngxdz549.cloudfront.net/images/cached/images/remote/http_s3.amazonaws.com/ns.images/newspring/_fpo/NScollege-cip-0033_1700_1133_90_c1.jpg",
     });
   }
 
-  wrapRefetch = (refetch: Function) =>
-    (...args: Object[]) => {
-      this.setState({ refetching: true });
-      return refetch(...args).then((x) => {
-        this.setState({ refetching: false });
-        return x;
-      });
-    };
+  wrapRefetch = (refetch: Function) => (...args: Object[]) => {
+    this.setState({ refetching: true });
+    return refetch(...args).then(x => {
+      this.setState({ refetching: false });
+      return x;
+    });
+  };
 
   onPrintClick = (e: Event) => {
     e.preventDefault();
     const { limit, start, end } = this.props.currentVariables;
 
     // XXX default shows all transactions, but we only want to print YTD
-    const vars = limit && !start && !end
-      ? { ...this.props.currentVariables, start: moment().startOf("year") }
-      : this.props.currentVariables;
+    const vars =
+      limit && !start && !end
+        ? { ...this.props.currentVariables, start: moment().startOf("year") }
+        : this.props.currentVariables;
 
     this.setState({ printLoading: true });
     this.props
@@ -103,7 +104,12 @@ class TemplateWithoutData extends Component {
 const FILTER_QUERY = gql`
   query GetFilterContent {
     family: currentFamily {
-      person { nickName, firstName, lastName, id: entityId }
+      person {
+        nickName
+        firstName
+        lastName
+        id: entityId
+      }
     }
   }
 `;
@@ -111,42 +117,61 @@ const FILTER_QUERY = gql`
 const withFilter = graphql(FILTER_QUERY, { name: "filter" });
 
 const GET_STATEMENT = gql`
-  mutation GetGivingStatement($limit: Int, $skip: Int, $people: [Int], $start: String, $end: String) {
+  mutation GetGivingStatement(
+    $limit: Int
+    $skip: Int
+    $people: [Int]
+    $start: String
+    $end: String
+  ) {
     transactionStatement(
-      limit: $limit,
-      skip: $skip,
-      people: $people,
-      start: $start,
+      limit: $limit
+      skip: $skip
+      people: $people
+      start: $start
       end: $end
-    ){
+    ) {
       file
     }
   }
 `;
 
 const withStatement = graphql(GET_STATEMENT, {
-  props: ({ mutate }) => ({ getPDF: (variables) => mutate({ variables }) }),
+  props: ({ mutate }) => ({ getPDF: variables => mutate({ variables }) }),
 });
 
 const TRANSACTIONS_QUERY = gql`
-  query GetTransactions($limit: Int, $skip: Int, $people: [Int], $start: String, $end: String) {
+  query GetTransactions(
+    $limit: Int
+    $skip: Int
+    $people: [Int]
+    $start: String
+    $end: String
+  ) {
     transactions(
-      limit: $limit,
-      skip: $skip,
-      people: $people,
-      start: $start,
-      end: $end,
+      limit: $limit
+      skip: $skip
+      people: $people
+      start: $start
+      end: $end
       cache: false
     ) {
       id
       date
       status
       summary
-      person { firstName, lastName, photo }
+      person {
+        firstName
+        lastName
+        photo
+      }
       details {
         id
         amount
-        account { id, name }
+        account {
+          id
+          name
+        }
       }
     }
   }
@@ -171,7 +196,8 @@ const withTransactions = graphql(TRANSACTIONS_QUERY, {
     currentVariables: data.variables,
     transactions: data.transactions || [],
     loading: data.loading,
-    done: data.variables.limit === 0 ||
+    done:
+      data.variables.limit === 0 ||
       (data.transactions &&
         !data.loading &&
         data.transactions.length < data.variables.limit + data.variables.skip),
@@ -185,7 +211,7 @@ const withTransactions = graphql(TRANSACTIONS_QUERY, {
             ...fetchMoreResult.data.transactions,
           ];
           return {
-            transactions: transactions.filter((x) => !!x.id),
+            transactions: transactions.filter(x => !!x.id),
           };
         },
       }),

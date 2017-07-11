@@ -24,13 +24,13 @@ const defaultProps = {
     content: {
       studyEntries: [
         {
-          title: "Study Entry"
+          title: "Study Entry",
         },
       ],
     },
   },
   light: true,
-  focus: "1"
+  focus: "1",
 };
 
 const generateComponent = (additionalProps = {}) => {
@@ -39,7 +39,7 @@ const generateComponent = (additionalProps = {}) => {
     ...additionalProps,
   };
 
-  return <StudyEntry { ...newProps } />;
+  return <StudyEntry {...newProps} />;
 };
 
 it("parses study entry query", () => {
@@ -52,24 +52,28 @@ it("renders with props", () => {
 });
 
 it("returns null if there is no studyEntries", () => {
-  const tree = renderer.create(generateComponent({
-    studyEntries: {
-      content: {
-        studyEntries: [],
-      }
-    },
-  }));
+  const tree = renderer.create(
+    generateComponent({
+      studyEntries: {
+        content: {
+          studyEntries: [],
+        },
+      },
+    }),
+  );
   expect(tree).toMatchSnapshot();
 });
 
 it("has a loading state", () => {
-  const tree = renderer.create(generateComponent({
-    studyEntries: {
-      loading: true
-    },
-  }));
+  const tree = renderer.create(
+    generateComponent({
+      studyEntries: {
+        loading: true,
+      },
+    }),
+  );
   expect(tree).toMatchSnapshot();
-})
+});
 
 it("calculates width based on window size", () => {
   const wrapper = shallow(generateComponent());

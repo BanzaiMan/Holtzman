@@ -1,4 +1,3 @@
-
 // @flow
 import { Component } from "react";
 import SwipeableViews from "react-swipeable-views";
@@ -14,28 +13,27 @@ type ISliderProps = {
   toggleColor: string,
   isLight: boolean,
   flush: boolean,
-}
+};
 
 type ISliderState = {
-  index: number;
-}
+  index: number,
+};
 
 const TOGGLES = ["Devotional", "Scripture"];
 
 export default class Slider extends Component {
-
   props: ISliderProps;
   state: ISliderState;
 
   state = { index: 0, reflow: false };
 
-  handleChangeTabs = (index: number) => this.setState({ index })
-  handleChangeIndex = (index: number) => this.setState({ index })
+  handleChangeTabs = (index: number) => this.setState({ index });
+  handleChangeIndex = (index: number) => this.setState({ index });
 
   onLinkClick = (e: Event) => {
     e.preventDefault();
     this.handleChangeTabs(1);
-  }
+  };
 
   render() {
     const { index } = this.state;
@@ -49,11 +47,15 @@ export default class Slider extends Component {
       },
       toggle: {
         color: isLight ? "#505050" : "#f7f7f7",
-        ":hover": { color: isLight ? "#505050 !important" : "#f7f7f7 !important" },
+        ":hover": {
+          color: isLight ? "#505050 !important" : "#f7f7f7 !important",
+        },
       },
       active: {
         color: isLight ? "#303030" : "#ffffff",
-        ":hover": { color: isLight ? "#303030 !important" : "#ffffff !important" },
+        ":hover": {
+          color: isLight ? "#303030 !important" : "#ffffff !important",
+        },
       },
     });
 
@@ -82,7 +84,10 @@ export default class Slider extends Component {
           animateHeight
         >
           <div className="one-whole">
-            <Content studyEntry={this.props.studyEntry} onClickLink={this.onLinkClick} />
+            <Content
+              studyEntry={this.props.studyEntry}
+              onClickLink={this.onLinkClick}
+            />
           </div>
           <div className="one-whole">
             <Scripture studyEntry={this.props.studyEntry} />

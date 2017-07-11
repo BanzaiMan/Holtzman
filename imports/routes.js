@@ -1,4 +1,3 @@
-
 import { Meteor } from "meteor/meteor";
 import ChildrenRoutes from "./pages";
 
@@ -9,8 +8,9 @@ if (process.env.NATIVE) {
 
 const redirectToWelcome = (replace, cb) => {
   if (typeof NativeStorage === "undefined") return cb();
-  return NativeStorage.getItem("welcomed",
-    (welcomed) => {
+  return NativeStorage.getItem(
+    "welcomed",
+    welcomed => {
       if (welcomed) return cb();
       replace({ pathname: "/welcome" });
       return cb();

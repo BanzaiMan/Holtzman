@@ -10,28 +10,23 @@ import Readme from "./progress.md";
 
 const story = storiesOf("ProgressBar", module)
   .addDecorator(centered)
-  .addDecorator(backgrounds(defaultColors()))
-  ;
+  .addDecorator(backgrounds(defaultColors()));
 
 story
-  .add("Light", withReadme(
-    Readme,
-    () => (
+  .add(
+    "Light",
+    withReadme(Readme, () =>
       <ProgressBar
         title="My Fund"
         total="1000"
         percentDone="35"
         theme="light"
-      />
-    )
-  ))
-  .add("Dark", withReadme(
-    Readme,
-    () => (
-      <ProgressBar
-        title="My Fund"
-        total="1000"
-        percentDone="35"
-      />
-    )
-  ));
+      />,
+    ),
+  )
+  .add(
+    "Dark",
+    withReadme(Readme, () =>
+      <ProgressBar title="My Fund" total="1000" percentDone="35" />,
+    ),
+  );

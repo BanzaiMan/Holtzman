@@ -4,10 +4,12 @@ import { Component } from "react";
 import Tag from "../tags";
 
 type ITagSelectProps = {
-  items: [{
-    label: ?string,
-    value: string | number
-  }],
+  items: [
+    {
+      label: ?string,
+      value: string | number,
+    },
+  ],
   onClick: ?Function,
   overrideActive?: boolean,
   currentActive?: string,
@@ -23,13 +25,13 @@ export default class TagSelect extends Component {
 
   state = {
     active: "",
-  }
+  };
 
   componentWillMount = () => {
     if (this.props.currentActive !== "") {
       this.setState({ active: this.props.currentActive });
     }
-  }
+  };
 
   handleTagClick = (value: any) => {
     if (value === this.state.active) {
@@ -39,21 +41,21 @@ export default class TagSelect extends Component {
     }
 
     if (this.props.onClick) this.props.onClick(value);
-  }
+  };
 
-  isActive = (value: string | number) => value === this.state.active
+  isActive = (value: string | number) => value === this.state.active;
 
   canBeActive = (value: string | number) => {
     if (!this.state.active) return true;
     return this.isActive(value);
-  }
+  };
 
   render() {
     const { items } = this.props;
 
     return (
       <div>
-        {items.map(({ label, value }, key) => (
+        {items.map(({ label, value }, key) =>
           <Tag
             key={key}
             label={label || value}
@@ -61,8 +63,8 @@ export default class TagSelect extends Component {
             onClick={this.handleTagClick}
             active={this.isActive(value)}
             className={this.props.overrideActive}
-          />
-        ))}
+          />,
+        )}
       </div>
     );
   }

@@ -16,17 +16,13 @@ afterEach(() => {
 
 describe("Remind", () => {
   it("should give default info if no props are passed", () => {
-    const tree = shallow(
-      <Remind />
-    );
+    const tree = shallow(<Remind />);
     expect(shallowToJson(tree)).toMatchSnapshot();
   });
 
   it("should click the back button one time", () => {
     const mockOnClick = jest.fn();
-    const wrapper = mount(
-      <Remind back={mockOnClick} />
-    );
+    const wrapper = mount(<Remind back={mockOnClick} />);
     expect(mockOnClick).not.toHaveBeenCalled();
     getSingleSpecWrapper(wrapper, "back-button").simulate("click");
     expect(mockOnClick).toHaveBeenCalledTimes(1);
@@ -34,9 +30,7 @@ describe("Remind", () => {
 
   it("should click the submit button one time", () => {
     const mockOnClick = jest.fn();
-    const wrapper = mount(
-      <Remind onSubmit={mockOnClick} />
-    );
+    const wrapper = mount(<Remind onSubmit={mockOnClick} />);
     expect(mockOnClick).not.toHaveBeenCalled();
     wrapper.find("form").simulate("submit");
     expect(mockOnClick).toHaveBeenCalledTimes(1);

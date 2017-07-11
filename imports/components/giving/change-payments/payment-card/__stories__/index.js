@@ -17,19 +17,19 @@ import PaymentAccounts from "./paymentAccounts";
 import PaymentCard from "../index";
 
 const accountTypes = {
-  "Visa": "Visa",
-  "MasterCard": "MasterCard",
-  "AmEx": "AmEx",
-  "Discover": "Discover",
-  "Bank": "Bank",
-}
+  Visa: "Visa",
+  MasterCard: "MasterCard",
+  AmEx: "AmEx",
+  Discover: "Discover",
+  Bank: "Bank",
+};
 
 const selectedAccount = {
   "1": "First",
   "2": "Second",
-}
+};
 
-const selectAccount = (e) => {
+const selectAccount = e => {
   e.preventDefault;
   alert(`Account ${e.currentTarget.id} Selected`);
 };
@@ -37,11 +37,11 @@ const selectAccount = (e) => {
 const story = storiesOf("Change Payments", module)
   .addDecorator(withKnobs)
   .addDecorator(centered)
-  .addDecorator(backgrounds(defaultColors("light-primary", "light-secondary")))
-  ;
+  .addDecorator(backgrounds(defaultColors("light-primary", "light-secondary")));
 
-story
-  .add("Payment Card", withReadme(Readme, () => (
+story.add(
+  "Payment Card",
+  withReadme(Readme, () =>
     <div className={"floating"}>
       <div className={"grid__item"} style={{ maxWidth: "480px" }}>
         <PaymentCard
@@ -63,10 +63,13 @@ story
 
         <button
           className="btn one-whole push-double-top soft-sides push-bottom"
-          onClick={() => { alert('Account Changed'); }}
+          onClick={() => {
+            alert("Account Changed");
+          }}
         >
           Change Account
         </button>
       </div>
-    </div>
-  )));
+    </div>,
+  ),
+);

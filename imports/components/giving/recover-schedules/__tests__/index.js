@@ -12,7 +12,7 @@ jest.mock("moment");
 beforeEach(() => {
   reset();
   startBuffering();
-})
+});
 afterEach(() => {
   Meteor.call.mockClear();
   reset();
@@ -28,16 +28,12 @@ describe("RecoverSchedules", () => {
   };
 
   it("should be default if default props are passed", () => {
-    const tree = shallow(
-      <RecoverSchedules {...sampleProps} />
-    );
+    const tree = shallow(<RecoverSchedules {...sampleProps} />);
     expect(shallowToJson(tree)).toMatchSnapshot();
   });
 
   it("has and calls the back method", () => {
-    const wrapper = shallow(
-      <RecoverSchedules {...sampleProps} />
-    );
+    const wrapper = shallow(<RecoverSchedules {...sampleProps} />);
     const component = wrapper.instance();
     expect(component.back).toBeTruthy();
     const mockedEvent = {
@@ -51,9 +47,7 @@ describe("RecoverSchedules", () => {
   });
 
   it("has and calls the close method", () => {
-    const wrapper = shallow(
-      <RecoverSchedules {...sampleProps} />
-    );
+    const wrapper = shallow(<RecoverSchedules {...sampleProps} />);
     const component = wrapper.instance();
     expect(component.close).toBeTruthy();
     sampleProps.dispatch.mockClear();
@@ -74,12 +68,10 @@ describe("RecoverSchedules", () => {
     // input.value = "MY TEST VALUE";
     // document.getElementsByTagName("body")[0].appendChild(input);
 
-    const wrapper = shallow(
-      <RecoverSchedules {...sampleProps} />
-    );
+    const wrapper = shallow(<RecoverSchedules {...sampleProps} />);
     // make sure it passes the "remind" state to the Layout
     wrapper.setState({ state: "remind" });
-    expect(shallowToJson(wrapper)).toMatchSnapshot()
+    expect(shallowToJson(wrapper)).toMatchSnapshot();
 
     // make sure the onRemind function exists
     const component = wrapper.instance();
@@ -88,7 +80,7 @@ describe("RecoverSchedules", () => {
     // make sure the onRemind function has been called.
     const mockedEvent = {
       preventDefault: jest.fn(),
-    }
+    };
     Meteor.userId = jest.fn(() => "test");
     Meteor.users = {
       update: jest.fn(Meteor.userId),
@@ -105,7 +97,7 @@ describe("RecoverSchedules", () => {
     toDate
       .mockReturnValueOnce("tomorrow")
       .mockReturnValueOnce("nextWeek")
-      .mockReturnValueOnce("twoWeeks")
+      .mockReturnValueOnce("twoWeeks");
 
     sampleProps.dispatch.mockClear();
     component.onRemind(mockedEvent);
@@ -116,11 +108,11 @@ describe("RecoverSchedules", () => {
     expect(mockedEvent.preventDefault).toBeCalled();
     expect(document.getElementById).toBeCalledWith("remind-frequency");
     expect(Meteor.users.update.mock.calls[0][0]).toEqual({
-      "_id": "test",
+      _id: "test",
     });
 
     expect(Meteor.users.update.mock.calls[0][1]).toEqual({
-      "$set": {
+      $set: {
         "profile.reminderDate": "tomorrow",
       },
     });

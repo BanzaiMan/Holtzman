@@ -11,7 +11,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Template { ...newProps } />;
+  return <Template {...newProps} />;
 };
 
 it("renders", () => {
@@ -27,8 +27,10 @@ it("renders server version", () => {
 });
 
 it("renders lap-and-up version", () => {
-  const wrapper = shallow(generateComponent({
-    breakpoints: ["lap-and-up"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      breakpoints: ["lap-and-up"],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

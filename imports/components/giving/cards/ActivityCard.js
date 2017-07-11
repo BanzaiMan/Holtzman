@@ -5,13 +5,7 @@ import { Link } from "react-router";
 import { Error, Success } from "../../@primitives/UI/icons";
 
 const getClasses = (status: string) => {
-  const classes = [
-    "card__item",
-    "soft",
-    "text-left",
-    "soft-bottom",
-    "rounded",
-  ];
+  const classes = ["card__item", "soft", "text-left", "soft-bottom", "rounded"];
 
   let backgroundColor = "background--dark-primary";
   let textColor = "text-light-primary";
@@ -49,29 +43,43 @@ const ActivityCard = ({
   message,
   linkText,
   linkUrl,
-}: IActivityCard) => (
+}: IActivityCard) =>
   <div className="card">
     <div className={getClasses(status)}>
       <div className="floating text-left">
-        <i className="soft-half-right">{getIcon(status)}</i>
-        {date && <h5 className={`${status === "success" ? "text-dark-tertiary " : ""}display-inline-block floating__item soft-half-bottom`}>{ moment(date).format("MMM D, YYYY") }</h5>}
+        <i className="soft-half-right">
+          {getIcon(status)}
+        </i>
+        {date &&
+          <h5
+            className={`${status === "success"
+              ? "text-dark-tertiary "
+              : ""}display-inline-block floating__item soft-half-bottom`}
+          >
+            {moment(date).format("MMM D, YYYY")}
+          </h5>}
       </div>
-      {typeof message === "string" ? <p>{message}</p> : message}
-      {linkText && linkUrl && (
+      {typeof message === "string"
+        ? <p>
+            {message}
+          </p>
+        : message}
+      {linkText &&
+        linkUrl &&
         <Link
           to={linkUrl}
           className={
-            status === "success" ? "text-primary plain" : "text-light-primary plain"
+            status === "success"
+              ? "text-primary plain"
+              : "text-light-primary plain"
           }
         >
           <h5 className="display-inline-block flush-bottom">
             {linkText}
           </h5>
           <span className="icon-arrow-next soft-half-left" />
-        </Link>
-      )}
+        </Link>}
     </div>
-  </div>
-);
+  </div>;
 
 export default ActivityCard;

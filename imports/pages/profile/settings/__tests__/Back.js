@@ -3,9 +3,7 @@ import { shallowToJson } from "enzyme-to-json";
 import { Meteor } from "meteor/meteor";
 import Back from "../Back";
 
-const generateComponent = () => (
-  <Back />
-);
+const generateComponent = () => <Back />;
 
 it("renders", () => {
   const wrapper = shallow(generateComponent());

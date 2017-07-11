@@ -1,8 +1,6 @@
 /* eslint-disable */
 import { storiesOf } from "@kadira/storybook";
-import {
-  withKnobs,
-} from "@kadira/storybook-addon-knobs";
+import { withKnobs } from "@kadira/storybook-addon-knobs";
 import withReadme from "storybook-readme/with-readme";
 import backgrounds from "react-storybook-addon-backgrounds";
 
@@ -16,16 +14,20 @@ import Give from "../";
 const story = storiesOf("Give", module)
   .addDecorator(withKnobs)
   .addDecorator(centered)
-  .addDecorator(backgrounds(defaultColors("light-secondary", "light-primary")))
-  ;
+  .addDecorator(backgrounds(defaultColors("light-secondary", "light-primary")));
 
-story
-  .add("Give Block", withReadme(Readme, () => {
+story.add(
+  "Give Block",
+  withReadme(Readme, () => {
     return (
-      <div className="background--light-primary" style={{ maxWidth: "480px", margin: "0 auto" }} >
+      <div
+        className="background--light-primary"
+        style={{ maxWidth: "480px", margin: "0 auto" }}
+      >
         <Provider>
           <Give />
         </Provider>
       </div>
-    )
-  }));
+    );
+  }),
+);

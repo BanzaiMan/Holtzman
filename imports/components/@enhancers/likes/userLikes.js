@@ -13,6 +13,9 @@ export const LIKES_QUERY = gql`
   ${groupCard}
 `;
 
-export const withLikes = graphql(LIKES_QUERY, { name: "likes", options: { forceFetch: true } });
+export const withLikes = graphql(LIKES_QUERY, {
+  name: "likes",
+  options: { forceFetch: true },
+});
 
 export default withLikes;

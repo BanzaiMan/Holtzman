@@ -34,7 +34,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -43,9 +43,11 @@ it("renders with props", () => {
 });
 
 it("renders without recoverableSchedules", () => {
-  const wrapper = shallow(generateComponent({
-    recoverableSchedules: [],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      recoverableSchedules: [],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -57,11 +59,13 @@ it("does not render recoverableSchedule if it has a gateway", () => {
 });
 
 it("works with nickName", () => {
-  const wrapper = shallow(generateComponent({
-    person: {
-      nickName: "jimothy",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      person: {
+        nickName: "jimothy",
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 

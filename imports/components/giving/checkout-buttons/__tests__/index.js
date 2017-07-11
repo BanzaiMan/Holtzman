@@ -1,4 +1,3 @@
-
 import { Component } from "react";
 import { print } from "graphql-tag/printer";
 import { graphql } from "react-apollo";
@@ -50,8 +49,7 @@ describe("graphql integration", () => {
   //   expect(calculatedOptions.forceFetch).toBe(true);
   // });
 
-  it("correctly delivers props to child component", (done) => {
-
+  it("correctly delivers props to child component", done => {
     const query = addTypenameToDocument(SAVED_ACCTS_QUERY);
     const variables = { cache: false };
 
@@ -59,9 +57,8 @@ describe("graphql integration", () => {
       savedPayments: null,
     };
 
-
     class Foo extends Component {
-      componentWillReceiveProps({ savedPayments: { loading, savedPayments }}) {
+      componentWillReceiveProps({ savedPayments: { loading, savedPayments } }) {
         expect(loading).toBe(false);
         expect(savedPayments).toBe(null);
         done();
@@ -74,18 +71,17 @@ describe("graphql integration", () => {
     const DummyComponent = withSavedPayments(Foo);
 
     const wrapper = mount(
-      <MockedProvider mocks={[
-        { request: { query, variables }, result: { data: mockedData } }
-      ]}>
+      <MockedProvider
+        mocks={[
+          { request: { query, variables }, result: { data: mockedData } },
+        ]}
+      >
         <DummyComponent />
-      </MockedProvider>
+      </MockedProvider>,
     );
-
-
   });
 
-  it("correctly delivers props to child component", (done) => {
-
+  it("correctly delivers props to child component", done => {
     const query = addTypenameToDocument(SAVED_ACCTS_QUERY);
     const variables = { cache: false };
 
@@ -93,9 +89,8 @@ describe("graphql integration", () => {
       savedPayments: [],
     };
 
-
     class Foo extends Component {
-      componentWillReceiveProps({ savedPayments: { loading, savedPayments }}) {
+      componentWillReceiveProps({ savedPayments: { loading, savedPayments } }) {
         expect(loading).toBe(false);
         expect(savedPayments).toEqual(mockedData.savedPayments);
         done();
@@ -108,17 +103,17 @@ describe("graphql integration", () => {
     const DummyComponent = withSavedPayments(Foo);
 
     const wrapper = mount(
-      <MockedProvider mocks={[
-        { request: { query, variables }, result: { data: mockedData } }
-      ]}>
+      <MockedProvider
+        mocks={[
+          { request: { query, variables }, result: { data: mockedData } },
+        ]}
+      >
         <DummyComponent />
-      </MockedProvider>
+      </MockedProvider>,
     );
-
   });
 
-  it("correctly delivers props to child component", (done) => {
-
+  it("correctly delivers props to child component", done => {
     const query = addTypenameToDocument(SAVED_ACCTS_QUERY);
     const variables = { cache: false };
 
@@ -132,15 +127,14 @@ describe("graphql integration", () => {
           payment: {
             accountNumber: "4111111111111111",
             paymentType: "Visa",
-            __typename: "Card"
-          }
-        }
+            __typename: "Card",
+          },
+        },
       ],
     };
 
-
     class Foo extends Component {
-      componentWillReceiveProps({ savedPayments: { loading, savedPayments }}) {
+      componentWillReceiveProps({ savedPayments: { loading, savedPayments } }) {
         expect(loading).toBe(false);
         expect(savedPayments).toEqual(mockedData.savedPayments);
         expect(savedPayments).toMatchSnapshot();
@@ -154,13 +148,14 @@ describe("graphql integration", () => {
     const DummyComponent = withSavedPayments(Foo);
 
     const wrapper = mount(
-      <MockedProvider mocks={[
-        { request: { query, variables }, result: { data: mockedData } }
-      ]}>
+      <MockedProvider
+        mocks={[
+          { request: { query, variables }, result: { data: mockedData } },
+        ]}
+      >
         <DummyComponent />
-      </MockedProvider>
+      </MockedProvider>,
     );
-
   });
 });
 

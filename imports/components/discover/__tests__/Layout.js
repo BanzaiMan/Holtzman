@@ -1,9 +1,6 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
-import SearchLayout, {
-  Content,
-  getStyle,
-} from "../Layout";
+import SearchLayout, { Content, getStyle } from "../Layout";
 
 describe("Content", () => {
   const defaultProps = {
@@ -18,7 +15,7 @@ describe("Content", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Content { ...newProps } />;
+    return <Content {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -27,11 +24,13 @@ describe("Content", () => {
   });
 
   it("renders search", () => {
-    const wrapper = shallow(generateComponent({
-      search: {
-        searching: true,
-      },
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        search: {
+          searching: true,
+        },
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
@@ -59,7 +58,7 @@ describe("SearchLayout", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <SearchLayout { ...newProps } />;
+    return <SearchLayout {...newProps} />;
   };
 
   it("renders", () => {

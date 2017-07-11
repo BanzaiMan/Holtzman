@@ -7,9 +7,7 @@ const defaultProps = {
   scripture: "Job 2",
 };
 
-const generateComponent = () => (
-  <ScriptureItem { ...defaultProps } />
-);
+const generateComponent = () => <ScriptureItem {...defaultProps} />;
 
 it("renders loading without scriptureData", () => {
   Meteor.call = jest.fn();

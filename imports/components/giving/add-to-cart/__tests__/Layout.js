@@ -21,9 +21,7 @@ const additionalAccounts = [
 
 const generateComponent = (additionalProps = {}) => {
   const defaultProps = {
-    accounts: [
-      { value: "test" }
-    ],
+    accounts: [{ value: "test" }],
     subfunds: [
       {
         id: 1,
@@ -35,9 +33,7 @@ const generateComponent = (additionalProps = {}) => {
     changeAmount: () => {},
     preFill: () => {},
   };
-  return (
-    <Layout {...defaultProps} {...additionalProps} />
-  );
+  return <Layout {...defaultProps} {...additionalProps} />;
 };
 
 beforeEach(() => {

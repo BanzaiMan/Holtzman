@@ -6,12 +6,13 @@ type IZip = {
   zip: Function,
 };
 
-const Zip = ({
-  billing,
-  zip,
-}: IZip) => {
+const Zip = ({ billing, zip }: IZip) => {
   let length = "one-whole";
-  if (!billing.country || billing.country === "US" || billing.country === "CA") {
+  if (
+    !billing.country ||
+    billing.country === "US" ||
+    billing.country === "CA"
+  ) {
     length = "one-half";
   }
   return (

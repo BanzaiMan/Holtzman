@@ -13,7 +13,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <AccountType { ...newProps } />;
+  return <AccountType {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -22,15 +22,19 @@ it("renders with props", () => {
 });
 
 it("handles ACH case", () => {
-  const wrapper = shallow(generateComponent({
-    type: "ACH",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      type: "ACH",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("handles AmEx case", () => {
-  const wrapper = shallow(generateComponent({
-    type: "American Express",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      type: "American Express",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

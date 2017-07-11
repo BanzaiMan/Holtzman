@@ -9,7 +9,7 @@ import Layout from "./Layout";
 type IStore = {
   routing: Object,
   give: Object,
-  accounts: Object
+  accounts: Object,
 };
 
 // We only care about the give state
@@ -17,7 +17,7 @@ export const map = ({ routing, give, accounts }: IStore) => ({
   status: give.state,
   total: give.total,
   query: routing.location.query,
-  authorized: accounts.authorized
+  authorized: accounts.authorized,
 });
 
 export const withGiveActions = connect(map, giveActions);
@@ -30,12 +30,12 @@ type ICartContainer = {
   query: Object,
   status: string,
   authorized: boolean,
-  total: number
+  total: number,
 };
 
 type ISelectOptions = {
   label: string | number,
-  value: string | number
+  value: string | number,
 };
 
 type ISubFund = {
@@ -43,12 +43,12 @@ type ISubFund = {
   primary: boolean,
   id: number,
   fundId: ?number,
-  amount: ?number | string
+  amount: ?number | string,
 };
 
 type ICartContainerState = {
   subfunds: ISubFund[],
-  canCheckout: boolean
+  canCheckout: boolean,
 };
 
 class CartContainer extends Component {
@@ -56,7 +56,7 @@ class CartContainer extends Component {
   state: ICartContainerState;
 
   static defaultProps = {
-    accounts: []
+    accounts: [],
   };
 
   resetCbs = [];
@@ -115,7 +115,7 @@ class CartContainer extends Component {
           primary: this.props.accounts.length === accounts.length,
           id: index + 1,
           fundId,
-          amount
+          amount,
         };
 
         let prefilled = false;
@@ -163,7 +163,9 @@ class CartContainer extends Component {
     decimals = newAmount.split(".")[1];
     if (decimals && `${decimals}`.length > 2) {
       const newDecimals = `${decimals}`.split(""); // turn into an array
-      newAmount = `${newAmount.split(".")[0]}.${newDecimals[0]}${newDecimals[1]}`;
+      newAmount = `${newAmount.split(
+        ".",
+      )[0]}.${newDecimals[0]}${newDecimals[1]}`;
     }
 
     const value = Number(`${newAmount}`.replace(/[^0-9\.]+/g, ""));
@@ -203,7 +205,7 @@ class CartContainer extends Component {
       // then remove them from the subfunds accounts
       const selectedFunds = [
         id,
-        ...subfunds.map(({ amount, fundId }) => amount && fundId)
+        ...subfunds.map(({ amount, fundId }) => amount && fundId),
       ].filter(x => !!x);
 
       // move the fund around
@@ -234,7 +236,7 @@ class CartContainer extends Component {
     // it wont rerender
     // this subfund instance was managing the following subfund
     const currentFund: Object[] = state.subfunds.filter(
-      x => x.id === subfundId
+      x => x.id === subfundId,
     );
 
     if (currentFund.length) {
@@ -246,8 +248,8 @@ class CartContainer extends Component {
         this.props.addTransactions({
           [id]: {
             value: Number(`${currentFund[0].amount}`.replace(/[^0-9\.]+/g, "")),
-            label: fund.name
-          }
+            label: fund.name,
+          },
         });
       }
     }
@@ -274,12 +276,12 @@ class CartContainer extends Component {
         const newSubfund = {
           accounts: [...this.props.accounts].map(x => ({
             label: x.name,
-            value: x.id
+            value: x.id,
           })),
           primary: false,
           id: 2,
           fundId: undefined,
-          amount: ""
+          amount: "",
         };
         // amount has been added to first fund
         if (amount) {
@@ -294,7 +296,7 @@ class CartContainer extends Component {
         // eslint-disable-next-line
         subfunds[0].accounts = [...this.props.accounts].map(x => ({
           label: x.name,
-          value: x.id
+          value: x.id,
         }));
         // remove second subfund
         subfunds.pop();

@@ -1,7 +1,5 @@
-
 import transactions from "./transactions";
 import schedules from "./scheduledTransactions";
-
 
 const observers = {
   transactions,
@@ -9,7 +7,8 @@ const observers = {
 };
 
 const observe = () => {
-  for (const observer in observers) { // eslint-disable-line
+  for (const observer in observers) {
+    // eslint-disable-line
     observers[observer]();
   }
 };

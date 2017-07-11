@@ -5,7 +5,10 @@ import ReactMixin from "react-mixin";
 import gql from "graphql-tag";
 import { withRouter } from "react-router";
 
-import Split, { Left, Right } from "../../../components/@primitives/layout/split";
+import Split, {
+  Left,
+  Right,
+} from "../../../components/@primitives/layout/split";
 import Headerable from "../../../deprecated/mixins/mixins.Header";
 import { nav as navActions } from "../../../data/store";
 
@@ -14,19 +17,18 @@ import Result from "./Result";
 
 const defaultArray = [];
 class TemplateWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     router: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     attributes: PropTypes.object.isRequired,
     content: PropTypes.object.isRequired,
-  }
+  };
 
   state = {
     tags: [],
     query: null,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(navActions.setLevel("TOP"));
@@ -58,16 +60,16 @@ class TemplateWithoutData extends Component {
     // reset state
     this.setState({ tags: [], query: null });
     router.push(location);
-  }
+  };
 
-  inputOnChange = (value) => {
+  inputOnChange = value => {
     this.setState({
       tags: this.state.tags,
       query: value,
     });
-  }
+  };
 
-  tagOnClick = (tag) => {
+  tagOnClick = tag => {
     const tagList = [...this.state.tags];
     if (tagList.indexOf(tag) > -1) {
       // remove the tag from the list string
@@ -77,28 +79,30 @@ class TemplateWithoutData extends Component {
     }
 
     this.setState({ tags: tagList });
-  }
+  };
 
-  submitTags = (e) => {
+  submitTags = e => {
     if (e) e.preventDefault();
     this.getResults();
-  }
+  };
 
-  findByQuery = (e) => {
+  findByQuery = e => {
     if (e) e.preventDefault();
     document.getElementById("search").blur();
     this.getResults();
-  }
+  };
 
   /* eslint-disable max-len */
   render() {
     const { attributes, location, content } = this.props;
-    if (location.query && (
-      location.query.tags
-      || location.query.q
-      || location.query.campuses
-      || location.query.schedules
-    )) return <Result />;
+    if (
+      location.query &&
+      (location.query.tags ||
+        location.query.q ||
+        location.query.campuses ||
+        location.query.schedules)
+    )
+      return <Result />;
     return (
       <div>
         <Split>
@@ -120,7 +124,6 @@ class TemplateWithoutData extends Component {
           />
         </Left>
       </div>
-
     );
   }
   /* eslint-enable max-len */
@@ -136,14 +139,20 @@ const GROUP_ATTRIBUTES_QUERY = gql`
   }
 `;
 
-const withGroupAttributes = graphql(GROUP_ATTRIBUTES_QUERY, { name: "attributes" });
+const withGroupAttributes = graphql(GROUP_ATTRIBUTES_QUERY, {
+  name: "attributes",
+});
 
 const TAGGED_CONTENT_QUERY = gql`
-  query GetTaggedContent($tagName: String!, $limit: Int, $includeChannels: [String]) {
+  query GetTaggedContent(
+    $tagName: String!
+    $limit: Int
+    $includeChannels: [String]
+  ) {
     entries: taggedContent(
-      tagName: $tagName,
-      limit: $limit,
-      includeChannels: $includeChannels,
+      tagName: $tagName
+      limit: $limit
+      includeChannels: $includeChannels
       cache: false
     ) {
       entryId: id
@@ -168,29 +177,23 @@ const TAGGED_CONTENT_QUERY = gql`
 
 const withTaggedContent = graphql(TAGGED_CONTENT_QUERY, {
   name: "content",
-  options: ({
+  options: {
     variables: {
       tagName: "community",
       includeChannels: ["articles"],
       limit: 2,
     },
-  }),
+  },
 });
 
-const mapStateToProps = (state) => ({ location: state.routing.location });
+const mapStateToProps = state => ({ location: state.routing.location });
 
 export default withRouter(
   connect(mapStateToProps)(
     withGroupAttributes(
-      withTaggedContent(
-        ReactMixin.decorate(Headerable)(
-          TemplateWithoutData
-        )
-      )
-    )
-  )
+      withTaggedContent(ReactMixin.decorate(Headerable)(TemplateWithoutData)),
+    ),
+  ),
 );
 
-export {
-  TemplateWithoutData,
-};
+export { TemplateWithoutData };

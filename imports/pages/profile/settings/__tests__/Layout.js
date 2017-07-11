@@ -24,7 +24,7 @@ const generateComponent = (additionalProps = {}) => {
     ...additionalProps,
   };
   return (
-    <Layout { ...newProps }>
+    <Layout {...newProps}>
       <h1>test</h1>
     </Layout>
   );

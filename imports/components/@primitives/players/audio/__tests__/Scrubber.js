@@ -23,7 +23,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <AudioScrubber { ...newProps } />;
+  return <AudioScrubber {...newProps} />;
 };
 
 beforeEach(() => {
@@ -41,9 +41,11 @@ it("renders with props", () => {
 });
 
 it("renders light version", () => {
-  const wrapper = shallow(generateComponent({
-    isLight: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      isLight: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -63,7 +65,7 @@ it("click executes if not scrubbing", () => {
     target: {
       offsetWidth: 100,
       parentElement: {
-        getClientRects: jest.fn(() => [ { left: 0 } ]),
+        getClientRects: jest.fn(() => [{ left: 0 }]),
       },
     },
     clientX: 2,
@@ -85,7 +87,7 @@ it("calculatePercent returns percentage", () => {
   const mockTarget = {
     offsetWidth: 100,
     parentElement: {
-      getClientRects: jest.fn(() => [ { left: 1 } ]),
+      getClientRects: jest.fn(() => [{ left: 1 }]),
     },
   };
   const result = wrapper.instance().calculatePercent(mockTarget, 5);
@@ -94,9 +96,11 @@ it("calculatePercent returns percentage", () => {
 
 it("seek calls seek with percentage", () => {
   const mockSeek = jest.fn();
-  const wrapper = shallow(generateComponent({
-    seek: mockSeek,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      seek: mockSeek,
+    }),
+  );
   wrapper.instance().seek(20);
   expect(mockSeek).toHaveBeenCalledTimes(1);
   expect(mockSeek).toHaveBeenCalledWith(20);
@@ -104,9 +108,11 @@ it("seek calls seek with percentage", () => {
 
 it("seek calls seek with 100 if > 100", () => {
   const mockSeek = jest.fn();
-  const wrapper = shallow(generateComponent({
-    seek: mockSeek,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      seek: mockSeek,
+    }),
+  );
   wrapper.instance().seek(120);
   expect(mockSeek).toHaveBeenCalledTimes(1);
   expect(mockSeek).toHaveBeenCalledWith(100);
@@ -114,9 +120,11 @@ it("seek calls seek with 100 if > 100", () => {
 
 it("seek calls seek with 0 if < 0", () => {
   const mockSeek = jest.fn();
-  const wrapper = shallow(generateComponent({
-    seek: mockSeek,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      seek: mockSeek,
+    }),
+  );
   wrapper.instance().seek(-120);
   expect(mockSeek).toHaveBeenCalledTimes(1);
   expect(mockSeek).toHaveBeenCalledWith(0);
@@ -198,12 +206,10 @@ it("touchMove updates state with percent", () => {
     target: {
       offsetWidth: 100,
       parentElement: {
-        getClientRects: jest.fn(() => [ { left: 0 } ]),
+        getClientRects: jest.fn(() => [{ left: 0 }]),
       },
     },
-    touches: [
-      { clientX: 2 },
-    ],
+    touches: [{ clientX: 2 }],
   };
   wrapper.instance().touchMove(mockEvent);
   expect(wrapper.state().lastPercent).toBe(2);
@@ -226,7 +232,7 @@ it("touchEnd calls seek with last percent and evntually resets state", () => {
 });
 
 it("scrubStyle uses progress if no override", () => {
-  const localProps = { ...defaultProps }
+  const localProps = { ...defaultProps };
   localProps.audio.progress = "30";
 
   const wrapper = shallow(generateComponent(localProps));
@@ -238,7 +244,7 @@ it("scrubStyle uses progress if no override", () => {
 });
 
 it("scrubStyle uses lastPercent if override", () => {
-  const localProps = { ...defaultProps }
+  const localProps = { ...defaultProps };
   localProps.audio.progress = "30";
 
   const wrapper = shallow(generateComponent(localProps));

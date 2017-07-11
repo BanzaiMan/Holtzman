@@ -29,7 +29,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Confirm { ...newProps } />;
+  return <Confirm {...newProps} />;
 };
 
 it("renders TransactionLayout by default", () => {
@@ -44,9 +44,11 @@ it("renders PaymentOptionsLayout when state is true", () => {
 });
 
 it("renders ScheduleLayout if schedules", () => {
-  const wrapper = shallow(generateComponent({
-    schedule: { start: null, frequency: null },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      schedule: { start: null, frequency: null },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -70,7 +72,7 @@ it("completeGift calls openUrl", () => {
       total: defaultProps.total,
       data: defaultProps.data,
       userId: "23",
-    })
+    }),
   );
   const mockGiveUrl = `https://test.com/give/review?giveData=${mockGiveData}`;
 
@@ -106,12 +108,12 @@ it("completeGift calls openUrl with a saved payment", () => {
       total: defaultProps.total,
       data: { payment: { name: "iOS card" } },
       userId: "23",
-    })
+    }),
   );
   const mockGiveUrl = `https://test.com/give/review?giveData=${mockGiveData}`;
 
-  const props = {...defaultProps};
-  props.data.payment.name = "iOS card"
+  const props = { ...defaultProps };
+  props.data.payment.name = "iOS card";
   const wrapper = shallow(generateComponent(props));
   wrapper.instance().completeGift({
     preventDefault: mockPreventDefault,
@@ -125,16 +127,15 @@ it("completeGift calls openUrl with a saved payment", () => {
   openUrl.mockClear();
 });
 
-
 it("choose calls changeSavedAccount with account selected", () => {
   const mockChangeSavedAccount = jest.fn();
   const mockPreventDefault = jest.fn();
-  const wrapper = shallow(generateComponent({
-    changeSavedAccount: mockChangeSavedAccount,
-    savedAccounts: [
-      { id: "1" },
-    ],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      changeSavedAccount: mockChangeSavedAccount,
+      savedAccounts: [{ id: "1" }],
+    }),
+  );
   const mockCurrentTarget = document.createElement("input");
   mockCurrentTarget.id = "1";
 

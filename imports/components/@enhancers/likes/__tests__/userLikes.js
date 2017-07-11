@@ -1,4 +1,3 @@
-
 import { print } from "graphql-tag/printer";
 import { withLikes, LIKES_QUERY } from "../userLikes";
 

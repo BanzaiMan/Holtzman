@@ -29,7 +29,7 @@ describe("TransactionDetail", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <DetailCard { ...newProps } />;
+    return <DetailCard {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -38,24 +38,30 @@ describe("TransactionDetail", () => {
   });
 
   it("renders with failure", () => {
-    const wrapper = shallow(generateComponent({
-      failure: true,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        failure: true,
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it("renders with failure and status", () => {
-    const wrapper = shallow(generateComponent({
-      failure: true,
-      status: "error",
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        failure: true,
+        status: "error",
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it("renders without icon", () => {
-    const wrapper = shallow(generateComponent({
-      icon: false,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        icon: false,
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
@@ -73,9 +79,9 @@ describe("TransactionCard", () => {
   const generateComponent = (additionalProps = {}) => {
     const newProps = {
       ...defaultProps,
-      ...additionalProps
+      ...additionalProps,
     };
-    return <TransactionCard { ...newProps } />;
+    return <TransactionCard {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -84,22 +90,26 @@ describe("TransactionCard", () => {
   });
 
   it("renders pending version", () => {
-    const wrapper = shallow(generateComponent({
-      transaction: {
-        id: "1",
-        status: "PENDING",
-      },
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        transaction: {
+          id: "1",
+          status: "PENDING",
+        },
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it("renders failed version", () => {
-    const wrapper = shallow(generateComponent({
-      transaction: {
-        id: "1",
-        status: "FAILED",
-      },
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        transaction: {
+          id: "1",
+          status: "FAILED",
+        },
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });

@@ -25,7 +25,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <NavLayout { ...newProps } />;
+  return <NavLayout {...newProps} />;
 };
 
 beforeEach(() => {
@@ -48,16 +48,20 @@ it("layoutClasses returns default", () => {
 });
 
 it("layoutClasses appends additional classes", () => {
-  const wrapper = shallow(generateComponent({
-    classes: ["one", "two"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      classes: ["one", "two"],
+    }),
+  );
   expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
 });
 
 it("layoutClasses accounts for light nav bar", () => {
-  const wrapper = shallow(generateComponent({
-    fgColor: "light",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      fgColor: "light",
+    }),
+  );
   expect(wrapper.instance().layoutClasses()).toMatchSnapshot();
 });
 

@@ -8,37 +8,31 @@ import { actions as audioActions } from "../../../../data/store/audio";
 import { modal, nav as navActions } from "../../../../data/store";
 
 class AudioControlsWithoutData extends Component {
-
   static propTypes = {
     audio: PropTypes.object.isRequired, // eslint-disable-line
     isLight: PropTypes.bool.isRequired,
     dispatch: PropTypes.func,
-  }
+  };
 
-  getTertiaryTextColor = (dark) =>
-    (dark ? { color: "rgba(255,255,255,.5)" } : { color: "rgba(0,0,0,.5)" });
+  getTertiaryTextColor = dark =>
+    dark ? { color: "rgba(255,255,255,.5)" } : { color: "rgba(0,0,0,.5)" };
 
-  getPrimaryTextColor = (dark) =>
-    (dark ? { color: "rgba(255,255,255,1)" } : { color: "rgba(0,0,0,1)" });
+  getPrimaryTextColor = dark =>
+    dark ? { color: "rgba(255,255,255,1)" } : { color: "rgba(0,0,0,1)" };
 
   getTertiaryTextClass = () =>
-    (this.props.isLight ? "text-dark-tertiary" : "text-light-tertiary");
+    this.props.isLight ? "text-dark-tertiary" : "text-light-tertiary";
 
   getSecondayTextClass = () =>
-    (this.props.isLight ? "text-dark-secondary" : "text-light-secondary");
+    this.props.isLight ? "text-dark-secondary" : "text-light-secondary";
 
   getPrimaryTextClass = () =>
-    (this.props.isLight ? "text-dark-primary" : "text-light-primary");
+    this.props.isLight ? "text-dark-primary" : "text-light-primary";
 
   shuffleClasses = () => {
-    const classes = [
-      "soft-half-right",
-      "flush",
-      "h5",
-      "icon-shuffle",
-    ];
+    const classes = ["soft-half-right", "flush", "h5", "icon-shuffle"];
     return classes.join(" ");
-  }
+  };
 
   activeShuffleStyles = () => {
     const { isLight } = this.props;
@@ -49,18 +43,14 @@ class AudioControlsWithoutData extends Component {
   };
 
   repeatClasses = () => {
-    const classes = [
-      "flush",
-      "h5",
-      "icon-repeat",
-    ];
+    const classes = ["flush", "h5", "icon-repeat"];
     return classes.join(" ");
   };
 
   repeatIconStyles = {
     top: "-38px",
     position: "relative",
-  }
+  };
 
   repeatIcon = () => {
     const { repeat } = this.props.audio;
@@ -75,9 +65,13 @@ class AudioControlsWithoutData extends Component {
     if (repeat === "repeat-one") classes.push("icon-repeat-one");
 
     return (
-      <i className={classes.join(" ")} onClick={this.repeat} style={this.repeatIconStyles} /> // eslint-disable-line
+      <i
+        className={classes.join(" ")}
+        onClick={this.repeat}
+        style={this.repeatIconStyles}
+      /> // eslint-disable-line
     );
-  }
+  };
 
   activeRepeatStyles = () => {
     const { repeat } = this.props.audio;
@@ -91,24 +85,28 @@ class AudioControlsWithoutData extends Component {
   listDetail = () => {
     const { album, track } = this.props.audio.playing;
 
-    const trackNumber = album.content.tracks.findIndex((current) => current.title === track.title);
+    const trackNumber = album.content.tracks.findIndex(
+      current => current.title === track.title,
+    );
 
-    this.props.dispatch(modal.render(ListDetail, {
-      color: "background--dark-primary",
-      modalBackground: "dark",
-      album,
-      trackNumber,
-      style: {
-        opacity: 0.9,
-      },
-    }));
+    this.props.dispatch(
+      modal.render(ListDetail, {
+        color: "background--dark-primary",
+        modalBackground: "dark",
+        album,
+        trackNumber,
+        style: {
+          opacity: 0.9,
+        },
+      }),
+    );
     this.props.dispatch(modal.setRetrigger("FullPlayer"));
     this.props.dispatch(navActions.setColor("#202020", "light"));
   };
 
   controlGridStyles = {
     maxHeight: "30px",
-  }
+  };
 
   backClasses = () =>
     [
@@ -128,14 +126,10 @@ class AudioControlsWithoutData extends Component {
       "icon-skip-next",
     ].join(" ");
 
-  toggleClasses = (toggleIcon) =>
-    [
-      "soft-sides",
-      "flush",
-      this.getPrimaryTextClass(),
-      "h1",
-      toggleIcon,
-    ].join(" ");
+  toggleClasses = toggleIcon =>
+    ["soft-sides", "flush", this.getPrimaryTextClass(), "h1", toggleIcon].join(
+      " ",
+    );
 
   playIconPosition = () => {
     const { state } = this.props.audio;
@@ -150,9 +144,9 @@ class AudioControlsWithoutData extends Component {
       left: "2px",
       position: "relative",
     };
-  }
+  };
 
-  toggle = (e) => {
+  toggle = e => {
     e.preventDefault();
     e.stopPropagation();
     const { state } = this.props.audio;
@@ -168,7 +162,7 @@ class AudioControlsWithoutData extends Component {
     }
   };
 
-  next = (e) => {
+  next = e => {
     e.preventDefault();
     e.stopPropagation();
     const { album } = this.props.audio.playing;
@@ -179,7 +173,7 @@ class AudioControlsWithoutData extends Component {
     }
   };
 
-  back = (e) => {
+  back = e => {
     e.preventDefault();
     e.stopPropagation();
     const { album } = this.props.audio.playing;
@@ -190,7 +184,7 @@ class AudioControlsWithoutData extends Component {
     }
   };
 
-  repeat = (e) => {
+  repeat = e => {
     e.preventDefault();
     e.stopPropagation();
     const { repeat } = this.props.audio;
@@ -204,7 +198,7 @@ class AudioControlsWithoutData extends Component {
     }
   };
 
-  shuffle = (e) => {
+  shuffle = e => {
     e.preventDefault();
     e.stopPropagation();
     const { order } = this.props.audio;
@@ -217,7 +211,8 @@ class AudioControlsWithoutData extends Component {
   };
 
   playlistControls = () => {
-    const showControls = this.props.audio.playing.album.channelName !== "series_newspring";
+    const showControls =
+      this.props.audio.playing.album.channelName !== "series_newspring";
     if (!showControls) return null;
     const { isLight } = this.props;
     /* eslint-disable */
@@ -225,16 +220,25 @@ class AudioControlsWithoutData extends Component {
       <div className="grid one-whole flush" style={this.controlGridStyles}>
         <div className="grid__item one-third text-left hard">
           <button className="plain floating__item" onClick={this.shuffle}>
-            <i className={this.shuffleClasses()} style={this.activeShuffleStyles()} />
+            <i
+              className={this.shuffleClasses()}
+              style={this.activeShuffleStyles()}
+            />
           </button>
         </div>
         <div className="grid__item one-third hard-ends hard">
           <button className="plain floating__item" onClick={this.repeat}>
-            <i className={this.repeatClasses()} style={this.activeRepeatStyles()} />
+            <i
+              className={this.repeatClasses()}
+              style={this.activeRepeatStyles()}
+            />
           </button>
         </div>
         <div className="grid__item one-third text-right hard-sides">
-          <h5 onClick={this.listDetail} style={this.getTertiaryTextColor(!isLight)}>
+          <h5
+            onClick={this.listDetail}
+            style={this.getTertiaryTextColor(!isLight)}
+          >
             •••
           </h5>
         </div>
@@ -242,7 +246,7 @@ class AudioControlsWithoutData extends Component {
       </div>
     );
     /* eslint-enable */
-  }
+  };
 
   render() {
     const { state, visibility } = this.props.audio;
@@ -258,10 +262,7 @@ class AudioControlsWithoutData extends Component {
       ];
 
       return (
-        <button
-          className="plain float-right"
-          onClick={this.toggle}
-        >
+        <button className="plain float-right" onClick={this.toggle}>
           <i className={classes.join(" ")} />
         </button>
       );
@@ -269,36 +270,31 @@ class AudioControlsWithoutData extends Component {
 
     return (
       <div className="floating audio-controls">
-
         <button className="plain floating__item" onClick={this.back}>
           <i className={this.backClasses()} />
         </button>
 
         <button className="plain floating__item" onClick={this.toggle}>
-          <i className={this.toggleClasses(toggleIcon)} style={this.playIconPosition()} />
+          <i
+            className={this.toggleClasses(toggleIcon)}
+            style={this.playIconPosition()}
+          />
         </button>
 
         <button className="plain floating__item" onClick={this.next}>
           <i className={this.nextClasses()} />
         </button>
 
-        <AudioScrubber
-          isLight={this.props.isLight}
-        />
+        <AudioScrubber isLight={this.props.isLight} />
 
         {this.playlistControls()}
-
       </div>
     );
   }
-
 }
 
 const withRedux = connect();
 
 export default withRedux(AudioControlsWithoutData);
 
-export {
-  AudioControlsWithoutData,
-  withRedux,
-};
+export { AudioControlsWithoutData, withRedux };

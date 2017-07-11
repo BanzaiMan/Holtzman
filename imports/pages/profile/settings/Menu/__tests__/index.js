@@ -1,14 +1,8 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import { Meteor } from "meteor/meteor";
-import {
-  MenuWithoutData as Menu,
-  RenderCell,
-  GET_PHOTO_QUERY,
-} from "../";
-import {
-  nav as navActions,
-} from "../../../../../data/store";
+import { MenuWithoutData as Menu, RenderCell, GET_PHOTO_QUERY } from "../";
+import { nav as navActions } from "../../../../../data/store";
 
 jest.mock("../../../../../deprecated/mixins/mixins.Header", () => {});
 jest.mock("../../../../../data/store", () => ({
@@ -30,7 +24,7 @@ describe("RenderCell", () => {
       ...additionalProps,
     };
     return (
-      <RenderCell { ...newProps }>
+      <RenderCell {...newProps}>
         <h1>test</h1>
       </RenderCell>
     );
@@ -42,9 +36,11 @@ describe("RenderCell", () => {
   });
 
   it("renders default icon", () => {
-    const wrapper = shallow(generateComponent({
-      iconFunc: null,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        iconFunc: null,
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
@@ -63,7 +59,7 @@ describe("Menu", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Menu { ...newProps } />;
+    return <Menu {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -78,9 +74,11 @@ describe("Menu", () => {
   it("updates nav on mount", () => {
     const mockDispatch = jest.fn();
     navActions.setLevel = jest.fn();
-    const wrapper = shallow(generateComponent({
-      dispatch: mockDispatch,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        dispatch: mockDispatch,
+      }),
+    );
     expect(mockDispatch).toHaveBeenCalledTimes(1);
     expect(navActions.setLevel).toHaveBeenCalledTimes(1);
     expect(navActions.setLevel).toHaveBeenCalledWith("TOP");
@@ -101,46 +99,48 @@ describe("Menu", () => {
     jest.useFakeTimers();
     const mockUpload = jest.fn().mockReturnValue(new Promise(p => p()));
     const mockRefetch = jest.fn();
-    const wrapper = shallow(generateComponent({
-      data: {
-        refetch: mockRefetch,
-      },
-      upload: mockUpload,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        data: {
+          refetch: mockRefetch,
+        },
+        upload: mockUpload,
+      }),
+    );
     wrapper.instance().upload("e", "upload", "opts");
     expect(mockUpload).toHaveBeenCalledTimes(1);
     expect(mockUpload).toHaveBeenCalledWith("e", "opts");
     expect(wrapper.state().upload).toBe("loading");
-    mockUpload()
-      .then(() => {
-        expect(wrapper.state().upload).toBe("uploaded");
-        expect(mockRefetch).toHaveBeenCalledTimes(1);
-        jest.runAllTimers();
-        expect(wrapper.state().upload).toBe("default");
-      });
+    mockUpload().then(() => {
+      expect(wrapper.state().upload).toBe("uploaded");
+      expect(mockRefetch).toHaveBeenCalledTimes(1);
+      jest.runAllTimers();
+      expect(wrapper.state().upload).toBe("default");
+    });
   });
 
   it("upload changes state to failed if upload fails", () => {
     jest.useFakeTimers();
-    const mockUpload = jest.fn().mockReturnValue(new Promise((p,r) => r()));
+    const mockUpload = jest.fn().mockReturnValue(new Promise((p, r) => r()));
     const mockRefetch = jest.fn();
-    const wrapper = shallow(generateComponent({
-      data: {
-        refetch: mockRefetch,
-      },
-      upload: mockUpload,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        data: {
+          refetch: mockRefetch,
+        },
+        upload: mockUpload,
+      }),
+    );
     wrapper.instance().upload("e", "upload", "opts");
     expect(mockUpload).toHaveBeenCalledTimes(1);
     expect(mockUpload).toHaveBeenCalledWith("e", "opts");
     expect(wrapper.state().upload).toBe("loading");
-    mockUpload()
-      .then(() => {
-        expect(wrapper.state().upload).toBe("failed");
-        expect(mockRefetch).toHaveBeenCalledTimes(0);
-        jest.runAllTimers();
-        expect(wrapper.state().upload).toBe("default");
-      });
+    mockUpload().then(() => {
+      expect(wrapper.state().upload).toBe("failed");
+      expect(mockRefetch).toHaveBeenCalledTimes(0);
+      jest.runAllTimers();
+      expect(wrapper.state().upload).toBe("default");
+    });
   });
 
   it("uploadIcon returns `icon-arrow-next` for default", () => {

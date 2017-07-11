@@ -17,7 +17,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SearchItem { ...newProps } />;
+  return <SearchItem {...newProps} />;
 };
 
 beforeEach(() => {
@@ -35,14 +35,16 @@ it("renders with props", () => {
 });
 
 it("works with no image", () => {
-  const wrapper = shallow(generateComponent({
-    item: {
-      link: "http://test.com",
-      title: "test item",
-      description: "test description",
-      image: "null",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      item: {
+        link: "http://test.com",
+        title: "test item",
+        description: "test description",
+        image: "null",
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 

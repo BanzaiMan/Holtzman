@@ -18,13 +18,13 @@ it("filters data from graphql", () => {
     currentPerson: {
       roles: [
         {
-          name: "WoW"
+          name: "WoW",
         },
         {
-          name: "Jenkins"
-        }
-      ]
-    }
+          name: "Jenkins",
+        },
+      ],
+    },
   };
 
   const isAuthorized = authorized(data, ["Staff"]);
@@ -36,13 +36,13 @@ it("sets authorized to true if group is matched", () => {
     currentPerson: {
       roles: [
         {
-          name: "WoW"
+          name: "WoW",
         },
         {
-          name: "Jenkins"
-        }
-      ]
-    }
+          name: "Jenkins",
+        },
+      ],
+    },
   };
 
   const isAuthorized = authorized(data, ["WoW"]);
@@ -54,13 +54,13 @@ it("expects an exact match", () => {
     currentPerson: {
       roles: [
         {
-          name: "WoW"
+          name: "WoW",
         },
         {
-          name: "Super Secret Group"
-        }
-      ]
-    }
+          name: "Super Secret Group",
+        },
+      ],
+    },
   };
 
   const isAuthorized = authorized(data, ["Super"]);
@@ -69,7 +69,7 @@ it("expects an exact match", () => {
 
 it("returns false if no person", () => {
   const data = {
-    currentPerson: {}
+    currentPerson: {},
   };
 
   const isAuthorized = authorized(data, ["Super"]);

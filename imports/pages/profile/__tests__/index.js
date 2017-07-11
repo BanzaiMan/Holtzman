@@ -4,11 +4,10 @@ import { Root } from "../";
 
 jest.mock("../../../deprecated/database/collections/likes", () => jest.fn());
 
-const generateComponent = () => (
+const generateComponent = () =>
   <Root>
     <h1>test</h1>
-  </Root>
-);
+  </Root>;
 
 it("renders with children", () => {
   const wrapper = shallow(generateComponent());

@@ -36,9 +36,7 @@ const defaultProps = {
       content: {
         description: "<h1>test</h1>",
         speaker: "jim bob",
-        audio: [
-          { url: "http://test.com/test.mp3" },
-        ],
+        audio: [{ url: "http://test.com/test.mp3" }],
         ooyalaId: "testid",
       },
     },
@@ -48,9 +46,7 @@ const defaultProps = {
       title: "test series",
       content: {
         isLight: false,
-        colors: [
-          { type: "primary", value: "00ff00" },
-        ],
+        colors: [{ type: "primary", value: "00ff00" }],
       },
     },
   },
@@ -64,7 +60,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SeriesSingleVideo { ...newProps } />;
+  return <SeriesSingleVideo {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -73,20 +69,24 @@ it("renders with props", () => {
 });
 
 it("renders loading without series", () => {
-  const wrapper = shallow(generateComponent({
-    series: {
-      content: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      series: {
+        content: null,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders loading without sermon", () => {
-  const wrapper = shallow(generateComponent({
-    currentSermon: {
-      content: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      currentSermon: {
+        content: null,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -101,9 +101,11 @@ it("parses sermon query", () => {
 it("handleHeader updates the header", () => {
   const mockDispatch = jest.fn();
   headerActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().handleHeader(defaultProps);
   // once on mount
   expect(headerActions.set).toHaveBeenCalledTimes(2);
@@ -118,12 +120,14 @@ it("handleHeader updates the header", () => {
 it("handleHeader doesn't set subtitle if live", () => {
   const mockDispatch = jest.fn();
   headerActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    live: {
-      live: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      live: {
+        live: true,
+      },
+    }),
+  );
   wrapper.instance().handleHeader(defaultProps);
   // once on mount
   expect(headerActions.set).toHaveBeenCalledTimes(2);

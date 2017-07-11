@@ -33,7 +33,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <TextArea { ...newProps } />;
+  return <TextArea {...newProps} />;
 };
 
 beforeEach(() => {
@@ -51,9 +51,11 @@ it("renders with props", () => {
 });
 
 it("overrides with theme if present", () => {
-  const wrapper = shallow(generateComponent({
-    theme: ["override"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      theme: ["override"],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -76,38 +78,48 @@ it("has error state", () => {
 });
 
 it("appends extra classes", () => {
-  const wrapper = shallow(generateComponent({
-    classes: ["append", "me"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      classes: ["append", "me"],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("can hide the label", () => {
-  const wrapper = shallow(generateComponent({
-    hideLabel: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      hideLabel: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("updates state on mount if default value", () => {
-  const wrapper = shallow(generateComponent({
-    defaultValue: "2",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      defaultValue: "2",
+    }),
+  );
   expect(wrapper.state().active).toBe(true);
 });
 
 it("sets value of node on did mount", () => {
-  const wrapper = mount(generateComponent({
-    defaultValue: "2",
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "2",
+    }),
+  );
   expect(wrapper.instance().getValue()).toBe("2");
   expect(wrapper.instance().interval).toBeTruthy();
 });
 
 it("updates state on will update", () => {
-  const wrapper = mount(generateComponent({
-    defaultValue: "2",
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "2",
+    }),
+  );
   const nextProps = clone(defaultProps);
   nextProps.defaultValue = "3";
   wrapper.setState({ focused: true });
@@ -118,22 +130,26 @@ it("updates state on will update", () => {
 it("removes interval on unmount", () => {
   const mockClearInterval = jest.fn();
   global.clearInterval = mockClearInterval;
-  const wrapper = mount(generateComponent({
-    defaultValue: "2",
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "2",
+    }),
+  );
   wrapper.instance().componentWillUnmount();
   expect(mockClearInterval).toHaveBeenCalledTimes(1);
 });
 
 it("format calls onChange and validation function", () => {
-  const mockFormat = jest.fn((x) => x);
+  const mockFormat = jest.fn(x => x);
   const mockOnChange = jest.fn();
   const mockEvent = {};
-  const wrapper = mount(generateComponent({
-    defaultValue: "2",
-    format: mockFormat,
-    onChange: mockOnChange,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "2",
+      format: mockFormat,
+      onChange: mockOnChange,
+    }),
+  );
   wrapper.instance().format(mockEvent);
   expect(mockFormat).toHaveBeenCalledTimes(1);
   expect(mockFormat.mock.calls[0][0]).toBe("2");
@@ -145,9 +161,11 @@ it("format calls onChange and validation function", () => {
 
 it("validate updates state when no value", () => {
   const mockValidation = jest.fn(() => true);
-  const wrapper = mount(generateComponent({
-    validation: mockValidation,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      validation: mockValidation,
+    }),
+  );
   wrapper.setState({ active: true, error: true, focused: true });
   wrapper.instance().validate();
   expect(mockValidation).toHaveBeenCalledTimes(1);
@@ -160,11 +178,13 @@ it("validate sets error when invalid", () => {
   const mockValidation = jest.fn(() => false);
   const mockOnBlur = jest.fn();
   const mockEvent = jest.fn();
-  const wrapper = mount(generateComponent({
-    defaultValue: "1",
-    validation: mockValidation,
-    onBlur: mockOnBlur,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "1",
+      validation: mockValidation,
+      onBlur: mockOnBlur,
+    }),
+  );
   wrapper.instance().validate(mockEvent);
   expect(wrapper.state().error).toBe(true);
   expect(mockOnBlur).toHaveBeenCalledTimes(1);
@@ -182,9 +202,11 @@ it("focus changes the state", () => {
 });
 
 it("disabled returns disabled when set", () => {
-  const wrapper = shallow(generateComponent({
-    disabled: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      disabled: true,
+    }),
+  );
   const result = wrapper.instance().disabled();
   expect(result).toBe(true);
 });
@@ -202,9 +224,11 @@ it("renderHepText returns undefined when no error or status", () => {
 });
 
 it("renderHepText returns when error and error text", () => {
-  const wrapper = shallow(generateComponent({
-    errorText: "error",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      errorText: "error",
+    }),
+  );
   wrapper.setState({ error: true });
   const result = wrapper.instance().renderHelpText();
   expect(result).toMatchSnapshot();
@@ -218,9 +242,11 @@ it("renderHepText returns when status", () => {
 });
 
 it("style returns blank object whe no style and not disabled", () => {
-  const wrapper = shallow(generateComponent({
-    style: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      style: null,
+    }),
+  );
   const result = wrapper.instance().style();
   expect(result).toEqual({});
 });
@@ -229,9 +255,11 @@ it("style returns styles in props", () => {
   const style = {
     color: "red",
   };
-  const wrapper = shallow(generateComponent({
-    style,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      style,
+    }),
+  );
   const result = wrapper.instance().style();
   expect(result).toEqual(style);
 });
@@ -240,10 +268,12 @@ it("style returns styles in props plus disabled state", () => {
   const style = {
     color: "red",
   };
-  const wrapper = shallow(generateComponent({
-    style,
-    disabled: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      style,
+      disabled: true,
+    }),
+  );
   const result = wrapper.instance().style();
   expect(result).toEqual({
     ...style,

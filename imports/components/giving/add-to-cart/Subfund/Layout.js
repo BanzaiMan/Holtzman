@@ -1,4 +1,3 @@
-
 // @flow
 
 // $FlowMeteor
@@ -16,7 +15,7 @@ type ILayout = {
   fundId: number,
   inputVal: string,
   preFill: Function,
-}
+};
 
 const Layout = ({
   accounts,
@@ -26,7 +25,7 @@ const Layout = ({
   fundId,
   inputVal,
   preFill,
-}: ILayout) => (
+}: ILayout) =>
   <div>
     <div className="display-inline-block push-half-bottom h3 push-half-right text-dark-primary">
       and give
@@ -37,7 +36,9 @@ const Layout = ({
       defaultValue={preFill(fundId)}
       format={changeAmount}
       hideLabel
-      inputClasses={`outlined--dotted outlined--light h3 hard-top flush-bottom text-brand ${css(Styles["show-placeholder"])}`}
+      inputClasses={`outlined--dotted outlined--light h3 hard-top flush-bottom text-brand ${css(
+        Styles["show-placeholder"],
+      )}`}
       placeholder="$0.00"
       style={{ maxWidth: "150px" }}
       type={Meteor.isCordova ? "text" : "tel"}
@@ -49,8 +50,14 @@ const Layout = ({
         to
       </h3>
       <Forms.Select
-        classes={["soft-bottom", "display-inline-block", `${css(Styles.select)}`]}
-        inputClasses={`${active ? "text-brand" : "text-dark-tertiary"} outlined--dotted outlined--light h3 hard-top flush-bottom`}
+        classes={[
+          "soft-bottom",
+          "display-inline-block",
+          `${css(Styles.select)}`,
+        ]}
+        inputClasses={`${active
+          ? "text-brand"
+          : "text-dark-tertiary"} outlined--dotted outlined--light h3 hard-top flush-bottom`}
         items={accounts}
         defaultValue={accounts[0].value}
         onChange={changeFund}
@@ -60,7 +67,6 @@ const Layout = ({
         includeBlank
       />
     </div>
-  </div>
-);
+  </div>;
 
 export default Layout;

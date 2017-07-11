@@ -19,7 +19,7 @@ describe("ExternalLinkWrapper", () => {
       ...additionalProps,
     };
     return (
-      <ExternalLinkWrapper { ...newProps }>
+      <ExternalLinkWrapper {...newProps}>
         <h1>test</h1>
       </ExternalLinkWrapper>
     );
@@ -31,9 +31,11 @@ describe("ExternalLinkWrapper", () => {
   });
 
   it("renders internal link", () => {
-    const wrapper = shallow(generateComponent({
-      to: "/test",
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        to: "/test",
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
@@ -82,7 +84,7 @@ describe("ChildItem", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <ChildItem { ...newProps } />;
+    return <ChildItem {...newProps} />;
   };
 
   it("render with props", () => {
@@ -91,9 +93,11 @@ describe("ChildItem", () => {
   });
 
   it("does not render if no section", () => {
-    const wrapper = shallow(generateComponent({
-      section: null,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        section: null,
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
@@ -116,7 +120,7 @@ describe("SingleItem", () => {
       ...additionalProps,
     };
     return (
-      <SingleItem { ...newProps }>
+      <SingleItem {...newProps}>
         <h1>test</h1>
       </SingleItem>
     );
@@ -128,9 +132,11 @@ describe("SingleItem", () => {
   });
 
   it("does not render if no section", () => {
-    const wrapper = shallow(generateComponent({
-      section: null,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        section: null,
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
@@ -193,7 +199,7 @@ describe("SectionItem", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <SectionItem { ...newProps } />;
+    return <SectionItem {...newProps} />;
   };
 
   it("renders with props", () => {

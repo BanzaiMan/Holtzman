@@ -1,6 +1,5 @@
-
 import { shallow } from "enzyme";
-import { shallowToJson } from "enzyme-to-json"
+import { shallowToJson } from "enzyme-to-json";
 import Home from "../";
 
 describe("home index file", () => {
@@ -12,4 +11,4 @@ describe("home index file", () => {
   it("has routes", () => {
     expect(Home.Routes).toMatchSnapshot();
   });
-})
+});

@@ -1,4 +1,3 @@
-
 import sagaHelper from "redux-saga-testing";
 import { takeLatest } from "redux-saga";
 import { put, select, call, cps } from "redux-saga/effects";
@@ -14,21 +13,20 @@ describe("successful validation", () => {
   }));
 
   it("formats the data in the store", result => {
-
     expect(result.CALL.args[0].variables).toEqual({
       data: JSON.stringify({
         amount: 0,
         billing: {
-          'first-name': null,
-          'last-name': null,
+          "first-name": null,
+          "last-name": null,
           email: null,
           address1: null,
-          address2: '',
+          address2: "",
           city: null,
           state: null,
-          postal: null
+          postal: null,
         },
-        'merchant-defined-field-2': null
+        "merchant-defined-field-2": null,
       }),
       id: null,
       instant: false,
@@ -45,15 +43,17 @@ describe("successful validation", () => {
 
   it("tries to submit payment details with the data and url", result => {
     expect(result.CALL.args[0].variables).toEqual({ token: "TOKEN" });
-    return { };
+    return {};
   });
 
-  it("finally returns an object with status", ({ success, validationError }) => {
+  it("finally returns an object with status", ({
+    success,
+    validationError,
+  }) => {
     expect(success).toBe(true);
     expect(validationError).toBe(false);
   });
 });
-
 
 describe("failure in order", () => {
   const it = sagaHelper(validate());
@@ -66,16 +66,16 @@ describe("failure in order", () => {
       data: JSON.stringify({
         amount: 0,
         billing: {
-          'first-name': null,
-          'last-name': null,
+          "first-name": null,
+          "last-name": null,
           email: null,
           address1: null,
-          address2: '',
+          address2: "",
           city: null,
           state: null,
-          postal: null
+          postal: null,
         },
-        'merchant-defined-field-2': null
+        "merchant-defined-field-2": null,
       }),
       id: null,
       instant: false,
@@ -89,12 +89,14 @@ describe("failure in order", () => {
     return null;
   });
 
-  it("finally returns an object with faling status", ({ success, validationError }) => {
+  it("finally returns an object with faling status", ({
+    success,
+    validationError,
+  }) => {
     expect(success).toBe(false);
     expect(validationError.message).toBe("SAMPLE ERROR");
   });
 });
-
 
 describe("failure in charge", () => {
   const it = sagaHelper(validate());
@@ -107,16 +109,16 @@ describe("failure in charge", () => {
       data: JSON.stringify({
         amount: 0,
         billing: {
-          'first-name': null,
-          'last-name': null,
+          "first-name": null,
+          "last-name": null,
           email: null,
           address1: null,
-          address2: '',
+          address2: "",
           city: null,
           state: null,
-          postal: null
+          postal: null,
         },
-        'merchant-defined-field-2': null
+        "merchant-defined-field-2": null,
       }),
       id: null,
       instant: false,
@@ -136,7 +138,10 @@ describe("failure in charge", () => {
     return { data: { response: { error: "SAMPLE ERROR" } } };
   });
 
-  it("finally returns an object with faling status", ({ success, validationError }) => {
+  it("finally returns an object with faling status", ({
+    success,
+    validationError,
+  }) => {
     expect(success).toBe(false);
     expect(validationError).toBe("SAMPLE ERROR");
   });

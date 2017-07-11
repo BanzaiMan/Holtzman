@@ -1,4 +1,3 @@
-
 // @flow
 // ignore mixin until we can remove it entirely
 // $FlowMeteor
@@ -53,9 +52,7 @@ const ArticlesSingle = (props: IArticlesSingle) => {
         title={article.title}
         image={photo}
         id={article.id}
-        meta={[
-          { property: "og:type", content: "article" },
-        ]}
+        meta={[{ property: "og:type", content: "article" }]}
       />
       <Split nav classes={["background--light-primary"]}>
         {(() => {
@@ -65,7 +62,12 @@ const ArticlesSingle = (props: IArticlesSingle) => {
                 mobile
                 background={photo}
                 classes={["floating--bottom", "overlay--gradient@lap-and-up"]}
-                ratioClasses={["floating__item", "overlay__item", "one-whole", "soft@lap-and-up"]}
+                ratioClasses={[
+                  "floating__item",
+                  "overlay__item",
+                  "one-whole",
+                  "soft@lap-and-up",
+                ]}
                 aspect="square"
               />
             );
@@ -73,7 +75,7 @@ const ArticlesSingle = (props: IArticlesSingle) => {
           return <SingleVideoPlayer ooyalaId={article.content.ooyalaId} />;
         })()}
       </Split>
-      <Left scroll >
+      <Left scroll>
         <div className="one-whole">
           <section
             className={
@@ -126,7 +128,7 @@ const ARTICLE_QUERY = gql`
 
 const withArticle = graphql(ARTICLE_QUERY, {
   name: "article",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { id: ownProps.params.id },
   }),
 });
@@ -136,13 +138,11 @@ export default connect()(
     ReactMixin.decorate(Shareable)(
       ReactMixin.decorate(Headerable)(
         canLike(
-          (props) => (props.article.loading ? null : props.article.content.id)
-        )(ArticlesSingle)
-      )
-    )
-  )
+          props => (props.article.loading ? null : props.article.content.id),
+        )(ArticlesSingle),
+      ),
+    ),
+  ),
 );
 
-export {
-  ArticlesSingle as ArticlesSingleWithoutData,
-};
+export { ArticlesSingle as ArticlesSingleWithoutData };

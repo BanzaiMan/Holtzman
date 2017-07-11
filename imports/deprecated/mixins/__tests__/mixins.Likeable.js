@@ -38,7 +38,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <CWithHeader { ...newProps } />;
+  return <CWithHeader {...newProps} />;
 };
 
 it("sets likeableAction on mount", () => {
@@ -50,9 +50,11 @@ it("onClickAction renders modal if no user", () => {
   Meteor.userId = jest.fn(() => false);
   const mockDispatch = jest.fn();
   modal.render = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   const mockGetLikeableEntry = jest.fn();
   wrapper.instance().getLikableEntry = mockGetLikeableEntry;
   const result = wrapper.instance().onClickAction();
@@ -94,9 +96,11 @@ it("onClickAction calls updates redux and the database if user", () => {
 });
 
 it("getLikableEntry returns null if not found", () => {
-  const wrapper = shallow(generateComponent({
-    props: {},
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      props: {},
+    }),
+  );
   expect(wrapper.instance().getLikableEntry()).toBe(null);
 });
 
@@ -110,12 +114,14 @@ it("getLikableEntry returns for all entry types", () => {
     "album",
     "news",
   ];
-  entryTypes.map((entry) => {
-    const wrapper = shallow(generateComponent({
-      [entry]: {
-        content: {},
-      },
-    }));
+  entryTypes.map(entry => {
+    const wrapper = shallow(
+      generateComponent({
+        [entry]: {
+          content: {},
+        },
+      }),
+    );
     const result = wrapper.instance().getLikableEntry();
     expect(result).toEqual({});
   });
@@ -124,9 +130,11 @@ it("getLikableEntry returns for all entry types", () => {
 it("updateRedux toggles like with id", () => {
   const mockDispatch = jest.fn();
   likedActions.toggle = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   const result = wrapper.instance().updateRedux({
     id: "1",
   });
@@ -140,9 +148,11 @@ it("updateRedux toggles like with id", () => {
 it("updateRedux toggles like with entryId", () => {
   const mockDispatch = jest.fn();
   likedActions.toggle = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   const result = wrapper.instance().updateRedux({
     entryId: "1",
   });
@@ -207,21 +217,23 @@ it("updateDatabase inserts like with parent if sermon", () => {
   Likes.findOne = jest.fn(() => null);
   Likes.insert = jest.fn();
   Meteor.userId = jest.fn(() => "2");
-  const wrapper = shallow(generateComponent({
-    series: {
-      content: {
-        id: "3",
+  const wrapper = shallow(
+    generateComponent({
+      series: {
         content: {
-          images: [
-            {
-              fileLabel: "1:1",
-              url: "http://test.com/parent.jpg",
-            },
-          ],
+          id: "3",
+          content: {
+            images: [
+              {
+                fileLabel: "1:1",
+                url: "http://test.com/parent.jpg",
+              },
+            ],
+          },
         },
       },
-    },
-  }));
+    }),
+  );
   const mockEntry = {
     id: "1",
     title: "test title",

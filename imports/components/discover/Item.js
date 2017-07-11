@@ -10,10 +10,9 @@ import inAppLink from "../../util/inAppLink";
 import Styles from "./styles-css";
 
 export default class SearchItem extends Component {
-
   static propTypes = {
     item: PropTypes.object, // eslint-disable-line
-  }
+  };
 
   cardClasses = () => {
     const classes = [
@@ -29,17 +28,11 @@ export default class SearchItem extends Component {
     ];
 
     return classes.join(" ");
-  }
+  };
 
-  gridClasses = () => (
-    [
-      "grid",
-      "flush",
-      css(Styles["height-100"]),
-    ].join(" ")
-  )
+  gridClasses = () => ["grid", "flush", css(Styles["height-100"])].join(" ");
 
-  gridItemClasses = () => (
+  gridItemClasses = () =>
     [
       "grid__item",
       "three-fifths",
@@ -47,28 +40,27 @@ export default class SearchItem extends Component {
       "floating--left",
       "one-whole",
       css(Styles["height-100"]),
-    ].join(" ")
-  )
+    ].join(" ");
 
-  pClasses = () => (
-    `small ${css(Styles["ellipsis-p"])}`
-  )
+  pClasses = () => `small ${css(Styles["ellipsis-p"])}`;
 
-  bgClasses = () => (
-    [
-      "grid__item",
-      "two-fifths",
-      "hard",
-      "soft-half-left",
-      "background--cover",
-      css(Styles["height-100"]),
-    ]
-  )
+  bgClasses = () => [
+    "grid__item",
+    "two-fifths",
+    "hard",
+    "soft-half-left",
+    "background--cover",
+    css(Styles["height-100"]),
+  ];
 
   // context from ImageLoader
   preloader() {
     return (
-      <div className={`${this.imageclasses.join(" ")} ${css(LoadingStyles["load-item"])}`}>
+      <div
+        className={`${this.imageclasses.join(" ")} ${css(
+          LoadingStyles["load-item"],
+        )}`}
+      >
         <div className="ratio--square" />
       </div>
     );
@@ -76,22 +68,22 @@ export default class SearchItem extends Component {
 
   // context from ImageLoader
   renderElement() {
-    return (
-      <div
-        className={this.imageclasses.join(" ")}
-        style={this.style}
-      />
-    );
+    return <div className={this.imageclasses.join(" ")} style={this.style} />;
   }
 
   render() {
     return (
-      <Link to={this.props.item.link} className={this.cardClasses()} onClick={inAppLink}>
+      <Link
+        to={this.props.item.link}
+        className={this.cardClasses()}
+        onClick={inAppLink}
+      >
         <div className={this.gridClasses()}>
-
           <div className={this.gridItemClasses()}>
             <div className="floating__item one-whole soft-half-sides">
-              <h6>{this.props.item.title}</h6>
+              <h6>
+                {this.props.item.title}
+              </h6>
               <p className={this.pClasses()}>
                 {this.props.item.description}
               </p>
@@ -102,9 +94,7 @@ export default class SearchItem extends Component {
             if (this.props.item.image === "null") {
               const classes = this.bgClasses();
               classes.push(css(Styles["placeholder-img"]));
-              return (
-                <div className={classes.join(" ")} />
-              );
+              return <div className={classes.join(" ")} />;
             }
             return (
               <ImageLoader
@@ -123,5 +113,4 @@ export default class SearchItem extends Component {
       </Link>
     );
   }
-
 }

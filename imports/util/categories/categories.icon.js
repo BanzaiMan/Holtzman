@@ -1,5 +1,3 @@
-
-
 function categoryIcon(contentItem) {
   const category = contentItem.channelName;
 

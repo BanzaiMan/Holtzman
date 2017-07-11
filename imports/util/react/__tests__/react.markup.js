@@ -23,11 +23,14 @@ it("should return from body prop by default", () => {
 });
 
 it("should allow setting a different prop for content", () => {
-  const result = createMarkup({
-    content: {
-      newBody: "<h1>test</h1>",
+  const result = createMarkup(
+    {
+      content: {
+        newBody: "<h1>test</h1>",
+      },
     },
-  }, "newBody");
+    "newBody",
+  );
   expect(result).toEqual({
     __html: "<h1>test</h1>",
   });

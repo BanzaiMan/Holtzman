@@ -1,4 +1,3 @@
-
 // @flow
 
 import { Link } from "react-router";
@@ -22,25 +21,39 @@ const MiniCard = ({
 }: IMiniCard) =>
   <Link to={link} className="plain">
     <div className="card">
-      <div className={`card__item soft push-half-ends ${image ? "two-thirds" : "one-whole"}`} style={{ verticalAlign: "middle" }}>
-        <h6 className={`text-dark-primary capitalize${!description ? " push-half-top" : ""}`}>{ title }</h6>
+      <div
+        className={`card__item soft push-half-ends ${image
+          ? "two-thirds"
+          : "one-whole"}`}
+        style={{ verticalAlign: "middle" }}
+      >
+        <h6
+          className={`text-dark-primary capitalize${!description
+            ? " push-half-top"
+            : ""}`}
+        >
+          {title}
+        </h6>
 
-        { description && <p className="text-dark-primary">{ description }</p> }
+        {description &&
+          <p className="text-dark-primary">
+            {description}
+          </p>}
 
-        {
-          (icon || category) &&
-            <div className="display-inline-block">
-              { icon && <span className={`${icon} text-dark-tertiary`} /> }
-              { category && <h7 className="text-dark-tertiary soft-half-left">{ category }</h7> }
-            </div>
-        }
+        {(icon || category) &&
+          <div className="display-inline-block">
+            {icon && <span className={`${icon} text-dark-tertiary`} />}
+            {category &&
+              <h7 className="text-dark-tertiary soft-half-left">
+                {category}
+              </h7>}
+          </div>}
       </div>
       <div
         className="locked-ends locked-right card__image one-third background--fill"
         style={{ verticalAlign: "middle", backgroundImage: `url('${image}')` }}
       />
     </div>
-  </Link>
-;
+  </Link>;
 
 export default MiniCard;

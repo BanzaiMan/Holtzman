@@ -12,4 +12,4 @@ describe("Event", () => {
     const wrapper = Event.Routes;
     expect(wrapper).toMatchSnapshot();
   });
-})
+});

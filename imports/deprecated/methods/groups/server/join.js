@@ -2,7 +2,6 @@
 import { api, parseEndpoint } from "../../../../util/rock";
 import makeNewGuid from "../../../../util/guid";
 
-
 let GROUP_MEMBER_REQUEST_EMAIL = false;
 let EMAIL_EXISTS = true;
 
@@ -14,7 +13,12 @@ Meteor.methods({
 
     const user = Meteor.users.findOne({ _id: this.userId });
 
-    if (!user || !user.services || !user.services.rock || !user.services.rock.PersonId) {
+    if (
+      !user ||
+      !user.services ||
+      !user.services.rock ||
+      !user.services.rock.PersonId
+    ) {
       throw new Meteor.Error("There was a problem joining this group");
     }
 
@@ -24,7 +28,7 @@ Meteor.methods({
     // first time this is used, try to load the email in memory
     if (!GROUP_MEMBER_REQUEST_EMAIL && EMAIL_EXISTS) {
       GROUP_MEMBER_REQUEST_EMAIL = api.get.sync(
-        "SystemEmails?$filter=Title eq 'Group Member Request'"
+        "SystemEmails?$filter=Title eq 'Group Member Request'",
       );
       if (!GROUP_MEMBER_REQUEST_EMAIL.length) {
         EMAIL_EXISTS = false;
@@ -49,7 +53,7 @@ Meteor.methods({
       // it could be that you are already a member of this group
       // lets check that
       const inGroup = api.get.sync(
-        `GroupMembers?$filter=GroupId eq ${GroupId} and PersonId eq ${PersonId}`
+        `GroupMembers?$filter=GroupId eq ${GroupId} and PersonId eq ${PersonId}`,
       );
       if (inGroup.length) {
         throw new Meteor.Error("You are already a member of this group");
@@ -94,15 +98,15 @@ Meteor.methods({
             RequestMessage: message,
             Person,
             Group,
-          }
-          , (err) => {
+          },
+          err => {
             // in case this messed up, let the job handle it in Rock
             if (err) {
               api.patch.sync(`GroupMembers/${GroupMemberId}`, {
                 IsNotified: false,
               });
             }
-          }
+          },
         );
       }, 100);
     }

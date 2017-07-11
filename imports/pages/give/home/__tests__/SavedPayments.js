@@ -1,4 +1,3 @@
-
 import { mount } from "enzyme";
 import { mountToJson } from "enzyme-to-json";
 import { SavedPaymentsList } from "../SavedPayments";
@@ -16,20 +15,20 @@ const mockPayments = {
       name: "My Card",
       id: 2,
       payment: { accountNumber: "654321******0123", paymentType: "MasterCard" },
-    }
+    },
   ],
 };
 
-const generateComponent = (additionalProps) =>
+const generateComponent = additionalProps =>
   <SavedPaymentsList payments={mockPayments} />;
 
-describe ("Saved Payments List", () => {
+describe("Saved Payments List", () => {
   it("should render with minimal props", () => {
     const component = mount(<SavedPaymentsList />);
     expect(mountToJson(component)).toMatchSnapshot();
   });
 
-  it ("should render a loading state", () => {
+  it("should render a loading state", () => {
     const mockLoadingData = {
       loading: true,
     };
@@ -39,13 +38,13 @@ describe ("Saved Payments List", () => {
   });
 
   it("should render without saved payments", () => {
-    const mockEmptyData = { };
+    const mockEmptyData = {};
 
     const component = mount(<SavedPaymentsList payments={mockEmptyData} />);
     expect(mountToJson(component)).toMatchSnapshot();
   });
 
-  it ("should render properly with data", () => {
+  it("should render properly with data", () => {
     const component = mount(generateComponent());
     expect(mountToJson(component)).toMatchSnapshot();
   });

@@ -1,7 +1,7 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import { search as searchActions } from "../../../../../data/store";
-import { HeaderWithoutData as Header } from "../"
+import { HeaderWithoutData as Header } from "../";
 
 jest.mock("../../../../../data/store", () => ({
   search: {
@@ -28,7 +28,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Header { ...newProps } />;
+  return <Header {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -37,66 +37,84 @@ it("renders with props", () => {
 });
 
 it("renders searching version", () => {
-  const wrapper = shallow(generateComponent({
-    searching: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      searching: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders isSearch version", () => {
-  const wrapper = shallow(generateComponent({
-    isSearch: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      isSearch: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders default text version", () => {
-  const wrapper = shallow(generateComponent({
-    text: "default",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      text: "default",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders NewSpring text version", () => {
-  const wrapper = shallow(generateComponent({
-    text: "NewSpring",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      text: "NewSpring",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders subtext if present", () => {
-  const wrapper = shallow(generateComponent({
-    subText: "some subtext",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      subText: "some subtext",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders live version", () => {
-  const wrapper = shallow(generateComponent({
-    visible: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      visible: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders light version", () => {
-  const wrapper = shallow(generateComponent({
-    light: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      light: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("showSettings return undefined if not showSettings", () => {
-  const wrapper = shallow(generateComponent({
-    showSettings: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      showSettings: false,
+    }),
+  );
   const result = wrapper.instance().showSettings();
   expect(result).toBe(undefined);
 });
 
 it("showSettings returns if showSettings", () => {
-  const wrapper = shallow(generateComponent({
-    showSettings: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      showSettings: true,
+    }),
+  );
   const result = wrapper.instance().showSettings();
   expect(result).toMatchSnapshot();
 });
@@ -105,9 +123,11 @@ it("cancelSearch calls preventDefault and updates search store", () => {
   const mockDispatch = jest.fn();
   searchActions.searching = jest.fn();
   searchActions.term = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().searchInput = {
     value: "something",
   };

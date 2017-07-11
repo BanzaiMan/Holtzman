@@ -23,14 +23,13 @@ import Content from "./Content";
 import Slider from "./Slider";
 
 class StudyEntrySingle extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     live: PropTypes.object.isRequired,
     studyEntry: PropTypes.object.isRequired,
     study: PropTypes.object.isRequired,
     params: PropTypes.object.isRequried,
-  }
+  };
 
   state = {};
 
@@ -56,7 +55,7 @@ class StudyEntrySingle extends Component {
       this.props.studyEntry.content &&
       this.props.study.content &&
       nextProps.study.content
-      ) {
+    ) {
       if (
         nextProps.studyEntry.content.id === this.props.studyEntry.content.id &&
         this.props.study.content.id === nextProps.studyEntry.content.id
@@ -79,10 +78,10 @@ class StudyEntrySingle extends Component {
     this.props.dispatch(liveActions.unfloat());
   }
 
-  onClickLink = (event) => {
+  onClickLink = event => {
     event.preventDefault();
     this.setState({ liveSet: false, livePush: false });
-  }
+  };
 
   getLiveClasses = () => {
     const classes = [];
@@ -91,7 +90,7 @@ class StudyEntrySingle extends Component {
     }
 
     return classes;
-  }
+  };
 
   // if has scripture and live re-enabled
   // the live bar
@@ -117,9 +116,9 @@ class StudyEntrySingle extends Component {
         this.props.dispatch(liveActions.show());
       }, 1000);
     }
-  }
+  };
 
-  handleHeader = (nextProps) => {
+  handleHeader = nextProps => {
     const content = nextProps.study.content;
     if (!content || this.headerSet) return;
 
@@ -135,7 +134,7 @@ class StudyEntrySingle extends Component {
 
     this.headerSet = true;
     this.props.dispatch(headerActions.set(options));
-  }
+  };
 
   renderContent = (studyEntry, study) => {
     if (!studyEntry.content.scripture) {
@@ -160,7 +159,7 @@ class StudyEntrySingle extends Component {
         flush
       />
     );
-  }
+  };
 
   render() {
     const { loading, content } = this.props.studyEntry;
@@ -181,13 +180,11 @@ class StudyEntrySingle extends Component {
           title={studyEntry.title}
           id={studyEntry.id}
           image={
-              studyEntry.content.images && studyEntry.content.images.length > 0
-                ? studyEntry.content.images[0].url
-                : null
+            studyEntry.content.images && studyEntry.content.images.length > 0
+              ? studyEntry.content.images[0].url
+              : null
           }
-          meta={[
-            { property: "og:type", content: "article" },
-          ]}
+          meta={[{ property: "og:type", content: "article" }]}
         />
         {this.renderContent(studyEntry, this.props.study)}
         <div className="one-whole background--light-secondary text-center">
@@ -203,7 +200,6 @@ class StudyEntrySingle extends Component {
       </div>
     );
   }
-
 }
 
 const CURRENT_STUDY_ENTRY_QUERY = gql`
@@ -248,7 +244,7 @@ const CURRENT_STUDY_ENTRY_QUERY = gql`
 `;
 const withCurrentStudyEntry = graphql(CURRENT_STUDY_ENTRY_QUERY, {
   name: "studyEntry",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { studyEntryId: ownProps.params.studyEntryId },
   }),
 });
@@ -292,12 +288,12 @@ const STUDY_QUERY = gql`
 
 const withStudy = graphql(STUDY_QUERY, {
   name: "study",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { id: ownProps.params.id },
   }),
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   modal: { visible: state.modal.visible },
   live: state.live,
 });
@@ -307,13 +303,12 @@ export default connect(mapStateToProps)(
     withStudy(
       ReactMixin.decorate(Shareable)(
         canLike(
-          (props) => (props.studyEntry.loading ? null : props.studyEntry.content.entryId)
-        )(StudyEntrySingle)
-      )
-    )
-  )
+          props =>
+            props.studyEntry.loading ? null : props.studyEntry.content.entryId,
+        )(StudyEntrySingle),
+      ),
+    ),
+  ),
 );
 
-export {
-  StudyEntrySingle as StudyEntrySingleWithoutData,
-};
+export { StudyEntrySingle as StudyEntrySingleWithoutData };

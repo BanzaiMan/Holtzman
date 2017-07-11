@@ -1,5 +1,5 @@
 import { shallow } from "enzyme";
-import { shallowToJson }from "enzyme-to-json";
+import { shallowToJson } from "enzyme-to-json";
 import { reset, startBuffering } from "aphrodite/lib/inject";
 import { Meteor } from "meteor/meteor";
 import { CartContainer } from "../index";
@@ -10,16 +10,17 @@ export const sampleAccount = {
 };
 
 export const sampleSchedule = {
-  details: [{
-    account: {...sampleAccount},
-    amount: 50,
-  }],
+  details: [
+    {
+      account: { ...sampleAccount },
+      amount: 50,
+    },
+  ],
   frequency: "Monthly",
   start: new Date("2025", "01", "01"),
 };
 
 describe("CartContainer", () => {
-
   beforeEach(() => {
     reset();
     startBuffering();
@@ -29,19 +30,19 @@ describe("CartContainer", () => {
     reset();
   });
 
-  it( "renders offline if !alive", () => {
+  it("renders offline if !alive", () => {
     const functionMock = jest.fn();
 
     const tree = shallow(
       <CartContainer
         // first thing called on new CartContainers
         clearTransactions={functionMock}
-      />
+      />,
     );
     expect(shallowToJson(tree)).toMatchSnapshot();
   });
 
-  it( "renders null if no accounts exist", () => {
+  it("renders null if no accounts exist", () => {
     const functionMock = jest.fn();
 
     const tree = shallow(
@@ -49,7 +50,7 @@ describe("CartContainer", () => {
         accounts={[]}
         alive={true}
         clearTransactions={functionMock}
-      />
+      />,
     );
     expect(shallowToJson(tree)).toMatchSnapshot();
   });
@@ -70,7 +71,7 @@ describe("CartContainer", () => {
         saveSchedule={functionMock}
         setTransactionType={functionMock}
         text={""}
-      />
+      />,
     );
 
     expect(shallowToJson(tree)).toMatchSnapshot();
@@ -93,7 +94,7 @@ describe("CartContainer", () => {
         saveSchedule={functionMock}
         setTransactionType={functionMock}
         text={""}
-      />
+      />,
     );
 
     expect(shallowToJson(wrapper)).toMatchSnapshot();
@@ -116,7 +117,7 @@ describe("CartContainer", () => {
         saveSchedule={functionMock}
         setTransactionType={functionMock}
         text={""}
-      />
+      />,
     );
 
     wrapper.setProps({

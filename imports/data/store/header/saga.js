@@ -3,9 +3,10 @@ import { takeLatest } from "redux-saga";
 import { fork, select } from "redux-saga/effects";
 import { addSaga } from "../utilities";
 
-const canRun = () => (
-  typeof window !== "undefined" && window !== null && typeof window.StatusBar !== "undefined"
-);
+const canRun = () =>
+  typeof window !== "undefined" &&
+  window !== null &&
+  typeof window.StatusBar !== "undefined";
 
 function* toggleHeader() {
   const { header } = yield select();

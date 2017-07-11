@@ -1,8 +1,5 @@
-
 import Spinner from "./Spinner";
 
-const Loading = () => (
-  <Spinner />
-);
+const Loading = () => <Spinner />;
 
 export default Loading;

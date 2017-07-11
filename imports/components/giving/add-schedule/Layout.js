@@ -28,7 +28,6 @@ type ILayout = {
 
 // this definition of Layout works
 class Layout extends Component {
-
   props: ILayout;
 
   render() {
@@ -49,7 +48,7 @@ class Layout extends Component {
       dataId,
     } = this.props;
 
-/* end flip flop comment section */
+    /* end flip flop comment section */
     const formClasses = [
       "flush-bottom",
       "h3",
@@ -68,7 +67,12 @@ class Layout extends Component {
     }
 
     let prefillFund = accounts[0].value;
-    if (existing && existing.details && existing.details.length && existing.details[0].account) {
+    if (
+      existing &&
+      existing.details &&
+      existing.details.length &&
+      existing.details[0].account
+    ) {
       prefillFund = existing.details[0].account.id;
     }
 
@@ -79,7 +83,12 @@ class Layout extends Component {
     }
 
     let formInputDefaultValue = null;
-    if (existing && existing.details && existing.details.length && existing.details[0].amount) {
+    if (
+      existing &&
+      existing.details &&
+      existing.details.length &&
+      existing.details[0].amount
+    ) {
       formInputDefaultValue = `$${existing.details[0].amount}`;
     }
 
@@ -92,7 +101,9 @@ class Layout extends Component {
       <div className="push-top@handheld soft-half-top@lap-and-up">
         <Forms.Form
           classes={["text-left", "hard"]}
-          submit={(e) => { e.preventDefault(); }}
+          submit={e => {
+            e.preventDefault();
+          }}
           id="add-to-cart"
         >
           <TertiaryPhrase
@@ -106,58 +117,64 @@ class Layout extends Component {
             type={Meteor.isCordova ? "text" : "tel"}
             ref="primary-account"
             classes={["soft-bottom", "input--active", "display-inline-block"]}
-            inputClasses={`${formClasses.join(" ")} text-dark-primary ${css(Styles["show-placeholder"])}`}
+            inputClasses={`${formClasses.join(" ")} text-dark-primary ${css(
+              Styles["show-placeholder"],
+            )}`}
             placeholder="$0.00"
             validate={save}
             format={format}
             style={{ width: "200px" }}
             defaultValue={formInputDefaultValue}
           />
-          <TertiaryPhrase
-            text="to&nbsp;"
-          />
+          <TertiaryPhrase text="to&nbsp;" />
           <Forms.Select
             items={accounts}
             name="select-account"
             id={"select"}
             hideLabel
             ref="select-account"
-            classes={["soft-bottom", "display-inline-block", css(Styles.select)]}
+            classes={[
+              "soft-bottom",
+              "display-inline-block",
+              css(Styles.select),
+            ]}
             inputClasses={`${formClasses.join(" ")} text-light-tertiary`}
             placeholder="select fund here"
             onChange={setFund}
             defaultValue={prefillFund}
           />
-          <TertiaryPhrase
-            text="&nbsp;"
-          />
+          <TertiaryPhrase text="&nbsp;" />
           <Forms.Select
             items={schedules}
             name="schedules"
             id={"schedules"}
             hideLabel
             ref="schedules"
-            classes={["soft-bottom", "display-inline-block", css(Styles.select)]}
+            classes={[
+              "soft-bottom",
+              "display-inline-block",
+              css(Styles.select),
+            ]}
             inputClasses={`${formClasses.join(" ")} text-light-tertiary`}
             includeBlank
             placeholder="choose frequency"
             onChange={setFrequency}
             defaultValue={formSelectDefaultValue}
           />
-          <TertiaryPhrase
-            text="&nbsp;starting&nbsp;"
-          />
+          <TertiaryPhrase text="&nbsp;starting&nbsp;" />
           <Forms.Date
             id="start-date"
             name="start-date"
             hideLabel
             ref="start-date"
             classes={["soft-bottom", "input--active", "display-inline-block"]}
-            inputClasses={`${formClasses.join(" ")} text-dark-primary ${css(Styles["show-placeholder"])}`}
+            inputClasses={`${formClasses.join(" ")} text-dark-primary ${css(
+              Styles["show-placeholder"],
+            )}`}
             placeholder="select date"
             past={false}
             today={false}
-            format={value => (Moment(value).format("MMM D, YYYY"))} // eslint-disable-line
+            format={value => Moment(value).format("MMM D, YYYY")} // eslint-disable-line
             validation={saveDate}
             defaultValue={defaultDate}
           />

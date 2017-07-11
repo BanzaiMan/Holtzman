@@ -1,7 +1,6 @@
 import { Component, PropTypes } from "react";
 
 export default class Tabs extends Component {
-
   static propTypes = {
     items: PropTypes.array.isRequired, // eslint-disable-line
     toggle: PropTypes.func.isRequired,
@@ -12,11 +11,11 @@ export default class Tabs extends Component {
     arrowClass: PropTypes.string,
     arrowStyle: PropTypes.obj,
     flush: PropTypes.boolean,
-  }
+  };
 
   state = {
     active: 0,
-  }
+  };
 
   componentWillMount() {
     if (this.props.state !== null && this.props.state !== undefined) {
@@ -30,23 +29,19 @@ export default class Tabs extends Component {
     }
   }
 
-  toggle = (event) => {
+  toggle = event => {
     const active = Number(event.target.dataset.toggle);
     if (active !== this.state.active) {
-      if (typeof (this.props.toggle) === "function") {
+      if (typeof this.props.toggle === "function") {
         this.props.toggle(active);
       }
 
       this.setState({ active });
     }
-  }
+  };
 
-  toggleClasses = (main) => {
-    const classes = [
-      "transition",
-      "text-center",
-      "toggle__item",
-    ];
+  toggleClasses = main => {
+    const classes = ["transition", "text-center", "toggle__item"];
 
     if (this.state.active === main) {
       classes.push("toggle__item--active");
@@ -56,18 +51,16 @@ export default class Tabs extends Component {
     }
 
     return classes.join(" ");
-  }
+  };
 
-  toggleWidth = () =>
-    100 / this.props.items.length;
+  toggleWidth = () => 100 / this.props.items.length;
 
-
-  toggleStyle = { width: `${this.toggleWidth()}%` }
+  toggleStyle = { width: `${this.toggleWidth()}%` };
 
   arrowStyle = () => ({
     ...this.props.arrowStyle,
     ...{ marginLeft: `${this.toggleWidth() * this.state.active}%` },
-  })
+  });
 
   render() {
     const { flush } = this.props;
@@ -76,27 +69,28 @@ export default class Tabs extends Component {
         className={`toggle ${flush ? "" : "push-bottom"} soft-sides`}
         style={{ ...{ backgroundColor: "#fff" }, ...this.props.style }}
       >
-        {this.props.items.map((item, i) =>
-          /* eslint-disable */
-          <div
-            data-toggle={i}
-            className={this.toggleClasses(i)}
-            style={this.toggleStyle}
-            onClick={this.toggle}
-            key={i}
-          >{item}</div>
+        {this.props.items.map(
+          (item, i) =>
+            /* eslint-disable */
+            <div
+              data-toggle={i}
+              className={this.toggleClasses(i)}
+              style={this.toggleStyle}
+              onClick={this.toggle}
+              key={i}
+            >
+              {item}
+            </div>,
           /* eslint-enable */
         )}
 
         <div className="grid text-left toggle-arrow soft-sides">
-
           <div
-            className={`transition grid__item hard one-half toggle-arrow__item ${this.props.arrowClass || ""}`}
+            className={`transition grid__item hard one-half toggle-arrow__item ${this
+              .props.arrowClass || ""}`}
             style={this.arrowStyle()}
           />
-
         </div>
-
       </div>
     );
   }

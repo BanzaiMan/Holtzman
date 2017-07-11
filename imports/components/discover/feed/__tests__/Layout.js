@@ -24,9 +24,7 @@ describe("getImage", () => {
   });
 
   it("returns any image if not the one you want", () => {
-    const images = [
-      { url: "http://test.com/2x1.jpg", fileLabel: "2:1" },
-    ];
+    const images = [{ url: "http://test.com/2x1.jpg", fileLabel: "2:1" }];
     const result = getImage(images, "1:1");
     expect(result).toBe(images[0].url);
   });
@@ -40,9 +38,7 @@ describe("Layout", () => {
         urlTitle: "test-title",
       },
       content: {
-        images: [
-          { url: "http://test.com/2x1.jpg", fileLabel: "2:1" },
-        ],
+        images: [{ url: "http://test.com/2x1.jpg", fileLabel: "2:1" }],
       },
     },
     recommendedItems: [
@@ -53,9 +49,7 @@ describe("Layout", () => {
           date: "12-12-2012",
         },
         content: {
-          images: [
-            { url: "http://test.com/2x1.jpg", fileLabel: "2:1" },
-          ],
+          images: [{ url: "http://test.com/2x1.jpg", fileLabel: "2:1" }],
         },
       },
       {
@@ -65,9 +59,7 @@ describe("Layout", () => {
           date: "12-12-2012",
         },
         content: {
-          images: [
-            { url: "http://test.com/2x1.jpg", fileLabel: "2:1" },
-          ],
+          images: [{ url: "http://test.com/2x1.jpg", fileLabel: "2:1" }],
         },
       },
     ],
@@ -79,9 +71,7 @@ describe("Layout", () => {
           date: "12-12-2012",
         },
         content: {
-          images: [
-            { url: "http://test.com/2x1.jpg", fileLabel: "2:1" },
-          ],
+          images: [{ url: "http://test.com/2x1.jpg", fileLabel: "2:1" }],
         },
       },
       {
@@ -91,9 +81,7 @@ describe("Layout", () => {
           date: "12-12-2012",
         },
         content: {
-          images: [
-            { url: "http://test.com/2x1.jpg", fileLabel: "2:1" },
-          ],
+          images: [{ url: "http://test.com/2x1.jpg", fileLabel: "2:1" }],
         },
       },
     ],
@@ -104,7 +92,7 @@ describe("Layout", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Layout { ...newProps } />;
+    return <Layout {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -113,15 +101,16 @@ describe("Layout", () => {
   });
 
   it("works without featured item", () => {
-    const wrapper = shallow(generateComponent({
-      featuredItem: null,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        featuredItem: null,
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 });
 
 describe("RenderRecentLikes", () => {
-
   const defaultProps = {
     recentLikes: [],
     recentLoading: false,
@@ -133,15 +122,19 @@ describe("RenderRecentLikes", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <RenderRecentLikes { ...newProps } />;
+    return <RenderRecentLikes {...newProps} />;
   };
 
-  beforeEach(() => {
-
-  });
+  beforeEach(() => {});
 
   it("should not render with no likes", () => {
-    const component = shallow(generateComponent({ show: true, recentLoading: false, recentLikes: null }));
+    const component = shallow(
+      generateComponent({
+        show: true,
+        recentLoading: false,
+        recentLikes: null,
+      }),
+    );
     expect(shallowToJson(component)).toEqual(null);
   });
 
@@ -151,15 +144,22 @@ describe("RenderRecentLikes", () => {
   });
 
   it("should render loading if it is loading", () => {
-    const component = shallow(generateComponent({ recentLoading: true, show: true }));
+    const component = shallow(
+      generateComponent({ recentLoading: true, show: true }),
+    );
     expect(component.find("Spinner").length).toEqual(1);
     expect(shallowToJson(component)).toMatchSnapshot();
   });
 
   fit("should render likes if not loading", () => {
-    const component = shallow(generateComponent({ recentLoading: false, show: true, recentLikes: ["yo", "dawg"] }));
+    const component = shallow(
+      generateComponent({
+        recentLoading: false,
+        show: true,
+        recentLikes: ["yo", "dawg"],
+      }),
+    );
     expect(component.find("Spinner").length).toEqual(0);
     expect(shallowToJson(component)).toMatchSnapshot();
   });
-
 });

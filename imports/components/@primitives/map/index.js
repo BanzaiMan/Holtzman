@@ -19,7 +19,6 @@ const dynamicProps = {};
 const defaultCenter = [34.595413, -82.6241234];
 @controllable(["center", "zoom", "markers"])
 export default class Map extends Component {
-
   static propTypes = {
     onCenterChange: PropTypes.func, // @controllable generated fn
     onZoomChange: PropTypes.func, // @controllable generated fn
@@ -31,11 +30,8 @@ export default class Map extends Component {
     active: PropTypes.bool,
     hover: PropTypes.string,
     popUp: PropTypes.any, // eslint-disable-line
-    options: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.string,
-    ]),
-  }
+    options: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
+  };
 
   static defaultProps = {
     center: [34.595413, -82.6241234],
@@ -51,23 +47,26 @@ export default class Map extends Component {
       scrollwheel: false,
       disableDefaultUI: true,
     },
-  }
+  };
 
   shouldComponentUpdate = shouldPureComponentUpdate;
 
   componentDidUpdate(prevProps) {
     const didChange = !_.isEqual(this.props.markers, prevProps.markers);
     if (didChange && prevProps.autoCenter && this.map) {
-      const markers = this.props.markers.filter((x) =>
-        (x.latitude && x.longitude)
-      ).map((marker) => (
-        new google.maps.LatLng(marker.latitude, marker.longitude)
-      ));
+      const markers = this.props.markers
+        .filter(x => x.latitude && x.longitude)
+        .map(
+          marker => new google.maps.LatLng(marker.latitude, marker.longitude),
+        );
 
       if (markers.length && markers.length > 1) {
-        this.map.fitBounds(markers.reduce((bounds, marker) => { // eslint-disable-line
-          return bounds.extend(marker);
-        }, new google.maps.LatLngBounds()));
+        this.map.fitBounds(
+          markers.reduce((bounds, marker) => {
+            // eslint-disable-line
+            return bounds.extend(marker);
+          }, new google.maps.LatLngBounds()),
+        );
       }
     }
   }
@@ -79,9 +78,9 @@ export default class Map extends Component {
       this.props.onCenterChange(center);
       this.props.onZoomChange(zoom);
     }
-  }
+  };
 
-  onChildClick = (key) => {
+  onChildClick = key => {
     const { markers } = this.props;
 
     let marker;
@@ -95,9 +94,9 @@ export default class Map extends Component {
     if (this.props.onChildClick) {
       this.props.onChildClick(marker);
     }
-  }
+  };
 
-  onChildMouseEnter = (key) => {
+  onChildMouseEnter = key => {
     const { markers } = this.props;
 
     let marker;
@@ -111,19 +110,19 @@ export default class Map extends Component {
     if (this.props.onMarkerHover) {
       this.props.onMarkerHover(marker);
     }
-  }
+  };
 
   onChildMouseLeave = (/* key, childProps */) => {
     if (this.props.onMarkerHover) {
       this.props.onMarkerHover(-1);
     }
-  }
+  };
 
   onBalloonCloseClick = () => {
     if (this.props.onChildClick) {
       this.props.onChildClick(-1);
     }
-  }
+  };
 
   render() {
     try {
@@ -148,35 +147,49 @@ export default class Map extends Component {
             onChildMouseEnter={this.onChildMouseEnter}
             onChildMouseLeave={this.onChildMouseLeave}
             distanceToMouse={this.distanceToMouse}
-            bootstrapURLKeys={{ key: "AIzaSyCntgrGdfBmzdMxACihPEutGBh_5xsFx8Y" }}
-            margin={[K_MARGIN_TOP, K_MARGIN_RIGHT, K_MARGIN_BOTTOM, K_MARGIN_LEFT]}
+            bootstrapURLKeys={{
+              key: "AIzaSyCntgrGdfBmzdMxACihPEutGBh_5xsFx8Y",
+            }}
+            margin={[
+              K_MARGIN_TOP,
+              K_MARGIN_RIGHT,
+              K_MARGIN_BOTTOM,
+              K_MARGIN_LEFT,
+            ]}
             hoverDistance={K_HOVER_DISTANCE}
             yesIWantToUseGoogleMapApiInternals
             onGoogleApiLoaded={({ map }) => {
               this.map = map;
               const markers = this.props.markers
-                .filter((x) => x.latitude && x.longitude)
-                .map((marker) => (
-                  new google.maps.LatLng(marker.latitude, marker.longitude)
-                ));
+                .filter(x => x.latitude && x.longitude)
+                .map(
+                  marker =>
+                    new google.maps.LatLng(marker.latitude, marker.longitude),
+                );
 
               if (markers.length > 1) {
-                this.map.fitBounds(markers.reduce((bounds, marker) => { // eslint-disable-line
-                  return bounds.extend(marker);
-                }, new google.maps.LatLngBounds()));
+                this.map.fitBounds(
+                  markers.reduce((bounds, marker) => {
+                    // eslint-disable-line
+                    return bounds.extend(marker);
+                  }, new google.maps.LatLngBounds()),
+                );
               }
             }}
           >
-            {this.props.markers && this.props.markers.map((marker) => (
-              <Marker
-                lat={marker.latitude}
-                lng={marker.longitude}
-                key={marker.id}
-                active={this.props.active === marker.id}
-                hover={this.props.hover === marker.id}
-                popUp={this.props.popUp}
-              >{marker.children || null}</Marker>
-            ))}
+            {this.props.markers &&
+              this.props.markers.map(marker =>
+                <Marker
+                  lat={marker.latitude}
+                  lng={marker.longitude}
+                  key={marker.id}
+                  active={this.props.active === marker.id}
+                  hover={this.props.hover === marker.id}
+                  popUp={this.props.popUp}
+                >
+                  {marker.children || null}
+                </Marker>,
+              )}
           </GoogleMap>
         );
       }
@@ -185,5 +198,4 @@ export default class Map extends Component {
     }
     return null;
   }
-
 }

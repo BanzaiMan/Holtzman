@@ -20,7 +20,7 @@ type ILayout = {
   campuses: [String],
   schedules: [String],
   LoadingComponent: Function,
-  done: boolean
+  done: boolean,
 };
 
 const Layout = ({
@@ -38,7 +38,7 @@ const Layout = ({
   toggleTags,
   onCardHover,
   done,
-}: ILayout) => (
+}: ILayout) =>
   <section className="background--light-secondary hard">
     {/* Meta */}
     <Meta title="Group Finder" />
@@ -47,7 +47,7 @@ const Layout = ({
     <div
       className={
         "background--light-primary soft soft-double-left@anchored " +
-          "outlined--light outlined--bottom"
+        "outlined--light outlined--bottom"
       }
       style={{
         whiteSpace: "nowrap",
@@ -57,17 +57,17 @@ const Layout = ({
       }}
     >
       {tags &&
-        tags.map((tag, key) => (
+        tags.map((tag, key) =>
           <Tag
             style={{ verticalAlign: "bottom" }}
             className="flush-bottom"
             val={tag}
             key={key}
             canBeActive
-          />
-        ))}
+          />,
+        )}
       {schedules &&
-        schedules.map((schedule, key) => (
+        schedules.map((schedule, key) =>
           <Tag
             style={{ verticalAlign: "bottom" }}
             className="flush-bottom"
@@ -75,10 +75,10 @@ const Layout = ({
             urlKey="schedules"
             key={key}
             canBeActive
-          />
-        ))}
+          />,
+        )}
       {campuses &&
-        campuses.map((campus, key) => (
+        campuses.map((campus, key) =>
           <Tag
             style={{ verticalAlign: "bottom" }}
             className="flush-bottom"
@@ -86,8 +86,8 @@ const Layout = ({
             urlKey="campuses"
             key={key}
             canBeActive
-          />
-        ))}
+          />,
+        )}
       <Tag
         style={{ verticalAlign: "bottom" }}
         className="flush-bottom"
@@ -97,7 +97,6 @@ const Layout = ({
         iconClass={showTags ? "icon-arrow-up" : "icon-arrow-down"}
         data-spec="iconTag"
       />
-
     </div>
 
     {/* Filter */}
@@ -125,13 +124,12 @@ const Layout = ({
             >
               {count} Results
             </h6>
-            {(() => (
+            {(() =>
               <button
                 className="float-right icon-search"
                 style={{ marginTop: "-4px" }}
                 onClick={() => toggleSearch()}
-              />
-            ))()}
+              />)()}
           </div>
         );
       })()}
@@ -144,9 +142,9 @@ const Layout = ({
           <Spinner styles={{ width: "40px", height: "40px" }} />
         </div>}
 
-      {groups.map((group, key) => (
-        <Group onHover={onCardHover} group={group} id={group.id} key={key} />
-      ))}
+      {groups.map((group, key) =>
+        <Group onHover={onCardHover} group={group} id={group.id} key={key} />,
+      )}
 
       {(() => {
         if (!count) return null;
@@ -154,7 +152,7 @@ const Layout = ({
           <div
             className={
               "text-center soft-half-top push-top push-double-top@lap-and-up " +
-                "soft-half-bottom soft-half-sides"
+              "soft-half-bottom soft-half-sides"
             }
           >
             <h6 className="em text-dark-secondary flush">
@@ -176,8 +174,8 @@ const Layout = ({
                 <p className="flush hard">
                   <em>
                     <small>
-                      Unfortunately, we didn't find any groups matching your search. You can start a group
-                      {" "}
+                      Unfortunately, we didn't find any groups matching your
+                      search. You can start a group{" "}
                       <a href="https://rock.newspring.cc/workflows/81">here!</a>
                     </small>
                   </em>
@@ -192,7 +190,7 @@ const Layout = ({
       <button
         className={
           "relative one-whole push-double-top@lap-and-up " +
-            "push-double-top push-bottom@lap-and-up"
+          "push-double-top push-bottom@lap-and-up"
         }
       >
         <div className="card soft soft-double-sides@lap-and-up">
@@ -200,20 +198,22 @@ const Layout = ({
             <div className="one-whole text-center@handheld">
               {/* Name */}
               <h4 className="soft-half-top push-top@anchored capitalize">
-                Can't find what you're looking for, or want to start your own group?
+                Can't find what you're looking for, or want to start your own
+                group?
               </h4>
 
               {/* CTA */}
-              <Link href="https://rock.newspring.cc/workflows/81" className="btn push-half-top">
+              <Link
+                href="https://rock.newspring.cc/workflows/81"
+                className="btn push-half-top"
+              >
                 Contact Us
               </Link>
             </div>
           </div>
         </div>
       </button>
-
     </div>
-  </section>
-);
+  </section>;
 
 export default Layout;

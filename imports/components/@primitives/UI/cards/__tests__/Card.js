@@ -1,14 +1,20 @@
-
 import { shallow, mount } from "enzyme";
 import { mountToJson } from "enzyme-to-json";
 import { getSingleSpecWrapper } from "../../../../../util/tests/data-spec";
 import { ImageLoader } from "../../../UI/loading";
 import { Link } from "react-router";
 
-import
-  Card,
-  { Wrapper, createItemClasses, cardClasses, createStyles, imageStyles, preloader, renderActualElement, createImage, createWrapperClasses }
-from "../Card";
+import Card, {
+  Wrapper,
+  createItemClasses,
+  cardClasses,
+  createStyles,
+  imageStyles,
+  preloader,
+  renderActualElement,
+  createImage,
+  createWrapperClasses,
+} from "../Card";
 
 describe("wrapper", () => {
   it("should render", () => {
@@ -17,12 +23,16 @@ describe("wrapper", () => {
     expect(mountToJson(component)).toMatchSnapshot();
   });
   it("should pass children", () => {
-    const component = mount(<Wrapper><img /></Wrapper>);
+    const component = mount(
+      <Wrapper>
+        <img />
+      </Wrapper>,
+    );
     expect(component).toBeDefined();
     expect(component.find("img")).toBeDefined();
   });
   it("should pass props", () => {
-    const component = mount(<Wrapper style={{color: "blue"}}/>);
+    const component = mount(<Wrapper style={{ color: "blue" }} />);
     expect(component).toBeDefined();
     expect(component.find("div").props().style).toEqual({ color: "blue" });
   });
@@ -33,7 +43,9 @@ describe("createItemClasses", () => {
     expect(createItemClasses()).toBeDefined();
   });
   it("should append background style with linkAll", () => {
-    expect(createItemClasses(null, true)).toContain("background--light-primary");
+    expect(createItemClasses(null, true)).toContain(
+      "background--light-primary",
+    );
   });
   it("should append item classes", () => {
     expect(createItemClasses(["harambe"], true)).toContain("harambe");
@@ -113,7 +125,7 @@ describe("renderActualElement", () => {
 
 describe("createImage", () => {
   beforeEach(() => {
-    jest.mock("../../../UI/loading", (props) => <div />);
+    jest.mock("../../../UI/loading", props => <div />);
   });
 
   it("should not error with no args", () => {
@@ -122,37 +134,43 @@ describe("createImage", () => {
   });
   it("should append ratio if defined", () => {
     const component = mount(createImage("triangle"));
-    expect(component.find("ImageLoader").props().imageclasses)
-      .toContain("ratio--triangle");
+    expect(component.find("ImageLoader").props().imageclasses).toContain(
+      "ratio--triangle",
+    );
   });
   it("should append landscape ratio if one isn't defined", () => {
     const component = mount(createImage());
-    expect(component.find("ImageLoader").props().imageclasses)
-      .toContain("ratio--landscape");
+    expect(component.find("ImageLoader").props().imageclasses).toContain(
+      "ratio--landscape",
+    );
   });
   it("should append imageclasses if passed in", () => {
     const component = mount(createImage(null, "ballin"));
-    expect(component.find("ImageLoader").props().imageclasses)
-      .toContain("ballin");
+    expect(component.find("ImageLoader").props().imageclasses).toContain(
+      "ballin",
+    );
   });
   it("should pass url prop", () => {
     const component = mount(createImage(null, null, "//harambe"));
-    expect(component.find("ImageLoader").props().src)
-      .toEqual("//harambe");
+    expect(component.find("ImageLoader").props().src).toEqual("//harambe");
   });
   it("should pass style prop if not full", () => {
     const component = mount(createImage(null, null, "//harambe", false));
-    expect(component.find("ImageLoader").props().style.backgroundImage)
-      .toEqual("url(\'//harambe\')");
+    expect(component.find("ImageLoader").props().style.backgroundImage).toEqual(
+      "url('//harambe')",
+    );
   });
   it("should pass renderElement", () => {
     const component = mount(createImage(null, null, null, false, jest.fn()));
-    expect(typeof component.find("ImageLoader").props().renderElement)
-      .toEqual("function");
+    expect(typeof component.find("ImageLoader").props().renderElement).toEqual(
+      "function",
+    );
   });
   it("should pass preloader", () => {
     const preloader = jest.fn();
-    const component = mount(createImage(null, null, null, false, null, preloader));
+    const component = mount(
+      createImage(null, null, null, false, null, preloader),
+    );
     expect(preloader).toBeCalled();
     expect(preloader.mock.calls[0][0].length).toBeTruthy();
   });
@@ -171,12 +189,13 @@ describe("createWrapperClasses", () => {
 });
 
 describe("Card", () => {
-  const generateComponent = (additionalProps={}) => (<Card {...additionalProps} />);
+  const generateComponent = (additionalProps = {}) =>
+    <Card {...additionalProps} />;
   beforeEach(() => {
-    jest.mock("../../../UI/loading", (props) => <div />);
+    jest.mock("../../../UI/loading", props => <div />);
     jest.mock("react-router", () => ({
-      "Link": jest.fn((props) => "a"),
-    }))
+      Link: jest.fn(props => "a"),
+    }));
   });
 
   it("should render with no props", () => {
@@ -185,7 +204,7 @@ describe("Card", () => {
     expect(mountToJson(component)).toMatchSnapshot();
   });
   it("should render wrapping `a` with linkAll", () => {
-    const component = mount(generateComponent({linkAll: true}));
+    const component = mount(generateComponent({ linkAll: true }));
     expect(component.find("a.card")).toHaveLength(1);
   });
   it("should render wrapping `div` with no linkAll", () => {
@@ -193,17 +212,17 @@ describe("Card", () => {
     expect(component.find("div.card")).toHaveLength(1);
   });
   it("should pass theme to card if present", () => {
-    const component = mount(generateComponent({theme: "yellow"}));
+    const component = mount(generateComponent({ theme: "yellow" }));
     const card = getSingleSpecWrapper(component, "card");
     expect(card.hasClass("yellow")).toEqual(true);
   });
   it("should pass classes to card if theme not present", () => {
-    const component = mount(generateComponent({classes: ["yellow"]}));
+    const component = mount(generateComponent({ classes: ["yellow"] }));
     const card = getSingleSpecWrapper(component, "card");
     expect(card.hasClass("yellow")).toEqual(true);
   });
   it("should pass styles to card", () => {
-    const component = mount(generateComponent({styles: {color: "blue"}}));
+    const component = mount(generateComponent({ styles: { color: "blue" } }));
     const card = getSingleSpecWrapper(component, "card");
     expect(card.prop("style")).toEqual({ color: "blue" });
   });
@@ -243,7 +262,11 @@ describe("Card", () => {
     expect(wrapper.prop("className")).toBeDefined();
   });
   it("should pass children", () => {
-    const component = mount(<Card><p id="hey">cincinnati zoo</p></Card>);
+    const component = mount(
+      <Card>
+        <p id="hey">cincinnati zoo</p>
+      </Card>,
+    );
     expect(component.find("#hey").text()).toEqual("cincinnati zoo");
   });
 });

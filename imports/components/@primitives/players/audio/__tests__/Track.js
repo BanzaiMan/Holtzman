@@ -1,5 +1,5 @@
 import { shallow } from "enzyme";
-import { shallowToJson } from "enzyme-to-json"
+import { shallowToJson } from "enzyme-to-json";
 import AudioTrack from "../Track";
 
 const defaultProps = {
@@ -17,7 +17,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <AudioTrack { ...newProps } />;
+  return <AudioTrack {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -31,9 +31,11 @@ it("trackClasses has active version", () => {
 });
 
 it("trackClasses has inactive version", () => {
-  const wrapper = shallow(generateComponent({
-    active: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      active: false,
+    }),
+  );
   expect(wrapper.instance().trackClasses()).toMatchSnapshot();
 });
 
@@ -43,18 +45,22 @@ it("textClasses has active version", () => {
 });
 
 it("textClasses has inactive version", () => {
-  const wrapper = shallow(generateComponent({
-    active: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      active: false,
+    }),
+  );
   expect(wrapper.instance().textClasses()).toMatchSnapshot();
 });
 
 it("play calls play with track", () => {
   const mockPlay = jest.fn();
-  const wrapper = shallow(generateComponent({
-    play: mockPlay,
-  }));
-  const mockPreventDefault = jest.fn()
+  const wrapper = shallow(
+    generateComponent({
+      play: mockPlay,
+    }),
+  );
+  const mockPreventDefault = jest.fn();
   wrapper.instance().play({
     preventDefault: mockPreventDefault,
   });
@@ -65,13 +71,15 @@ it("play calls play with track", () => {
 
 it("play does not play if no file", () => {
   const mockPlay = jest.fn();
-  const wrapper = shallow(generateComponent({
-    track: {
-      file: null,
-    },
-    play: mockPlay,
-  }));
-  const mockPreventDefault = jest.fn()
+  const wrapper = shallow(
+    generateComponent({
+      track: {
+        file: null,
+      },
+      play: mockPlay,
+    }),
+  );
+  const mockPreventDefault = jest.fn();
   wrapper.instance().play({
     preventDefault: mockPreventDefault,
   });
@@ -85,11 +93,13 @@ it("buttonClasses has active state", () => {
 });
 
 it("buttonClasses has inactive state", () => {
-  const wrapper = shallow(generateComponent({
-    track: {
-      file: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      track: {
+        file: null,
+      },
+    }),
+  );
   expect(wrapper.instance().buttonClasses()).toMatchSnapshot();
 });
 
@@ -99,10 +109,12 @@ it("durationClasses has active state", () => {
 });
 
 it("durationClasses has inactive state", () => {
-  const wrapper = shallow(generateComponent({
-    track: {
-      file: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      track: {
+        file: null,
+      },
+    }),
+  );
   expect(wrapper.instance().durationClasses()).toMatchSnapshot();
 });

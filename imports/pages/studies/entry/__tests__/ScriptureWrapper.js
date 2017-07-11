@@ -17,10 +17,7 @@ afterEach(() => {
 const defaultProps = {
   studyEntry: {
     content: {
-      scripture: [
-        { book: "Job", passage: "2" },
-        { book: "Job", passage: "3" },
-      ],
+      scripture: [{ book: "Job", passage: "2" }, { book: "Job", passage: "3" }],
     },
   },
   classes: [],
@@ -31,7 +28,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <ScriptureWrapper {...newProps } />;
+  return <ScriptureWrapper {...newProps} />;
 };
 
 it("renders scriptures", () => {
@@ -46,9 +43,11 @@ it("getClasses returns default classes", () => {
 });
 
 it("getClasses appends additional classes", () => {
-  const wrapper = shallow(generateComponent({
-    classes: ["test", "test2"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      classes: ["test", "test2"],
+    }),
+  );
   const result = wrapper.instance().getClasses();
   expect(result).toMatchSnapshot();
 });

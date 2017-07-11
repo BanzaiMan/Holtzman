@@ -1,11 +1,7 @@
 /* eslint-disable */
 import { Meteor } from "meteor/meteor";
 import { storiesOf } from "@kadira/storybook";
-import {
-  withKnobs,
-  number,
-  text,
-} from "@kadira/storybook-addon-knobs";
+import { withKnobs, number, text } from "@kadira/storybook-addon-knobs";
 import withReadme from "storybook-readme/with-readme";
 import backgrounds from "react-storybook-addon-backgrounds";
 
@@ -18,11 +14,11 @@ import LineGraph from "../LineGraph";
 const story = storiesOf("Graphs", module)
   .addDecorator(withKnobs)
   .addDecorator(centered)
-  .addDecorator(backgrounds(defaultColors()))
-  ;
+  .addDecorator(backgrounds(defaultColors()));
 
-story
-  .add("Line Graph", withReadme(Readme, () => {
+story.add(
+  "Line Graph",
+  withReadme(Readme, () => {
     const data = [
       {
         month: "January",
@@ -115,11 +111,26 @@ story
         fill: "#858585",
       },
     };
-    axisStyles.axis.lineColor = text("Axis Line Color", axisStyles.axis.lineColor);
-    axisStyles.axis.lineWidth = text("Axis Line Width", axisStyles.axis.lineWidth);
-    axisStyles.tickLabels.fontSize = number("Axis Font Size", axisStyles.tickLabels.fontSize);
-    axisStyles.tickLabels.padding = text("Axis Padding", axisStyles.tickLabels.padding);
-    axisStyles.tickLabels.fill = text("Axis Text Color", axisStyles.tickLabels.fill);
+    axisStyles.axis.lineColor = text(
+      "Axis Line Color",
+      axisStyles.axis.lineColor,
+    );
+    axisStyles.axis.lineWidth = text(
+      "Axis Line Width",
+      axisStyles.axis.lineWidth,
+    );
+    axisStyles.tickLabels.fontSize = number(
+      "Axis Font Size",
+      axisStyles.tickLabels.fontSize,
+    );
+    axisStyles.tickLabels.padding = text(
+      "Axis Padding",
+      axisStyles.tickLabels.padding,
+    );
+    axisStyles.tickLabels.fill = text(
+      "Axis Text Color",
+      axisStyles.tickLabels.fill,
+    );
 
     return (
       <LineGraph
@@ -131,4 +142,5 @@ story
         axisStyles={axisStyles}
       />
     );
-  }));
+  }),
+);

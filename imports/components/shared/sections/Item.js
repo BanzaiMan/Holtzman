@@ -5,11 +5,11 @@ import { VelocityTransitionGroup } from "velocity-react";
 
 import { ImageLoader } from "../../@primitives/UI/loading";
 
-export const ExternalLinkWrapper = (props) => {
+export const ExternalLinkWrapper = props => {
   let url = props.to;
   if (props.to.match("//") === null) {
     return (
-      <Link {...props} to={url} >
+      <Link {...props} to={url}>
         {props.children}
       </Link>
     );
@@ -19,10 +19,7 @@ export const ExternalLinkWrapper = (props) => {
     url = `/${url}`;
   }
   return (
-    <a
-      {...props}
-      href={url}
-    >
+    <a {...props} href={url}>
       {props.children}
     </a>
   );
@@ -36,10 +33,7 @@ ExternalLinkWrapper.propTypes = {
 // context from ImageLoader
 export function preloader() {
   return (
-    <div
-      id={this.id}
-      className={`${this.imageclasses.join(" ")}`}
-    >
+    <div id={this.id} className={`${this.imageclasses.join(" ")}`}>
       {this.children}
     </div>
   );
@@ -85,10 +79,18 @@ export const ChildItem = ({ section, go }) => {
         id={section.id}
       >
         <div className="rounded one-whole grid rounded flush background--light-primary">
-          <div className="grid__item two-thirds hard" style={{ verticalAlign: "middle" }}>
-            <h6 className="soft-left text-dark-primary flush-bottom">{section.text}</h6>
+          <div
+            className="grid__item two-thirds hard"
+            style={{ verticalAlign: "middle" }}
+          >
+            <h6 className="soft-left text-dark-primary flush-bottom">
+              {section.text}
+            </h6>
           </div>
-          <div className="grid__item one-third hard" style={{ verticalAlign: "middle" }}>
+          <div
+            className="grid__item one-third hard"
+            style={{ verticalAlign: "middle" }}
+          >
             <ImageLoader
               src={section.image}
               preloader={preloader}
@@ -104,7 +106,6 @@ export const ChildItem = ({ section, go }) => {
             </ImageLoader>
           </div>
         </div>
-
       </ExternalLinkWrapper>
     </div>
   );
@@ -148,12 +149,13 @@ export const SingleItem = ({ section, go, children }) => {
           src={section.image}
           preloader={preloader}
           renderElement={renderElement}
-
           imageclasses={imageclasses}
           style={{ backgroundImage: `url('${section.image}')` }}
         >
           <div className="overlay__item floating__item ratio__item">
-            <h6 className="text-light-primary soft-left">{section.text}</h6>
+            <h6 className="text-light-primary soft-left">
+              {section.text}
+            </h6>
           </div>
         </ImageLoader>
       </ExternalLinkWrapper>
@@ -169,17 +171,16 @@ SingleItem.propTypes = {
 };
 
 export default class SectionItem extends Component {
-
   static propTypes = {
     sections: PropTypes.array,
     hide: PropTypes.func.isRequired,
-  }
+  };
 
   state = {
     section: null,
-  }
+  };
 
-  expandOrGo = (e) => {
+  expandOrGo = e => {
     const { id } = e.currentTarget;
 
     for (const section of this.props.sections) {
@@ -208,7 +209,7 @@ export default class SectionItem extends Component {
     }
 
     this.props.hide();
-  }
+  };
 
   renderChildren = () => {
     const { section } = this.state;
@@ -228,18 +229,15 @@ export default class SectionItem extends Component {
       <div className="soft-half-right soft-left soft-top background--dark-primary push-bottom">
         {/* <h4 className="soft-half-bottom text-light-primary text-center">{section.text}</h4>*/}
         <div className="grid ">
-
-          {children.map((sectionItem, i) => (
-            <ChildItem section={sectionItem} key={i} go={this.expandOrGo} />
-          ))}
-
+          {children.map((sectionItem, i) =>
+            <ChildItem section={sectionItem} key={i} go={this.expandOrGo} />,
+          )}
         </div>
       </div>
-
     );
-  }
+  };
 
-  renderArrow = (sectionItem) => {
+  renderArrow = sectionItem => {
     const { section } = this.state;
 
     if (!section) {
@@ -267,7 +265,7 @@ export default class SectionItem extends Component {
         }}
       />
     );
-  }
+  };
 
   render() {
     const { sections } = this.props;
@@ -276,15 +274,18 @@ export default class SectionItem extends Component {
       <div>
         <div className="soft-half-right soft-left">
           <div className="grid">
-            <div className="grid__item one-whole" >
+            <div className="grid__item one-whole">
               <div className="grid">
-                {sections.map((sectionItem, i) => (
-                  <SingleItem section={sectionItem} key={i} go={this.expandOrGo}>
+                {sections.map((sectionItem, i) =>
+                  <SingleItem
+                    section={sectionItem}
+                    key={i}
+                    go={this.expandOrGo}
+                  >
                     {this.renderArrow(sectionItem)}
-                  </SingleItem>
-                ))}
+                  </SingleItem>,
+                )}
               </div>
-
             </div>
           </div>
         </div>
@@ -292,10 +293,12 @@ export default class SectionItem extends Component {
         <div className="one-whole">
           <VelocityTransitionGroup
             enter={{
-              animation: "slideDown", duration: 250,
+              animation: "slideDown",
+              duration: 250,
             }}
             leave={{
-              animation: "slideUp", duration: 250,
+              animation: "slideUp",
+              duration: 250,
             }}
           >
             {this.renderChildren()}

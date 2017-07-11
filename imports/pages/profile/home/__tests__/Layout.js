@@ -22,7 +22,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 Meteor.isCordova = false;
@@ -39,11 +39,13 @@ it("renders cordova version", () => {
 });
 
 it("works without city", () => {
-  const wrapper = shallow(generateComponent({
-    person: {
-      nickName: "jim",
-      lastName: "bob",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      person: {
+        nickName: "jim",
+        lastName: "bob",
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

@@ -25,7 +25,7 @@ export const REMOVE_PAYMENT_MUTATION = gql`
 
 export const updateQuery = (id: string, name: ?string) => (
   prev: Object,
-  { mutationResult }: Object
+  { mutationResult }: Object,
 ) => {
   const { error } = mutationResult.data.payment;
   if (error) return prev;
@@ -42,22 +42,23 @@ export const updateQuery = (id: string, name: ?string) => (
 
 export const withPaymentRemove = graphql(REMOVE_PAYMENT_MUTATION, {
   props: ({ mutate }) => ({
-    remove: (id) => mutate({
-      variables: { id },
-      optimisticResponse: {
-        __typename: "Mutation",
-        payment: {
-          error: null,
-          code: null,
-          success: true,
-          __typename: "SavePaymentMutationResponse",
+    remove: id =>
+      mutate({
+        variables: { id },
+        optimisticResponse: {
+          __typename: "Mutation",
+          payment: {
+            error: null,
+            code: null,
+            success: true,
+            __typename: "SavePaymentMutationResponse",
+          },
         },
-      },
-      updateQueries: {
-        GivingDashboard: updateQuery(id),
-        GetSavedPaymentAccounts: updateQuery(id),
-      },
-    }),
+        updateQueries: {
+          GivingDashboard: updateQuery(id),
+          GetSavedPaymentAccounts: updateQuery(id),
+        },
+      }),
   }),
 });
 
@@ -67,33 +68,36 @@ export const EDIT_PAYMENT_MUTATION = gql`
       error
       code
       success
-      savedPayment { name }
+      savedPayment {
+        name
+      }
     }
   }
 `;
 
 export const withPaymentUpdate = graphql(EDIT_PAYMENT_MUTATION, {
   props: ({ mutate }) => ({
-    save: (id, name) => mutate({
-      variables: { id, name },
-      optimisticResponse: {
-        __typename: "Mutation",
-        payment: {
-          error: null,
-          code: null,
-          success: true,
+    save: (id, name) =>
+      mutate({
+        variables: { id, name },
+        optimisticResponse: {
+          __typename: "Mutation",
           payment: {
-            __typename: "SavedPayment",
-            name,
+            error: null,
+            code: null,
+            success: true,
+            payment: {
+              __typename: "SavedPayment",
+              name,
+            },
+            __typename: "SavePaymentMutationResponse",
           },
-          __typename: "SavePaymentMutationResponse",
         },
-      },
-      updateQueries: {
-        GivingDashboard: updateQuery(id, name),
-        GetSavedPaymentAccounts: updateQuery(id, name),
-      },
-    }),
+        updateQueries: {
+          GivingDashboard: updateQuery(id, name),
+          GetSavedPaymentAccounts: updateQuery(id, name),
+        },
+      }),
   }),
 });
 
@@ -105,32 +109,29 @@ type IWithPaymentRemove = {
 };
 
 export class EditWithOutMutations extends Component {
-
   props: IWithPaymentRemove;
 
-  state = { name: "", loading: false, success: false, action: "" }
+  state = { name: "", loading: false, success: false, action: "" };
 
   componentWillMount() {
     this.setState({ name: this.props.payment.name });
   }
 
-  changeName = (name: string) => this.setState({ name })
+  changeName = (name: string) => this.setState({ name });
 
   save = () => {
     this.setState({ loading: true, action: "update" });
-    this.props.save(this.props.payment.id, this.state.name)
-      .then(() => {
-        this.setState({ loading: false, success: true, action: "update" });
-      });
-  }
+    this.props.save(this.props.payment.id, this.state.name).then(() => {
+      this.setState({ loading: false, success: true, action: "update" });
+    });
+  };
 
   remove = () => {
     this.setState({ loading: true, action: "remove" });
-    this.props.remove(this.props.payment.id)
-      .then(() => {
-        this.setState({ loading: false, success: true, action: "remove" });
-      });
-  }
+    this.props.remove(this.props.payment.id).then(() => {
+      this.setState({ loading: false, success: true, action: "remove" });
+    });
+  };
 
   render() {
     const { payment, dispatch } = this.props;
@@ -148,7 +149,9 @@ export class EditWithOutMutations extends Component {
     return (
       <div className="soft">
         <div className="one-whole text-center soft-ends">
-          <h4 className="text-dark-primary flush-bottom soft-bottom">Edit Account</h4>
+          <h4 className="text-dark-primary flush-bottom soft-bottom">
+            Edit Account
+          </h4>
           <div style={{ verticalAlign: "middle" }}>
             <h6
               className="text-dark-tertiary flush soft-half-right display-inline-block"
@@ -156,7 +159,10 @@ export class EditWithOutMutations extends Component {
             >
               {payment.payment.accountNumber.slice(-4)}
             </h6>
-            <div className="display-inline-block" style={{ verticalAlign: "top" }}>
+            <div
+              className="display-inline-block"
+              style={{ verticalAlign: "top" }}
+            >
               <AccountType
                 width="30px"
                 height="20px"
@@ -172,10 +178,7 @@ export class EditWithOutMutations extends Component {
             defaultValue={this.state.name}
             onChange={this.changeName}
           />
-          <button
-            className="btn one-whole push-half-ends"
-            onClick={this.save}
-          >
+          <button className="btn one-whole push-half-ends" onClick={this.save}>
             Save Changes
           </button>
           <button
@@ -192,12 +195,11 @@ export class EditWithOutMutations extends Component {
 
 const Edit = withPaymentUpdate(withPaymentRemove(EditWithOutMutations));
 
-export default connect()(({ payment, dispatch }) => (
+export default connect()(({ payment, dispatch }) =>
   <SavedPaymentCard
     classes={"grid__item one-whole one-half@anchored"}
     key={`${payment.id}_${payment.name}`}
     payment={payment}
     onClick={() => dispatch(modal.render(Edit, { payment, dispatch }))}
-  />
-));
-
+  />,
+);

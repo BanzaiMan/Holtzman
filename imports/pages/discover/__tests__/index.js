@@ -22,7 +22,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Discover { ...newProps } />;
+  return <Discover {...newProps} />;
 };
 
 beforeEach(() => {
@@ -40,20 +40,24 @@ it("renders with props", () => {
 });
 
 it("renders additional padding when audio player active", () => {
-  const wrapper = shallow(generateComponent({
-    audio: {
-      state: "playing",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      audio: {
+        state: "playing",
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("hides live bar on mount", () => {
   const mockDispatch = jest.fn();
   liveActions.hide = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(liveActions.hide).toHaveBeenCalledTimes(1);
 });
@@ -61,9 +65,11 @@ it("hides live bar on mount", () => {
 it("reenables live bar on unmount", () => {
   const mockDispatch = jest.fn();
   liveActions.show = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.unmount();
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(liveActions.show).toHaveBeenCalledTimes(1);
@@ -78,11 +84,13 @@ it("containerStyles doesn't account for audio player when default", () => {
 });
 
 it("containerStyles acounts for audio player when not default", () => {
-  const wrapper = shallow(generateComponent({
-    audio: {
-      state: "paused",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      audio: {
+        state: "paused",
+      },
+    }),
+  );
   const result = wrapper.instance().containerStyles();
   expect(result).toEqual({
     paddingBottom: "50px",

@@ -17,12 +17,11 @@ import { nav as navActions } from "../../data/store";
 import Single from "./Single";
 
 class TemplateWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
     Loading: PropTypes.func,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(navActions.setLevel("TOP"));
@@ -32,33 +31,28 @@ class TemplateWithoutData extends Component {
   }
 
   handleRefresh = (resolve, reject) => {
-    this.props.data.refetch()
-      .then(resolve)
-      .catch(reject);
-  }
+    this.props.data.refetch().then(resolve).catch(reject);
+  };
 
   renderItems = () => {
     const { content } = this.props.data;
     let items = [1, 2, 3, 4, 5];
     if (content) items = content;
-    return (
-      items.map((item, i) => (
-        <div
-          className={
-            "grid__item one-half@palm-wide one-third@portable one-quarter@anchored " +
-            "flush-bottom@handheld push-bottom@portable push-bottom@anchored"
-          }
-          key={i}
-        >
-          {(() => {
-            if (typeof item === "number") return <FeedItemSkeleton />;
-            return <FeedItem item={item} />;
-          })()}
-        </div>
-      ))
+    return items.map((item, i) =>
+      <div
+        className={
+          "grid__item one-half@palm-wide one-third@portable one-quarter@anchored " +
+          "flush-bottom@handheld push-bottom@portable push-bottom@anchored"
+        }
+        key={i}
+      >
+        {(() => {
+          if (typeof item === "number") return <FeedItemSkeleton />;
+          return <FeedItem item={item} />;
+        })()}
+      </div>,
     );
-  }
-
+  };
 
   render() {
     const { Loading } = this.props;
@@ -115,31 +109,34 @@ const withStories = graphql(STORIES_QUERY, {
   props: ({ data }) => ({
     data,
     loading: data.loading,
-    done: (
+    done:
       data.content &&
       !data.loading &&
-      data.content.length < data.variables.limit + data.variables.skip
-    ),
-    fetchMore: () => data.fetchMore({
-      variables: { ...data.variables, skip: data.content.length },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult.data) return previousResult;
-        return { content: [...previousResult.content, ...fetchMoreResult.data.content] };
-      },
-    }),
+      data.content.length < data.variables.limit + data.variables.skip,
+    fetchMore: () =>
+      data.fetchMore({
+        variables: { ...data.variables, skip: data.content.length },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult.data) return previousResult;
+          return {
+            content: [
+              ...previousResult.content,
+              ...fetchMoreResult.data.content,
+            ],
+          };
+        },
+      }),
   }),
 });
 
-const mapStateToProps = (state) => ({ paging: state.paging });
+const mapStateToProps = state => ({ paging: state.paging });
 
 const Template = connect(mapStateToProps)(
   withStories(
-    infiniteScroll((x) => x, { doneText: "End of Stories" })(
-      ReactMixin.decorate(Headerable)(
-        TemplateWithoutData
-      )
-    )
-  )
+    infiniteScroll(x => x, { doneText: "End of Stories" })(
+      ReactMixin.decorate(Headerable)(TemplateWithoutData),
+    ),
+  ),
 );
 
 const Routes = [
@@ -152,7 +149,4 @@ export default {
   Routes,
 };
 
-export {
-  TemplateWithoutData,
-  STORIES_QUERY,
-};
+export { TemplateWithoutData, STORIES_QUERY };

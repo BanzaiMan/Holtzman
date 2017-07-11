@@ -42,16 +42,17 @@ export const propsReducer = ({ data }: { data: IData }) => {
   const person = data.person;
   const groups = data.person && data.person.groups;
   const loginParam = person ? person.impersonationParameter : "";
-  const ledGroups = groups && groups.length && person
-    ? groups
-      .map(g => ({...g, members: getLeaders(g)})) // members only shows leaders
-      .filter(g => isLeader(person, g.members)) // filter out groups this person isn't leading
-    : null;
+  const ledGroups =
+    groups && groups.length && person
+      ? groups
+          .map(g => ({ ...g, members: getLeaders(g) })) // members only shows leaders
+          .filter(g => isLeader(person, g.members)) // filter out groups this person isn't leading
+      : null;
   return groups ? { groups: ledGroups, loginParam } : { loading: true };
 };
 
 export const withGroups = graphql(PRELOAD_PERSON, {
-  props: propsReducer
+  props: propsReducer,
 });
 
 export default withGroups(Layout);

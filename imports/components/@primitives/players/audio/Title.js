@@ -1,7 +1,6 @@
 import { Component, PropTypes } from "react";
 
 export default class AudioTitle extends Component {
-
   static propTypes = {
     trackTitle: PropTypes.string.isRequired,
     artistName: PropTypes.string.isRequired,
@@ -9,16 +8,16 @@ export default class AudioTitle extends Component {
     isPlaying: PropTypes.bool.isRequired,
     isLight: PropTypes.bool.isRequired,
     channelName: PropTypes.string.isRequired,
-  }
+  };
 
-  getTertiaryTextColor = (dark) =>
-    (dark ? { color: "rgba(255,255,255,.5)" } : { color: "rgba(0,0,0,.5)" });
+  getTertiaryTextColor = dark =>
+    dark ? { color: "rgba(255,255,255,.5)" } : { color: "rgba(0,0,0,.5)" };
 
   getTertiaryTextClass = () =>
-    (this.props.isLight ? "text-dark-tertiary" : "text-light-tertiary");
+    this.props.isLight ? "text-dark-tertiary" : "text-light-tertiary";
 
   getPrimaryTextClass = () =>
-    (this.props.isLight ? "text-dark-primary" : "text-light-primary");
+    this.props.isLight ? "text-dark-primary" : "text-light-primary";
 
   // show title before artist if sermon
   // else show artist before title
@@ -57,7 +56,10 @@ export default class AudioTitle extends Component {
           <h5 className={`${this.getPrimaryTextClass()} flush`}>
             {this.props.trackTitle}
           </h5>
-          <h6 className="push-bottom" style={this.getTertiaryTextColor(!isLight)}>
+          <h6
+            className="push-bottom"
+            style={this.getTertiaryTextColor(!isLight)}
+          >
             {this.getArtistLine()}
           </h6>
         </div>
@@ -66,7 +68,9 @@ export default class AudioTitle extends Component {
 
     return (
       <div>
-        <h4>{this.props.albumTitle}</h4>
+        <h4>
+          {this.props.albumTitle}
+        </h4>
         <h6 className="text-dark-tertiary flush">
           <span className="music-album-artist">
             {this.props.artistName}

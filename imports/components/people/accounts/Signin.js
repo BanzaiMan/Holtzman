@@ -11,7 +11,7 @@ type Props = {
   save: Function,
   data: Object,
   forgot: Function,
-  account: bool,
+  account: boolean,
   header: Object,
   submit: Function,
   toggles: [],
@@ -23,22 +23,26 @@ type Props = {
 class SignIn extends Component {
   props: Props;
 
-  static defaultProps = { toggles: ["Sign In", "Register"] }
+  static defaultProps = { toggles: ["Sign In", "Register"] };
 
-  state = { showAlternativePeople: true, selectedPerson: undefined }
+  state = { showAlternativePeople: true, selectedPerson: undefined };
 
-  header = () => (
+  header = () =>
     <div className="text-center">
-      <h3 className="uppercase text-light-primary flush-bottom push-half-bottom" style={{ fontWeight: "900" }}>
+      <h3
+        className="uppercase text-light-primary flush-bottom push-half-bottom"
+        style={{ fontWeight: "900" }}
+      >
         Welcome To NewSpring
       </h3>
-      <p className="flush-bottom"><em className="text-light-primary small">
-        Sign In or Create your NewSpring Account
-      </em></p>
-    </div>
-  )
+      <p className="flush-bottom">
+        <em className="text-light-primary small">
+          Sign In or Create your NewSpring Account
+        </em>
+      </p>
+    </div>;
 
-  toggle = (num: number) => this.props.setAccount(num === 0)
+  toggle = (num: number) => this.props.setAccount(num === 0);
 
   isEmail = (value: string) => {
     const isValid = value.length ? Validate.isEmail(value) : true;
@@ -51,12 +55,12 @@ class SignIn extends Component {
 
     this.setState({ showAlternativePeople: true });
     return isValid;
-  }
+  };
 
   savePassword = (value: string) => {
     this.props.save({ password: value });
     return true;
-  }
+  };
 
   liveSavePassword = (value: string) => {
     const isValid = value.length;
@@ -68,7 +72,7 @@ class SignIn extends Component {
     }
 
     return value;
-  }
+  };
 
   firstName = (value: string) => {
     const isValid = value.length;
@@ -80,7 +84,7 @@ class SignIn extends Component {
     }
 
     return isValid;
-  }
+  };
 
   lastName = (value: string) => {
     const isValid = value.length;
@@ -92,13 +96,13 @@ class SignIn extends Component {
     }
 
     return isValid;
-  }
+  };
 
   saveTerms = (event: Event) => {
     if (event.target instanceof HTMLInputElement) {
       this.props.save({ terms: event.target.checked });
     }
-  }
+  };
 
   changeEmails = (event: Event) => {
     const { dataset } = ((event.currentTarget: any): HTMLElement);
@@ -108,13 +112,14 @@ class SignIn extends Component {
     this.props.setAccount(true);
 
     event.preventDefault();
-  }
+  };
 
   submit = (event: Event) => {
     event.preventDefault();
     const { refs } = this;
     const data = { ...this.props.data };
-    for (const input in refs) { // eslint-disable-line
+    for (const input in refs) {
+      // eslint-disable-line
       const component = refs[input];
       if (component.validate) component.validate();
       data[input] = component.getValue();
@@ -123,7 +128,7 @@ class SignIn extends Component {
     if (data.email && data.password) this.props.submit();
 
     return;
-  }
+  };
 
   selectPerson = (id: string) => {
     if (this.state.selectedPerson === id) {
@@ -134,18 +139,18 @@ class SignIn extends Component {
 
     this.setState({ selectedPerson: id });
     this.props.save({ personId: id });
-  }
+  };
 
   createNewPerson = (e: Event) => {
     if (e) e.preventDefault();
     this.setState({ showAlternativePeople: false });
     this.props.clear("data");
-  }
+  };
 
   completeAccount = (e: Event) => {
     if (e) e.preventDefault();
     this.props.completeAccount();
-  }
+  };
 
   render() {
     return (
@@ -188,16 +193,27 @@ class SignIn extends Component {
                     <h6 className="flush-bottom text-dark-primary push-back-half-top">
                       It looks like you may have a NewSpring account already!
                       <span>
-                        &nbsp; Is this your email?<br /><br />
-                        <a href="" onClick={this.changeEmails} data-email={this.props.alternateAccounts[0]}>
+                        &nbsp; Is this your email?<br />
+                        <br />
+                        <a
+                          href=""
+                          onClick={this.changeEmails}
+                          data-email={this.props.alternateAccounts[0]}
+                        >
                           {this.props.alternateAccounts[0]}
                         </a>?
                       </span>
-                      <br /><br />Click below to sign in with this email.
+                      <br />
+                      <br />Click below to sign in with this email.
                     </h6>
                   </div>
                   <div className="push-half-top push-bottom soft-half-bottom one-whole text-center">
-                    <button className="btn" type="submit" onClick={this.changeEmails} data-email={this.props.alternateAccounts[0]}>
+                    <button
+                      className="btn"
+                      type="submit"
+                      onClick={this.changeEmails}
+                      data-email={this.props.alternateAccounts[0]}
+                    >
                       Sign In
                     </button>
                   </div>
@@ -215,12 +231,13 @@ class SignIn extends Component {
                 <div className="one-whole text-left push-back-double-top">
                   <h6 className="text-dark-primary soft-top flush-bottom soft-half-bottom push-back-double-top">
                     It looks like you already have a NewSpring account started!
-                    To finish setting it up, select your person and click complete account.
+                    To finish setting it up, select your person and click
+                    complete account.
                   </h6>
                   {people.map((person, key) => {
-                    const isActive = () => (
-                      person.id === this.props.data.id || person.id === this.state.selectedPerson
-                    );
+                    const isActive = () =>
+                      person.id === this.props.data.id ||
+                      person.id === this.state.selectedPerson;
                     return (
                       // eslint-disable-next-line jsx-a11y/no-static-element-interactions
                       <div
@@ -248,15 +265,22 @@ class SignIn extends Component {
                           className="flush hard display-inline-block"
                           style={{ verticalAlign: "middle" }}
                         >
-                          <h5 className="flush-bottom">{person.firstName} {person.lastName}</h5>
-                          <h7 className="flush-bottom em text-dark-tertiary">{person.email}</h7>
+                          <h5 className="flush-bottom">
+                            {person.firstName} {person.lastName}
+                          </h5>
+                          <h7 className="flush-bottom em text-dark-tertiary">
+                            {person.email}
+                          </h7>
                         </div>
                       </div>
                     );
                   })}
 
                   <div className="one-whole text-center push-top">
-                    <button className="btn push-top push-bottom" onClick={this.completeAccount}>
+                    <button
+                      className="btn push-top push-bottom"
+                      onClick={this.completeAccount}
+                    >
                       Complete Account
                     </button>
                     <a
@@ -267,7 +291,6 @@ class SignIn extends Component {
                       Register new account
                     </a>
                   </div>
-
                 </div>
               );
             }
@@ -316,11 +339,14 @@ class SignIn extends Component {
                         defaultValue={this.props.data.terms}
                         clicked={this.saveTerms}
                       >
-                        By signing up you agree to our <a
+                        By signing up you agree to our{" "}
+                        <a
                           href="//newspring.cc/terms"
                           target="_blank"
                           rel="noopener noreferrer"
-                        >terms of use</a>
+                        >
+                          terms of use
+                        </a>
                       </Forms.Checkbox>
                     );
                   }
@@ -345,7 +371,11 @@ class SignIn extends Component {
                   const { data, account } = this.props;
                   const btnClasses = ["push-double-bottom"];
 
-                  if (!data.email || !data.password  || (!account && !data.terms)) {
+                  if (
+                    !data.email ||
+                    !data.password ||
+                    (!account && !data.terms)
+                  ) {
                     btnClasses.push("btn--disabled");
                   } else {
                     btnClasses.push("btn");
@@ -358,11 +388,8 @@ class SignIn extends Component {
                   );
                 })()}
               </div>
-
             );
           })()}
-
-
         </Forms.Form>
       </div>
     );

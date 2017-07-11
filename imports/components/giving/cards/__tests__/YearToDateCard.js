@@ -3,7 +3,6 @@ import { mountToJson, shallowToJson } from "enzyme-to-json";
 import YearToDate from "../YearToDateCard";
 
 describe("Year To Date", () => {
-
   const generateComponent = (additionalProps = {}) => {
     const defaultProps = {
       graphData: {
@@ -89,9 +88,7 @@ describe("Year To Date", () => {
       linkUrl: "https://my.newspring.cc",
     };
 
-    return (
-      <YearToDate {...defaultProps} {...additionalProps} />
-    );
+    return <YearToDate {...defaultProps} {...additionalProps} />;
   };
 
   it("should render with the default set of props", () => {

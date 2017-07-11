@@ -1,5 +1,3 @@
-
-
 Meteor.methods({
   "communication/slack/send": function sendSlack(text, room) {
     if (!Meteor.settings.slack || !text) return Promise.resolve();

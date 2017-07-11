@@ -8,24 +8,23 @@ import Success from "./Success";
 import Layout from "./Layout";
 
 class ChangePassword extends Component {
-
   static propTypes = {
     params: {
       token: PropTypes.string.isRequired,
     },
     dispatch: PropTypes.func.isRequired,
-  }
+  };
 
   state = {
     newP: null,
     newPDup: null,
     state: "default",
-  }
+  };
 
-  submit = (e) => {
+  submit = e => {
     e.preventDefault();
     this.setState({ state: "loading" });
-    Accounts.resetPassword(this.props.params.token, this.state.newP, (err) => {
+    Accounts.resetPassword(this.props.params.token, this.state.newP, err => {
       if (err) {
         this.setState({ state: "error", err });
         setTimeout(() => {
@@ -34,7 +33,7 @@ class ChangePassword extends Component {
         return;
       }
 
-      reset(false, this.state.newP, (error) => {
+      reset(false, this.state.newP, error => {
         if (error) {
           this.setState({ state: "error", error });
           setTimeout(() => {
@@ -42,7 +41,6 @@ class ChangePassword extends Component {
           }, 5000);
           return;
         }
-
 
         this.setState({ state: "success" });
 
@@ -52,7 +50,7 @@ class ChangePassword extends Component {
         }, 1000);
       });
     });
-  }
+  };
 
   save = (value, input) => {
     const { id } = input;
@@ -68,8 +66,7 @@ class ChangePassword extends Component {
     this.setState({ [id]: value });
 
     return true;
-  }
-
+  };
 
   render() {
     const { state, err } = this.state;
@@ -97,11 +94,7 @@ class ChangePassword extends Component {
         );
       default:
         return (
-          <Layout
-            submit={this.submit}
-            save={this.save}
-            state={this.state}
-          />
+          <Layout submit={this.submit} save={this.save} state={this.state} />
         );
     }
   }
@@ -109,6 +102,4 @@ class ChangePassword extends Component {
 
 export default connect()(ChangePassword);
 
-export {
-  ChangePassword as ChangePasswordWithoutData,
-};
+export { ChangePassword as ChangePasswordWithoutData };

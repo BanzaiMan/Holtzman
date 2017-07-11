@@ -1,12 +1,8 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import modal from "../../../../data/store/modal";
-import {
-  nav as navActions,
-} from "../../../../data/store";
-import {
-  SectionsContainerWithoutData as SectionsContainer,
-} from "../";
+import { nav as navActions } from "../../../../data/store";
+import { SectionsContainerWithoutData as SectionsContainer } from "../";
 
 jest.mock("../../../../deprecated/mixins/mixins.Header.js", () => jest.fn());
 jest.mock("../../../../data/store/modal", () => ({
@@ -30,7 +26,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SectionsContainer { ...newProps } />;
+  return <SectionsContainer {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -42,9 +38,11 @@ it("adjust nav, modal, and header on mount", () => {
   const mockDispatch = jest.fn();
   navActions.setLevel = jest.fn();
   modal.update = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   // mock header mixin methods
   const mockLockHeader = jest.fn();
   wrapper.instance().lockHeader = mockLockHeader;
@@ -64,17 +62,22 @@ it("adjust nav, modal, and header on mount", () => {
   expect(mockLockHeader).toHaveBeenCalledTimes(1);
   expect(mockLockHeader).toHaveBeenCalledWith("SectionsContainer");
   expect(mockHeaderAction).toHaveBeenCalledTimes(1);
-  expect(mockHeaderAction).toHaveBeenCalledWith({
-    title: "Sections",
-  }, "SectionsContainer");
+  expect(mockHeaderAction).toHaveBeenCalledWith(
+    {
+      title: "Sections",
+    },
+    "SectionsContainer",
+  );
 });
 
 it("updates modal and unlocks header on unmount", () => {
   const mockDispatch = jest.fn();
   modal.update = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   // mock header mixin methods
   const mockUnlockHeader = jest.fn();
   wrapper.instance().unlockHeader = mockUnlockHeader;

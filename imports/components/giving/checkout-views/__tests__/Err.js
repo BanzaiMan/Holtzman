@@ -15,7 +15,7 @@ describe("StepOneAction", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <StepOneAction { ...newProps } />;
+    return <StepOneAction {...newProps} />;
   };
 
   it("renders if step one function", () => {
@@ -24,9 +24,11 @@ describe("StepOneAction", () => {
   });
 
   it("does not render if no step one function", () => {
-    const result = renderer.create(generateComponent({
-      goToStepOne: null,
-    }));
+    const result = renderer.create(
+      generateComponent({
+        goToStepOne: null,
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
@@ -40,7 +42,7 @@ describe("AdditionalMessage", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <AdditionalMessage { ...newProps } />;
+    return <AdditionalMessage {...newProps} />;
   };
 
   it("renders if additional message", () => {
@@ -49,9 +51,11 @@ describe("AdditionalMessage", () => {
   });
 
   it("does not render if no additional message", () => {
-    const result = renderer.create(generateComponent({
-      additionalMessage: null,
-    }));
+    const result = renderer.create(
+      generateComponent({
+        additionalMessage: null,
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
@@ -63,7 +67,7 @@ describe("ContactLink", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <ContactLink { ...newProps } />;
+    return <ContactLink {...newProps} />;
   };
 
   it("renders", () => {
@@ -79,7 +83,7 @@ describe("ContactUs", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <ContactUs { ...newProps } />;
+    return <ContactUs {...newProps} />;
   };
 
   it("renders", () => {
@@ -99,7 +103,7 @@ describe("Err", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Err { ...newProps } />;
+    return <Err {...newProps} />;
   };
 
   it("renders", () => {

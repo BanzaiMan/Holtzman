@@ -1,13 +1,13 @@
-
 import { addMiddleware } from "../utilities";
 import Debouncer from "../../../util/debounce";
 import actions from "./actions";
 
 let bound = false;
-const responsiveBindings = (store) => (next) => (action) => {
-  if (bound) { return next(action); }
+const responsiveBindings = store => next => action => {
+  if (bound) {
+    return next(action);
+  }
   bound = true;
-
 
   // XXX figure out how to get width on the server
   if (typeof window === "undefined" || window === null) {
@@ -16,8 +16,7 @@ const responsiveBindings = (store) => (next) => (action) => {
 
   const { dispatch, getState } = store;
 
-
-  const getBreakpoints = (width) => {
+  const getBreakpoints = width => {
     const { responsive } = getState();
 
     const breakpoints = [];
@@ -70,7 +69,6 @@ const responsiveBindings = (store) => (next) => (action) => {
   // this is a single run through since we are using a debounced
   // method to bind to the window's events
   window.addEventListener("resize", deboncedResize, false);
-
 
   return next(action);
 };

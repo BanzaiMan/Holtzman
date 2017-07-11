@@ -1,7 +1,7 @@
 /* eslint-disable */
 
 /* DayPicker styles */
-const Styles = () => (
+const Styles = () =>
   <style>{`\
     .DayPicker {
       display: -webkit-box;
@@ -157,7 +157,6 @@ const Styles = () => (
       color: #fff;
       background-color: #6bac43;
     }
-  `}</style>
-);
+  `}</style>;
 
 export default Styles;

@@ -1,4 +1,3 @@
-
 // @flow
 // ignore this until we can remove it entirely
 // $FlowMeteor
@@ -72,7 +71,7 @@ const GET_NEWS_QUERY = gql`
 
 const withNews = graphql(GET_NEWS_QUERY, {
   name: "news",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { id: ownProps.params.id },
   }),
 });
@@ -81,15 +80,12 @@ export default connect()(
   withNews(
     ReactMixin.decorate(Shareable)(
       ReactMixin.decorate(Headerable)(
-        canLike(
-          (props) => (props.news.loading ? null : props.news.content.id)
-        )(StoriesSingleWithoutData)
-      )
-    )
-  )
+        canLike(props => (props.news.loading ? null : props.news.content.id))(
+          StoriesSingleWithoutData,
+        ),
+      ),
+    ),
+  ),
 );
 
-export {
-  StoriesSingleWithoutData,
-  GET_NEWS_QUERY,
-};
+export { StoriesSingleWithoutData, GET_NEWS_QUERY };

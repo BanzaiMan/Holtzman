@@ -66,7 +66,7 @@ it("NAV.SET_VISIBILITY", () => {
   expect(result).toMatchSnapshot();
 });
 
-it("NAV.ANYTHING_ELSE",() => {
+it("NAV.ANYTHING_ELSE", () => {
   const action = {
     type: "NAV.ANYTHING_ELSE",
   };

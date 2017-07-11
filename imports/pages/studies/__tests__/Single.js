@@ -55,7 +55,7 @@ const generateComponent = (additionalProps = {}) => {
     ...additionalProps,
   };
 
-  return <StudiesSingleWithoutData { ...newProps } />;
+  return <StudiesSingleWithoutData {...newProps} />;
 };
 
 it("renders with no image", () => {
@@ -64,31 +64,33 @@ it("renders with no image", () => {
 });
 
 it("renders loading with no study", () => {
-  const tree = renderer.create(generateComponent({
-    study: {}
-  }));
+  const tree = renderer.create(
+    generateComponent({
+      study: {},
+    }),
+  );
   expect(tree).toMatchSnapshot();
 });
 
 it("renders studies content", () => {
-  const tree = renderer.create(generateComponent({
-    study: {
-      content: {
-        id: "1",
-        children: [{ id: "1"}],
-        meta: {
-          urlTitle: "study",
-        },
-        channelName: "studies",
+  const tree = renderer.create(
+    generateComponent({
+      study: {
         content: {
-          description: "<h1>study</h1>",
-          images: [
-            { fileLabel: "1:1", url: "http://test.com/1x1.jpg" },
-          ],
+          id: "1",
+          children: [{ id: "1" }],
+          meta: {
+            urlTitle: "study",
+          },
+          channelName: "studies",
+          content: {
+            description: "<h1>study</h1>",
+            images: [{ fileLabel: "1:1", url: "http://test.com/1x1.jpg" }],
+          },
         },
       },
-    }
-  }));
+    }),
+  );
 
   expect(tree).toMatchSnapshot();
 });
@@ -97,9 +99,11 @@ it("dispatches store on mount", () => {
   const mockDispatch = jest.fn();
   headerActions.set = jest.fn();
 
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(headerActions.set).toHaveBeenCalledTimes(1);

@@ -11,24 +11,20 @@ import Loading from "../../components/@primitives/UI/loading";
 import canLike from "../../components/@enhancers/likes/toggle";
 import Shareable from "../../deprecated/mixins/mixins.Shareable";
 
-import {
-  header as headerActions,
-  live as liveActions,
-} from "../../data/store";
+import { header as headerActions, live as liveActions } from "../../data/store";
 
 // can we use the core toggle here? Is it ready @jbaxleyiii?
 import DevotionsSingleContent from "./SingleContent";
 import DevotionsSingleScripture from "./SingleScripture";
 
 class DevotionsSingle extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     live: PropTypes.object.isRequired,
     devotion: PropTypes.object.isRequired,
-  }
+  };
 
-  state = { selectedIndex: 0 }
+  state = { selectedIndex: 0 };
 
   componentWillMount() {
     if (process.env.WEB) return;
@@ -48,7 +44,8 @@ class DevotionsSingle extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (this.state !== nextState) return true;
     if (nextProps.devotion.content && this.props.devotion.content) {
-      if (nextProps.devotion.content.id === this.props.devotion.content.id) return false;
+      if (nextProps.devotion.content.id === this.props.devotion.content.id)
+        return false;
       this.setState({ selectedIndex: 0 });
       return true;
     }
@@ -64,14 +61,14 @@ class DevotionsSingle extends Component {
     this.props.dispatch(liveActions.unfloat());
   }
 
-  onClickLink = (event) => {
+  onClickLink = event => {
     event.preventDefault();
     this.setState({
       selectedIndex: 1,
       liveSet: false,
       livePush: false,
     });
-  }
+  };
 
   getLiveClasses = () => {
     const classes = [];
@@ -80,7 +77,7 @@ class DevotionsSingle extends Component {
     }
 
     return classes;
-  }
+  };
 
   // if has scripture and live re-enabled
   // the live bar
@@ -110,9 +107,9 @@ class DevotionsSingle extends Component {
         this.props.dispatch(liveActions.show());
       }, 1000);
     }
-  }
+  };
 
-  renderContent = (devotion) => {
+  renderContent = devotion => {
     if (!devotion.content.scripture) {
       return (
         <div title="Devotional">
@@ -126,11 +123,7 @@ class DevotionsSingle extends Component {
     }
 
     return (
-      <SwipeViews
-        selectedIndex={this.state.selectedIndex}
-        disableSwipe
-      >
-
+      <SwipeViews selectedIndex={this.state.selectedIndex} disableSwipe>
         <div title="Devotional">
           <DevotionsSingleContent
             devotion={devotion}
@@ -147,7 +140,7 @@ class DevotionsSingle extends Component {
         </div>
       </SwipeViews>
     );
-  }
+  };
 
   render() {
     const { content } = this.props.devotion;
@@ -168,19 +161,16 @@ class DevotionsSingle extends Component {
           title={devotion.title}
           id={devotion.id}
           image={
-              devotion.content.images && devotion.content.images.length > 0
-                ? devotion.content.images[0].url
-                : null
+            devotion.content.images && devotion.content.images.length > 0
+              ? devotion.content.images[0].url
+              : null
           }
-          meta={[
-            { property: "og:type", content: "article" },
-          ]}
+          meta={[{ property: "og:type", content: "article" }]}
         />
         {this.renderContent(devotion)}
       </div>
     );
   }
-
 }
 
 const DEVOTIONAL_QUERY = gql`
@@ -219,12 +209,12 @@ const DEVOTIONAL_QUERY = gql`
 
 const withDevotional = graphql(DEVOTIONAL_QUERY, {
   name: "devotion",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { id: ownProps.params.id },
   }),
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   modal: { visible: state.modal.visible },
   live: state.live,
 });
@@ -233,12 +223,10 @@ export default connect(mapStateToProps)(
   withDevotional(
     ReactMixin.decorate(Shareable)(
       canLike(
-        (props) => (props.devotion.loading ? null : props.devotion.content.id)
-      )(DevotionsSingle)
-    )
-  )
+        props => (props.devotion.loading ? null : props.devotion.content.id),
+      )(DevotionsSingle),
+    ),
+  ),
 );
 
-export {
-  DevotionsSingle as DevotionsSingleWithoutData,
-};
+export { DevotionsSingle as DevotionsSingleWithoutData };

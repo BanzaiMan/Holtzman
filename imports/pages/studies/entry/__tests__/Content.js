@@ -14,8 +14,6 @@ afterEach(() => {
   reset();
 });
 
-
-
 jest.mock("../../../../components/content/related-content");
 jest.mock("../../../../components/@primitives/players/video");
 
@@ -37,7 +35,7 @@ const generateComponent = (additionalProps = {}) => {
     ...additionalProps,
   };
 
-  return <Content { ...newProps } />;
+  return <Content {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -46,80 +44,87 @@ it("renders with props", () => {
 });
 
 it("renders with an image and no video", () => {
-  const tree = renderer.create(generateComponent({
-    studyEntry:{
-      content: {
-        images: [
-          {
-            "fileName": "Galatiansstudy2x1.png",
-            "fileType": null,
-            "fileLabel": "2:1",
-            "url": "//drhztd8q3iayu.cloudfront.net/newspring/collection/studies/Galatiansstudy2x1.large.png",
-            "size": "large"
-          },
-        ],
+  const tree = renderer.create(
+    generateComponent({
+      studyEntry: {
+        content: {
+          images: [
+            {
+              fileName: "Galatiansstudy2x1.png",
+              fileType: null,
+              fileLabel: "2:1",
+              url:
+                "//drhztd8q3iayu.cloudfront.net/newspring/collection/studies/Galatiansstudy2x1.large.png",
+              size: "large",
+            },
+          ],
+        },
       },
-    },
-  }));
+    }),
+  );
   expect(tree).toMatchSnapshot();
 });
 
 it("renders with an ooyala video", () => {
-  const tree = renderer.create(generateComponent({
-    studyEntry: {
-      content: {
-        ooyalaId: "fake-ooyala-Id",
-      }
-    },
-  }));
+  const tree = renderer.create(
+    generateComponent({
+      studyEntry: {
+        content: {
+          ooyalaId: "fake-ooyala-Id",
+        },
+      },
+    }),
+  );
   expect(tree).toMatchSnapshot();
 });
 
 it("renders with scripture", () => {
-  const tree = renderer.create(generateComponent({
-    studyEntry: {
-      content: {
-        images: [
-          {
-            "fileName": "Galatiansstudy2x1.png",
-            "fileType": null,
-            "fileLabel": "2:1",
-            "url": "//drhztd8q3iayu.cloudfront.net/newspring/collection/studies/Galatiansstudy2x1.large.png",
-            "size": "large"
-          },
-        ],
-        scripture: [
-          {
-            "book": "Galatians",
-            "passage": "2:11-21",
-          },
-        ],
+  const tree = renderer.create(
+    generateComponent({
+      studyEntry: {
+        content: {
+          images: [
+            {
+              fileName: "Galatiansstudy2x1.png",
+              fileType: null,
+              fileLabel: "2:1",
+              url:
+                "//drhztd8q3iayu.cloudfront.net/newspring/collection/studies/Galatiansstudy2x1.large.png",
+              size: "large",
+            },
+          ],
+          scripture: [
+            {
+              book: "Galatians",
+              passage: "2:11-21",
+            },
+          ],
+        },
       },
-    },
-  }));
+    }),
+  );
   expect(tree).toMatchSnapshot();
 });
 
 it("renders with related content", () => {
-  const tree = renderer.create(generateComponent({
-    studyEntry: {
-      content: {
-        images: [
-          {
-            "fileName": "Galatiansstudy2x1.png",
-            "fileType": null,
-            "fileLabel": "2:1",
-            "url": "//drhztd8q3iayu.cloudfront.net/newspring/collection/studies/Galatiansstudy2x1.large.png",
-            "size": "large"
-          },
-        ],
-        tags: [
-          "grace",
-          "love",
-          "salvation"
-        ],
-      }
-    }
-  }));
+  const tree = renderer.create(
+    generateComponent({
+      studyEntry: {
+        content: {
+          images: [
+            {
+              fileName: "Galatiansstudy2x1.png",
+              fileType: null,
+              fileLabel: "2:1",
+              url:
+                "//drhztd8q3iayu.cloudfront.net/newspring/collection/studies/Galatiansstudy2x1.large.png",
+              size: "large",
+            },
+          ],
+          tags: ["grace", "love", "salvation"],
+        },
+      },
+    }),
+  );
   expect(tree).toMatchSnapshot();
 });

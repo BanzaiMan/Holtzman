@@ -7,10 +7,9 @@ import SeriesVideoListItem from "./VideoListItem";
 import { Spinner } from "../../components/@primitives/UI/loading";
 
 class SeriesVideoListWithoutData extends Component {
-
   static propTypes = {
     sermons: PropTypes.object.isRequired,
-  }
+  };
 
   dynamicWidth = () => {
     if (typeof window !== "undefined" || window !== null) {
@@ -18,21 +17,21 @@ class SeriesVideoListWithoutData extends Component {
       let itemSize = (window.innerWidth - 40) * ratio; // four-fifths
       itemSize += 20; // account for margin
       const items = this.props.sermons.content.sermons.length;
-      const width = (items * itemSize) + 40;
+      const width = items * itemSize + 40;
       return {
         width: `${width}px`,
       };
     }
 
     return {};
-  }
+  };
 
   overflow = {
     overflowX: "scroll",
     overflowY: "hidden",
     paddingLeft: "20px",
     WebkitOverflowScrolling: "touch",
-  }
+  };
 
   render() {
     const { content } = this.props.sermons;
@@ -51,13 +50,10 @@ class SeriesVideoListWithoutData extends Component {
 
     return (
       <div style={this.overflow}>
-        <section
-          className="soft-half-top"
-          style={this.dynamicWidth()}
-        >
-          {sermons.map((sermon, i) => (
-            <SeriesVideoListItem sermon={sermon} order={i} key={i} />
-          ))}
+        <section className="soft-half-top" style={this.dynamicWidth()}>
+          {sermons.map((sermon, i) =>
+            <SeriesVideoListItem sermon={sermon} order={i} key={i} />,
+          )}
         </section>
       </div>
     );
@@ -94,18 +90,11 @@ const SERMONS_QUERY = gql`
 
 const withSermons = graphql(SERMONS_QUERY, {
   name: "sermons",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { id: ownProps.id },
   }),
 });
 
-export default connect()(
-  withSermons(
-    SeriesVideoListWithoutData
-  )
-);
+export default connect()(withSermons(SeriesVideoListWithoutData));
 
-export {
-  SeriesVideoListWithoutData,
-  SERMONS_QUERY,
-};
+export { SeriesVideoListWithoutData, SERMONS_QUERY };

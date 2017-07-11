@@ -1,4 +1,3 @@
-
 // @flow
 
 import moment from "moment";
@@ -7,7 +6,6 @@ import Forms from "../../../components/@primitives/UI/forms";
 import Loading from "../../../components/@primitives/UI/loading/Spinner";
 
 import withData from "./givingSummaryEnhancer";
-
 
 import YTDGraph from "./YTDMetrics";
 import Progress from "./FundBreakdown";
@@ -26,7 +24,7 @@ type IRightPanel = {
   changeYear: Function,
 };
 
-export const RightPanel = ({ loading, data, changeYear }: IRightPanel) => (
+export const RightPanel = ({ loading, data, changeYear }: IRightPanel) =>
   <div className="scrollable locked-ends locked-sides background--primary soft-double-sides soft-double-top">
     {/* spacer */}
     <div className="push-double-top display-inline-block soft-double-ends soft-double-right one-whole">
@@ -38,11 +36,15 @@ export const RightPanel = ({ loading, data, changeYear }: IRightPanel) => (
       </h3>
       <div className="display-inline-block">
         <p className="text-light-primary display-inline-block soft-half-right">
-          <small><em>
-              See your summary from
-          </em></small>
+          <small>
+            <em>See your summary from</em>
+          </small>
         </p>
-        <style>{".right-select select { color: #ffffff } .right-select:after {border-color: #ffffff transparent transparent} .right-select select option { color: #505050 }"}</style>
+        <style>
+          {
+            ".right-select select { color: #ffffff } .right-select:after {border-color: #ffffff transparent transparent} .right-select select option { color: #505050 }"
+          }
+        </style>
         <Forms.Select
           items={YEARS}
           hideLabel
@@ -51,7 +53,7 @@ export const RightPanel = ({ loading, data, changeYear }: IRightPanel) => (
           onChange={changeYear}
         />
       </div>
-      {loading && (
+      {loading &&
         <div className="soft-double one-whole text-center">
           <Loading
             styles={{
@@ -59,21 +61,15 @@ export const RightPanel = ({ loading, data, changeYear }: IRightPanel) => (
               borderWidth: "7px",
             }}
           />
-        </div>
-      )}
-      {!loading && (
+        </div>}
+      {!loading &&
         <div>
-          <YTDGraph
-            data={data}
-            linkUrl={"/give/history"}
-          />
+          <YTDGraph data={data} linkUrl={"/give/history"} />
           {/* spacer */}
           <div className="push-ends soft-ends" />
           <Progress data={data} />
-        </div>
-      )}
+        </div>}
     </div>
-  </div>
-);
+  </div>;
 
 export default withData(RightPanel);

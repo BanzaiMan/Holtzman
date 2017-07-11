@@ -1,12 +1,11 @@
 // @flow
 import Layout from "./Layout";
 
-const EditSchedule = () => (
-  <Layout />
-);
+const EditSchedule = () => <Layout />;
 
 const Routes = [
-  { path: "schedules/edit/:id",
+  {
+    path: "schedules/edit/:id",
     component: EditSchedule,
   },
 ];

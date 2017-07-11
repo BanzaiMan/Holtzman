@@ -14,7 +14,6 @@ import Headerable from "../../deprecated/mixins/mixins.Header";
 import canLike from "../../components/@enhancers/likes/toggle";
 import Shareable from "../../deprecated/mixins/mixins.Shareable";
 
-
 import RelatedContent from "../../components/content/related-content";
 
 import collections from "../../util/collections";
@@ -23,17 +22,15 @@ import styles from "../../util/styles";
 import react from "../../util/react";
 import inAppLink from "../../util/inAppLink";
 
-
 import StudyHero from "./Hero";
 import StudyEntryList from "./EntryList";
 
 class StudiesSingleWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     study: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
-  }
+  };
 
   componentWillMount() {
     if (process.env.WEB) return;
@@ -46,17 +43,19 @@ class StudiesSingleWithoutData extends Component {
     this.handleHeaderStyle(nextProps);
   }
 
-  handleHeaderStyle = (nextProps) => {
+  handleHeaderStyle = nextProps => {
     const content = nextProps.study.content;
     if (!content) return;
     const { isLight } = nextProps.study.content.content;
     const color = collections.color(content);
-    this.props.dispatch(headerActions.set({
-      title: nextProps.study.content.title,
-      color,
-      light: !isLight,
-    }));
-  }
+    this.props.dispatch(
+      headerActions.set({
+        title: nextProps.study.content.title,
+        color,
+        light: !isLight,
+      }),
+    );
+  };
 
   hackBackgroundStyles() {
     return {
@@ -97,30 +96,43 @@ class StudiesSingleWithoutData extends Component {
           }
           id={study.id}
         />
-        <div className={`${collections.classes(study)} background--light-primary`}>
-          <div className={collections.classes(study)} style={this.hackBackgroundStyles()} />
-          <style>{styles.overlay(study)}</style>
-          <style>{collections.backgroundStyles(study)}</style>
+        <div
+          className={`${collections.classes(study)} background--light-primary`}
+        >
+          <div
+            className={collections.classes(study)}
+            style={this.hackBackgroundStyles()}
+          />
+          <style>
+            {styles.overlay(study)}
+          </style>
+          <style>
+            {collections.backgroundStyles(study)}
+          </style>
           <StudyHero study={study} />
-          <section className={`${study.content.isLight ? "text-dark-primary" : "text-light-primary"} hard-ends soft-double-sides@palm-wide`}>
+          <section
+            className={`${study.content.isLight
+              ? "text-dark-primary"
+              : "text-light-primary"} hard-ends soft-double-sides@palm-wide`}
+          >
             <div dangerouslySetInnerHTML={react.markup(study, "description")} />
           </section>
-          {!study.children.length && (
+          {!study.children.length &&
             <div className="one-whole text-center soft-bottom">
               <a
                 href={contentHelpers.siteLink(study)}
                 onClick={inAppLink}
-                className={`${isLight ? "btn--dark-secondary" : "btn--light"} plain`}
+                className={`${isLight
+                  ? "btn--dark-secondary"
+                  : "btn--light"} plain`}
               >
                 View Study
               </a>
-            </div>
-          )}
+            </div>}
           <StudyEntryList id={this.props.params.id} />
         </div>
         <RelatedContent excludedIds={[study.id]} tags={study.content.tags} />
       </div>
-
     );
   }
 }
@@ -167,7 +179,7 @@ const STUDY_SINGLE_QUERY = gql`
 
 const withStudySingle = graphql(STUDY_SINGLE_QUERY, {
   name: "study",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { id: ownProps.params.id },
   }),
 });
@@ -176,15 +188,12 @@ export default connect()(
   withStudySingle(
     ReactMixin.decorate(Shareable)(
       ReactMixin.decorate(Headerable)(
-        canLike(
-          (props) => (props.study.loading ? null : props.study.content.id)
-        )(StudiesSingleWithoutData)
-      )
-    )
-  )
+        canLike(props => (props.study.loading ? null : props.study.content.id))(
+          StudiesSingleWithoutData,
+        ),
+      ),
+    ),
+  ),
 );
 
-export {
-  StudiesSingleWithoutData,
-  STUDY_SINGLE_QUERY,
-};
+export { StudiesSingleWithoutData, STUDY_SINGLE_QUERY };

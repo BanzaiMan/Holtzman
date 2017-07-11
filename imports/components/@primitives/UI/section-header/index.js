@@ -1,4 +1,3 @@
-
 // @flow
 
 const halvesClasses = "one-half floating display-inline-block";
@@ -18,7 +17,6 @@ const SectionHeader = ({ title, link }: ISectionHeader) =>
     <div className={`${halvesClasses} floating--right soft soft-half-right`}>
       {link}
     </div>
-  </div>
-  ;
+  </div>;
 
 export default SectionHeader;

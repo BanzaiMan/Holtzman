@@ -1,15 +1,11 @@
-
 import { shallow, mount } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import TagSelect from "../TagSelect";
 
-jest.mock("../../tags", () => () => <div/>);
+jest.mock("../../tags", () => () => <div />);
 
 const props = {
-  items: [
-    { label: "foo", value: "bar" },
-    { label: "baz", value: "zoo" },
-  ],
+  items: [{ label: "foo", value: "bar" }, { label: "baz", value: "zoo" }],
   onClick: jest.fn(),
 };
 

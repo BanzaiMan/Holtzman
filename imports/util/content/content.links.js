@@ -1,8 +1,8 @@
-
 function contentLink(contentItem) {
   const entryId = contentItem.entryId || contentItem.id;
   const category = contentItem.channelName;
-  const seriesId = contentItem.parent && (contentItem.parent.entryId || contentItem.parent.id);
+  const seriesId =
+    contentItem.parent && (contentItem.parent.entryId || contentItem.parent.id);
 
   switch (category) {
     case "series_newspring":
@@ -27,7 +27,6 @@ function contentLink(contentItem) {
       return `/events/${entryId}`;
     default:
       return null;
-
   }
 }
 

@@ -11,7 +11,7 @@ import FunFacts from "./sections/funFacts";
 import Thanks from "./sections/thanks";
 
 /* eslint-disable max-len */
-export const Ministries = () => (
+export const Ministries = () =>
   <div>
     <Meta title="Ministries" />
 
@@ -23,8 +23,7 @@ export const Ministries = () => (
     <Web />
     <FunFacts />
     <Thanks />
-  </div>
-);
+  </div>;
 
 const Routes = [
   {

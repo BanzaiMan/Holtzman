@@ -15,10 +15,9 @@ type ITemplate = {
   give: Object,
 };
 
-const mapStateToProps = (state) => ({ give: state.give });
+const mapStateToProps = state => ({ give: state.give });
 
 export class Template extends Component {
-
   props: ITemplate;
 
   componentWillMount() {
@@ -44,7 +43,7 @@ export class Template extends Component {
   onSubmit = (event: Event) => {
     event.preventDefault();
     this.props.dispatch(giveActions.submit());
-  }
+  };
 
   getGiveData = () => {
     try {
@@ -56,20 +55,22 @@ export class Template extends Component {
         // If first entry with this name
         if (typeof queryString[pair[0]] === "undefined") {
           queryString[pair[0]] = decodeURIComponent(pair[1]);
-        // If second entry with this name
+          // If second entry with this name
         } else if (typeof queryString[pair[0]] === "string") {
           const arr = [queryString[pair[0]], decodeURIComponent(pair[1])];
           queryString[pair[0]] = arr;
-        // If third or later entry with this name
+          // If third or later entry with this name
         } else {
           queryString[pair[0]].push(decodeURIComponent(pair[1]));
         }
         return null;
       });
       return JSON.parse(queryString.giveData);
-    } catch (error) { /* do nothing */ }
+    } catch (error) {
+      /* do nothing */
+    }
     return null;
-  }
+  };
 
   render() {
     const { state, errors, total, data } = this.props.give;
@@ -121,9 +122,7 @@ export class Template extends Component {
 
 const TemplateWithData = connect(mapStateToProps)(Template);
 
-const Routes = [
-  { path: "review", component: TemplateWithData },
-];
+const Routes = [{ path: "review", component: TemplateWithData }];
 
 export default {
   Template,

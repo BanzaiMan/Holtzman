@@ -18,7 +18,7 @@ export default class Marker extends Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
 
   render() {
-    let style = (this.props.$hover || this.props.hover) ? hover : base;
+    let style = this.props.$hover || this.props.hover ? hover : base;
 
     if (this.props.active) style = active;
 

@@ -17,7 +17,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Err { ...newProps } />;
+  return <Err {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -26,17 +26,21 @@ it("renders with props", () => {
 });
 
 it("renders with error.error", () => {
-  const wrapper = shallow(generateComponent({
-    error: {
-      error: "error message",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      error: {
+        error: "error message",
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders default message if no error message", () => {
-  const wrapper = shallow(generateComponent({
-    error: {},
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      error: {},
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

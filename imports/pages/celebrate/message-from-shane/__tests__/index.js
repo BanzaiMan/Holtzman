@@ -7,7 +7,7 @@ const defaultProps = {
 };
 
 const generateComponent = () => {
-  return <Shane { ...defaultProps } />;
+  return <Shane {...defaultProps} />;
 };
 
 describe("Shane", () => {

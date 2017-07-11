@@ -1,4 +1,3 @@
-
 /*
 
   toDateString
@@ -29,9 +28,7 @@ function toDateString(dateObj, abbreviated) {
     monthName = monthName.substring(0, 3);
   }
 
-
   return `${monthName} ${date}, ${year}`;
 }
-
 
 export default toDateString;

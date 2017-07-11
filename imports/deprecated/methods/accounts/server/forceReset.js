@@ -25,23 +25,24 @@ Meteor.methods({
 
       const meteorUserId = Accounts.createUser({ email: Username });
 
-      Meteor.users.upsert(meteorUserId, {
-        $set: {
-          "services.rock": {
-            PersonId,
-            PrimaryAliasId,
+      Meteor.users.upsert(
+        meteorUserId,
+        {
+          $set: {
+            "services.rock": {
+              PersonId,
+              PrimaryAliasId,
+            },
           },
         },
-      },
-        (err) => {
+        err => {
           if (!err) Accounts.sendResetPasswordEmail(meteorUserId);
-        }
+        },
       );
     } catch (e) {
       // eslint-disable-next-line
       console.log(e);
     }
-
 
     return true;
   },

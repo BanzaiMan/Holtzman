@@ -1,4 +1,3 @@
-
 // @flow
 import moment from "moment";
 import { Link } from "react-router";
@@ -21,21 +20,18 @@ export const DetailCard = ({
   status,
   failure,
   person,
-}: IDetailCard) => (
+}: IDetailCard) =>
   <div className="grid" style={{ verticalAlign: "middle" }}>
     <div className="grid__item one-half" style={{ verticalAlign: "middle" }}>
       <div className="relative">
-
         {/* person photo */}
-        {person && (
+        {person &&
           <div
             className="background--fill soft visuallyhidden@palm float-left round push-half-top"
             style={{ backgroundImage: `url("${person.photo}")` }}
-          />
-        )}
+          />}
 
         <div className="soft-double-left@palm-wide-and-up push-left@palm-wide-and-up">
-
           {/* account name */}
           <h5
             className="text-dark-secondary flush"
@@ -45,24 +41,29 @@ export const DetailCard = ({
           </h5>
 
           {/* person details */}
-          {person && (
+          {person &&
             <h6 className="text-dark-tertiary soft-half-bottom flush">
               {person.nickName || person.firstName} {person.lastName}
-            </h6>
-          )}
+            </h6>}
 
           {/* status and date */}
-          <p className={`flush italic small ${failure ? "text-alert" : "text-dark-tertiary"}`}>
-            {status ? `${status} - ` : ""}{moment(transaction.date).format("MMM D, YYYY")}
+          <p
+            className={`flush italic small ${failure
+              ? "text-alert"
+              : "text-dark-tertiary"}`}
+          >
+            {status ? `${status} - ` : ""}
+            {moment(transaction.date).format("MMM D, YYYY")}
           </p>
         </div>
       </div>
-
     </div>
 
-    <div className="grid__item one-half text-right" style={{ verticalAlign: "middle" }}>
+    <div
+      className="grid__item one-half text-right"
+      style={{ verticalAlign: "middle" }}
+    >
       <div>
-
         <Currency
           amount={transactionDetail.amount}
           baseHeadingSize="4"
@@ -72,21 +73,19 @@ export const DetailCard = ({
           `}
         />
 
-        {icon && (
+        {icon &&
           <span
             className="text-primary icon-arrow-next locked"
             style={{
               right: "-13px",
               top: "2px",
             }}
-          />
-        )}
+          />}
       </div>
     </div>
-  </div>
-);
+  </div>;
 
-const PendingWrapper = ({ children }: { children?: React$Element<any> }) => (
+const PendingWrapper = ({ children }: { children?: React$Element<any> }) =>
   <div
     className="soft card"
     style={{
@@ -98,39 +97,40 @@ const PendingWrapper = ({ children }: { children?: React$Element<any> }) => (
     }}
   >
     {children}
-  </div>
-);
+  </div>;
 
-const FailedWrapper = ({ children }: { children?: React$Element<any> }) => (
+const FailedWrapper = ({ children }: { children?: React$Element<any> }) =>
   <div className="soft card">
     {children}
-    <p className="flush-bottom soft-top" style={{ lineHeight: ".9" }}><small><em>
-      For more information about why this contribution failed to process,
-      please contact our Finance Team at{" "}
-      <a href="tel:864-965-9990">864-965-9990</a> or{" "}
-      <a
-        rel="noopener noreferrer"
-        target="_blank"
-        href="//rock.newspring.cc/workflows/152?Topic=Stewardship"
-      >
-        contact us
-      </a>
-    </em></small></p>
-  </div>
-);
+    <p className="flush-bottom soft-top" style={{ lineHeight: ".9" }}>
+      <small>
+        <em>
+          For more information about why this contribution failed to process,
+          please contact our Finance Team at{" "}
+          <a href="tel:864-965-9990">864-965-9990</a> or{" "}
+          <a
+            rel="noopener noreferrer"
+            target="_blank"
+            href="//rock.newspring.cc/workflows/152?Topic=Stewardship"
+          >
+            contact us
+          </a>
+        </em>
+      </small>
+    </p>
+  </div>;
 
 type IWrapper = {
   children?: React$Element<any>,
   transaction: Object,
-}
+};
 
-const Wrapper = ({ children, transaction }: IWrapper) => (
+const Wrapper = ({ children, transaction }: IWrapper) =>
   <div className="soft card">
     <Link to={`/give/history/${transaction.id}`}>
       {children}
     </Link>
-  </div>
-);
+  </div>;
 
 type ITransactionCard = {
   transactionDetail: Object,

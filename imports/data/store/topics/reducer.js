@@ -9,23 +9,21 @@ const initial = {
 };
 
 export default createReducer(initial, {
-
   "TOPIC.TOGGLE": (state, action) => {
     const topic = action.props.topic;
     const previousTopics = state.topics;
-    const nextTopics = _.contains(previousTopics, topic) ?
-      _.without(previousTopics, topic) :
-      _.union(previousTopics, [topic]);
+    const nextTopics = _.contains(previousTopics, topic)
+      ? _.without(previousTopics, topic)
+      : _.union(previousTopics, [topic]);
 
-    return { ...state,
+    return {
+      ...state,
       topics: nextTopics,
     };
   },
 
-  "TOPIC.SET": (state, action) => (
-    { ...state,
-      topics: action.content,
-    }
-  ),
-
+  "TOPIC.SET": (state, action) => ({
+    ...state,
+    topics: action.content,
+  }),
 });

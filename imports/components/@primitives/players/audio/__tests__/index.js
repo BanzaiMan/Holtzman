@@ -51,7 +51,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <AudioPlayer { ...newProps } />;
+  return <AudioPlayer {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -69,9 +69,11 @@ it("renders with mini player", () => {
 it("triggers modal if expanding", () => {
   const mockDispatch = jest.fn();
   modal.render = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   const nextProps = clone(defaultProps);
   nextProps.audio.visibility = "expand";
   wrapper.setProps(nextProps);
@@ -90,9 +92,11 @@ it("updates nav if phone", () => {
   modal.render = jest.fn();
   navActions.setLevel = jest.fn();
   navActions.setColor = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   const nextProps = clone(defaultProps);
   nextProps.audio.visibility = "expand";
   wrapper.setProps(nextProps);
@@ -153,7 +157,7 @@ it("shouldDisplayMini returns true if dock", () => {
   props.audio.visibility = "dock";
   const wrapper = shallow(generateComponent(props));
   expect(wrapper.instance().shouldDisplayMini()).toBe(
-    props.audio.playing.track.file
+    props.audio.playing.track.file,
   );
 });
 
@@ -162,6 +166,6 @@ it("shouldDisplayMini returns true if fade", () => {
   props.audio.visibility = "fade";
   const wrapper = shallow(generateComponent(props));
   expect(wrapper.instance().shouldDisplayMini()).toBe(
-    props.audio.playing.track.file
+    props.audio.playing.track.file,
   );
 });

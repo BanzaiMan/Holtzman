@@ -3,10 +3,7 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 
-import {
-  modal,
-  give as giveActions,
-} from "../../../data/store";
+import { modal, give as giveActions } from "../../../data/store";
 
 import Layout from "./Layout";
 
@@ -28,12 +25,12 @@ type IChangePayments = {
 
 type IChangePaymentsState = {
   savedAccount: Object,
-}
+};
 
 type IInputEvent = {
   preventDefault: Function,
   currentTarget: HTMLInputElement,
-}
+};
 
 class ChangePayments extends Component {
   props: IChangePayments;
@@ -41,14 +38,14 @@ class ChangePayments extends Component {
 
   state = {
     savedAccount: null,
-  }
+  };
 
   changeAccounts = (e: Event) => {
     e.preventDefault();
 
     this.props.dispatch(giveActions.setAccount(this.state.savedAccount));
     this.props.dispatch(modal.hide());
-  }
+  };
 
   choose = (e: IInputEvent) => {
     const { preventDefault, currentTarget } = e;
@@ -67,7 +64,7 @@ class ChangePayments extends Component {
     this.setState({
       savedAccount: act,
     });
-  }
+  };
 
   render() {
     let selectedAccount = this.props.currentAccount;
@@ -86,6 +83,4 @@ class ChangePayments extends Component {
 
 export default withRedux(ChangePayments);
 
-export {
-  ChangePayments as ChangePaymentsWithoutData,
-};
+export { ChangePayments as ChangePaymentsWithoutData };

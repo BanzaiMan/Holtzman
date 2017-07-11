@@ -23,7 +23,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <ForgotPassword { ...newProps } />;
+  return <ForgotPassword {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -50,20 +50,24 @@ it("renders success version", () => {
 });
 
 it("renders disabled if errors from props", () => {
-  const wrapper = shallow(generateComponent({
-    errors: {
-      message: "thing",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      errors: {
+        message: "thing",
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("isEmail saves the email if valid", () => {
   const mockSave = jest.fn();
   Validate.isEmail = jest.fn(() => true);
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
   const result = wrapper.instance().isEmail("test@gmail.com");
   expect(result).toBe(true);
   expect(mockSave).toHaveBeenCalledTimes(1);
@@ -73,9 +77,11 @@ it("isEmail saves the email if valid", () => {
 it("isEmail clears the email if invalid", () => {
   const mockClear = jest.fn();
   Validate.isEmail = jest.fn(() => false);
-  const wrapper = shallow(generateComponent({
-    clear: mockClear,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      clear: mockClear,
+    }),
+  );
   const result = wrapper.instance().isEmail("test@gmail.com");
   expect(result).toBe(false);
   expect(mockClear).toHaveBeenCalledTimes(1);
@@ -86,16 +92,20 @@ it("submit calls Accounts forgot password", () => {
   jest.useFakeTimers();
   Accounts.forgotPassword = jest.fn();
   const mockBack = jest.fn();
-  const wrapper = shallow(generateComponent({
-    back: mockBack,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      back: mockBack,
+    }),
+  );
   const mockPreventDefault = jest.fn();
   wrapper.instance().submit({
     preventDefault: mockPreventDefault,
   });
   expect(mockPreventDefault).toHaveBeenCalledTimes(1);
   expect(Accounts.forgotPassword).toHaveBeenCalledTimes(1);
-  expect(Accounts.forgotPassword.mock.calls[0][0]).toEqual({ email: defaultProps.email });
+  expect(Accounts.forgotPassword.mock.calls[0][0]).toEqual({
+    email: defaultProps.email,
+  });
   expect(wrapper.state().state).toBe("loading");
   // simulate successful forgotPassword callback
   Accounts.forgotPassword.mock.calls[0][1](null);
@@ -109,9 +119,11 @@ it("submit updates with error when forgotPassword errors", () => {
   jest.useFakeTimers();
   Accounts.forgotPassword = jest.fn();
   const mockBack = jest.fn();
-  const wrapper = shallow(generateComponent({
-    back: mockBack,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      back: mockBack,
+    }),
+  );
   const mockPreventDefault = jest.fn();
   wrapper.instance().submit({
     preventDefault: mockPreventDefault,
@@ -128,9 +140,11 @@ it("submit tries force reset if 403 error", () => {
   jest.useFakeTimers();
   Accounts.forgotPassword = jest.fn();
   const mockBack = jest.fn();
-  const wrapper = shallow(generateComponent({
-    back: mockBack,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      back: mockBack,
+    }),
+  );
   const mockPreventDefault = jest.fn();
   wrapper.instance().submit({
     preventDefault: mockPreventDefault,
@@ -152,9 +166,11 @@ it("submit tries force reset if 403 error and then errors if error again", () =>
   jest.useFakeTimers();
   Accounts.forgotPassword = jest.fn();
   const mockBack = jest.fn();
-  const wrapper = shallow(generateComponent({
-    back: mockBack,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      back: mockBack,
+    }),
+  );
   const mockPreventDefault = jest.fn();
   wrapper.instance().submit({
     preventDefault: mockPreventDefault,

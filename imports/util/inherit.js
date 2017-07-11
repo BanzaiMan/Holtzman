@@ -1,5 +1,3 @@
-
-
 function inherit(Child, Parent) {
   // copy Parent static properties
   const child = Object.assign(Child, Parent);

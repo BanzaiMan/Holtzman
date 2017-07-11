@@ -40,7 +40,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Template { ...newProps } />;
+  return <Template {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -49,31 +49,37 @@ it("renders with props", () => {
 });
 
 it("renders without accounts", () => {
-  const wrapper = shallow(generateComponent({
-    accounts: {},
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      accounts: {},
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders without transactions", () => {
-  const wrapper = shallow(generateComponent({
-    data: {
-      loading: false,
-      transactions: null,
-      person: {},
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        loading: false,
+        transactions: null,
+        person: {},
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders without person", () => {
-  const wrapper = shallow(generateComponent({
-    data: {
-      loading: false,
-      transactions: [{}, {}],
-      person: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        loading: false,
+        transactions: [{}, {}],
+        person: null,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -87,9 +93,11 @@ it("confirm sets the recoverable schedule and returns true", () => {
   };
   const mockDispatch = jest.fn();
   giveActions.setRecoverableSchedule = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   const result = wrapper.instance().confirm(mockEvent);
 
@@ -112,9 +120,11 @@ it("cancel renders modal and deletes schedules when finished", () => {
   giveActions.deleteSchedule = jest.fn();
   giveActions.deleteRecoverableSchedules = jest.fn();
   Meteor.call = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.instance().cancel(mockEvent);
 

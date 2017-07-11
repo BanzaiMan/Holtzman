@@ -1,12 +1,11 @@
 import Sections from "../../components/shared/sections";
 import Meta from "../../components/shared/meta";
 
-const Template = () => (
+const Template = () =>
   <div className="background--light-secondary">
     <Meta title="Sections" />
     <Sections />
-  </div>
-);
+  </div>;
 
 const Routes = [
   {
@@ -19,6 +18,4 @@ export default {
   Routes,
 };
 
-export {
-  Template,
-};
+export { Template };

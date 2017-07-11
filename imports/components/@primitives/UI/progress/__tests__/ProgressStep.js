@@ -12,7 +12,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Progress { ...newProps } />;
+  return <Progress {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -30,7 +30,5 @@ it("getLayer calculates layer", () => {
 it("steps returns an array of objects containing count", () => {
   const wrapper = shallow(generateComponent());
   const result = wrapper.instance().steps();
-  expect(result).toEqual([
-    { count: 0 }, { count: 1 }, { count: 2 },
-  ]);
+  expect(result).toEqual([{ count: 0 }, { count: 1 }, { count: 2 }]);
 });

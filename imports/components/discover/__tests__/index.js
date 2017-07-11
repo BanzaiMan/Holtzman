@@ -31,7 +31,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SearchContainer { ...newProps } />;
+  return <SearchContainer {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -61,10 +61,13 @@ it("adjust nav and header on mount", () => {
   expect(mockLockHeader).toHaveBeenCalledTimes(1);
   expect(mockLockHeader).toHaveBeenCalledWith("DiscoverModal");
   expect(mockHeaderAction).toHaveBeenCalledTimes(1);
-  expect(mockHeaderAction).toHaveBeenCalledWith({
-    isSearch: true,
-    searchSubmit: wrapper.instance().searchSubmit,
-  }, "DiscoverModal");
+  expect(mockHeaderAction).toHaveBeenCalledWith(
+    {
+      isSearch: true,
+      searchSubmit: wrapper.instance().searchSubmit,
+    },
+    "DiscoverModal",
+  );
 });
 
 it("adjust modal, header, and seach on unmount", () => {
@@ -95,11 +98,13 @@ it("getSearch calls apollo client with search query", () => {
   };
   const mockPromise = new Promise(p => p(mockPromiseData));
   const mockQuery = jest.fn(() => mockPromise);
-  const wrapper = shallow(generateComponent({
-    client: {
-      query: mockQuery,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      client: {
+        query: mockQuery,
+      },
+    }),
+  );
   searchActions.toggleLoading = jest.fn();
   searchActions.incrementPage = jest.fn();
   searchActions.add = jest.fn();
@@ -120,9 +125,9 @@ it("getSearch calls apollo client with search query", () => {
     expect(searchActions.incrementPage).toHaveBeenCalledTimes(1);
     expect(searchActions.add).toHaveBeenCalledTimes(1);
     expect(searchActions.add).toHaveBeenCalledWith(
-      mockPromiseData.data.search.items
+      mockPromiseData.data.search.items,
     );
-  })
+  });
 });
 
 it("getSearch calls none and done if no items", () => {
@@ -136,11 +141,13 @@ it("getSearch calls none and done if no items", () => {
   };
   const mockPromise = new Promise(p => p(mockPromiseData));
   const mockQuery = jest.fn(() => mockPromise);
-  const wrapper = shallow(generateComponent({
-    client: {
-      query: mockQuery,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      client: {
+        query: mockQuery,
+      },
+    }),
+  );
   searchActions.none = jest.fn();
   searchActions.done = jest.fn();
   wrapper.instance().getSearch();
@@ -149,7 +156,7 @@ it("getSearch calls none and done if no items", () => {
     expect(searchActions.none).toHaveBeenCalledWith(true);
     expect(searchActions.done).toHaveBeenCalledTimes(1);
     expect(searchActions.done).toHaveBeenCalledWith(true);
-  })
+  });
 });
 
 it("hide hides the modal", () => {

@@ -1,4 +1,3 @@
-
 import { mount, shallow } from "enzyme";
 import { mountToJson } from "enzyme-to-json";
 import { reset, startBuffering } from "aphrodite/lib/inject";
@@ -8,25 +7,27 @@ import { SubFundWithoutData, withRedux } from "../";
 
 // see the first test
 jest.mock("react-redux", () => ({
-  connect: jest.fn((props, dispatch) => jest.fn((MyComp) => <MyComp {...dispatch} />)),
+  connect: jest.fn((props, dispatch) =>
+    jest.fn(MyComp => <MyComp {...dispatch} />),
+  ),
 }));
 
 const additionalAccounts = [
-  {value: "test fund 1", label: "test fund 1", testId: 0},
-  {value: "test fund 2", label: "test fund 2", testId: 1},
-  {value: "RIP harambe fund", label: "RIP harambe fund", testId: 2},
-  {value: "my account", label:"my account", testId: 3},
+  { value: "test fund 1", label: "test fund 1", testId: 0 },
+  { value: "test fund 2", label: "test fund 2", testId: 1 },
+  { value: "RIP harambe fund", label: "RIP harambe fund", testId: 2 },
+  { value: "my account", label: "my account", testId: 3 },
 ];
 
-const generateComponent = (additionalProps={}) => {
+const generateComponent = (additionalProps = {}) => {
   const defaultProps = {
     accounts: [{ value: "main fund" }],
     preFill: () => {},
     changeAmount: jest.fn(),
-    changeFund: jest.fn()
+    changeFund: jest.fn(),
   };
 
-  return <SubFundWithoutData {...defaultProps} {...additionalProps} />
+  return <SubFundWithoutData {...defaultProps} {...additionalProps} />;
 };
 
 beforeEach(() => {
@@ -44,10 +45,10 @@ describe("withRedux", () => {
   *   This tests to make sure that this is happening on a stub component
   */
   xit("should include all the give actions", () => {
-    const Stub = (dispatch) => {
+    const Stub = dispatch => {
       expect(dispatch).toMatchSnapshot();
       return null;
-    }
+    };
     const stub = withRedux(Stub);
     shallow(stub);
   });
@@ -64,8 +65,7 @@ describe("withRedux", () => {
   // })
 });
 
-describe ("SubFund", () => {
-
+describe("SubFund", () => {
   it("should render with minimal props", () => {
     const component = mount(generateComponent());
 
@@ -120,5 +120,4 @@ describe ("SubFund", () => {
     expect(component.state()).toEqual({ active: false });
     expect(changeFund).toBeCalledWith(0, 11);
   });
-
 });

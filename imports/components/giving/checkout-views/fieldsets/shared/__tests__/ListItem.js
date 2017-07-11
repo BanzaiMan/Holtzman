@@ -4,10 +4,8 @@ import { ListItem } from "../";
 it("should render with props", () => {
   const mockTransaction = {
     label: "label",
-    value: 24.00,
+    value: 24.0,
   };
-  const result = renderer.create(
-    <ListItem transaction={mockTransaction} />
-  );
+  const result = renderer.create(<ListItem transaction={mockTransaction} />);
   expect(result).toMatchSnapshot();
 });

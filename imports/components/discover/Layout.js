@@ -20,11 +20,10 @@ const getStyle = () => {
   return style;
 };
 
-const SearchLayout = ({ loadMore, search }) => (
+const SearchLayout = ({ loadMore, search }) =>
   <section className="hard" style={getStyle()}>
     <Content loadMore={loadMore} search={search} />
-  </section>
-);
+  </section>;
 
 Content.propTypes = {
   loadMore: PropTypes.func,
@@ -38,7 +37,4 @@ SearchLayout.propTypes = {
 
 export default SearchLayout;
 
-export {
-  Content,
-  getStyle,
-};
+export { Content, getStyle };

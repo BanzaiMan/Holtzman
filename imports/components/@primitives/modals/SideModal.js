@@ -6,7 +6,6 @@ import styles from "./modal-css";
 import offsetStyles from "../nav/offset-css";
 
 export default class SideModal extends Component {
-
   static propTypes = {
     childClasses: PropTypes.array, // eslint-disable-line
     float: PropTypes.bool,
@@ -35,7 +34,7 @@ export default class SideModal extends Component {
     theme: PropTypes.string,
     visible: PropTypes.bool,
     captureRef: PropTypes.func.isRequired,
-  }
+  };
 
   static defaultProps = {
     childClasses: [],
@@ -43,11 +42,11 @@ export default class SideModal extends Component {
     offset: true,
     styles: {},
     props: {},
-  }
+  };
 
   state = {
     coverHeader: false,
-  }
+  };
 
   componentWillUpdate(nextProps) {
     const coverHeader = !!nextProps.props.coverHeader;
@@ -68,12 +67,7 @@ export default class SideModal extends Component {
   childClasses = () => {
     const { childClasses, float } = this.props;
 
-    let classes = [
-      "hard",
-      "one-whole",
-      css(styles.interior),
-      "scrollable",
-    ];
+    let classes = ["hard", "one-whole", css(styles.interior), "scrollable"];
 
     if (childClasses.length) {
       classes = classes.concat(childClasses);
@@ -82,23 +76,17 @@ export default class SideModal extends Component {
     if (float) {
       classes.push("floating__item");
     } else {
-      classes = classes.concat([
-        "inline-block",
-        "locked-top",
-      ]);
+      classes = classes.concat(["inline-block", "locked-top"]);
     }
 
     return classes.join(" ");
-  }
+  };
 
   layoutClasses = () => {
     const { float, offset } = this.props;
     const { classes, layoutOverride, modalBackground } = this.props.modal.props;
 
-    let classList = [
-      "hard",
-      "flush",
-    ];
+    let classList = ["hard", "flush"];
 
     if (classes && classes.length) {
       classList = classList.concat(classes);
@@ -125,13 +113,13 @@ export default class SideModal extends Component {
     }
 
     return classList.join(" ");
-  }
+  };
 
   styles = () => {
     // XXX there will never not be styles since defaultProps
     // const style = { ...(this.props.styles || this.props.style) };
     const style = { ...this.props.styles };
-    style.top = (process.env.WEB || this.state.coverHeader) ? "0px" : "46px";
+    style.top = process.env.WEB || this.state.coverHeader ? "0px" : "46px";
 
     return style;
   };
@@ -179,17 +167,23 @@ export default class SideModal extends Component {
     }
 
     return (
-      <div className="panel overlay--solid-dark fixed" data-side-modal id="@@modal" onClick={close} style={this.getContainerStyle()}>
-        <VelocityComponent
-          animation={slide}
-          duration={300}
-          runOnMount
-        >
+      <div
+        className="panel overlay--solid-dark fixed"
+        data-side-modal
+        id="@@modal"
+        onClick={close}
+        style={this.getContainerStyle()}
+      >
+        <VelocityComponent animation={slide} duration={300} runOnMount>
           <section
             className={this.props.theme || this.layoutClasses()}
             style={this.styles()}
           >
-            <div ref={this.props.captureRef} className={this.childClasses()} style={{ height: "100%" }}>
+            <div
+              ref={this.props.captureRef}
+              className={this.childClasses()}
+              style={{ height: "100%" }}
+            >
               <ChildComponent {...props} />
             </div>
           </section>

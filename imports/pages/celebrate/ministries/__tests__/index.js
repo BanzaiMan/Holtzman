@@ -1,6 +1,6 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
-import { Ministries } from "../"
+import { Ministries } from "../";
 
 const generateComponent = () => {
   return <Ministries />;

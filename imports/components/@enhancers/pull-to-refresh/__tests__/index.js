@@ -1,8 +1,6 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
-import {
-  ApollosPullToRefreshWithoutData as ApollosPullToRefresh,
-} from "../";
+import { ApollosPullToRefreshWithoutData as ApollosPullToRefresh } from "../";
 
 const defaultProps = {
   handleRefresh: jest.fn(),
@@ -14,7 +12,7 @@ const generateComponent = (additionalProps = {}) => {
     ...additionalProps,
   };
   return (
-    <ApollosPullToRefresh { ...newProps }>
+    <ApollosPullToRefresh {...newProps}>
       <h1>test</h1>
     </ApollosPullToRefresh>
   );

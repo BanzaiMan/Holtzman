@@ -25,7 +25,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SeriesVideoListItem { ...newProps } />;
+  return <SeriesVideoListItem {...newProps} />;
 };
 
 it("renders with props", () => {

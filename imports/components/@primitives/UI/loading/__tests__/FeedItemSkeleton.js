@@ -3,9 +3,7 @@ import { shallowToJson } from "enzyme-to-json";
 import { reset, startBuffering } from "aphrodite/lib/inject";
 import FeedItemSkeleton from "../FeedItemSkeleton";
 
-const generateComponent = () => (
-  <FeedItemSkeleton />
-);
+const generateComponent = () => <FeedItemSkeleton />;
 
 beforeEach(() => {
   reset();

@@ -27,12 +27,12 @@ export default class Billing extends Component {
     }
 
     return true;
-  }
+  };
 
   streetAddress2 = (value: string): boolean => {
     this.props.save({ billing: { streetAddress2: value } });
     return true;
-  }
+  };
 
   saveState = (value: string): boolean => {
     // we can't require city for international giving
@@ -44,7 +44,7 @@ export default class Billing extends Component {
     }
 
     return true;
-  }
+  };
 
   saveCountry = (value: string): boolean => {
     if (!value.length) {
@@ -54,7 +54,7 @@ export default class Billing extends Component {
     }
 
     return true;
-  }
+  };
 
   city = (value: string): boolean => {
     if (!value.length) {
@@ -64,9 +64,9 @@ export default class Billing extends Component {
     }
 
     return true;
-  }
+  };
 
-  zip = (value: string):boolean => {
+  zip = (value: string): boolean => {
     // we can't require zip for international giving
     if (!value.length) {
       this.props.clear("billing", "zip");
@@ -75,7 +75,7 @@ export default class Billing extends Component {
     }
 
     return true;
-  }
+  };
 
   render() {
     return (
@@ -86,7 +86,6 @@ export default class Billing extends Component {
         streetAddress={this.streetAddress}
         streetAddress2={this.streetAddress2}
         zip={this.zip}
-
         back={this.props.back}
         billing={this.props.data.billing}
         countries={this.props.countries}

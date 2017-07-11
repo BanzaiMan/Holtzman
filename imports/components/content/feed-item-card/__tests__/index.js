@@ -19,11 +19,12 @@ describe("FeedItem", () => {
     const content = {
       channelName: "articles",
       content: {
-        colors: [
-          { description: "primary", id: null, value: "303030" },
-        ],
+        colors: [{ description: "primary", id: null, value: "303030" }],
         images: [
-          { fileLabel: "2:1", url: "https://images.unsplash.com/24/5895672523_2e8ce56485_o.jpg" },
+          {
+            fileLabel: "2:1",
+            url: "https://images.unsplash.com/24/5895672523_2e8ce56485_o.jpg",
+          },
         ],
       },
       meta: {
@@ -32,11 +33,7 @@ describe("FeedItem", () => {
       title: "FeedItem Title",
     };
 
-    const tree = renderer.create(
-      <FeedItem
-        item={content}
-      />
-    );
+    const tree = renderer.create(<FeedItem item={content} />);
     expect(tree).toMatchSnapshot();
   });
 
@@ -45,11 +42,12 @@ describe("FeedItem", () => {
     const content = {
       channelName: "series_newspring",
       content: {
-        colors: [
-          { description: "primary", id: null, value: "303030" },
-        ],
+        colors: [{ description: "primary", id: null, value: "303030" }],
         images: [
-          { fileLabel: "2:1", url: "https://images.unsplash.com/24/5895672523_2e8ce56485_o.jpg" },
+          {
+            fileLabel: "2:1",
+            url: "https://images.unsplash.com/24/5895672523_2e8ce56485_o.jpg",
+          },
         ],
       },
       meta: {
@@ -58,11 +56,7 @@ describe("FeedItem", () => {
       title: "FeedItem Title",
     };
 
-    const tree = renderer.create(
-      <FeedItem
-        item={content}
-      />
-    );
+    const tree = renderer.create(<FeedItem item={content} />);
     expect(tree).toMatchSnapshot();
   });
 
@@ -78,7 +72,10 @@ describe("FeedItem", () => {
           },
         ],
         images: [
-          { fileLabel: "2:1", url: "https://images.unsplash.com/24/5895672523_2e8ce56485_o.jpg" },
+          {
+            fileLabel: "2:1",
+            url: "https://images.unsplash.com/24/5895672523_2e8ce56485_o.jpg",
+          },
         ],
       },
       meta: {
@@ -98,11 +95,7 @@ describe("FeedItem", () => {
       title: "FeedItem Title",
     };
 
-    const tree = renderer.create(
-      <FeedItem
-        item={content}
-      />
-    );
+    const tree = renderer.create(<FeedItem item={content} />);
     expect(tree).toMatchSnapshot();
   });
 
@@ -134,18 +127,18 @@ describe("FeedItem", () => {
             },
           ],
           images: [
-            { fileLabel: "2:1", url: "https://images.unsplash.com/photo-1418985991508-e47386d96a71" },
+            {
+              fileLabel: "2:1",
+              url:
+                "https://images.unsplash.com/photo-1418985991508-e47386d96a71",
+            },
           ],
         },
       },
       title: "FeedItem Title",
     };
 
-    const tree = renderer.create(
-      <FeedItem
-        item={content}
-      />
-    );
+    const tree = renderer.create(<FeedItem item={content} />);
     expect(tree).toMatchSnapshot();
   });
 
@@ -161,7 +154,10 @@ describe("FeedItem", () => {
           },
         ],
         images: [
-          { fileLabel: "2:1", url: "https://images.unsplash.com/24/5895672523_2e8ce56485_o.jpg" },
+          {
+            fileLabel: "2:1",
+            url: "https://images.unsplash.com/24/5895672523_2e8ce56485_o.jpg",
+          },
         ],
       },
       meta: {
@@ -177,18 +173,18 @@ describe("FeedItem", () => {
             },
           ],
           images: [
-            { fileLabel: "2:1", url: "https://images.unsplash.com/photo-1418985991508-e47386d96a71" },
+            {
+              fileLabel: "2:1",
+              url:
+                "https://images.unsplash.com/photo-1418985991508-e47386d96a71",
+            },
           ],
         },
       },
       title: "FeedItem Title",
     };
 
-    const tree = renderer.create(
-      <FeedItem
-        item={content}
-      />
-    );
+    const tree = renderer.create(<FeedItem item={content} />);
     expect(tree).toMatchSnapshot();
   });
 });

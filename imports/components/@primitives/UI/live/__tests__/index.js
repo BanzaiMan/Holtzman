@@ -3,10 +3,7 @@ import { shallowToJson } from "enzyme-to-json";
 import { reset, startBuffering } from "aphrodite/lib/inject";
 import { print } from "graphql-tag/printer";
 import liveActions from "../../../../../data/store/live";
-import {
-  LiveWithoutData as Live,
-  LIVE_QUERY,
-} from "../";
+import { LiveWithoutData as Live, LIVE_QUERY } from "../";
 
 jest.mock("../../../../../data/store/live", () => ({
   set: jest.fn(),
@@ -40,7 +37,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Live { ...newProps } />;
+  return <Live {...newProps} />;
 };
 
 beforeEach(() => {
@@ -58,47 +55,55 @@ it("renders with props", () => {
 });
 
 it("doesn't render if not live", () => {
-  const wrapper = shallow(generateComponent({
-    live: {
-      live: false,
-      embedCode: "test",
-      show: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      live: {
+        live: false,
+        embedCode: "test",
+        show: true,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("doesn't render if no embed code", () => {
-  const wrapper = shallow(generateComponent({
-    live: {
-      live: true,
-      embedCode: null,
-      show: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      live: {
+        live: true,
+        embedCode: null,
+        show: true,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("doesn't render if don't show", () => {
-  const wrapper = shallow(generateComponent({
-    live: {
-      live: true,
-      embedCode: "test",
-      show: false,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      live: {
+        live: true,
+        embedCode: "test",
+        show: false,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders float version", () => {
-  const wrapper = shallow(generateComponent({
-    live: {
-      float: true,
-      live: true,
-      embedCode: "test",
-      show: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      live: {
+        float: true,
+        live: true,
+        embedCode: "test",
+        show: true,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -109,14 +114,16 @@ it("getClasses returns default classes", () => {
 });
 
 it("getClasses returns float version", () => {
-  const wrapper = shallow(generateComponent({
-    live: {
-      float: true,
-      live: true,
-      embedCode: "test",
-      show: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      live: {
+        float: true,
+        live: true,
+        embedCode: "test",
+        show: true,
+      },
+    }),
+  );
   const result = wrapper.instance().getClasses();
   expect(result).toMatchSnapshot();
 });
@@ -129,9 +136,11 @@ it("getTextClasses returns default classes", () => {
 
 it("handleLive returns if not live", () => {
   const mockDispatch = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().handleLiveChange({
     data: {
       live: null,
@@ -142,9 +151,11 @@ it("handleLive returns if not live", () => {
 
 it("handleLive returns data live is the same as props live", () => {
   const mockDispatch = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().handleLiveChange({
     data: {
       live: {
@@ -164,9 +175,11 @@ it("handleLive updates store when data live is and props live is not", () => {
   const mockDispatch = jest.fn();
   liveActions.set = jest.fn();
   liveActions.reset = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().handleLiveChange({
     data: {
       live: {
@@ -191,9 +204,11 @@ it("handleLive updates store when data is not live and props live is", () => {
   const mockDispatch = jest.fn();
   liveActions.set = jest.fn();
   liveActions.reset = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().handleLiveChange({
     data: {
       live: {
@@ -229,9 +244,13 @@ it("shows beta users a link to wowza page", () => {
   };
   const wrapper = shallow(generateComponent(props));
   expect(wrapper.instance().getLink()).toEqual("/wowza");
-  wrapper.setProps({ ...props, person: {
-    authLoading: false, authorized: false,
-  }});
+  wrapper.setProps({
+    ...props,
+    person: {
+      authLoading: false,
+      authorized: false,
+    },
+  });
   // use only wowza now
   expect(wrapper.instance().getLink()).toEqual("/wowza");
 });

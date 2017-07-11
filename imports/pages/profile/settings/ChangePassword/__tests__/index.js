@@ -22,7 +22,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <ChangePassword { ...newProps } />;
+  return <ChangePassword {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -58,9 +58,11 @@ it("renders success version", () => {
 it("updates nav on mount", () => {
   const mockDispatch = jest.fn();
   nav.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(nav.setLevel).toHaveBeenCalledTimes(1);
   expect(nav.setLevel).toHaveBeenCalledWith("BASIC_CONTENT");
@@ -69,9 +71,11 @@ it("updates nav on mount", () => {
 it("updates nav on unmount", () => {
   const mockDispatch = jest.fn();
   nav.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.unmount();
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(nav.setLevel).toHaveBeenCalledTimes(2);

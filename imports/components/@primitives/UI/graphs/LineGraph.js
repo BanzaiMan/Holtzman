@@ -18,10 +18,9 @@ type ILineGraph = {
 };
 
 const getTickFormat = (data: Object[]) => {
-  const ticks = data.map((x) => (x.tick));
+  const ticks = data.map(x => x.tick);
   return ticks;
 };
-
 
 type IGradientGroup = {
   style?: Object,
@@ -31,12 +30,14 @@ type IGradientGroup = {
   gradientColor: string,
 };
 
-const GradientGroup = ({ style, events, transform, children, gradientColor }: IGradientGroup) => (
-  <g
-    style={style}
-    {...events}
-    transform={transform}
-  >
+const GradientGroup = ({
+  style,
+  events,
+  transform,
+  children,
+  gradientColor,
+}: IGradientGroup) =>
+  <g style={style} {...events} transform={transform}>
     <defs>
       <linearGradient id="gradient" x1="0" y1="0" x2="0" y2="1">
         <stop offset=".5" stopOpacity="1" stopColor={gradientColor} />
@@ -44,16 +45,18 @@ const GradientGroup = ({ style, events, transform, children, gradientColor }: IG
       </linearGradient>
     </defs>
     {children}
-  </g>
-);
+  </g>;
 
 class LineGraph extends Component {
   props: ILineGraph;
   graphContainer: Element;
 
   componentDidMount() {
-    const renderedChart = this.graphContainer.querySelectorAll("[aria-labelledby='title desc']");
-    if (renderedChart && renderedChart.length) renderedChart[0].removeAttribute("height");
+    const renderedChart = this.graphContainer.querySelectorAll(
+      "[aria-labelledby='title desc']",
+    );
+    if (renderedChart && renderedChart.length)
+      renderedChart[0].removeAttribute("height");
   }
 
   render() {
@@ -66,10 +69,7 @@ class LineGraph extends Component {
       lineWidth,
     } = this.props;
     return (
-      <div
-        className=""
-        ref={(el) => (this.graphContainer = el)}
-      >
+      <div className="" ref={el => (this.graphContainer = el)}>
         <VictoryChart
           height={160}
           padding={{ top: 5, left: 10, right: 10, bottom: 20 }}

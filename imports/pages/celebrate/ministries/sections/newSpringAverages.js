@@ -1,4 +1,3 @@
-
 import FitText from "../../components/fit-text";
 import CardSlider from "../../../../components/@primitives/UI/card-slider";
 import MetricCard from "../../components/metricCard";
@@ -29,15 +28,11 @@ const data = {
 };
 
 /* eslint-disable max-len */
-const NewSpringAverages = () => (
+const NewSpringAverages = () =>
   <div className="background--light-secondary text-dark-primary soft-double-ends push-ends@lap-and-up soft-ends text-center">
     <div className="constrain-page push-top soft-sides@handheld">
       <div className="one-whole">
-        <h3
-          className="push-half-bottom"
-        >
-          Average Weekly Attendance
-        </h3>
+        <h3 className="push-half-bottom">Average Weekly Attendance</h3>
 
         <FitText compressor={0.6} maxFontSize="100">
           <h1
@@ -53,17 +48,12 @@ const NewSpringAverages = () => (
 
     <div className="push-bottom@lap-and-up">
       <CardSlider>
-        {data.attendance.campuses.map((campus, i) => (
-          <MetricCard
-            key={i}
-            count={campus.average}
-            label={campus.name}
-          />
-        ))}
+        {data.attendance.campuses.map((campus, i) =>
+          <MetricCard key={i} count={campus.average} label={campus.name} />,
+        )}
       </CardSlider>
     </div>
-  </div>
-);
+  </div>;
 /* eslint-enable max-len */
 
 export default NewSpringAverages;

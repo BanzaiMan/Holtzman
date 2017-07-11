@@ -1,4 +1,3 @@
-
 import { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router";
@@ -16,21 +15,17 @@ import {
 } from "../../data/store";
 
 class ListDetailWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     header: PropTypes.object.isRequired,
     audio: PropTypes.object.isRequired,
-    album: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.object,
-    ]).isRequired,
+    album: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
     trackNumber: PropTypes.number.isRequired,
-  }
+  };
 
   state = {
     previousHeaderColor: null,
-  }
+  };
 
   componentWillMount() {
     if (process.env.NATIVE) {
@@ -49,7 +44,7 @@ class ListDetailWithoutData extends Component {
   componentWillUnmount() {
     if (process.env.NATIVE) {
       this.props.dispatch(
-        headerActions.statusBarColor(this.state.previousHeaderColor)
+        headerActions.statusBarColor(this.state.previousHeaderColor),
       );
       this.props.dispatch(navActions.setLevel("CONTENT"));
     }
@@ -71,21 +66,25 @@ class ListDetailWithoutData extends Component {
     } else {
       this.props.dispatch(modal.hide());
     }
-  }
+  };
 
-  share = (event) => {
+  share = event => {
     event.preventDefault();
     const { dispatch } = this.props;
     dispatch(shareActions.share());
-  }
+  };
 
   render() {
     const url = `/music/${this.props.album.entryId}`;
-    const smallImage = _.find(this.props.album.content.images, (image) => (
-      image.fileName.indexOf("blur") === -1 && image.size === "small"
-    ));
+    const smallImage = _.find(
+      this.props.album.content.images,
+      image => image.fileName.indexOf("blur") === -1 && image.size === "small",
+    );
     return (
-      <div className="one-whole soft background--dark-primary" style={this.sectionStyles}>
+      <div
+        className="one-whole soft background--dark-primary"
+        style={this.sectionStyles}
+      >
         <div className="text-light-primary">
           <div className="grid floating push-bottom">
             <div
@@ -100,8 +99,12 @@ class ListDetailWithoutData extends Component {
                 {this.props.album.content.tracks[this.props.trackNumber].title}
               </h5>
               <h7 className="text-light-tertiary">
-                <span>{this.props.album.title} – </span>
-                <span>{this.props.album.artist || "NewSpring"}</span>
+                <span>
+                  {this.props.album.title} –{" "}
+                </span>
+                <span>
+                  {this.props.album.artist || "NewSpring"}
+                </span>
               </h7>
             </div>
           </div>
@@ -112,29 +115,24 @@ class ListDetailWithoutData extends Component {
           >
             <h5>View Album</h5>
           </Link>
-          <h5 onClick={this.share} className="push-ends">Share</h5>
+          <h5 onClick={this.share} className="push-ends">
+            Share
+          </h5>
         </div>
       </div>
     );
   }
-
 }
 
-const mapStateToProps = (state) => (
-  {
-    audio: {
-      visibility: state.audio.visibility,
-    },
-    header: state.header,
-  }
-);
+const mapStateToProps = state => ({
+  audio: {
+    visibility: state.audio.visibility,
+  },
+  header: state.header,
+});
 
 export default connect(mapStateToProps)(
-  ReactMixin.decorate(Shareable)(
-    ListDetailWithoutData
-  )
+  ReactMixin.decorate(Shareable)(ListDetailWithoutData),
 );
 
-export {
-  ListDetailWithoutData,
-};
+export { ListDetailWithoutData };

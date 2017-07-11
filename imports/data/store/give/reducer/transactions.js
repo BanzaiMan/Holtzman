@@ -1,4 +1,3 @@
-
 const addTransaction = (state, action) => {
   let total = 0;
 
@@ -18,7 +17,8 @@ const addTransaction = (state, action) => {
     total += mergedTransactions[fund].value;
   }
 
-  return { ...state,
+  return {
+    ...state,
     ...{
       transactions: mergedTransactions,
       total,
@@ -51,7 +51,8 @@ const clearTransaction = (state, action) => {
     total += state.transactions[fund].value;
   }
 
-  return { ...state,
+  return {
+    ...state,
     ...{
       transactions: state.transactions,
       total,
@@ -59,17 +60,12 @@ const clearTransaction = (state, action) => {
   };
 };
 
-const clearTransactions = (state) => (
-  { ...state,
-    ...{
-      total: 0,
-      transactions: {},
-    },
-  }
-);
+const clearTransactions = state => ({
+  ...state,
+  ...{
+    total: 0,
+    transactions: {},
+  },
+});
 
-export {
-  addTransaction,
-  clearTransaction,
-  clearTransactions,
-};
+export { addTransaction, clearTransaction, clearTransactions };

@@ -2,7 +2,7 @@ import PaymentCard from "../index";
 
 type IPaymentAccounts = {
   savedAccounts: Object,
-}
+};
 
 // XXX Need to refactor this to get it to work
 const choose = (e: SyntheticInputEvent) => {
@@ -23,11 +23,9 @@ const choose = (e: SyntheticInputEvent) => {
   });
 };
 
-const PaymentAccounts = ({
-  savedAccounts,
-}: IPaymentAccounts) => (
+const PaymentAccounts = ({ savedAccounts }: IPaymentAccounts) =>
   <div>
-    {savedAccounts.map((account, key) => (
+    {savedAccounts.map((account, key) =>
       <PaymentCard
         key={key}
         onClick={choose}
@@ -36,9 +34,8 @@ const PaymentAccounts = ({
         paymentAccount={account.payment.accountNumber}
         paymentType={account.payment.paymentType}
         // selectedAccountId={selectedAccount.id}
-      />
-    ))}
-  </div>
-);
+      />,
+    )}
+  </div>;
 
 export default PaymentAccounts;

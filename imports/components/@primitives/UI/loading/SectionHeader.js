@@ -1,4 +1,3 @@
-
 import SmallButton from "../buttons/SmallButton";
 
 const halvesClasses = "one-half floating display-inline-block";
@@ -12,8 +11,10 @@ export default () =>
       />
     </div>
     <div className={`${halvesClasses} floating--right soft soft-half-right`}>
-      <SmallButton disabled text="See All" style={{ color: "transparent", borderColor: "#ddd" }} />
+      <SmallButton
+        disabled
+        text="See All"
+        style={{ color: "transparent", borderColor: "#ddd" }}
+      />
     </div>
-  </div>
-  ;
-
+  </div>;

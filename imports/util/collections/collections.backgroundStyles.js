@@ -1,4 +1,3 @@
-
 import collectionClass from "./collections.class";
 import collectionColor from "./collections.color";
 

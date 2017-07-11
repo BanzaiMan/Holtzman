@@ -5,7 +5,9 @@ import { makeNewGuid } from "../../../../util";
 Meteor.methods({
   "rock/accounts/updateHome": function updateHome(data) {
     if (!this.userId) {
-      throw new Meteor.Error("You must be logged in to change your information");
+      throw new Meteor.Error(
+        "You must be logged in to change your information",
+      );
     }
 
     const user = Meteor.users.findOne(this.userId);
@@ -48,7 +50,6 @@ Meteor.methods({
       throw new Meteor.Error(success);
     }
 
-
     /*
 
       The user does not have a home so far, we need to create a Location and Group Location
@@ -58,7 +59,8 @@ Meteor.methods({
     const Location = { ...{ Guid: makeNewGuid(), IsActive: true }, ...data };
     const LocationId = api.post.sync("Locations", Location);
 
-    if (!LocationId) throw new Meteor.Error("Location could not be created", Location);
+    if (!LocationId)
+      throw new Meteor.Error("Location could not be created", Location);
 
     const GroupLocation = {
       GroupId,

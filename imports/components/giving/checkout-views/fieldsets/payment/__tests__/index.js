@@ -24,7 +24,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Payment { ...newProps } />;
+  return <Payment {...newProps} />;
 };
 
 it("should render with props", () => {
@@ -34,9 +34,11 @@ it("should render with props", () => {
 
 it("savePayment should change save state and call save", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
 
   expect(wrapper.state().save).toBeTruthy();
   expect(mockSave).toHaveBeenCalledTimes(0);
@@ -52,9 +54,11 @@ it("savePayment should change save state and call save", () => {
 
 it("saveName should not call save if no value", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
 
   const result = wrapper.instance().saveName("");
   expect(result).toBeFalsy();
@@ -63,9 +67,11 @@ it("saveName should not call save if no value", () => {
 
 it("saveName should call save if value", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
 
   const result = wrapper.instance().saveName("test");
   expect(result).toBeTruthy();
@@ -200,9 +206,11 @@ it("validate ccv returns false if empty", () => {
 
 it("saveData calls save if valid", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
   const mockTarget = document.createElement("input");
   mockTarget.id = "accountNumber";
 
@@ -210,16 +218,18 @@ it("saveData calls save if valid", () => {
   expect(mockSave).toHaveBeenCalledTimes(1);
   expect(mockSave).toHaveBeenCalledWith({
     payment: {
-      "accountNumber": "test",
-    }
+      accountNumber: "test",
+    },
   });
 });
 
 it("saveData does not call save if invalid", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
   const mockTarget = document.createElement("input");
   mockTarget.id = "accountNumber";
 
@@ -238,13 +248,15 @@ it("formatExp returns 5 characters if greater than 5", () => {
 });
 
 it("formatExp updates 1/ if current last number isn't a /", () => {
-  const wrapper = shallow(generateComponent({
-    data: {
-      payment: {
-        expiration: "1",
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        payment: {
+          expiration: "1",
+        },
       },
-    },
-  }));
+    }),
+  );
   const mockTarget = document.createElement("input");
   mockTarget.id = "expiration";
 
@@ -297,9 +309,11 @@ it("formatExp leaves it alone if fine", () => {
 
 it("toggle changes the payment type to ach if not ach", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
   wrapper.instance().toggle();
   expect(mockSave).toHaveBeenCalledTimes(1);
   expect(mockSave).toHaveBeenCalledWith({
@@ -311,14 +325,16 @@ it("toggle changes the payment type to ach if not ach", () => {
 
 it("toggle changes the payment type to cc if ach", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    data: {
-      payment: {
-        type: "ach",
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        payment: {
+          type: "ach",
+        },
       },
-    },
-    save: mockSave,
-  }));
+      save: mockSave,
+    }),
+  );
   wrapper.instance().toggle();
   expect(mockSave).toHaveBeenCalledTimes(1);
   expect(mockSave).toHaveBeenCalledWith({

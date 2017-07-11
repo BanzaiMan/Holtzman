@@ -21,7 +21,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <StoriesSingle { ...newProps } />;
+  return <StoriesSingle {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -30,11 +30,13 @@ it("renders with props", () => {
 });
 
 it("renders loading if no content", () => {
-  const wrapper = shallow(generateComponent({
-    story: {
-      content: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      story: {
+        content: null,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 

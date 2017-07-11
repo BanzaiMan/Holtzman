@@ -7,12 +7,8 @@ import AudioControls from "./Controls";
 import Styles from "./styles/miniPlayer";
 
 class MiniPlayerWithoutData extends Component {
-
   static propTypes = {
-    classes: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-    ]),
+    classes: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     audio: PropTypes.object, // eslint-disable-line
     dispatch: PropTypes.func,
     play: PropTypes.func,
@@ -39,7 +35,7 @@ class MiniPlayerWithoutData extends Component {
       return `${collectionTitle} – ${artistName}`;
     }
     return `${artistName} – ${collectionTitle}`;
-  }
+  };
 
   layoutClasses = () => {
     let classes = [
@@ -50,7 +46,6 @@ class MiniPlayerWithoutData extends Component {
       "soft-half",
       "floating",
     ];
-
 
     if (this.props.classes) {
       classes = classes.concat(this.props.classes);
@@ -63,7 +58,7 @@ class MiniPlayerWithoutData extends Component {
     }
 
     return classes.join(" ");
-  }
+  };
 
   stopClasses = () => {
     const classes = [
@@ -81,10 +76,9 @@ class MiniPlayerWithoutData extends Component {
     }
 
     return classes.join(" ");
-  }
+  };
 
-  stopH6Classes = () =>
-    css(Styles["mini-player-stop-h6"]);
+  stopH6Classes = () => css(Styles["mini-player-stop-h6"]);
 
   stopH6IconClasses = () => {
     const classes = [
@@ -94,7 +88,7 @@ class MiniPlayerWithoutData extends Component {
       css(Styles["mini-player-stop-h6-icon"]),
     ];
     return classes.join(" ");
-  }
+  };
 
   albumClasses = () => {
     const classes = [
@@ -108,9 +102,9 @@ class MiniPlayerWithoutData extends Component {
     classes.push(css(Styles["mini-album-cover"]));
 
     return classes.join(" ");
-  }
+  };
 
-  toggle = (e) => {
+  toggle = e => {
     e.preventDefault();
     e.stopPropagation();
     const { state } = this.props.audio;
@@ -126,11 +120,11 @@ class MiniPlayerWithoutData extends Component {
       this.props.pause();
       return;
     }
-  }
+  };
 
   removeHideTimer = () => {
     clearInterval(this.timeout);
-  }
+  };
 
   startHideTimer = () => {
     this.timeout = setTimeout(() => {
@@ -138,25 +132,28 @@ class MiniPlayerWithoutData extends Component {
       this.props.hide();
       this.props.reset();
     }, 600000);
-  }
+  };
 
   openFullPlayer = () => {
     this.props.dispatch(audioActions.setVisibility("expand"));
   };
 
-  touchStart = (e) => {
+  touchStart = e => {
     this.setState({
       startX: e.touches[0].clientX,
       transition: false,
     });
-  }
+  };
 
-  touchMove = (e) => {
-    const percent = this.calculatePercent(e.currentTarget, e.touches[0].clientX);
+  touchMove = e => {
+    const percent = this.calculatePercent(
+      e.currentTarget,
+      e.touches[0].clientX,
+    );
     this.setState({
       lastPercent: percent,
     });
-  }
+  };
 
   touchEnd = () => {
     const decider = 25;
@@ -177,12 +174,12 @@ class MiniPlayerWithoutData extends Component {
       lastPercent: stop ? 100 : 0,
       transition: true,
     });
-  }
+  };
 
   calculatePercent = (targetElement, clickedX) => {
     const range = targetElement.offsetWidth;
     const offsetClicked = clickedX - this.state.startX;
-    const percentClicked = (offsetClicked / range) * 100;
+    const percentClicked = offsetClicked / range * 100;
 
     if (percentClicked > 100) {
       return 100;
@@ -191,13 +188,11 @@ class MiniPlayerWithoutData extends Component {
     }
 
     return percentClicked;
-  }
+  };
 
-  playerStyle = () =>
-    ({
-      left: `${this.state.lastPercent}%`,
-    });
-
+  playerStyle = () => ({
+    left: `${this.state.lastPercent}%`,
+  });
 
   fadeClass = () => {
     const { visibility } = this.props.audio;
@@ -205,13 +200,13 @@ class MiniPlayerWithoutData extends Component {
       return css(Styles["mini-player-fade"]);
     }
     return undefined;
-  }
+  };
 
   render() {
     const { playing } = this.props.audio;
     const { album } = playing;
     const { images } = album.content;
-    const smallImage = _.find(images, (image) => {
+    const smallImage = _.find(images, image => {
       if (image.fileLabel && image.size) {
         return image.fileLabel === "1:1" && image.size === "small";
       }
@@ -242,11 +237,8 @@ class MiniPlayerWithoutData extends Component {
           onTouchEnd={this.touchEnd}
           style={this.playerStyle()}
         >
-        {/* eslint-enable */}
-          <div
-            className={this.albumClasses()}
-            style={bgImageStyle}
-          />
+          {/* eslint-enable */}
+          <div className={this.albumClasses()} style={bgImageStyle} />
           <div className="plain floating__item six-eighths truncate">
             <h6 className="display-block text-dark-secondary flush">
               {playing.track.title}
@@ -255,10 +247,7 @@ class MiniPlayerWithoutData extends Component {
               {this.getArtistLine()}
             </h7>
           </div>
-          <AudioControls
-            audio={this.props.audio}
-            isLight
-          />
+          <AudioControls audio={this.props.audio} isLight />
         </div>
       </div>
     );
@@ -271,8 +260,4 @@ const withRedux = connect(map, audioActions);
 
 export default withRedux(MiniPlayerWithoutData);
 
-export {
-  MiniPlayerWithoutData,
-  map,
-  withRedux,
-};
+export { MiniPlayerWithoutData, map, withRedux };

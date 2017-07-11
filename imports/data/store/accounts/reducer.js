@@ -9,7 +9,6 @@ import { createReducer } from "../utilities";
 import types from "./types";
 
 export const initial = {
-
   account: true, // has an account
   authorized: false, // is logged in
   forgot: false, // ui state change (should move to component?)
@@ -66,13 +65,9 @@ export const initial = {
     //   message: "Email is required"
     // }
   },
-
-
 };
 
-
 export default createReducer(initial, {
-
   [types.SET_FORGOT](state, action) {
     if (typeof action.forgot !== "boolean") {
       return state;
@@ -313,6 +308,4 @@ export default createReducer(initial, {
       },
     };
   },
-
-
 });

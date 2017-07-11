@@ -1,4 +1,3 @@
-
 import { Component, PropTypes } from "react";
 import { connect } from "react-redux";
 
@@ -6,7 +5,6 @@ import { modal, audio as audioActions } from "../../data/store";
 import ListDetail from "./ListDetail";
 
 class AudioTrackWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     album: PropTypes.object.isRequired,
@@ -14,20 +12,22 @@ class AudioTrackWithoutData extends Component {
     track: PropTypes.object.isRequired,
     trackNumber: PropTypes.number.isRequired,
     active: PropTypes.bool,
-  }
+  };
 
   ListDetail = () => {
-    this.props.dispatch(modal.render(ListDetail, {
-      modalBackground: "dark",
-      album: this.props.album,
-      trackNumber: this.props.trackNumber,
-      style: {
-        opacity: 0.9,
-      },
-      coverHeader: true,
-      coverMiniPlayer: true,
-    }));
-  }
+    this.props.dispatch(
+      modal.render(ListDetail, {
+        modalBackground: "dark",
+        album: this.props.album,
+        trackNumber: this.props.trackNumber,
+        style: {
+          opacity: 0.9,
+        },
+        coverHeader: true,
+        coverMiniPlayer: true,
+      }),
+    );
+  };
 
   // XXX unused
   trackClasses = () => {
@@ -41,21 +41,18 @@ class AudioTrackWithoutData extends Component {
     if (this.props.active) classes.push("unread-notification");
 
     return classes.join(" ");
-  }
+  };
 
   // XXX unused
   textClasses = () => {
-    const classes = [
-      "float-left",
-      "truncate",
-    ];
+    const classes = ["float-left", "truncate"];
 
     if (this.props.active) classes.push("strong");
 
     return classes.join(" ");
-  }
+  };
 
-  play = (e) => {
+  play = e => {
     e.preventDefault();
     const index = this.props.trackNumber;
 
@@ -69,15 +66,17 @@ class AudioTrackWithoutData extends Component {
       return;
     }
 
-    this.props.dispatch(audioActions.setPlaying({
-      track,
-      album: this.props.album,
-    }));
+    this.props.dispatch(
+      audioActions.setPlaying({
+        track,
+        album: this.props.album,
+      }),
+    );
 
-    this.props.dispatch(audioActions.setPlaylist(
-      this.props.album.content.tracks
-    ));
-  }
+    this.props.dispatch(
+      audioActions.setPlaylist(this.props.album.content.tracks),
+    );
+  };
 
   render() {
     return (
@@ -101,11 +100,8 @@ class AudioTrackWithoutData extends Component {
       </div>
     );
   }
-
 }
 
 export default connect()(AudioTrackWithoutData);
 
-export {
-  AudioTrackWithoutData,
-};
+export { AudioTrackWithoutData };

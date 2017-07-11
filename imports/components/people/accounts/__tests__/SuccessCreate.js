@@ -12,7 +12,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Success { ...newProps } />;
+  return <Success {...newProps} />;
 };
 
 it("render with props", () => {

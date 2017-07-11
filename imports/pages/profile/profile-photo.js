@@ -3,10 +3,9 @@
 import { Component, createElement } from "react";
 import { avatar } from "../../deprecated/methods/files/browser";
 
-export default (WrappedComponent) => {
+export default WrappedComponent => {
   class ProfileUpload extends Component {
-
-    state = { photo: null }
+    state = { photo: null };
 
     nativePost = (fileEntry, s, f) => {
       // Do something with the FileEntry object, like write to it, upload it, etc.
@@ -24,7 +23,7 @@ export default (WrappedComponent) => {
 
       const ft = new FileTransfer();
       ft.upload(fileURL, encodeURI(url), s, f, options);
-    }
+    };
 
     nativeUpload = (e, opts = {}) => {
       e.preventDefault();
@@ -33,23 +32,26 @@ export default (WrappedComponent) => {
 
       return new Promise((s, f) => {
         navigator.camera.getPicture(
-          (photo) => {
+          photo => {
             this.setState({
               photo: WebAppLocalServer.localFileSystemUrl(photo),
             });
             this.nativePost(photo, s, f);
           },
           f,
-          { ...{
-            quality: 50,
-            destinationType: Camera.DestinationType.FILE_URI,
-            correctOrientation: true,
-            encodingType: Camera.EncodingType.JPEG,
-            mediaType: Camera.MediaType.PICTURE,
-            sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
-            allowEdit: false,
-            cameraDirection: Camera.Direction.FRONT,
-          }, ...opts }
+          {
+            ...{
+              quality: 50,
+              destinationType: Camera.DestinationType.FILE_URI,
+              correctOrientation: true,
+              encodingType: Camera.EncodingType.JPEG,
+              mediaType: Camera.MediaType.PICTURE,
+              sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
+              allowEdit: false,
+              cameraDirection: Camera.Direction.FRONT,
+            },
+            ...opts,
+          },
         );
       })
         .then(({ response }) => {
@@ -61,10 +63,13 @@ export default (WrappedComponent) => {
             });
           });
         })
-        .catch((e) => { camera.cleanup(); console.log(e); });
-    }
+        .catch(e => {
+          camera.cleanup();
+          console.log(e);
+        });
+    };
 
-    webUpload = (e) => {
+    webUpload = e => {
       const files = e.target.files;
       if (!Meteor.settings.public.rock) return Promise.reject();
 
@@ -82,7 +87,7 @@ export default (WrappedComponent) => {
         body: data,
       })
         .then(x => x.json())
-        .then((id) => {
+        .then(id => {
           return new Promise((s, f) => {
             avatar(id, (err, response) => {
               if (err) f(err);
@@ -90,9 +95,9 @@ export default (WrappedComponent) => {
             });
           });
         });
-    }
+    };
 
-    preRender = (files) => {
+    preRender = files => {
       const save = photo => this.setState({ photo });
 
       for (const file in files) {
@@ -103,17 +108,19 @@ export default (WrappedComponent) => {
         reader.readAsDataURL(files[file]);
         break;
       }
-    }
+    };
 
     render() {
-      const props = { ...{
-        upload: process.env.NATIVE ? this.nativeUpload : this.webUpload,
-        photo: this.state.photo || this.props.photo,
-      }, ...this.props };
+      const props = {
+        ...{
+          upload: process.env.NATIVE ? this.nativeUpload : this.webUpload,
+          photo: this.state.photo || this.props.photo,
+        },
+        ...this.props,
+      };
       // props.client = this.client;
       return createElement(WrappedComponent, props);
     }
-
   }
 
   return ProfileUpload;

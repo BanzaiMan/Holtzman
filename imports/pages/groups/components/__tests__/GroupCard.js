@@ -12,10 +12,7 @@ const defaultProps = {
       description: "test description",
     },
     distance: 2,
-    tags: [
-      { value: "one" },
-      { value: "two" },
-    ],
+    tags: [{ value: "one" }, { value: "two" }],
     type: "test type",
     kidFriendly: true,
     demographic: "test demographic",
@@ -29,12 +26,12 @@ const defaultProps = {
   onHover: jest.fn(),
 };
 
-const generateComponent = (additionalProps ={}) => {
+const generateComponent = (additionalProps = {}) => {
   const newProps = {
     ...defaultProps,
     ...additionalProps,
   };
-  return <GroupCard { ...newProps } />;
+  return <GroupCard {...newProps} />;
 };
 
 it("renders with props", () => {

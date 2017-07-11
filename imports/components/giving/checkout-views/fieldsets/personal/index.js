@@ -29,7 +29,7 @@ export default class Personal extends Component {
     }
 
     return true;
-  }
+  };
 
   isEmail = (value: string): boolean => {
     const isValid = Validate.isEmail(value);
@@ -41,7 +41,7 @@ export default class Personal extends Component {
     }
 
     return isValid;
-  }
+  };
 
   lastName = (value: string): boolean => {
     if (!value.length) {
@@ -51,7 +51,7 @@ export default class Personal extends Component {
     }
 
     return true;
-  }
+  };
 
   campus = (value: string): boolean => {
     this.props.save({ personal: { campusId: value } });
@@ -62,8 +62,7 @@ export default class Personal extends Component {
       this.props.save({ personal: { campus: campus.label } });
     }
     return true;
-  }
-
+  };
 
   render() {
     const { personal } = this.props.data;
@@ -80,7 +79,6 @@ export default class Personal extends Component {
         firstName={this.firstName}
         isEmail={this.isEmail}
         lastName={this.lastName}
-
         campuses={campuses}
         header={this.props.header}
         next={this.props.next}

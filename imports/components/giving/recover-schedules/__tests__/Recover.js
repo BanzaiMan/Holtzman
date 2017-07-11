@@ -9,21 +9,23 @@ describe("Recover", () => {
       map: jest.fn(),
     };
 
-    const tree = shallow(
-      <Recover schedules={schedules} />
-    );
+    const tree = shallow(<Recover schedules={schedules} />);
     expect(shallowToJson(tree)).toMatchSnapshot();
   });
 });
 
 describe("RecoverableSchedule", () => {
   it("should test the RecoverableSchedule", () => {
-    const amount="1.00";
-    const account="Test Account";
-    const frequency="Weekly";
+    const amount = "1.00";
+    const account = "Test Account";
+    const frequency = "Weekly";
 
     const tree = shallow(
-      <RecoverableSchedule amount={amount} account={account} frequency={frequency} />
+      <RecoverableSchedule
+        amount={amount}
+        account={account}
+        frequency={frequency}
+      />,
     );
     expect(shallowToJson(tree)).toMatchSnapshot();
   });

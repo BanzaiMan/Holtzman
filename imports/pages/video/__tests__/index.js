@@ -21,7 +21,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Template { ...newProps } />;
+  return <Template {...newProps} />;
 };
 
 beforeEach(() => {
@@ -42,9 +42,11 @@ it("updates nav and header on mount", () => {
   const mockDispatch = jest.fn();
   navActions.setLevel = jest.fn();
   headerActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   expect(mockDispatch).toHaveBeenCalledTimes(2);
   expect(navActions.setLevel).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledWith("BASIC_CONTENT");

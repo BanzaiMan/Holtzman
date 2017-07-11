@@ -1,4 +1,3 @@
-
 import actions from "../actions";
 
 it("includes types in the export", () => {
@@ -14,7 +13,7 @@ it("goes to next", () => {
 });
 
 it("setAccount", () => {
-  expect(actions.setAccount({ 1: { name: "test" }})).toMatchSnapshot();
+  expect(actions.setAccount({ 1: { name: "test" } })).toMatchSnapshot();
 });
 
 it("clearAccount", () => {
@@ -22,7 +21,7 @@ it("clearAccount", () => {
 });
 
 it("setAccounts", () => {
-  expect(actions.setAccounts([{ 1: { name: "TEST" }}])).toMatchSnapshot();
+  expect(actions.setAccounts([{ 1: { name: "TEST" } }])).toMatchSnapshot();
 });
 
 it("setTransactionType", () => {
@@ -38,7 +37,7 @@ it("clearTransaction", () => {
 });
 
 it("save", () => {
-  expect(actions.save({ personal: { firstName: "James "}})).toMatchSnapshot();
+  expect(actions.save({ personal: { firstName: "James " } })).toMatchSnapshot();
 });
 
 it("clear", () => {

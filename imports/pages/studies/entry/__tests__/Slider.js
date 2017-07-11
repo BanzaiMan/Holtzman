@@ -19,7 +19,6 @@ afterEach(() => {
   reset();
 });
 
-
 const defaultProps = {
   studyEntry: {
     content: {
@@ -34,11 +33,11 @@ const defaultProps = {
 
 const generateComponent = (additionalProps = {}) => {
   const newProps = {
-      ...defaultProps,
-      ...additionalProps,
-    };
+    ...defaultProps,
+    ...additionalProps,
+  };
 
-  return <Slider { ...newProps } />;
+  return <Slider {...newProps} />;
 };
 
 it("renders with props", () => {

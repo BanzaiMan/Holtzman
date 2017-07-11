@@ -1,4 +1,3 @@
-
 // import "./saga"
 
 // Constants
@@ -6,7 +5,7 @@
 const TRANSITION = "@@router/TRANSITION";
 const UPDATE_LOCATION = "@@router/UPDATE_LOCATION";
 
-const SELECT_LOCATION = (state) => state.routing.location;
+const SELECT_LOCATION = state => state.routing.location;
 
 function transition(method) {
   return (...args) => ({
@@ -36,7 +35,10 @@ const initialState = {
   location: undefined,
 };
 
-export function routeReducer(state = initialState, { type, payload: location }) {
+export function routeReducer(
+  state = initialState,
+  { type, payload: location },
+) {
   if (type !== UPDATE_LOCATION) {
     return state;
   }
@@ -54,10 +56,12 @@ export function syncHistory(history) {
   let connected = false;
   let syncing = false;
 
-  history.listen((location) => { initialState.location = location; })();
+  history.listen(location => {
+    initialState.location = location;
+  })();
 
   function middleware(store) {
-    unsubscribeHistory = history.listen((location) => {
+    unsubscribeHistory = history.listen(location => {
       currentKey = location.key;
       if (syncing) {
         // Don't dispatch a new action if we're replaying location.
@@ -71,14 +75,19 @@ export function syncHistory(history) {
         routing.location.previous = [];
       }
 
-      if (routing.location.previous[routing.location.previous.length - 1] === location.pathname) {
+      if (
+        routing.location.previous[routing.location.previous.length - 1] ===
+        location.pathname
+      ) {
         routing.location.previous.splice(-1);
         location.previous = routing.location.previous; // eslint-disable-line no-param-reassign
       } else {
         // eslint-disable-next-line no-param-reassign
-        location.previous = [...routing.location.previous, ...[routing.location.pathname]];
+        location.previous = [
+          ...routing.location.previous,
+          ...[routing.location.pathname],
+        ];
       }
-
 
       store.dispatch(updateLocation(location));
     });
@@ -86,7 +95,7 @@ export function syncHistory(history) {
     connected = true;
 
     // eslint-disable-next-line consistent-return
-    return (next) => (action) => {
+    return next => action => {
       if (action.type !== TRANSITION || !connected) {
         return next(action);
       }
@@ -97,32 +106,34 @@ export function syncHistory(history) {
     };
   }
 
-  middleware.listenForReplays =
-    (store, selectLocationState = SELECT_LOCATION) => {
-      const getLocationState = () => selectLocationState(store.getState());
-      const initialLocation = getLocationState();
+  middleware.listenForReplays = (
+    store,
+    selectLocationState = SELECT_LOCATION,
+  ) => {
+    const getLocationState = () => selectLocationState(store.getState());
+    const initialLocation = getLocationState();
 
-      unsubscribeStore = store.subscribe(() => {
-        const location = getLocationState();
+    unsubscribeStore = store.subscribe(() => {
+      const location = getLocationState();
 
-        // If we're resetting to the beginning, use the saved initial value. We
-        // need to dispatch a new action at this point to populate the store
-        // appropriately.
-        if (location.key === initialLocation.key) {
-          history.replace(initialLocation);
-          return;
-        }
+      // If we're resetting to the beginning, use the saved initial value. We
+      // need to dispatch a new action at this point to populate the store
+      // appropriately.
+      if (location.key === initialLocation.key) {
+        history.replace(initialLocation);
+        return;
+      }
 
-        // Otherwise, if we need to update the history location, do so without
-        // dispatching a new action, as we're just bringing history in sync
-        // with the store.
-        if (location.key !== currentKey) {
-          syncing = true;
-          history.transitionTo(location);
-          syncing = false;
-        }
-      });
-    };
+      // Otherwise, if we need to update the history location, do so without
+      // dispatching a new action, as we're just bringing history in sync
+      // with the store.
+      if (location.key !== currentKey) {
+        syncing = true;
+        history.transitionTo(location);
+        syncing = false;
+      }
+    });
+  };
 
   middleware.unsubscribe = () => {
     unsubscribeHistory();

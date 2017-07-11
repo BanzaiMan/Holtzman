@@ -21,7 +21,7 @@ class TemplateWithoutData extends Component {
     dispatch: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
     Loading: PropTypes.func,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(navActions.setLevel("TOP"));
@@ -31,10 +31,8 @@ class TemplateWithoutData extends Component {
   }
 
   handleRefresh = (resolve, reject) => {
-    this.props.data.refetch()
-      .then(resolve)
-      .catch(reject);
-  }
+    this.props.data.refetch().then(resolve).catch(reject);
+  };
 
   renderItems = () => {
     const { content } = this.props.data;
@@ -43,12 +41,12 @@ class TemplateWithoutData extends Component {
 
     if (content) {
       loading = false;
-      items = _.filter(content, (item) => (
-        _.any(item.content.tracks, (track) => !!track.file)
-      ));
+      items = _.filter(content, item =>
+        _.any(item.content.tracks, track => !!track.file),
+      );
     }
 
-    return items.map((item, i) => (
+    return items.map((item, i) =>
       <div
         className={
           "grid__item one-half@palm-wide one-third@portable one-quarter@anchored " +
@@ -60,10 +58,9 @@ class TemplateWithoutData extends Component {
           if (loading) return <FeedItemSkeleton />;
           return <FeedItem item={item} />;
         })()}
-      </div>
-    ));
-  }
-
+      </div>,
+    );
+  };
 
   render() {
     const { Loading } = this.props;
@@ -119,32 +116,35 @@ const withAlbums = graphql(ALBUMS_QUERY, {
   props: ({ data }) => ({
     data,
     loading: data.loading,
-    done: (
+    done:
       data.content &&
       // XXX Pagination is currently broken
       data.loading &&
-      data.content.length < data.variables.limit + data.variables.skip
-    ),
-    fetchMore: () => data.fetchMore({
-      variables: { ...data.variables, skip: data.content.length },
-      updateQuery: (previousResult, { fetchMoreResult }) => {
-        if (!fetchMoreResult.data) return previousResult;
-        return { content: [...previousResult.content, ...fetchMoreResult.data.content] };
-      },
-    }),
+      data.content.length < data.variables.limit + data.variables.skip,
+    fetchMore: () =>
+      data.fetchMore({
+        variables: { ...data.variables, skip: data.content.length },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult.data) return previousResult;
+          return {
+            content: [
+              ...previousResult.content,
+              ...fetchMoreResult.data.content,
+            ],
+          };
+        },
+      }),
   }),
 });
 
-const mapStateToProps = (state) => ({ paging: state.paging });
+const mapStateToProps = state => ({ paging: state.paging });
 
 const Template = connect(mapStateToProps)(
   withAlbums(
-    infiniteScroll((x) => x, { doneText: "End of Albums" })(
-      ReactMixin.decorate(Headerable)(
-        TemplateWithoutData
-      )
-    )
-  )
+    infiniteScroll(x => x, { doneText: "End of Albums" })(
+      ReactMixin.decorate(Headerable)(TemplateWithoutData),
+    ),
+  ),
 );
 
 const Routes = [
@@ -157,7 +157,4 @@ export default {
   Routes,
 };
 
-export {
-  TemplateWithoutData,
-  ALBUMS_QUERY,
-};
+export { TemplateWithoutData, ALBUMS_QUERY };

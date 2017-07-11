@@ -9,7 +9,7 @@ const styles = {
   zIndex: 1,
 };
 
-const Layout = ({ submit, save, state }) => (
+const Layout = ({ submit, save, state }) =>
   <div
     className={
       "background--light-primary one-whole text-center " +
@@ -32,9 +32,7 @@ const Layout = ({ submit, save, state }) => (
       submit={submit}
     >
       <div className="push-double">
-        <h4 className="text-center">
-          Change Password
-        </h4>
+        <h4 className="text-center">Change Password</h4>
       </div>
 
       <Forms.Input
@@ -77,8 +75,7 @@ const Layout = ({ submit, save, state }) => (
         );
       })()}
     </Forms.Form>
-  </div>
-);
+  </div>;
 
 Layout.propTypes = {
   submit: PropTypes.func.isRequired,

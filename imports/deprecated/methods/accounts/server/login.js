@@ -17,8 +17,12 @@ Meteor.methods({
       Username = Username.replace(/@newspring.cc/, "");
     }
 
-    const isAuthorized = api.post.sync("Auth/login", { Username, Password: password });
-    if (isAuthorized.statusText) throw new Meteor.Error("Your password is incorrect");
+    const isAuthorized = api.post.sync("Auth/login", {
+      Username,
+      Password: password,
+    });
+    if (isAuthorized.statusText)
+      throw new Meteor.Error("Your password is incorrect");
 
     let userAccount = Accounts.findUserByEmail(email);
 
@@ -29,12 +33,11 @@ Meteor.methods({
         password,
       });
 
-
       const user = api.get.sync(`UserLogins?$filter=UserName eq '${Username}'`);
       const { PersonId } = user[0];
       if (!user[0].IsConfirmed) {
         // eslint-disable-next-line
-        api.post(`UserLogins/${user[0].Id}`, { IsConfirmed: true }, () => { });
+        api.post(`UserLogins/${user[0].Id}`, { IsConfirmed: true }, () => {});
       }
 
       api.patch(`UserLogins/${user[0].Id}`, {
@@ -45,7 +48,8 @@ Meteor.methods({
       const { PrimaryAliasId } = person;
 
       if (userAccount) {
-        Meteor.users.update(userAccount._id || userAccount, { // eslint-disable-line
+        Meteor.users.update(userAccount._id || userAccount, {
+          // eslint-disable-line
           $set: {
             "services.rock": {
               PersonId,
@@ -58,10 +62,12 @@ Meteor.methods({
       if (process.env.NODE_ENV === "production") {
         Meteor.setTimeout(() => {
           const currentCount = Meteor.users.find().count();
-          const missing = `${50000 - currentCount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          const missing = `${50000 - currentCount}`.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ",",
+          );
 
           const text = `Another user signed up for a NewSpring Account! Only ${missing} to go!`;
-
 
           Meteor.call("communication/slack/send", text, "#users");
         }, 10);
@@ -75,10 +81,14 @@ Meteor.methods({
         const { PersonId } = user[0];
 
         if (!user[0].IsConfirmed) {
-          api.post(`UserLogins/${user[0].Id}`, { IsConfirmed: true }, (error, response) => {
-            // eslint-disable-next-line
-            console.log(error, response);
-          });
+          api.post(
+            `UserLogins/${user[0].Id}`,
+            { IsConfirmed: true },
+            (error, response) => {
+              // eslint-disable-next-line
+              console.log(error, response);
+            },
+          );
         }
 
         api.patch(`UserLogins/${user[0].Id}`, {
@@ -90,7 +100,10 @@ Meteor.methods({
 
           if (userAccount) {
             const userRock = userAccount.services.rock;
-            if (userRock.PersonId !== PersonId || userRock.PrimaryAliasId !== PrimaryAliasId) {
+            if (
+              userRock.PersonId !== PersonId ||
+              userRock.PrimaryAliasId !== PrimaryAliasId
+            ) {
               // eslint-disable-next-line
               Meteor.users.update(userAccount._id || userAccount, {
                 $set: {
@@ -105,7 +118,6 @@ Meteor.methods({
         });
       });
     }
-
 
     return isAuthorized;
   },

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { connect } from "react-redux";
 import YearToDate from "../../../components/giving/cards/YearToDateCard";
@@ -44,7 +43,6 @@ export const GivingSummary = (props: IGivingSummary) => {
   return <DisplayWithData />;
 };
 
-
-export default connect((state) => ({ breakpoints: state.responsive.breakpoints }))(
-  GivingSummary
-);
+export default connect(state => ({
+  breakpoints: state.responsive.breakpoints,
+}))(GivingSummary);

@@ -5,10 +5,7 @@ type IPaymentOptions = {
   savedAccount: Object,
 };
 
-const PaymentOptions = ({
-  changeAccounts,
-  savedAccount,
-}: IPaymentOptions) => {
+const PaymentOptions = ({ changeAccounts, savedAccount }: IPaymentOptions) => {
   if (savedAccount.id === null) return null;
 
   return (

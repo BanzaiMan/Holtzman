@@ -5,10 +5,7 @@ type ITertiaryPhrase = {
   text?: string,
 };
 
-const TertiaryPhrase = ({
-  additionalClasses,
-  text = "",
-}: ITertiaryPhrase) => {
+const TertiaryPhrase = ({ additionalClasses, text = "" }: ITertiaryPhrase) => {
   const classes = [
     "text-dark-tertiary",
     "display-inline-block",

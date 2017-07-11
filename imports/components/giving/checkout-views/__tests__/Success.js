@@ -31,7 +31,7 @@ describe("ScheduleThanks", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <ScheduleThanks { ...newProps } />;
+    return <ScheduleThanks {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -40,9 +40,11 @@ describe("ScheduleThanks", () => {
   });
 
   it("does not render if no schedule", () => {
-    const result = renderer.create(generateComponent({
-      schedule: false,
-    }));
+    const result = renderer.create(
+      generateComponent({
+        schedule: false,
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
@@ -59,7 +61,7 @@ describe("OneTimeThanks", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <OneTimeThanks { ...newProps } />;
+    return <OneTimeThanks {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -68,9 +70,11 @@ describe("OneTimeThanks", () => {
   });
 
   it("does not render if schedule", () => {
-    const result = renderer.create(generateComponent({
-      schedule: {},
-    }));
+    const result = renderer.create(
+      generateComponent({
+        schedule: {},
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
@@ -85,7 +89,7 @@ describe("AdditionalMessage", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <AdditionalMessage { ...newProps } />;
+    return <AdditionalMessage {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -94,9 +98,11 @@ describe("AdditionalMessage", () => {
   });
 
   it("does not render if no additionalMessage", () => {
-    const result = renderer.create(generateComponent({
-      additionalMessage: null,
-    }));
+    const result = renderer.create(
+      generateComponent({
+        additionalMessage: null,
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
@@ -112,7 +118,7 @@ describe("CreateAccountFromGuest", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <CreateAccountFromGuest { ...newProps } />;
+    return <CreateAccountFromGuest {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -121,17 +127,17 @@ describe("CreateAccountFromGuest", () => {
   });
 
   it("does not render if not guest", () => {
-    const result = renderer.create(generateComponent({
-      guest: false,
-    }));
+    const result = renderer.create(
+      generateComponent({
+        guest: false,
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
 
 describe("ContactLink", () => {
-  const generateComponent = () => (
-    <ContactLink />
-  );
+  const generateComponent = () => <ContactLink />;
 
   it("renders", () => {
     const result = renderer.create(generateComponent());
@@ -140,9 +146,7 @@ describe("ContactLink", () => {
 });
 
 describe("ContactUs", () => {
-  const generateComponent = () => (
-    <ContactUs />
-  );
+  const generateComponent = () => <ContactUs />;
 
   it("renders", () => {
     const result = renderer.create(generateComponent());
@@ -163,7 +167,7 @@ describe("Success", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Success { ...newProps } />;
+    return <Success {...newProps} />;
   };
 
   it("renders with props", () => {

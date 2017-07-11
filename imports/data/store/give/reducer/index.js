@@ -10,7 +10,11 @@ import types from "../types";
 
 import progress from "./progress";
 import savedAccount from "./savedAccounts";
-import { addTransaction, clearTransaction, clearTransactions } from "./transactions";
+import {
+  addTransaction,
+  clearTransaction,
+  clearTransactions,
+} from "./transactions";
 import {
   setRecoverableSchedule,
   deleteRecoverableSchedule,
@@ -19,7 +23,6 @@ import {
 } from "./scheduledTransactions";
 
 export const initial = {
-
   userId: null, // used in native => web transactions
 
   step: 1, // Number (step along in progress bar to show)
@@ -55,15 +58,13 @@ export const initial = {
   },
 
   schedule: {
-    start: null,  // Date (YYYYMMDD)
+    start: null, // Date (YYYYMMDD)
     // payments: null,  future feature for pledges
     frequency: null, // String of value from Rock
   },
 
   scheduleToRecover: null,
-  recoverableSchedules: {
-
-  },
+  recoverableSchedules: {},
 
   // form data
   data: {
@@ -92,11 +93,9 @@ export const initial = {
       routing: null, // String (for safety with international numbers)
     },
   },
-
 };
 
 export default createReducer(initial, {
-
   [types.SET_PROGRESS]: progress,
 
   [types.SET_SAVED_ACCOUNT]: savedAccount,
@@ -113,7 +112,8 @@ export default createReducer(initial, {
 
   [types.SAVE_DATA](state, action) {
     // @TODO validation on new data
-    return { ...state,
+    return {
+      ...state,
       ...{
         data: {
           personal: { ...state.data.personal, ...action.data.personal },
@@ -125,11 +125,16 @@ export default createReducer(initial, {
   },
 
   [types.REMOVE_DATA](state, action) {
-    if (!action.field || !state.data[action.level] || !state.data[action.level][action.field]) {
+    if (
+      !action.field ||
+      !state.data[action.level] ||
+      !state.data[action.level][action.field]
+    ) {
       return state;
     }
 
-    return { ...state,
+    return {
+      ...state,
       ...{
         data: {
           ...state.data,
@@ -165,9 +170,9 @@ export default createReducer(initial, {
     };
   },
 
-
   [types.SAVE_SCHEDULE_DATA](state, action) {
-    return { ...state,
+    return {
+      ...state,
       ...{
         schedule: {
           ...state.schedule,
@@ -176,7 +181,6 @@ export default createReducer(initial, {
       },
     };
   },
-
 
   [types.REMOVE_SCHEDULE](state) {
     // @TODO validation on new data
@@ -193,7 +197,7 @@ export default createReducer(initial, {
     return {
       ...state,
       ...{
-        schedule: { },
+        schedule: {},
       },
     };
   },
@@ -224,7 +228,8 @@ export default createReducer(initial, {
       return state;
     }
 
-    return { ...state,
+    return {
+      ...state,
       ...{
         state: stateName,
       },
@@ -236,7 +241,8 @@ export default createReducer(initial, {
       return state;
     }
 
-    return { ...state,
+    return {
+      ...state,
       ...{
         errors: { ...state.errors, ...action.error },
       },
@@ -253,7 +259,8 @@ export default createReducer(initial, {
     delete errors[action.error];
 
     // update the state
-    return { ...state,
+    return {
+      ...state,
       ...{
         errors,
       },
@@ -261,7 +268,8 @@ export default createReducer(initial, {
   },
 
   [types.SET_ERRORS](state, action) {
-    return { ...state,
+    return {
+      ...state,
       ...{
         errors: { ...state.errors, ...action.errors },
       },
@@ -269,7 +277,8 @@ export default createReducer(initial, {
   },
 
   [types.SET_ACCOUNTS](state, action) {
-    return { ...state,
+    return {
+      ...state,
       ...{
         accounts: { ...state.accounts, ...action.accounts },
       },
@@ -277,7 +286,8 @@ export default createReducer(initial, {
   },
 
   [types.SET_TRANSACTION_TYPE](state, action) {
-    return { ...state,
+    return {
+      ...state,
       ...{
         transactionType: action.transactionType,
       },
@@ -285,7 +295,8 @@ export default createReducer(initial, {
   },
 
   [types.SET_TRANSACTION_DETAILS](state, action) {
-    return { ...state,
+    return {
+      ...state,
       ...{
         url: action.url,
       },
@@ -293,7 +304,8 @@ export default createReducer(initial, {
   },
 
   [types.SET_REMINDER_DATE](state, action) {
-    return { ...state,
+    return {
+      ...state,
       ...{
         reminderDate: action.reminderDate,
       },
@@ -303,6 +315,4 @@ export default createReducer(initial, {
   [types.SET_USERID](state, { userId }) {
     return { ...state, ...{ userId } };
   },
-
-
 });

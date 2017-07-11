@@ -15,7 +15,7 @@ it("correctly renders the component with props", () => {
       paymentAccount="4111111111111111"
       selectedAccountId="1"
       paymentType="Visa"
-    />
+    />,
   );
   expect(tree).toMatchSnapshot();
 });

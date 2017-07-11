@@ -22,7 +22,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <CWithShareable { ...newProps } />;
+  return <CWithShareable {...newProps} />;
 };
 
 it("binds actions, updates state, and calls setShareProps on mount", () => {
@@ -53,7 +53,7 @@ it("getShareableEntry returns for all entry types", () => {
     "album",
     "news",
   ];
-  entryTypes.map((entry) => {
+  entryTypes.map(entry => {
     const result = wrapper.instance().getShareableEntry({
       [entry]: {
         id: "1",
@@ -82,7 +82,7 @@ it("getShareableEntry works if no id but content", () => {
     "album",
     "news",
   ];
-  entryTypes.map((entry) => {
+  entryTypes.map(entry => {
     const result = wrapper.instance().getShareableEntry({
       [entry]: {
         content: {},
@@ -148,9 +148,11 @@ it("setShareProps does nothing if no item", () => {
 it("setShareAction dispatches share", () => {
   const mockDispatch = jest.fn();
   shareActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.setState({ __shareActionSet: false });
   const mockEntry = {
     id: "1",
@@ -182,9 +184,11 @@ it("setShareAction dispatches share", () => {
 it("setShareAction dispatches share properly with groups", () => {
   const mockDispatch = jest.fn();
   shareActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.setState({ __shareActionSet: false });
   const mockEntry = {
     __typename: "Group",
@@ -206,9 +210,11 @@ it("setShareAction dispatches share properly with groups", () => {
 it("setShareAction uses parent item for image if present", () => {
   const mockDispatch = jest.fn();
   shareActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.setState({ __shareActionSet: false });
   const mockEntry = {
     id: "1",
@@ -250,9 +256,11 @@ it("setShareAction uses parent item for image if present", () => {
 it("setShareAction prepends https if necesary", () => {
   const mockDispatch = jest.fn();
   shareActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.setState({ __shareActionSet: false });
   const mockEntry = {
     id: "1",
@@ -284,9 +292,11 @@ it("setShareAction prepends https if necesary", () => {
 it("setShareAction does nothing if sermon and no parent item yet", () => {
   const mockDispatch = jest.fn();
   shareActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.setState({ __shareActionSet: false });
   const mockEntry = {
     id: "1",

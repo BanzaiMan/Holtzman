@@ -7,7 +7,6 @@ import categories from "../../../../util/categories";
 import time from "../../../../util/time";
 import inAppLink from "../../../../util/inAppLink";
 
-
 export function isReady(content: Object) {
   if (!content) return false;
   return Object.keys(content).length;
@@ -49,13 +48,26 @@ type IHeroLink = {
 };
 
 export const HeroLink = (props: IHeroLink) => {
-  if (!props.to) return <Link>{props.children}</Link>;
+  if (!props.to)
+    return (
+      <Link>
+        {props.children}
+      </Link>
+    );
 
   if (Meteor.isCordova) {
-    return <Link to={props.to} onClick={inAppLink}>{props.children}</Link>;
+    return (
+      <Link to={props.to} onClick={inAppLink}>
+        {props.children}
+      </Link>
+    );
   }
 
-  return <a href={props.to}>{props.children}</a>;
+  return (
+    <a href={props.to}>
+      {props.children}
+    </a>
+  );
 };
 
 type IHero = {
@@ -64,28 +76,22 @@ type IHero = {
   hideDate?: boolean,
   link?: string,
   image?: string,
-}
+};
 
-const Hero = ({
-  content,
-  title,
-  hideDate,
-  link,
-  image,
-}: IHero) => (
-  <HeroLink
-    to={link || (content && content.meta && content.meta.urlTitle)}
-  >
+const Hero = ({ content, title, hideDate, link, image }: IHero) =>
+  <HeroLink to={link || (content && content.meta && content.meta.urlTitle)}>
     <section
-      className={
-        `hard floating--bottom text-left background--dark-primary ratio--square
+      className={`hard floating--bottom text-left background--dark-primary ratio--square
         ${content && content.content && content.content.images
           ? "background--fill overlay--gradient"
-          : ""}`
-      }
+          : ""}`}
       style={{
         backgroundImage: `
-          url('${image || getImage(content && content.content && content.content.images, "1:1")}')
+          url('${image ||
+            getImage(
+              content && content.content && content.content.images,
+              "1:1",
+            )}')
         `,
       }}
     >
@@ -97,18 +103,16 @@ const Hero = ({
         <h7 className="text-light-primary">
           {isReady(content) ? categories.name(content) : ""}
         </h7>
-        {
-          (content && !hideDate) &&
+        {content &&
+          !hideDate &&
           <h7
             className="text-light-primary text-right float-right"
             style={{ marginTop: "5px" }}
           >
             {isReady(content) ? time.relative(content) : ""}
-          </h7>
-        }
+          </h7>}
       </div>
     </section>
-  </HeroLink>
-);
+  </HeroLink>;
 
 export default Hero;

@@ -3,11 +3,15 @@ import { mountToJson, shallowToJson } from "enzyme-to-json";
 import { connect } from "react-redux";
 
 import { give as giveActions } from "../../../../data/store";
-import { CartContainerWithoutData as CartContainer, map, withGiveActions } from "../";
+import {
+  CartContainerWithoutData as CartContainer,
+  map,
+  withGiveActions,
+} from "../";
 import { SubFundWithoutData as SubFund } from "../Subfund";
 
 jest.mock("react-redux", () => ({
-  connect: jest.fn(() => (component) => <component />),
+  connect: jest.fn(() => component => <component />),
 }));
 
 jest.mock("../Subfund", () => jest.fn(() => <div />));
@@ -22,16 +26,14 @@ const generateComponent = (additionalProps = {}) => {
       {
         id: "1",
         name: "test",
-      }
+      },
     ],
     clearTransaction: jest.fn(),
     addTransactions: jest.fn(),
     give: "5",
     query: {},
   };
-  return (
-    <CartContainer {...defaultProps} {...additionalProps} />
-  );
+  return <CartContainer {...defaultProps} {...additionalProps} />;
 };
 
 const additionalAccounts = [
@@ -66,7 +68,7 @@ describe("map", () => {
       status: "default",
       total: 0,
       query: "foo",
-      authorized: false
+      authorized: false,
     });
   });
 });
@@ -87,7 +89,6 @@ it("should properly render with multiple accounts", () => {
 });
 
 describe("CartContainer > Lifecycle functions", () => {
-
   it("calls clearTransactions", () => {
     const spy = jest.fn();
     const component = mount(generateComponent({ clearTransactions: spy }));
@@ -97,10 +98,12 @@ describe("CartContainer > Lifecycle functions", () => {
 
   it("accepts query string prefills the fund", () => {
     const addTransactions = jest.fn();
-    const component = mount(generateComponent({
-      query: { test: 10 },
-      addTransactions,
-    }));
+    const component = mount(
+      generateComponent({
+        query: { test: 10 },
+        addTransactions,
+      }),
+    );
     const { subfunds } = component.state();
     expect(subfunds[0].fundId).toBe("1");
     expect(subfunds[0].amount).toBe(10);
@@ -109,7 +112,7 @@ describe("CartContainer > Lifecycle functions", () => {
       "1": {
         label: "test",
         value: 10,
-      }
+      },
     });
     expect(mountToJson(component)).toMatchSnapshot();
   });
@@ -117,10 +120,12 @@ describe("CartContainer > Lifecycle functions", () => {
   it("should clear transactions on success", () => {
     const spy = jest.fn();
     const resetSpy = jest.fn();
-    const component = mount(generateComponent({
-      clearTransactions: spy,
-      status: "success",
-    }));
+    const component = mount(
+      generateComponent({
+        clearTransactions: spy,
+        status: "success",
+      }),
+    );
     const { bindSubComponentReset } = component.instance();
     bindSubComponentReset(resetSpy);
     expect(spy).toHaveBeenCalledTimes(1);
@@ -132,10 +137,12 @@ describe("CartContainer > Lifecycle functions", () => {
 
   it("should clear transactions on when amount is set to 0", () => {
     const spy = jest.fn();
-    const component = mount(generateComponent({
-      clearTransactions: spy,
-      total: 1,
-    }));
+    const component = mount(
+      generateComponent({
+        clearTransactions: spy,
+        total: 1,
+      }),
+    );
     expect(spy).toHaveBeenCalledTimes(1);
     component.setProps({ total: 0 });
     expect(component.state()).toMatchSnapshot();
@@ -143,7 +150,7 @@ describe("CartContainer > Lifecycle functions", () => {
   });
 });
 
-describe ("CartContainer > Class Methods", () => {
+describe("CartContainer > Class Methods", () => {
   //dont' need to test the return value much. It's just the monetize function
   it("should allow selecting a fund", () => {
     const component = mount(generateComponent());
@@ -154,7 +161,9 @@ describe ("CartContainer > Class Methods", () => {
 
   describe("changeAmount", () => {
     it("update the state correctly", () => {
-      const component = mount(generateComponent({ accounts: additionalAccounts }));
+      const component = mount(
+        generateComponent({ accounts: additionalAccounts }),
+      );
       const changeAmount = component.instance().changeAmount;
       changeAmount(10, 1);
       expect(component.state().subfunds[0].amount).toBe(10);
@@ -162,33 +171,43 @@ describe ("CartContainer > Class Methods", () => {
 
     it("updates the store", () => {
       const addTransactions = jest.fn();
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-        addTransactions,
-      }));
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+          addTransactions,
+        }),
+      );
       const changeAmount = component.instance().changeAmount;
       changeAmount(10, 1);
-      expect(addTransactions).toBeCalledWith({ 1: { label: "TEST 1", value: 10 }});
+      expect(addTransactions).toBeCalledWith({
+        1: { label: "TEST 1", value: 10 },
+      });
     });
 
     it("returns a formated version of the amount", () => {
-      const component = mount(generateComponent({ accounts: additionalAccounts }));
+      const component = mount(
+        generateComponent({ accounts: additionalAccounts }),
+      );
       const changeAmount = component.instance().changeAmount;
       const amount = changeAmount(10, 1);
       expect(amount).toBe("$10");
     });
 
     it("handles cents as the only amount", () => {
-      const component = mount(generateComponent({ accounts: additionalAccounts }));
+      const component = mount(
+        generateComponent({ accounts: additionalAccounts }),
+      );
       const changeAmount = component.instance().changeAmount;
-      const amount = changeAmount(.0, 1);
+      const amount = changeAmount(0.0, 1);
       expect(amount).toBe("$0");
     });
 
     it("handles cents as the only amount with added amounts", () => {
-      const component = mount(generateComponent({ accounts: additionalAccounts }));
+      const component = mount(
+        generateComponent({ accounts: additionalAccounts }),
+      );
       const changeAmount = component.instance().changeAmount;
-      const amount = changeAmount(.05, 1);
+      const amount = changeAmount(0.05, 1);
       expect(amount).toBe("$0.05");
     });
 
@@ -202,21 +221,27 @@ describe ("CartContainer > Class Methods", () => {
 
   describe("changeFund", () => {
     it("update the state correctly", () => {
-      const component = mount(generateComponent({ accounts: additionalAccounts }));
+      const component = mount(
+        generateComponent({ accounts: additionalAccounts }),
+      );
       const changeFund = component.instance().changeFund;
       changeFund(2, 1);
       expect(component.state()).toMatchSnapshot();
     });
 
     it("handles deselecting a fund", () => {
-      const component = mount(generateComponent({ accounts: additionalAccounts }));
+      const component = mount(
+        generateComponent({ accounts: additionalAccounts }),
+      );
       const changeFund = component.instance().changeFund;
       changeFund(0, 1);
       expect(component.state()).toMatchSnapshot();
     });
 
     it("handles deselecting a fund with an amount", () => {
-      const component = mount(generateComponent({ accounts: additionalAccounts }));
+      const component = mount(
+        generateComponent({ accounts: additionalAccounts }),
+      );
       const changeFund = component.instance().changeFund;
       const changeAmount = component.instance().changeAmount;
       const amount = changeAmount(10, 1);
@@ -227,10 +252,12 @@ describe ("CartContainer > Class Methods", () => {
 
     it("clears the fund id", () => {
       const clearTransaction = jest.fn();
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-        clearTransaction,
-      }));
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+          clearTransaction,
+        }),
+      );
       const changeFund = component.instance().changeFund;
       changeFund(1, 1);
       expect(clearTransaction).toBeCalledWith(1);
@@ -238,15 +265,19 @@ describe ("CartContainer > Class Methods", () => {
 
     it("updates the store for the correct amount", () => {
       const addTransactions = jest.fn();
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-        addTransactions,
-      }));
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+          addTransactions,
+        }),
+      );
       const changeFund = component.instance().changeFund;
       const changeAmount = component.instance().changeAmount;
       const amount = changeAmount(10, 1);
       changeFund(1, 2);
-      expect(addTransactions).toBeCalledWith({ 1: { label: "TEST 1", value: 10 }});
+      expect(addTransactions).toBeCalledWith({
+        1: { label: "TEST 1", value: 10 },
+      });
     });
   });
 
@@ -259,7 +290,7 @@ describe ("CartContainer > Class Methods", () => {
     });
 
     it("returns a formatted amount", () => {
-      const component = mount(generateComponent({ query: { "test": 5 }}));
+      const component = mount(generateComponent({ query: { test: 5 } }));
       const preFillValue = component.instance().preFillValue;
       const amount = preFillValue("1");
       expect(amount).toBe("$5");
@@ -268,9 +299,11 @@ describe ("CartContainer > Class Methods", () => {
 
   describe("toggleSecondFund", () => {
     it("creates the correct new subfund state", () => {
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-      }));
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+        }),
+      );
       const { toggleSecondFund } = component.instance();
       toggleSecondFund();
       const newState = component.state();
@@ -278,24 +311,36 @@ describe ("CartContainer > Class Methods", () => {
     });
 
     it("creates the correct new subfund state when the first fund is selected", () => {
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-      }));
-      const { toggleSecondFund, changeAmount, changeFund } = component.instance();
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+        }),
+      );
+      const {
+        toggleSecondFund,
+        changeAmount,
+        changeFund,
+      } = component.instance();
       changeFund(1, 1);
-      changeAmount(10, 1)
+      changeAmount(10, 1);
       toggleSecondFund();
       const newState = component.state();
       expect(newState).toMatchSnapshot();
     });
 
     it("correctly toggles", () => {
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-      }));
-      const { toggleSecondFund, changeAmount, changeFund } = component.instance();
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+        }),
+      );
+      const {
+        toggleSecondFund,
+        changeAmount,
+        changeFund,
+      } = component.instance();
       changeFund(1, 1);
-      changeAmount(10, 1)
+      changeAmount(10, 1);
       toggleSecondFund();
       toggleSecondFund();
       const newState = component.state();
@@ -304,13 +349,19 @@ describe ("CartContainer > Class Methods", () => {
 
     it("clears the transaction when toggling", () => {
       const clearTransaction = jest.fn();
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-        clearTransaction,
-      }));
-      const { toggleSecondFund, changeAmount, changeFund } = component.instance();
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+          clearTransaction,
+        }),
+      );
+      const {
+        toggleSecondFund,
+        changeAmount,
+        changeFund,
+      } = component.instance();
       changeFund(1, 1);
-      changeAmount(10, 1)
+      changeAmount(10, 1);
       toggleSecondFund();
       toggleSecondFund();
       expect(clearTransaction).toBeCalledWith(1);
@@ -319,18 +370,22 @@ describe ("CartContainer > Class Methods", () => {
 
   describe("setCanCheckout", () => {
     it("updates the state", () => {
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-      }));
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+        }),
+      );
       const { setCanCheckout } = component.instance();
 
       setCanCheckout(true);
       expect(component.state().canCheckout).toBe(true);
     });
     it("updates the state (falsey)", () => {
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-      }));
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+        }),
+      );
       const { setCanCheckout } = component.instance();
 
       setCanCheckout(false);
@@ -340,26 +395,32 @@ describe ("CartContainer > Class Methods", () => {
 
   describe("canCheckout", () => {
     it("early returns if the total isn't valid", () => {
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-      }));
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+        }),
+      );
       const { canCheckout } = component.instance();
 
       expect(canCheckout(0)).toBe(false);
     });
     it("returns the canCheckout state from the component", () => {
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-      }));
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+        }),
+      );
       const { setCanCheckout, canCheckout } = component.instance();
 
       setCanCheckout(true);
       expect(canCheckout(10)).toBe(true);
     });
     it("returns the canCheckout state from the component (falsy)", () => {
-      const component = mount(generateComponent({
-        accounts: additionalAccounts,
-      }));
+      const component = mount(
+        generateComponent({
+          accounts: additionalAccounts,
+        }),
+      );
       const { setCanCheckout, canCheckout } = component.instance();
 
       setCanCheckout(false);

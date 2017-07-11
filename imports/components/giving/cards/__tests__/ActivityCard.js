@@ -4,7 +4,6 @@ import moment from "moment";
 import Activity from "../ActivityCard";
 
 describe("Activity", () => {
-
   const generateComponent = (additionalProps = {}) => {
     const defaultProps = {
       status: "success",
@@ -14,9 +13,7 @@ describe("Activity", () => {
       linkUrl: "https://my.newspring.cc/give/now",
     };
 
-    return (
-      <Activity {...defaultProps} {...additionalProps} />
-    );
+    return <Activity {...defaultProps} {...additionalProps} />;
   };
 
   it("should render with the default set of props", () => {
@@ -25,8 +22,8 @@ describe("Activity", () => {
   });
 
   it("should accept a react component as message prop", () => {
-    const message = <p>hello world</p>
-    const component = shallow(generateComponent({message: message}));
+    const message = <p>hello world</p>;
+    const component = shallow(generateComponent({ message: message }));
     expect(shallowToJson(component)).toMatchSnapshot();
   });
 

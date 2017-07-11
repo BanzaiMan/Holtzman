@@ -1,8 +1,6 @@
-
 import headerActions from "../../data/store/header";
 
 const Header = {
-
   savedDataOptions: null,
   savedDataRequestee: null,
 
@@ -97,7 +95,6 @@ const Header = {
       __headerSet: true,
     });
   },
-
 };
 
 export default Header;

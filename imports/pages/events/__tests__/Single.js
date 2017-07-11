@@ -27,8 +27,8 @@ const defaultProps = {
             fileLabel: "2:1",
             fileName: "1234.testImage.jpg",
             fileType: null,
-            url: "https://test.com/1234/testImage.jpg"
-          }
+            url: "https://test.com/1234/testImage.jpg",
+          },
         ],
         ooyalaId: "owqoitpuq52059akplsat0520",
       },
@@ -38,15 +38,15 @@ const defaultProps = {
         channelId: "115108957aekwtl15p89asfes",
         date: "",
         siteId: "1235273985qwtklasgjkhatwetiu",
-        urlTitle: "stuff"
+        urlTitle: "stuff",
       },
       status: "open",
-      title: "Stuff"
+      title: "Stuff",
     },
     live: {
       embedCode: null,
-      live: false
-    }
+      live: false,
+    },
   },
 };
 
@@ -55,7 +55,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <EventSingle { ...newProps } />;
+  return <EventSingle {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -64,87 +64,93 @@ it("renders with props", () => {
 });
 
 it("renders the live video when live", () => {
-  const wrapper = shallow(generateComponent({
-    event: {
-      content: {
+  const wrapper = shallow(
+    generateComponent({
+      event: {
         content: {
-          body: "<p>some kind of content about harambe</p>",
-          images: [
-            {
-              fileLabel: "2:1",
-              fileName: "1234.testImage.jpg",
-              fileType: null,
-              url: "https://test.com/1234/testImage.jpg"
-            }
-          ],
-          ooyalaId: "owqoitpuq52059akplsat0520",
+          content: {
+            body: "<p>some kind of content about harambe</p>",
+            images: [
+              {
+                fileLabel: "2:1",
+                fileName: "1234.testImage.jpg",
+                fileType: null,
+                url: "https://test.com/1234/testImage.jpg",
+              },
+            ],
+            ooyalaId: "owqoitpuq52059akplsat0520",
+          },
+          entryId: "10458239056qaklpstjw40951281",
+          id: "10458239056qaklpstjw40951281",
+          meta: {
+            channelId: "115108957aekwtl15p89asfes",
+            date: "",
+            siteId: "1235273985qwtklasgjkhatwetiu",
+            urlTitle: "stuff",
+          },
+          status: "open",
+          title: "Stuff",
         },
-        entryId: "10458239056qaklpstjw40951281",
-        id: "10458239056qaklpstjw40951281",
-        meta: {
-          channelId: "115108957aekwtl15p89asfes",
-          date: "",
-          siteId: "1235273985qwtklasgjkhatwetiu",
-          urlTitle: "stuff"
+        live: {
+          embedCode: "1234LIVETEST4321",
+          live: true,
         },
-        status: "open",
-        title: "Stuff"
       },
-      live: {
-        embedCode: "1234LIVETEST4321",
-        live: true
-      }
-    }
-  }));
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders an on demand video if present, and not live", () => {
-    const wrapper = shallow(generateComponent({
-    event: {
-      content: {
+  const wrapper = shallow(
+    generateComponent({
+      event: {
         content: {
-          body: "<p>some kind of content about harambe</p>",
-          images: [
-            {
-              fileLabel: "2:1",
-              fileName: "1234.testImage.jpg",
-              fileType: null,
-              url: "https://test.com/1234/testImage.jpg"
-            }
-          ],
-          ooyalaId: "owqoitpuq52059akplsat0520",
+          content: {
+            body: "<p>some kind of content about harambe</p>",
+            images: [
+              {
+                fileLabel: "2:1",
+                fileName: "1234.testImage.jpg",
+                fileType: null,
+                url: "https://test.com/1234/testImage.jpg",
+              },
+            ],
+            ooyalaId: "owqoitpuq52059akplsat0520",
+          },
+          entryId: "10458239056qaklpstjw40951281",
+          id: "10458239056qaklpstjw40951281",
+          meta: {
+            channelId: "115108957aekwtl15p89asfes",
+            date: "",
+            siteId: "1235273985qwtklasgjkhatwetiu",
+            urlTitle: "stuff",
+          },
+          status: "open",
+          title: "Stuff",
         },
-        entryId: "10458239056qaklpstjw40951281",
-        id: "10458239056qaklpstjw40951281",
-        meta: {
-          channelId: "115108957aekwtl15p89asfes",
-          date: "",
-          siteId: "1235273985qwtklasgjkhatwetiu",
-          urlTitle: "stuff"
+        live: {
+          embedCode: null,
+          live: false,
         },
-        status: "open",
-        title: "Stuff"
       },
-      live: {
-        embedCode: null,
-        live: false
-      }
-    }
-  }));
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders loading if no content", () => {
-  const wrapper = shallow(generateComponent({
-    event: {
-      content: null,
-      live: {
-        embedCode: null,
-        live: null
-      }
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      event: {
+        content: null,
+        live: {
+          embedCode: null,
+          live: null,
+        },
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -156,9 +162,11 @@ it("updates nav on mount", () => {
   const mockDispatch = jest.fn();
   navActions.setLevel = jest.fn();
   navActions.setAction = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledWith("BASIC_CONTENT");

@@ -1,4 +1,3 @@
-
 import { PropTypes } from "react";
 
 import { Accounts } from "../../@primitives/UI/icons";

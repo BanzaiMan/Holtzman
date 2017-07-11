@@ -6,7 +6,7 @@ import { Meteor } from "meteor/meteor";
 const buttonClasses = (
   savedPayments: Object[],
   disabled: boolean,
-  additionalClasses: string
+  additionalClasses: string,
 ): string => {
   let classes = ["btn"];
 
@@ -24,7 +24,6 @@ const buttonClasses = (
 
   return classes.join(" ");
 };
-
 
 type IPrimaryButton = {
   classes: string,
@@ -68,6 +67,4 @@ const PrimaryButton = ({
 
 export default PrimaryButton;
 
-export {
-  buttonClasses,
-};
+export { buttonClasses };

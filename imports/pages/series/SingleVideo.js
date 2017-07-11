@@ -24,14 +24,13 @@ import SingleVideoPlayer from "../../components/@primitives/players/video/Player
 import SeriesVideoList from "./VideoList";
 
 class SeriesSingleVideoWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     live: PropTypes.object.isRequired,
     currentSermon: PropTypes.object.isRequired,
     series: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
-  }
+  };
 
   componentWillMount() {
     if (process.env.WEB) return;
@@ -44,7 +43,7 @@ class SeriesSingleVideoWithoutData extends Component {
     this.handleHeader(nextProps);
   }
 
-  handleHeader = (nextProps) => {
+  handleHeader = nextProps => {
     const content = nextProps.series.content;
     if (!content) return;
 
@@ -62,21 +61,23 @@ class SeriesSingleVideoWithoutData extends Component {
     if (!live) options.subTitle = content.title;
 
     this.props.dispatch(headerActions.set(options));
-  }
+  };
 
-  playAudio = (e) => {
+  playAudio = e => {
     e.preventDefault();
     const currentSermon = this.props.currentSermon.content;
     const series = this.props.series.content;
-    this.props.dispatch(audioActions.setPlaying({
-      track: {
-        ...currentSermon.content.audio[0],
-        title: currentSermon.title,
-        artist: contentHelpers.speakers(currentSermon),
-      },
-      album: series,
-    }));
-  }
+    this.props.dispatch(
+      audioActions.setPlaying({
+        track: {
+          ...currentSermon.content.audio[0],
+          title: currentSermon.title,
+          artist: contentHelpers.speakers(currentSermon),
+        },
+        album: series,
+      }),
+    );
+  };
 
   render() {
     const sermonContent = this.props.currentSermon.content;
@@ -98,7 +99,7 @@ class SeriesSingleVideoWithoutData extends Component {
     return (
       <div className="background--light-primary">
         <SingleVideoPlayer ooyalaId={currentSermon.content.ooyalaId} />
-        {currentSermon.content.audio.length > 0 && (
+        {currentSermon.content.audio.length > 0 &&
           <div
             className="soft-sides background--light-secondary text-dark-secondary"
             style={{ paddingTop: "15px", paddingBottom: "15px" }}
@@ -109,13 +110,20 @@ class SeriesSingleVideoWithoutData extends Component {
               className="icon-category-audio float-right"
               style={{ marginTop: "-2px" }}
             />
-          </div>
-        )}
+          </div>}
         <div className="soft soft-double@palm-wide-and-up push-top">
-          <h2 className="push-half-bottom">{currentSermon.title}</h2>
-          <h4>{contentHelpers.speakers(currentSermon)}</h4>
-          <h6 className="text-dark-tertiary">{time.date(currentSermon)}</h6>
-          <div dangerouslySetInnerHTML={react.markup(currentSermon, "description")} />
+          <h2 className="push-half-bottom">
+            {currentSermon.title}
+          </h2>
+          <h4>
+            {contentHelpers.speakers(currentSermon)}
+          </h4>
+          <h6 className="text-dark-tertiary">
+            {time.date(currentSermon)}
+          </h6>
+          <div
+            dangerouslySetInnerHTML={react.markup(currentSermon, "description")}
+          />
         </div>
         <SeriesVideoList id={this.props.params.id} />
       </div>
@@ -153,7 +161,7 @@ const CURRENT_SERMON_QUERY = gql`
 `;
 const withCurrentSermon = graphql(CURRENT_SERMON_QUERY, {
   name: "currentSermon",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { sermonId: ownProps.params.sermonId },
   }),
 });
@@ -196,12 +204,12 @@ const SERIES_QUERY = gql`
 `;
 const withSeries = graphql(SERIES_QUERY, {
   name: "series",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { id: ownProps.params.id },
   }),
 });
 
-const mapStateToProps = (state) => ({ live: state.live });
+const mapStateToProps = state => ({ live: state.live });
 
 export default connect(mapStateToProps)(
   withCurrentSermon(
@@ -209,16 +217,15 @@ export default connect(mapStateToProps)(
       ReactMixin.decorate(Shareable)(
         ReactMixin.decorate(Headerable)(
           canLike(
-            (props) => (props.currentSermon.loading ? null : props.currentSermon.content.entryId)
-          )(SeriesSingleVideoWithoutData)
-        )
-      )
-    )
-  )
+            props =>
+              props.currentSermon.loading
+                ? null
+                : props.currentSermon.content.entryId,
+          )(SeriesSingleVideoWithoutData),
+        ),
+      ),
+    ),
+  ),
 );
 
-export {
-  SeriesSingleVideoWithoutData,
-  CURRENT_SERMON_QUERY,
-  SERIES_QUERY,
-};
+export { SeriesSingleVideoWithoutData, CURRENT_SERMON_QUERY, SERIES_QUERY };

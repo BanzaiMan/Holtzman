@@ -14,7 +14,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SavePaymentCheckBox { ...newProps } />;
+  return <SavePaymentCheckBox {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -23,24 +23,30 @@ it("renders with props", () => {
 });
 
 it("does not render if using saved account", () => {
-  const result = renderer.create(generateComponent({
-    savedAccount: {
-      id: "1",
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      savedAccount: {
+        id: "1",
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("does not render if guest checkout", () => {
-  const result = renderer.create(generateComponent({
-    transactionType: "guest",
-  }));
+  const result = renderer.create(
+    generateComponent({
+      transactionType: "guest",
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("does not render if scheduling", () => {
-  const result = renderer.create(generateComponent({
-    schedule: { start: "now" },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      schedule: { start: "now" },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });

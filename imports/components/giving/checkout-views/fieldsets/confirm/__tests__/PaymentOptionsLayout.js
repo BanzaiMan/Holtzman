@@ -18,7 +18,7 @@ const generateComponent = (additionalProps = {}) => {
     ...additionalProps,
   };
 
-  return <PaymentOptionsLayout { ...newProps } />;
+  return <PaymentOptionsLayout {...newProps} />;
 };
 
 it("should render with props", () => {

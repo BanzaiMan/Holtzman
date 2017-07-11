@@ -16,7 +16,7 @@ beforeEach(() => {
       payment: {
         accountNumber: "4111111111111111",
         paymentType: "Visa",
-      }
+      },
     },
     {
       name: "Test Card 2",
@@ -25,8 +25,8 @@ beforeEach(() => {
       payment: {
         accountNumber: "4111111111111111",
         paymentType: "Visa",
-      }
-    }
+      },
+    },
   ];
 });
 
@@ -43,21 +43,20 @@ it("correctly delivers props to child component", () => {
       selectedAccount="1"
       chooseAccount={() => {}}
       changeAccounts={() => {}}
-    />
+    />,
   );
 
   expect(PaymentCard).toHaveBeenCalledTimes(2);
 });
 
 it("correctly delivers props to the layout", () => {
-
   const layout = renderer.create(
     <Layout
       savedAccounts={accountResponse}
       selectedAccount="1"
       chooseAccount={() => {}}
       changeAccounts={() => {}}
-    />
+    />,
   );
 
   expect(layout).toMatchSnapshot();

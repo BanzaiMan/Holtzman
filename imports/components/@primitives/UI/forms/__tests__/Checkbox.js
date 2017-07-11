@@ -1,22 +1,22 @@
-
-import { mount, shallow } from 'enzyme';
-import Checkbox from '../Checkbox.js';
+import { mount, shallow } from "enzyme";
+import Checkbox from "../Checkbox.js";
 import { getSingleSpecWrapper } from "../../../../../util/tests/data-spec.js";
 import { mountToJson, shallowToJson } from "enzyme-to-json";
 
-const generateComponent = (additionalProps={}) => (
-    <Checkbox {...additionalProps} />
-);
+const generateComponent = (additionalProps = {}) =>
+  <Checkbox {...additionalProps} />;
 
-it ("should render with minimal props", () => {
+it("should render with minimal props", () => {
   let component = mount(generateComponent());
   expect(mountToJson(component)).toMatchSnapshot();
 });
 
-it ("should accept a default value", () => {
-  let component = mount(generateComponent({
-    defaultValue: true
-  }));
+it("should accept a default value", () => {
+  let component = mount(
+    generateComponent({
+      defaultValue: true,
+    }),
+  );
   expect(mountToJson(component)).toMatchSnapshot();
 
   const inputProps = getSingleSpecWrapper(component, "input").props();
@@ -24,10 +24,12 @@ it ("should accept a default value", () => {
   expect(inputProps.checked).toEqual("checked");
 });
 
-it ("should disable input with disabled prop", () => {
-  let component = mount(generateComponent({
-    disabled: true,
-  }));
+it("should disable input with disabled prop", () => {
+  let component = mount(
+    generateComponent({
+      disabled: true,
+    }),
+  );
   expect(mountToJson(component)).toMatchSnapshot();
 
   const inputProps = getSingleSpecWrapper(component, "input").props();
@@ -35,13 +37,17 @@ it ("should disable input with disabled prop", () => {
   expect(inputProps.disabled).toEqual(true);
 });
 
-it ("should add classes with classes prop", () => {
-  let component = mount(generateComponent({
-    classes: ["test1", "harambe"],
-  }));
-  let component2 = mount(generateComponent({
-    classes: "test1 harambe",
-  }));
+it("should add classes with classes prop", () => {
+  let component = mount(
+    generateComponent({
+      classes: ["test1", "harambe"],
+    }),
+  );
+  let component2 = mount(
+    generateComponent({
+      classes: "test1 harambe",
+    }),
+  );
   expect(mountToJson(component)).toMatchSnapshot();
   expect(mountToJson(component2)).toMatchSnapshot();
 
@@ -52,10 +58,12 @@ it ("should add classes with classes prop", () => {
   expect(wrapper2.hasClass("harambe")).toEqual(true);
 });
 
-it ("should display children", () => {
-  let component = mount(generateComponent({
-    children: "this is a test",
-  }));
+it("should display children", () => {
+  let component = mount(
+    generateComponent({
+      children: "this is a test",
+    }),
+  );
   expect(mountToJson(component)).toMatchSnapshot();
 
   const labelProps = getSingleSpecWrapper(component, "input-label").props();
@@ -63,10 +71,12 @@ it ("should display children", () => {
   expect(labelProps.children).toEqual("this is a test");
 });
 
-it ("should accept an id", () => {
-  let component = mount(generateComponent({
-    id: "harambe",
-  }));
+it("should accept an id", () => {
+  let component = mount(
+    generateComponent({
+      id: "harambe",
+    }),
+  );
   expect(mountToJson(component)).toMatchSnapshot();
 
   const inputProps = getSingleSpecWrapper(component, "input").props();
@@ -75,24 +85,30 @@ it ("should accept an id", () => {
 });
 
 // XXX Label doesn't actually display anything. Is that right?
-it ("should accept label", () => {
-  let component = mount(generateComponent({
-    label: "harambe",
-  }));
+it("should accept label", () => {
+  let component = mount(
+    generateComponent({
+      label: "harambe",
+    }),
+  );
   expect(mountToJson(component)).toMatchSnapshot();
 });
 
-it ("should accept name prop", () => {
-  let component = mount(generateComponent({
-    name: "harambe",
-  }));
+it("should accept name prop", () => {
+  let component = mount(
+    generateComponent({
+      name: "harambe",
+    }),
+  );
   expect(mountToJson(component)).toMatchSnapshot();
 });
 
-it ("should add inputClasses with inputClasses prop", () => {
-  let component = mount(generateComponent({
-    inputClasses: "test1 harambe",
-  }));
+it("should add inputClasses with inputClasses prop", () => {
+  let component = mount(
+    generateComponent({
+      inputClasses: "test1 harambe",
+    }),
+  );
 
   expect(mountToJson(component)).toMatchSnapshot();
 
@@ -101,11 +117,13 @@ it ("should add inputClasses with inputClasses prop", () => {
   expect(input.hasClass("harambe")).toEqual(true);
 });
 
-it ("should respond to onclick prop", () => {
+it("should respond to onclick prop", () => {
   const spy = jest.fn();
-  let component = mount(generateComponent({
-    clicked: spy,
-  }));
+  let component = mount(
+    generateComponent({
+      clicked: spy,
+    }),
+  );
 
   expect(mountToJson(component)).toMatchSnapshot();
 
@@ -115,10 +133,12 @@ it ("should respond to onclick prop", () => {
   expect(spy).toBeCalled();
 });
 
-it ("should hide label with hideLabel prop", () => {
-  let component = mount(generateComponent({
-    hideLabel: true,
-  }));
+it("should hide label with hideLabel prop", () => {
+  let component = mount(
+    generateComponent({
+      hideLabel: true,
+    }),
+  );
 
   expect(mountToJson(component)).toMatchSnapshot();
 
@@ -133,9 +153,11 @@ it("validate does not set error if validated", () => {
     },
   };
   const mockValidation = jest.fn(() => true);
-  const wrapper = shallow(generateComponent({
-    validation: mockValidation,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      validation: mockValidation,
+    }),
+  );
   wrapper.instance().validate(mockEvent);
   expect(wrapper.state().error).toBe(false);
 });
@@ -147,9 +169,11 @@ it("validate sets error if not validated", () => {
     },
   };
   const mockValidation = jest.fn(() => false);
-  const wrapper = shallow(generateComponent({
-    validation: mockValidation,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      validation: mockValidation,
+    }),
+  );
   wrapper.instance().validate(mockEvent);
   expect(wrapper.state().error).toBe(true);
 });
@@ -161,9 +185,11 @@ it("validate removes active and error if no value", () => {
     },
   };
   const mockValidation = jest.fn(() => true);
-  const wrapper = shallow(generateComponent({
-    validation: mockValidation,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      validation: mockValidation,
+    }),
+  );
   wrapper.setState({ active: true, error: true });
   wrapper.instance().validate(mockEvent);
   expect(wrapper.state().active).toBe(false);
@@ -177,9 +203,11 @@ it("renderHelpText does nothing if no error", () => {
 });
 
 it("renderHelpText renders when error and errorText", () => {
-  const wrapper = shallow(generateComponent({
-    errorText: "test",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      errorText: "test",
+    }),
+  );
   wrapper.setState({ error: true });
   const result = wrapper.instance().renderHelpText();
   expect(result).toMatchSnapshot();
@@ -193,8 +221,10 @@ it("renderHelpText renders when status", () => {
 });
 
 it("pushes type prop to inputclasses", () => {
-  const wrapper = shallow(generateComponent({
-    type: "mytype",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      type: "mytype",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

@@ -8,10 +8,7 @@
 import Currency from "../../@primitives/typography/currency";
 import { Progress as ProgressBar } from "../../@primitives/UI/progress";
 
-export const themeStyles = (
-  theme: string,
-  percentDone?: number,
-): Object => {
+export const themeStyles = (theme: string, percentDone?: number): Object => {
   if (theme === "light") {
     return {
       wrapper: {
@@ -58,20 +55,20 @@ type IProgress = {
   style: Object,
 };
 
-const Progress = ({
-  theme,
-  title,
-  total,
-  percentDone,
-  style,
-}: IProgress) =>
+const Progress = ({ theme, title, total, percentDone, style }: IProgress) =>
   <div style={{ ...themeStyles(theme).wrapper, ...style }}>
-    <div className="floating floating--left one-half display-inline-block push-half-top" style={{ verticalAlign: "middle" }}>
+    <div
+      className="floating floating--left one-half display-inline-block push-half-top"
+      style={{ verticalAlign: "middle" }}
+    >
       <h5 className="floating__item" data-spec="title">
         {title}
       </h5>
     </div>
-    <div className="floating floating--right one-half display-inline-block" style={{ verticalAlign: "middle" }}>
+    <div
+      className="floating floating--right one-half display-inline-block"
+      style={{ verticalAlign: "middle" }}
+    >
       <Currency
         amount={total}
         theme={themeStyles(theme).currencyText.color}
@@ -81,7 +78,6 @@ const Progress = ({
       />
     </div>
     <ProgressBar percentDone={percentDone} />
-  </div>
-  ;
+  </div>;
 
 export default Progress;

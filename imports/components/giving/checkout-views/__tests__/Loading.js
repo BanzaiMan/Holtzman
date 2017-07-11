@@ -2,9 +2,7 @@ import renderer from "react-test-renderer";
 import { reset, startBuffering } from "aphrodite/lib/inject";
 import Loading from "../Loading";
 
-const generateComponent = () => (
-  <Loading />
-);
+const generateComponent = () => <Loading />;
 
 beforeEach(() => {
   reset();

@@ -19,8 +19,12 @@ const Err = ({ msg, error, style }) => {
     <WindowLoading classes={["background--alert"]} styles={style}>
       <div className="locked-top locked-bottom one-whole floating">
         <div className="floating__item">
-          <h4 className="text-light-primary">{msg}</h4>
-          <p className="text-light-primary hard">{errorMessage}</p>
+          <h4 className="text-light-primary">
+            {msg}
+          </h4>
+          <p className="text-light-primary hard">
+            {errorMessage}
+          </p>
         </div>
       </div>
     </WindowLoading>

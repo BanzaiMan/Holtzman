@@ -32,7 +32,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 beforeEach(() => {
@@ -57,9 +57,11 @@ it("renders without person campus", () => {
 });
 
 it("renders without campuses", () => {
-  const wrapper = shallow(generateComponent({
-    campuses: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      campuses: null,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -67,21 +69,23 @@ it("submit calls submit with values in inputs", () => {
   Validate.isEmail = jest.fn(() => true);
   const mockPreventDefault = jest.fn();
   const mockSubmit = jest.fn();
-  const wrapper = mount(generateComponent({
-    submit: mockSubmit,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      submit: mockSubmit,
+    }),
+  );
   wrapper.instance().submit({
     preventDefault: mockPreventDefault,
   });
   expect(mockPreventDefault).toHaveBeenCalledTimes(1);
   expect(mockSubmit).toHaveBeenCalledWith({
-    NickName: 'jimothy',
-    FirstName: 'jim',
-    LastName: 'bob',
-    Email: 'test@test.com',
+    NickName: "jimothy",
+    FirstName: "jim",
+    LastName: "bob",
+    Email: "test@test.com",
     BirthMonth: 1,
     BirthDay: 1,
     BirthYear: 2000,
-    Campus: 1
+    Campus: 1,
   });
 });

@@ -25,7 +25,7 @@ const defaultProps = {
       },
     },
   ],
-  filterTransactions: jest.fn()
+  filterTransactions: jest.fn(),
 };
 
 const generateComponent = (additionalProps = {}) => {
@@ -33,7 +33,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Filter { ...newProps } />;
+  return <Filter {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -48,35 +48,39 @@ it("renders family members when expanded is true", () => {
 });
 
 it("doesn't render family members if there are none", () => {
-  const wrapper = shallow(generateComponent({
-    family: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      family: null,
+    }),
+  );
   wrapper.setState({ expanded: true });
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("works with nickname", () => {
-  const wrapper = shallow(generateComponent({
-    family: [
-      {
-        person: {
-          id: "1",
-          nickName: "jimothy",
-          firstName: "jim",
-          lastName: "bob",
-          photo: "http://test.com/test.jpg",
+  const wrapper = shallow(
+    generateComponent({
+      family: [
+        {
+          person: {
+            id: "1",
+            nickName: "jimothy",
+            firstName: "jim",
+            lastName: "bob",
+            photo: "http://test.com/test.jpg",
+          },
         },
-      },
-      {
-        person: {
-          id: "2",
-          firstName: "sally",
-          lastName: "bob",
-          photo: "http://test.com/test.jpg",
+        {
+          person: {
+            id: "2",
+            firstName: "sally",
+            lastName: "bob",
+            photo: "http://test.com/test.jpg",
+          },
         },
-      },
-    ],
-  }));
+      ],
+    }),
+  );
   wrapper.setState({ expanded: true });
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
@@ -85,18 +89,20 @@ it("updates the state upon recieving new family members", () => {
   const person1 = defaultProps.family[0].person;
   const person2 = defaultProps.family[1].person;
 
-  const wrapper = shallow(generateComponent({
-    family: [
-      {
-        person: {
-          id: "1",
-          firstName: "jim",
-          lastName: "bob",
-          photo: "http://test.com/test.jpg",
+  const wrapper = shallow(
+    generateComponent({
+      family: [
+        {
+          person: {
+            id: "1",
+            firstName: "jim",
+            lastName: "bob",
+            photo: "http://test.com/test.jpg",
+          },
         },
-      },
-    ],
-  }));
+      ],
+    }),
+  );
 
   // componentWillReceiveProps doesn't run on mount
   expect(wrapper.state().people).toEqual([]);
@@ -168,14 +174,16 @@ it("dateRangeClick with LastMonth value sets the start and end dates correctly",
 
   // this should set a 30 day range
   wrapper.instance().dateRangeClick("LastMonth");
-  expect(moment(wrapper.state().start).format("L")).toEqual(moment().subtract(30, "days").format("L"));
+  expect(moment(wrapper.state().start).format("L")).toEqual(
+    moment().subtract(30, "days").format("L"),
+  );
   expect(moment(wrapper.state().end).format("L")).toEqual(moment().format("L"));
 
   // calling it again should reset the start and end dates
   wrapper.instance().dateRangeClick("LastMonth");
   expect(wrapper.state().start).toEqual("");
   expect(wrapper.state().end).toEqual("");
-})
+});
 
 it("dateRangeClick with LastYear value sets the start and end dates correctly", () => {
   const wrapper = shallow(generateComponent());
@@ -185,14 +193,18 @@ it("dateRangeClick with LastYear value sets the start and end dates correctly", 
   });
 
   wrapper.instance().dateRangeClick("LastYear");
-  expect(moment(wrapper.state().start).format("L")).toEqual(moment().subtract(1, "year").startOf("year").format("L"));
-  expect(moment(wrapper.state().end).format("L")).toEqual(moment().subtract(1, "year").endOf("year").format("L"));
+  expect(moment(wrapper.state().start).format("L")).toEqual(
+    moment().subtract(1, "year").startOf("year").format("L"),
+  );
+  expect(moment(wrapper.state().end).format("L")).toEqual(
+    moment().subtract(1, "year").endOf("year").format("L"),
+  );
 
   // calling it again should reset the start and end dates
   wrapper.instance().dateRangeClick("LastYear");
   expect(wrapper.state().start).toEqual("");
   expect(wrapper.state().end).toEqual("");
-})
+});
 
 it("dateRangeClick with YearToDate value sets the start and end dates correctly", () => {
   const wrapper = shallow(generateComponent());
@@ -203,14 +215,16 @@ it("dateRangeClick with YearToDate value sets the start and end dates correctly"
 
   // this should set a 1 year range
   wrapper.instance().dateRangeClick("YearToDate");
-  expect(moment(wrapper.state().start).format("L")).toEqual(moment().startOf("year").format("L"));
+  expect(moment(wrapper.state().start).format("L")).toEqual(
+    moment().startOf("year").format("L"),
+  );
   expect(moment(wrapper.state().end).format("L")).toEqual(moment().format("L"));
 
   // calling it again should reset the start and end dates
   wrapper.instance().dateRangeClick("YearToDate");
   expect(wrapper.state().start).toEqual("");
   expect(wrapper.state().end).toEqual("");
-})
+});
 
 it("dateRangeClick with AllTime sets limit correctly", () => {
   const wrapper = shallow(generateComponent());
@@ -225,7 +239,7 @@ it("dateRangeClick with AllTime sets limit correctly", () => {
   // if you call it again, it should set the limit back to 20
   wrapper.instance().dateRangeClick("AllTime");
   expect(wrapper.state().limit).toEqual(20);
-})
+});
 
 it("dateRangeClick sets customDateDisabled correctly", () => {
   const wrapper = shallow(generateComponent());
@@ -240,7 +254,7 @@ it("dateRangeClick sets customDateDisabled correctly", () => {
   // if you call it again, it should set customDateDisabled back to false
   wrapper.instance().dateRangeClick("LastMonth");
   expect(wrapper.state().customDateDisabled).toEqual(false);
-})
+});
 
 it("dateRangeClick allows switching from one tag to another", () => {
   const wrapper = shallow(generateComponent());
@@ -282,7 +296,7 @@ it("toggleStartDatePicker correctly toggles the start date picker", () => {
   // if you call it again, it should set toggle the picker off.
   wrapper.instance().toggleStartDatePicker();
   expect(wrapper.state().showStartDatePicker).toEqual(false);
-})
+});
 
 it("toggleEndDatePicker correctly toggles the end date picker", () => {
   const wrapper = shallow(generateComponent());
@@ -297,7 +311,7 @@ it("toggleEndDatePicker correctly toggles the end date picker", () => {
   // if you call it again, it should set toggle the picker off.
   wrapper.instance().toggleEndDatePicker();
   expect(wrapper.state().showEndDatePicker).toEqual(false);
-})
+});
 
 it("startClick with StartDate value and blank start date shows the start date picker", () => {
   const wrapper = shallow(generateComponent());
@@ -309,7 +323,7 @@ it("startClick with StartDate value and blank start date shows the start date pi
   // calling it should toggle the picker on and set the override to true.
   wrapper.instance().startClick("StartDate");
   expect(wrapper.state().showStartDatePicker).toEqual(true);
-})
+});
 
 it("startClick with StartDate value and non-empty start date resets many things", () => {
   const wrapper = shallow(generateComponent());
@@ -325,19 +339,19 @@ it("startClick with StartDate value and non-empty start date resets many things"
   expect(wrapper.state().customStartLabel).toEqual("Start Date");
   expect(wrapper.state().customStartActive).toEqual(false);
   expect(wrapper.state().overrideActive).toEqual(false);
-})
+});
 
 it("startClick with EndDate value and blank end date shows the end date picker", () => {
   const wrapper = shallow(generateComponent());
   wrapper.setState({
     showEndDatePicker: false,
-    end: ""
+    end: "",
   });
 
   // calling it should toggle the picker on and set the override to true.
   wrapper.instance().startClick("EndDate");
   expect(wrapper.state().showEndDatePicker).toEqual(true);
-})
+});
 
 it("startClick with EndDate value and non-empty start date resets many things", () => {
   const wrapper = shallow(generateComponent());
@@ -353,7 +367,7 @@ it("startClick with EndDate value and non-empty start date resets many things", 
   expect(wrapper.state().customEndLabel).toEqual("End Date");
   expect(wrapper.state().customEndActive).toEqual(false);
   expect(wrapper.state().overrideActive).toEqual(false);
-})
+});
 
 it("onStartDayClick correctly sets state", () => {
   const wrapper = shallow(generateComponent());
@@ -365,7 +379,7 @@ it("onStartDayClick correctly sets state", () => {
   const selectedObject = {
     selected: true,
     disabled: false,
-  }
+  };
   const customDate = moment("2016-12-25");
 
   wrapper.instance().onStartDayClick(null, customDate, selectedObject);
@@ -378,7 +392,7 @@ it("onStartDayClick correctly sets state", () => {
   expect(wrapper.state().start).toEqual(customDate);
   expect(wrapper.state().customStartLabel).toEqual("Dec 25, 2016");
   expect(wrapper.state().customStartActive).toEqual(true);
-})
+});
 
 it("onEndDayClick correctly sets state", () => {
   const wrapper = shallow(generateComponent());
@@ -390,7 +404,7 @@ it("onEndDayClick correctly sets state", () => {
   const selectedObject = {
     selected: true,
     disabled: false,
-  }
+  };
   const customDate = moment("2016-12-25");
 
   wrapper.instance().onEndDayClick(null, customDate, selectedObject);
@@ -403,15 +417,17 @@ it("onEndDayClick correctly sets state", () => {
   expect(wrapper.state().end).toEqual(customDate);
   expect(wrapper.state().customEndLabel).toEqual("Dec 25, 2016");
   expect(wrapper.state().customEndActive).toEqual(true);
-})
+});
 
 it("filterResults correctly calls all the functions", () => {
   const person1 = defaultProps.family[0].person;
   const person2 = defaultProps.family[1].person;
   const mockFilterTransactions = jest.fn();
-  const wrapper = shallow(generateComponent({
-    filterTransactions: mockFilterTransactions,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      filterTransactions: mockFilterTransactions,
+    }),
+  );
   wrapper.setState({
     start: "",
     end: "",
@@ -421,5 +437,10 @@ it("filterResults correctly calls all the functions", () => {
   });
 
   wrapper.instance().filterResults();
-  expect(mockFilterTransactions).toHaveBeenCalledWith({ people: [ "1", "2" ], start: "", end: "", limit: 20 });
+  expect(mockFilterTransactions).toHaveBeenCalledWith({
+    people: ["1", "2"],
+    start: "",
+    end: "",
+    limit: 20,
+  });
 });

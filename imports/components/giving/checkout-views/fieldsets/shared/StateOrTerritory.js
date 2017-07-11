@@ -12,7 +12,11 @@ const StateOrTerritory = ({
   states,
   saveState,
 }: IStateOrTerritory) => {
-  if (!billing.country || billing.country === "US" || billing.country === "CA") {
+  if (
+    !billing.country ||
+    billing.country === "US" ||
+    billing.country === "CA"
+  ) {
     return (
       <div className="grid__item one-half">
         <Forms.Select

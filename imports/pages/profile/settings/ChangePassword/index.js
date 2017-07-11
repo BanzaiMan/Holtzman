@@ -4,22 +4,24 @@ import { connect } from "react-redux";
 import { nav } from "../../../../data/store";
 import { reset } from "../../../../deprecated/methods/accounts/browser";
 
-import { Error as Err, Loading } from "../../../../components/@primitives/UI/states";
+import {
+  Error as Err,
+  Loading,
+} from "../../../../components/@primitives/UI/states";
 import Success from "../Success";
 import Layout from "./Layout";
 
 class ChangePasswordWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-  }
+  };
 
   state = {
     current: null,
     newP: null,
     newPDup: null,
     state: "default",
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(nav.setLevel("BASIC_CONTENT"));
@@ -29,11 +31,11 @@ class ChangePasswordWithoutData extends Component {
     this.props.dispatch(nav.setLevel("TOP"));
   }
 
-  submit = (e) => {
+  submit = e => {
     e.preventDefault();
     this.setState({ state: "loading" });
 
-    reset(this.state.current, this.state.newP, (err) => {
+    reset(this.state.current, this.state.newP, err => {
       if (err) {
         this.setState({ state: "error", err });
         setTimeout(() => {
@@ -42,14 +44,13 @@ class ChangePasswordWithoutData extends Component {
         return;
       }
 
-
       this.setState({ state: "success" });
 
       setTimeout(() => {
         this.setState({ state: "default" });
       }, 5000);
     });
-  }
+  };
 
   save = (value, input) => {
     const { id } = input;
@@ -65,8 +66,7 @@ class ChangePasswordWithoutData extends Component {
     this.setState({ [id]: value });
 
     return true;
-  }
-
+  };
 
   render() {
     const { state, err } = this.state;
@@ -88,11 +88,7 @@ class ChangePasswordWithoutData extends Component {
         return <Success msg="Your password has been updated!" />;
       default:
         return (
-          <Layout
-            submit={this.submit}
-            save={this.save}
-            state={this.state}
-          />
+          <Layout submit={this.submit} save={this.save} state={this.state} />
         );
     }
   }
@@ -100,6 +96,4 @@ class ChangePasswordWithoutData extends Component {
 
 export default connect()(ChangePasswordWithoutData);
 
-export {
-  ChangePasswordWithoutData,
-};
+export { ChangePasswordWithoutData };

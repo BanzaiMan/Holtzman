@@ -15,10 +15,7 @@ export default function createContainer(options = {}, Component) {
     };
   }
 
-  const {
-    getMeteorData,
-    pure = true,
-  } = expandedOptions;
+  const { getMeteorData, pure = true } = expandedOptions;
 
   const mixins = [ReactMeteorData];
   if (pure) {

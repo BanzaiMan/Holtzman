@@ -5,10 +5,7 @@ import {
   header as headerActions,
 } from "../../../../data/store";
 import Following from "../../../../components/people/profile/following";
-import {
-  HomeWithoutData as Home,
-  GET_PERSON_QUERY,
-} from "../";
+import { HomeWithoutData as Home, GET_PERSON_QUERY } from "../";
 
 jest.mock("../../../../components/people/profile/likes", () => jest.fn());
 jest.mock("../../../../data/store", () => ({
@@ -36,7 +33,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Home { ...newProps } />;
+  return <Home {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -45,18 +42,22 @@ it("renders with props", () => {
 });
 
 it("renders without person", () => {
-  const wrapper = shallow(generateComponent({
-    data: {
-      person: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        person: null,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders without photo", () => {
-  const wrapper = shallow(generateComponent({
-    photo: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      photo: null,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -67,9 +68,11 @@ it("parses query correctly", () => {
 it("updates nav on mount", () => {
   const mockDispatch = jest.fn();
   navActions.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().componentDidMount();
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledTimes(1);

@@ -22,7 +22,7 @@ describe("Join", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Join { ...newProps } />;
+    return <Join {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -32,19 +32,23 @@ describe("Join", () => {
 
   it("calls the onClick function", () => {
     const mockOnClick = jest.fn();
-    const wrapper = shallow(generateComponent({
-      onExit: mockOnClick,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        onExit: mockOnClick,
+      }),
+    );
     expect(mockOnClick).not.toHaveBeenCalled();
-    wrapper.find("button[data-spec=\"cancel\"]").simulate("click");
+    wrapper.find('button[data-spec="cancel"]').simulate("click");
     expect(mockOnClick).toHaveBeenCalledTimes(1);
   });
 
   it("onClick calls updates state and calls onClick", () => {
     const mockOnClick = jest.fn();
-    const wrapper = shallow(generateComponent({
-      onClick: mockOnClick,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        onClick: mockOnClick,
+      }),
+    );
     wrapper.instance().onClick("e");
     expect(wrapper.state().state).toBe("loading");
     expect(mockOnClick).toHaveBeenCalledTimes(1);
@@ -59,9 +63,11 @@ describe("Join", () => {
   it("onClick calls updates state and calls onClick with error", () => {
     jest.useFakeTimers();
     const mockOnClick = jest.fn();
-    const wrapper = shallow(generateComponent({
-      onClick: mockOnClick,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        onClick: mockOnClick,
+      }),
+    );
     wrapper.instance().onClick("e");
     expect(wrapper.state().state).toBe("loading");
     expect(mockOnClick).toHaveBeenCalledTimes(1);
@@ -73,7 +79,7 @@ describe("Join", () => {
     jest.runAllTimers();
     expect(wrapper.state().state).toBe("default");
   });
-})
+});
 
 describe("ShowPhoneTextArea", () => {
   const defaultProps = {
@@ -87,7 +93,7 @@ describe("ShowPhoneTextArea", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <ShowPhoneTextArea { ...newProps } />;
+    return <ShowPhoneTextArea {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -98,7 +104,7 @@ describe("ShowPhoneTextArea", () => {
   it("shouldn't render if there is a phone number", () => {
     const additionalProps = {
       phones: ["(555) 555-5555"],
-    }
+    };
     const wrapper = shallow(generateComponent(additionalProps));
     expect(shallowToJson(wrapper)).toBe(null);
   });
@@ -107,8 +113,8 @@ describe("ShowPhoneTextArea", () => {
     const additionalProps = {
       loading: true,
       phones: ["(555) 555-5555"],
-    }
+    };
     const wrapper = shallow(generateComponent(additionalProps));
     expect(shallowToJson(wrapper)).toBe(null);
-  })
-})
+  });
+});

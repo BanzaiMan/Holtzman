@@ -13,7 +13,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Tabs { ...newProps } />;
+  return <Tabs {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -22,16 +22,20 @@ it("renders with props", () => {
 });
 
 it("updates active on mount", () => {
-  const wrapper = shallow(generateComponent({
-    state: 1,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      state: 1,
+    }),
+  );
   expect(wrapper.state().active).toBe(1);
 });
 
 it("updates active when recieving props", () => {
-  const wrapper = shallow(generateComponent({
-    state: 1,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      state: 1,
+    }),
+  );
   wrapper.setProps({ state: 2 });
   expect(wrapper.state().active).toBe(2);
 });
@@ -45,9 +49,11 @@ it("toggle uses event to update state", () => {
       },
     },
   };
-  const wrapper = shallow(generateComponent({
-    toggle: mockTabs,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      toggle: mockTabs,
+    }),
+  );
   wrapper.instance().toggle(mockEvent);
   expect(mockTabs).toHaveBeenCalledTimes(1);
   expect(mockTabs).toHaveBeenCalledWith(2);

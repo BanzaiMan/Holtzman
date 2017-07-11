@@ -26,7 +26,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <File { ...newProps } />;
+  return <File {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -35,9 +35,11 @@ it("renders with props", () => {
 });
 
 it("overrides with theme", () => {
-  const wrapper = shallow(generateComponent({
-    theme: ["mytheme"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      theme: ["mytheme"],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -54,30 +56,38 @@ it("has error state", () => {
 });
 
 it("appends classes", () => {
-  const wrapper = shallow(generateComponent({
-    classes: ["append", "me"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      classes: ["append", "me"],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("hides the label", () => {
-  const wrapper = shallow(generateComponent({
-    hideLabel: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      hideLabel: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("makes active on mount if defaultValue", () => {
-  const wrapper = shallow(generateComponent({
-    defaultValue: "test",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      defaultValue: "test",
+    }),
+  );
   expect(wrapper.state().active).toBe(true);
 });
 
 it("updates state if next default value isn't the current", () => {
-  const wrapper = mount(generateComponent({
-    defaultValue: "test",
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "test",
+    }),
+  );
   wrapper.setState({ focused: true });
   wrapper.setProps({ defaultValue: "test2" });
   expect(wrapper.state().focused).toBe(false);
@@ -86,10 +96,12 @@ it("updates state if next default value isn't the current", () => {
 it("format call format", () => {
   const mockFormat = jest.fn();
   const mockEvent = {};
-  const wrapper = mount(generateComponent({
-    defaultValue: "hey",
-    format: mockFormat,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "hey",
+      format: mockFormat,
+    }),
+  );
   wrapper.instance().format(mockEvent);
   expect(mockFormat).toHaveBeenCalledTimes(1);
   expect(mockFormat.mock.calls[0][0]).toBe("hey");
@@ -98,9 +110,11 @@ it("format call format", () => {
 
 it("validate resets state if no value", () => {
   const mockValidation = jest.fn(() => true);
-  const wrapper = mount(generateComponent({
-    validation: mockValidation,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      validation: mockValidation,
+    }),
+  );
   wrapper.setState({ active: true, error: true, focused: true });
   wrapper.instance().validate();
   expect(wrapper.state().active).toBe(false);
@@ -110,10 +124,12 @@ it("validate resets state if no value", () => {
 
 it("validate sets error if not valid", () => {
   const mockValidation = jest.fn(() => false);
-  const wrapper = mount(generateComponent({
-    defaultValue: "test",
-    validation: mockValidation,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "test",
+      validation: mockValidation,
+    }),
+  );
   wrapper.instance().validate();
   // from default value on mount
   expect(wrapper.state().active).toBe(true);
@@ -131,9 +147,11 @@ it("focus updates state", () => {
 
 it("getValue calls focus and validation", () => {
   const mockValidation = jest.fn(() => true);
-  const wrapper = mount(generateComponent({
-    validation: mockValidation,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      validation: mockValidation,
+    }),
+  );
   wrapper.instance().setValue("test");
   expect(wrapper.state().active).toBe(true);
   expect(wrapper.state().error).toBe(false);
@@ -144,17 +162,21 @@ it("getValue calls focus and validation", () => {
 });
 
 it("getValue retrives value from node", () => {
-  const wrapper = mount(generateComponent({
-    defaultValue: "test",
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "test",
+    }),
+  );
   const result = wrapper.instance().getValue();
   expect(result).toBe("test");
 });
 
 it("renderHelpText renders if error and error text", () => {
-  const wrapper = mount(generateComponent({
-    errorText: "error",
-  }));
+  const wrapper = mount(
+    generateComponent({
+      errorText: "error",
+    }),
+  );
   wrapper.setState({ error: true });
   const result = wrapper.instance().renderHelpText();
   expect(result).toMatchSnapshot();
@@ -180,9 +202,11 @@ it("style returns blank object if enabled", () => {
 });
 
 it("style returns disabled style if disabled", () => {
-  const wrapper = shallow(generateComponent({
-    disabled: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      disabled: true,
+    }),
+  );
   const result = wrapper.instance().style();
   expect(result).toEqual({
     cursor: "inherit",

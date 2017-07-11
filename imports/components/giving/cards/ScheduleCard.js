@@ -19,28 +19,29 @@ const ScheduleCard = ({
   latest,
   classes,
   onDetailClick,
-}: IScheduleCard) => (
+}: IScheduleCard) =>
   <div className={classes}>
     <div className="card">
       <div className="card__item soft push-half-ends one-whole">
-        <Currency
-          amount={amount}
-          className="text-left"
-          baseHeadingSize="1"
-        />
+        <Currency amount={amount} className="text-left" baseHeadingSize="1" />
         <h5 className="floating__item soft-half-right push-half--bottom text-dark-primary">
           {frequency}
         </h5>
-        <p className="flush-bottom soft-half-top" style={latest ? { marginBottom: "5px" } : {}}>
+        <p
+          className="flush-bottom soft-half-top"
+          style={latest ? { marginBottom: "5px" } : {}}
+        >
           <span
             className="h7 text-dark-tertiary push-half-right"
             style={{ verticalAlign: "middle" }}
           >
             Start Date:
           </span>
-          <em className="text-dark-primary">{moment.utc(started).format("MMM D, YYYY")}</em>
+          <em className="text-dark-primary">
+            {moment.utc(started).format("MMM D, YYYY")}
+          </em>
         </p>
-        {latest && (
+        {latest &&
           <p>
             <span
               className="h7 text-dark-tertiary push-half-right"
@@ -48,9 +49,10 @@ const ScheduleCard = ({
             >
               Latest Contribution:
             </span>
-            <em className="text-dark-primary">{moment(latest).format("MMM D, YYYY")}</em>
-          </p>
-        )}
+            <em className="text-dark-primary">
+              {moment(latest).format("MMM D, YYYY")}
+            </em>
+          </p>}
         <button
           className={`${String(!latest) && "soft-top"} text-primary`}
           style={{ borderColor: "inherit", borderWidth: "2px" }}
@@ -69,7 +71,6 @@ const ScheduleCard = ({
         </button>
       </div>
     </div>
-  </div>
-);
+  </div>;
 
 export default ScheduleCard;

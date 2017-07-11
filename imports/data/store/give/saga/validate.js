@@ -1,4 +1,3 @@
-
 import "regenerator-runtime/runtime";
 import { select, call } from "redux-saga/effects";
 
@@ -27,7 +26,6 @@ export default function* validate() {
   delete modifiedGive.transactions;
   delete modifiedGive.schedule;
 
-
   // step 1 (sumbit personal details)
   // personal info is ready to be submitted
   const formattedData = formatPersonDetails(modifiedGive);
@@ -49,7 +47,9 @@ export default function* validate() {
       },
     });
     url = response.url;
-  } catch (e) { error = e; }
+  } catch (e) {
+    error = e;
+  }
 
   // step 2 (submit payment details)
   yield submitPaymentDetails(modifiedGive.data, url);

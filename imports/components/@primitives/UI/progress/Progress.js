@@ -37,16 +37,12 @@ type IProgress = {
   height: string,
 };
 
-const Progress = ({
-  theme,
-  percentDone,
-  height,
-}: IProgress) =>
-  <div className="one-whole" style={themeStyles(theme, percentDone, height).progressBackground}>
-    <div
-      style={themeStyles(theme, percentDone).progress}
-    />
-  </div>
-  ;
+const Progress = ({ theme, percentDone, height }: IProgress) =>
+  <div
+    className="one-whole"
+    style={themeStyles(theme, percentDone, height).progressBackground}
+  >
+    <div style={themeStyles(theme, percentDone).progress} />
+  </div>;
 
 export default Progress;

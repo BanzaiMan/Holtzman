@@ -29,11 +29,18 @@ const ButtonText = ({
   if (overrideText) text = overrideText;
 
   if (paymentInfo.accountNumber || paymentInfo.cardNumber) {
-    const masked = paymentInfo.type === "ach" ? paymentInfo.accountNumber : paymentInfo.cardNumber;
+    const masked =
+      paymentInfo.type === "ach"
+        ? paymentInfo.accountNumber
+        : paymentInfo.cardNumber;
     text += ` With ${masked.replace(/-/g, "").slice(-4)}`;
   }
 
-  return <span>{text}</span>;
+  return (
+    <span>
+      {text}
+    </span>
+  );
 };
 
 export default ButtonText;

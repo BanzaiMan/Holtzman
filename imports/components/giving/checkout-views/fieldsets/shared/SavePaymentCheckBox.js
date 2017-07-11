@@ -17,11 +17,7 @@ const SavePaymentCheckBox = ({
   schedule,
   transactionType,
 }: ISavePaymentCheckBox) => {
-  if (
-    !savedAccount.id &&
-    transactionType !== "guest" &&
-    !schedule.start
-  ) {
+  if (!savedAccount.id && transactionType !== "guest" && !schedule.start) {
     return (
       <Forms.Checkbox
         name="savePayment"
@@ -34,7 +30,14 @@ const SavePaymentCheckBox = ({
   } else if (schedule.start) {
     return (
       <div>
-        <p><small><em>To save a payment, please give a one time contribution. We are sorry for any inconvenience this may cause.</em></small></p>
+        <p>
+          <small>
+            <em>
+              To save a payment, please give a one time contribution. We are
+              sorry for any inconvenience this may cause.
+            </em>
+          </small>
+        </p>
       </div>
     );
   }

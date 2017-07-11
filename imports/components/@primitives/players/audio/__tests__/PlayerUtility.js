@@ -4,9 +4,7 @@ import { clone } from "ramda";
 import { Meteor } from "meteor/meteor";
 import { actions as audioActions } from "../../../../../data/store/audio";
 import Audio from "../../../../../util/vendor/players/audio";
-import {
-  AudioPlayerUtilityWithoutData as AudioPlayerUtility,
-} from "../PlayerUtility";
+import { AudioPlayerUtilityWithoutData as AudioPlayerUtility } from "../PlayerUtility";
 
 global.Audio5 = jest.fn(() => ({
   on: jest.fn(),
@@ -27,11 +25,11 @@ const defaultProps = {
     playlist: [
       {
         title: "track title",
-        file: "http://test.com/1.mp3"
+        file: "http://test.com/1.mp3",
       },
       {
         title: "track title 2",
-        file: "http://test.com/2.mp3"
+        file: "http://test.com/2.mp3",
       },
     ],
     repeat: "default",
@@ -52,7 +50,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <AudioPlayerUtility { ...newProps } />;
+  return <AudioPlayerUtility {...newProps} />;
 };
 
 it("renders nothing but span", () => {
@@ -122,11 +120,11 @@ it("tracksWithFiles returns files from playlist", () => {
   expect(result).toEqual([
     {
       title: defaultProps.audio.playlist[0].title,
-      file: defaultProps.audio.playlist[0].file
+      file: defaultProps.audio.playlist[0].file,
     },
     {
       title: defaultProps.audio.playlist[1].title,
-      file: defaultProps.audio.playlist[1].file
+      file: defaultProps.audio.playlist[1].file,
     },
   ]);
 });
@@ -139,19 +137,20 @@ it("createPlayer returns null if no file", () => {
 
 it("createPlayer calls loading", () => {
   const mockLoading = jest.fn();
-  const wrapper = shallow(generateComponent({
-    loading: mockLoading,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      loading: mockLoading,
+    }),
+  );
   wrapper.instance().createPlayer(defaultProps.audio.playlist[0], false);
   expect(mockLoading).toHaveBeenCalledTimes(1);
 });
 
 it("createPlayer creates Audio on not ios", () => {
   const wrapper = shallow(generateComponent());
-  const result = wrapper.instance().createPlayer(
-    defaultProps.audio.playlist[0],
-    false
-  );
+  const result = wrapper
+    .instance()
+    .createPlayer(defaultProps.audio.playlist[0], false);
   expect(String(result.constructor.name)).toBe("Audio");
 });
 
@@ -161,10 +160,9 @@ it("createPlayer calls release", () => {
   const mockExisitingPlayer = new Audio();
   mockExisitingPlayer.release = mockRelease;
   wrapper.instance().player = mockExisitingPlayer;
-  const result = wrapper.instance().createPlayer(
-    defaultProps.audio.playlist[0],
-    false
-  );
+  const result = wrapper
+    .instance()
+    .createPlayer(defaultProps.audio.playlist[0], false);
   expect(mockRelease).toHaveBeenCalledTimes(1);
 });
 
@@ -172,10 +170,9 @@ it("createPlayer prefixes tracks with https", () => {
   const props = clone(defaultProps);
   props.audio.playlist[0].file = "//test.com/no.mp3";
   const wrapper = shallow(generateComponent(props));
-  const result = wrapper.instance().createPlayer(
-    props.audio.playlist[0],
-    false
-  );
+  const result = wrapper
+    .instance()
+    .createPlayer(props.audio.playlist[0], false);
   // thanks param reassign
   expect(props.audio.playlist[0].file).toBe("https://test.com/no.mp3");
 });
@@ -226,10 +223,9 @@ it("createPlayer creates Media on ios", () => {
     ended: jest.fn(),
   }));
   const wrapper = shallow(generateComponent());
-  const result = wrapper.instance().createPlayer(
-    defaultProps.audio.playlist[0],
-    false
-  );
+  const result = wrapper
+    .instance()
+    .createPlayer(defaultProps.audio.playlist[0], false);
   expect(String(result.constructor.name)).toBe("Media");
 });
 
@@ -256,9 +252,11 @@ it("seek calls seekTo with new position", () => {
 
 it("next calls setPlaying with next track", () => {
   const mockSetPlaying = jest.fn();
-  const wrapper = shallow(generateComponent({
-    setPlaying: mockSetPlaying,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      setPlaying: mockSetPlaying,
+    }),
+  );
   wrapper.instance().next();
   expect(mockSetPlaying).toHaveBeenCalledTimes(1);
   expect(mockSetPlaying).toHaveBeenCalledWith({
@@ -270,10 +268,12 @@ it("next calls setPlaying with random track", () => {
   const props = clone(defaultProps);
   props.audio.order = "shuffle";
   const mockSetPlaying = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    setPlaying: mockSetPlaying,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      setPlaying: mockSetPlaying,
+    }),
+  );
   wrapper.instance().next();
   expect(mockSetPlaying).toHaveBeenCalledTimes(1);
   expect(mockSetPlaying).toHaveBeenCalledWith({
@@ -287,12 +287,14 @@ it("next calls restart and play if repeat one", () => {
   const mockSetPlaying = jest.fn();
   const mockPlay = jest.fn();
   const mockRestart = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    setPlaying: mockSetPlaying,
-    restart: mockRestart,
-    play: mockPlay,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      setPlaying: mockSetPlaying,
+      restart: mockRestart,
+      play: mockPlay,
+    }),
+  );
   wrapper.instance().next();
   expect(mockSetPlaying).not.toHaveBeenCalled();
   expect(mockRestart).toHaveBeenCalledTimes(1);
@@ -306,11 +308,13 @@ it("next calls seek and play if cordova", () => {
   const mockSetPlaying = jest.fn();
   const mockPlay = jest.fn();
   const mockSeek = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    setPlaying: mockSetPlaying,
-    seek: mockSeek,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      setPlaying: mockSetPlaying,
+      seek: mockSeek,
+    }),
+  );
   wrapper.instance().player = {
     play: mockPlay,
   };
@@ -323,9 +327,11 @@ it("next calls seek and play if cordova", () => {
 
 it("previous calls setPlaying with previous track", () => {
   const mockSetPlaying = jest.fn();
-  const wrapper = shallow(generateComponent({
-    setPlaying: mockSetPlaying,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      setPlaying: mockSetPlaying,
+    }),
+  );
   wrapper.instance().previous();
   expect(mockSetPlaying).toHaveBeenCalledTimes(1);
   expect(mockSetPlaying).toHaveBeenCalledWith({
@@ -338,10 +344,12 @@ it("previous calls setPlaying with random track", () => {
   const props = clone(defaultProps);
   props.audio.order = "shuffle";
   const mockSetPlaying = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    setPlaying: mockSetPlaying,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      setPlaying: mockSetPlaying,
+    }),
+  );
   wrapper.instance().previous();
   expect(mockSetPlaying).toHaveBeenCalledTimes(1);
   expect(mockSetPlaying).toHaveBeenCalledWith({
@@ -355,12 +363,14 @@ it("previous calls restart and play if repeat one", () => {
   const mockSetPlaying = jest.fn();
   const mockPlay = jest.fn();
   const mockRestart = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    setPlaying: mockSetPlaying,
-    restart: mockRestart,
-    play: mockPlay,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      setPlaying: mockSetPlaying,
+      restart: mockRestart,
+      play: mockPlay,
+    }),
+  );
   wrapper.instance().previous();
   expect(mockSetPlaying).not.toHaveBeenCalled();
   expect(mockRestart).toHaveBeenCalledTimes(1);
@@ -374,11 +384,13 @@ it("previous calls seek and play if cordova", () => {
   const mockSetPlaying = jest.fn();
   const mockPlay = jest.fn();
   const mockSeek = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    setPlaying: mockSetPlaying,
-    seek: mockSeek,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      setPlaying: mockSetPlaying,
+      seek: mockSeek,
+    }),
+  );
   wrapper.instance().player = {
     play: mockPlay,
   };
@@ -402,9 +414,8 @@ it("createPlayer creates Media on ios", () => {
     ended: jest.fn(),
   }));
   const wrapper = shallow(generateComponent());
-  const result = wrapper.instance().createPlayer(
-    defaultProps.audio.playlist[0],
-    false
-  );
+  const result = wrapper
+    .instance()
+    .createPlayer(defaultProps.audio.playlist[0], false);
   expect(String(result.constructor.name)).toBe("Media");
 });

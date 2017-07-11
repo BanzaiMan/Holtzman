@@ -28,7 +28,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -37,17 +37,21 @@ it("renders with props", () => {
 });
 
 it("renders not alive version", () => {
-  const wrapper = shallow(generateComponent({
-    alive: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      alive: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders loading version", () => {
-  const wrapper = shallow(generateComponent({
-    accounts: {
-      loading: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      accounts: {
+        loading: true,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

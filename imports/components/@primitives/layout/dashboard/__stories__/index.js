@@ -1,10 +1,6 @@
 /* eslint-disable */
 import { storiesOf } from "@kadira/storybook";
-import {
-  withKnobs,
-  select,
-  text,
-} from "@kadira/storybook-addon-knobs";
+import { withKnobs, select, text } from "@kadira/storybook-addon-knobs";
 import withReadme from "storybook-readme/with-readme";
 import backgrounds from "react-storybook-addon-backgrounds";
 import centered from "/.storybook/decorators/centered";
@@ -18,11 +14,11 @@ import Activity from "../../../../giving/cards/ActivityCard";
 const story = storiesOf("Dashboard", module)
   .addDecorator(withKnobs)
   .addDecorator(centered)
-  .addDecorator(backgrounds(defaultColors("light-primary", "light-secondary")))
-  ;
+  .addDecorator(backgrounds(defaultColors("light-primary", "light-secondary")));
 
-story
-  .add("Dashboard", withReadme(Readme, () => {
+story.add(
+  "Dashboard",
+  withReadme(Readme, () => {
     const title = text("Title", "Your Giving");
 
     const subNav = [
@@ -50,7 +46,7 @@ story
       item1: "Menu Item 1",
       item2: "Menu Item 2",
       item3: "Menu Item 3",
-    }
+    };
     const defaultActiveValue = "item1";
     const active = select("Active", activeOptions, defaultActiveValue);
     subNav[0].isActive = active === "item1" ? true : false;
@@ -62,10 +58,7 @@ story
     subNav[2].title = text("Menu Item 3", subNav[2].title);
 
     return (
-      <Dashboard
-        title={title}
-        subNav={subNav}
-      >
+      <Dashboard title={title} subNav={subNav}>
         <div className="soft-double">
           <Activity
             status="success"
@@ -77,4 +70,5 @@ story
         </div>
       </Dashboard>
     );
-  }));
+  }),
+);

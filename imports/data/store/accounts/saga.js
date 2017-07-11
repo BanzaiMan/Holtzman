@@ -87,7 +87,8 @@ function* completeAccount() {
   const state = yield select();
   const { email, personId } = state.accounts.data;
   // eslint-disable-next-line
-  let created = false, error;
+  let created = false,
+    error;
 
   // XXX dead code removal broke this
   function canComplete() {
@@ -180,7 +181,7 @@ function* signup() {
 
         if (isAuthorized) {
           return { result: isAuthorized };
-        // eslint-disable-next-line
+          // eslint-disable-next-line
         } else {
           return { error: new Meteor.Error("An unkown error occured") };
         }
@@ -222,7 +223,10 @@ function* onboard({ state }) {
       yield put(actions.setState("default"));
     } else {
       // forceFetch for someone signs out and signs back in again
-      const { data } = yield GraphQL.query({ query: PRELOAD_PERSON, forceFetch: true });
+      const { data } = yield GraphQL.query({
+        query: PRELOAD_PERSON,
+        forceFetch: true,
+      });
       const { person } = data;
 
       if (person) yield put(actions.person(person));

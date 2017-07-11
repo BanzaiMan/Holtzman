@@ -14,7 +14,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Zip { ...newProps } />;
+  return <Zip {...newProps} />;
 };
 
 it("renders one-half if country is `US`", () => {
@@ -23,29 +23,35 @@ it("renders one-half if country is `US`", () => {
 });
 
 it("renders one-half if country is `CA`", () => {
-  const result = renderer.create(generateComponent({
-    billing: {
-      country: "CA",
-      zip: "23456",
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      billing: {
+        country: "CA",
+        zip: "23456",
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("renders one-half if no country", () => {
-  const result = renderer.create(generateComponent({
-    billing: {
-      country: null,
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      billing: {
+        country: null,
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("renders one-whole for countries with no states", () => {
-  const result = renderer.create(generateComponent({
-    billing: {
-      country: "UK",
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      billing: {
+        country: "UK",
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });

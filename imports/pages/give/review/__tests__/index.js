@@ -7,118 +7,108 @@ import { reset, startBuffering } from "aphrodite/lib/inject";
 import { Template } from "../";
 
 export const sampleData = {
-  "data": {
-    "payment": {
-      "icon": "Visa",
-      "type": "cc"
+  data: {
+    payment: {
+      icon: "Visa",
+      type: "cc",
     },
-    "personal": {
-      "campus": "Web",
-      "campusId": 20,
-      "email": "web@newspring.cc",
-      "firstName": "Jeff",
-      "lastName": "Goldblumm"
-    }
+    personal: {
+      campus: "Web",
+      campusId: 20,
+      email: "web@newspring.cc",
+      firstName: "Jeff",
+      lastName: "Goldblumm",
+    },
   },
-  "savedAccount": {
-    "date": null,
-    "id": 18376,
-    "name": "Jeff%27s%20NS%20Visa",
-    "payment": {
-      "accountNumber": "411111******1112",
-      "paymentType": "Visa"
-    }
+  savedAccount: {
+    date: null,
+    id: 18376,
+    name: "Jeff%27s%20NS%20Visa",
+    payment: {
+      accountNumber: "411111******1112",
+      paymentType: "Visa",
+    },
   },
-  "total": 1,
-  "transactions": {
+  total: 1,
+  transactions: {
     "125": {
-      "label": "General%20Fund",
-      "value": 1
-    }
+      label: "General%20Fund",
+      value: 1,
+    },
   },
-  "url": false,
-  "userId": "jY4RT2WK55yKYtj4y"
+  url: false,
+  userId: "jY4RT2WK55yKYtj4y",
 };
 
 describe("GiveReviewTemplate", () => {
   beforeEach(() => {
     reset();
     startBuffering();
-  })
+  });
   afterEach(() => {
     reset();
   });
 
   it("returns <Loading /> component based on state", () => {
     const giveData = {
-      "give": {
-        "state": "loading",
+      give: {
+        state: "loading",
         ...sampleData,
       },
-      "dispatch": jest.fn()
+      dispatch: jest.fn(),
     };
 
-    window.location = { "search": `giveData=${sampleData}`};
+    window.location = { search: `giveData=${sampleData}` };
 
-    const tree = shallow(
-      <Template {...giveData} />
-    );
+    const tree = shallow(<Template {...giveData} />);
     expect(shallowToJson(tree)).toMatchSnapshot();
     delete window.location;
   });
 
   it("returns <Success /> component based on state", () => {
     const giveData = {
-      "give": {
-        "state": "success",
+      give: {
+        state: "success",
         ...sampleData,
       },
-      "dispatch": jest.fn()
+      dispatch: jest.fn(),
     };
 
-    window.location = { "search": `giveData=${sampleData}`};
+    window.location = { search: `giveData=${sampleData}` };
 
-    const tree = shallow(
-      <Template {...giveData} />
-    );
+    const tree = shallow(<Template {...giveData} />);
     expect(shallowToJson(tree)).toMatchSnapshot();
     delete window.location;
   });
 
   it("returns <Error /> component based on state", () => {
     const giveData = {
-      "give": {
-        "state": "error",
+      give: {
+        state: "error",
         ...sampleData,
-        "errors":[
-          {"error": "must go faster!"}
-        ]
+        errors: [{ error: "must go faster!" }],
       },
-      "dispatch": jest.fn()
+      dispatch: jest.fn(),
     };
 
-    window.location = { "search": `giveData=${sampleData}`};
+    window.location = { search: `giveData=${sampleData}` };
 
-    const tree = shallow(
-      <Template {...giveData} />
-    );
+    const tree = shallow(<Template {...giveData} />);
     expect(shallowToJson(tree)).toMatchSnapshot();
     delete window.location;
   });
 
   it("returns <Layout /> component based on state", () => {
     const giveData = {
-      "give": {
-        "state": "done",
+      give: {
+        state: "done",
         ...sampleData,
       },
-      "dispatch": jest.fn()
+      dispatch: jest.fn(),
     };
 
-    window.location = { "search": `giveData=${sampleData}`};
-    const tree = shallow(
-      <Template {...giveData} />
-    );
+    window.location = { search: `giveData=${sampleData}` };
+    const tree = shallow(<Template {...giveData} />);
     expect(shallowToJson(tree)).toMatchSnapshot();
     delete window.location;
   });

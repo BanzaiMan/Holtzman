@@ -10,8 +10,18 @@ import Layout from "./Layout";
 
 /* eslint-disable max-len */
 export const RELATED_CONTENT_QUERY = gql`
-  query GetRelatedContent($tags: [String], $includeChannels: [String], $limit: Int, $excludedIds: [String]) {
-    taggedContent(tags: $tags, limit: $limit, includeChannels: $includeChannels, excludedIds: $excludedIds) {
+  query GetRelatedContent(
+    $tags: [String]
+    $includeChannels: [String]
+    $limit: Int
+    $excludedIds: [String]
+  ) {
+    taggedContent(
+      tags: $tags
+      limit: $limit
+      includeChannels: $includeChannels
+      excludedIds: $excludedIds
+    ) {
       entryId: id
       id
       title
@@ -43,7 +53,7 @@ export const RELATED_CONTENT_QUERY = gql`
 const defaultArray = [];
 export const withRelatedContent = graphql(RELATED_CONTENT_QUERY, {
   name: "content",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: {
       tags: ownProps.tags || defaultArray,
       includeChannels: ownProps.includeChannels || defaultArray,
@@ -59,11 +69,11 @@ type ITemplate = {
 };
 
 export class Template extends Component {
-  props: ITemplate
+  props: ITemplate;
 
   static defaultProps = {
     title: "More Like This",
-  }
+  };
 
   render() {
     const { taggedContent, loading } = this.props.content;

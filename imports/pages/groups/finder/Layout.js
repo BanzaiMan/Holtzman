@@ -19,7 +19,7 @@ const Layout = ({
   findByQuery,
   inputOnChange,
   content,
-}) => (
+}) =>
   <section className="background--light-secondary hard">
     {/* Meta */}
     <Meta
@@ -44,11 +44,17 @@ const Layout = ({
         </h6>
         <div className="push-ends soft-double-sides@lap-and-up push-double-sides@anchored">
           {/* weird SSR stuff here to investigate */}
-          {tags.map((tag, i) => <Tag className="" onClick={tagOnClick} key={i} val={tag.value} />)}
+          {tags.map((tag, i) =>
+            <Tag className="" onClick={tagOnClick} key={i} val={tag.value} />,
+          )}
         </div>
         {(() => {
           if (!tags.length) {
-            return <div className="one-whole text-center"><Loading /></div>;
+            return (
+              <div className="one-whole text-center">
+                <Loading />
+              </div>
+            );
           }
 
           const classes = ["btn", "push-top@lap-and-up"];
@@ -57,7 +63,7 @@ const Layout = ({
           return (
             <button
               disabled={!canSearchTags}
-              onClick={(e) => submitTags(e)}
+              onClick={e => submitTags(e)}
               className={classes.join(" ")}
             >
               Let&#39;s Go!
@@ -69,14 +75,15 @@ const Layout = ({
 
     <div className="soft-sides soft-double-sides@lap-and-up background--light-primary">
       <div className="soft@lap-and-up">
-        <hr className="flush outlined--light" style={{ borderWidth: "1px", borderTopWidth: 0 }} />
+        <hr
+          className="flush outlined--light"
+          style={{ borderWidth: "1px", borderTopWidth: 0 }}
+        />
       </div>
     </div>
 
     {/* Search */}
-    <div
-      className="soft soft-double-ends soft-double@lap-and-up text-center background--light-primary"
-    >
+    <div className="soft soft-double-ends soft-double@lap-and-up text-center background--light-primary">
       <div>
         <h3 className="soft-ends@anchored push-top@lap-and-up flush-bottom">
           Don&#39;t see what you&#39;re looking for?
@@ -90,7 +97,7 @@ const Layout = ({
             "display-inline-block",
             "push-bottom",
           ]}
-          submit={(e) => findByQuery(e)}
+          submit={e => findByQuery(e)}
           action
         >
           <Forms.Input
@@ -99,10 +106,12 @@ const Layout = ({
             placeholder="Type your search here..."
             type="text"
             name="search"
-            onChange={(e) => inputOnChange(e)}
+            onChange={e => inputOnChange(e)}
           />
           <div className="one-whole text-center@handheld text-left@lap-and-up">
-            <h6><em>Find a group by zipcode, name, campus, or description</em></h6>
+            <h6>
+              <em>Find a group by zipcode, name, campus, or description</em>
+            </h6>
           </div>
         </Forms.Form>
       </div>
@@ -117,51 +126,55 @@ const Layout = ({
     >
       <h3 className="push-top">You Can&#39;t Do Life Alone</h3>
       <div className="grid">
-        {content && content.map((entry, key) => {
-          if (process.env.WEB) {
+        {content &&
+          content.map((entry, key) => {
+            if (process.env.WEB) {
+              return (
+                <a
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  href={`https://newspring.cc/articles/${entry.meta.urlTitle}`}
+                  className="plain grid__item one-whole"
+                  key={key}
+                >
+                  <SideBySide
+                    classes={["push-bottom@lap-and-up"]}
+                    images={entry.content.images}
+                    defaultImage={entry.content.images[0].url}
+                  >
+                    <h4 className="text-dark-primary push-half-top@portable push-top@anchored">
+                      {entry.title}
+                    </h4>
+
+                    <p className="text-dark-primary">
+                      <small
+                        dangerouslySetInnerHTML={{ __html: entry.meta.summary }}
+                      />
+                    </p>
+                    <span
+                      className={
+                        "h6 btn--small btn--dark-tertiary " +
+                        "soft-sides@portable one-whole@handheld"
+                      }
+                    >
+                      Read more
+                    </span>
+                  </SideBySide>
+                </a>
+              );
+            }
             return (
-              <a
-                rel="noopener noreferrer"
-                target="_blank"
-                href={`https://newspring.cc/articles/${entry.meta.urlTitle}`}
-                className="plain grid__item one-whole"
+              <div
+                className="grid__item one-whole one-half@palm-wide-and-up"
                 key={key}
               >
-                <SideBySide
-                  classes={["push-bottom@lap-and-up"]}
-                  images={entry.content.images}
-                  defaultImage={entry.content.images[0].url}
-                >
-                  <h4 className="text-dark-primary push-half-top@portable push-top@anchored">
-                    {entry.title}
-                  </h4>
-
-                  <p className="text-dark-primary">
-                    <small dangerouslySetInnerHTML={{ __html: entry.meta.summary }} />
-                  </p>
-                  <span
-                    className={
-                      "h6 btn--small btn--dark-tertiary " +
-                      "soft-sides@portable one-whole@handheld"
-                    }
-                  >
-                    Read more
-                  </span>
-
-                </SideBySide>
-              </a>
+                <FeedItem item={entry} />
+              </div>
             );
-          }
-          return (
-            <div className="grid__item one-whole one-half@palm-wide-and-up" key={key} >
-              <FeedItem item={entry} />
-            </div>
-          );
-        })}
+          })}
       </div>
     </div>
-  </section>
-);
+  </section>;
 /* eslint-enable max-len */
 
 Layout.propTypes = {

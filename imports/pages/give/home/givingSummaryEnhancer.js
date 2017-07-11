@@ -1,4 +1,3 @@
-
 // @flow
 // $FlowMeteor
 import { Meteor } from "meteor/meteor";
@@ -32,13 +31,15 @@ export const formatGivingSummaryData = (data: Object): ?Object => {
   let total = 0;
   const accounts = {};
 
-  transactions.map((transaction) => {
+  transactions.map(transaction => {
     // iterate over every transaction, and sum up the months
     const month = moment(new Date(transaction.date)).format("M");
     if (!transaction.details || !transaction.details.length) return transaction;
 
-    summaryData[Number(month) - 1].amount += transaction.details
-      .reduce((prev, { amount }) => prev + amount, 0);
+    summaryData[Number(month) - 1].amount += transaction.details.reduce(
+      (prev, { amount }) => prev + amount,
+      0,
+    );
 
     total += transaction.details.reduce((prev, { amount }) => prev + amount, 0);
     transaction.details.forEach(({ amount, account }) => {
@@ -49,12 +50,12 @@ export const formatGivingSummaryData = (data: Object): ?Object => {
     return transaction;
   });
 
-  return ({
+  return {
     ...data,
     total,
     chartData: summaryData,
     accounts,
-  });
+  };
 };
 
 const YTD_QUERY = gql`
@@ -82,7 +83,7 @@ const withData = graphql(YTD_QUERY, {
     ssr: false,
   }),
   props: ({ data }) => ({
-    changeYear: (year) => {
+    changeYear: year => {
       const start = moment(`${year}`, "YYYY").startOf("year").format();
       const end = moment(`${year}`, "YYYY").endOf("year").format();
       return data.refetch({ start, end });
@@ -92,9 +93,7 @@ const withData = graphql(YTD_QUERY, {
   }),
 });
 
-
 const authorized = () => ({ authorized: Meteor.userId() });
 // eslint-disable-next-line
-export default (component: React$Component<any, any, any> | Function) => (
-  createContainer(authorized, withData(component))
-);
+export default (component: React$Component<any, any, any> | Function) =>
+  createContainer(authorized, withData(component));

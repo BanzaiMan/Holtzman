@@ -3,9 +3,7 @@ import { graphql } from "react-apollo";
 import { connect } from "react-redux";
 import gql from "graphql-tag";
 
-import {
-  nav as navActions,
-} from "../../../data/store";
+import { nav as navActions } from "../../../data/store";
 
 import withProfileUpload from "../profile-photo";
 
@@ -16,7 +14,6 @@ import PersonalDetails from "./PersonalDetails";
 import HomeAddress from "./HomeAddress";
 
 class TemplateWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     data: PropTypes.shape({
@@ -29,15 +26,15 @@ class TemplateWithoutData extends Component {
     children: PropTypes.object.isRequired,
     upload: PropTypes.func,
     photo: PropTypes.string,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(navActions.setLevel("TOP"));
   }
 
-  onUpload = (e) => {
+  onUpload = e => {
     this.props.upload(e).then(() => this.props.data.refetch());
-  }
+  };
 
   render() {
     const { photo } = this.props;
@@ -73,7 +70,7 @@ const PERSON_QUERY = gql`
 `;
 
 const withPerson = graphql(PERSON_QUERY, {
-  skip: (ownProps) => !ownProps.authorized,
+  skip: ownProps => !ownProps.authorized,
   options: {
     forceFetch: true,
   },
@@ -84,11 +81,7 @@ export const mapStateToProps = ({ accounts }) => ({
 });
 
 const Template = withProfileUpload(
-  connect(mapStateToProps)(
-    withPerson(
-      TemplateWithoutData
-    )
-  )
+  connect(mapStateToProps)(withPerson(TemplateWithoutData)),
 );
 
 const Routes = [
@@ -104,7 +97,8 @@ const Routes = [
       { path: "home-address", component: HomeAddress },
       {
         path: "saved-accounts",
-        onEnter: (nextState: Object, replace: Function) => replace("/give/home"),
+        onEnter: (nextState: Object, replace: Function) =>
+          replace("/give/home"),
       },
     ],
   },
@@ -115,7 +109,4 @@ export default {
   Routes,
 };
 
-export {
-  TemplateWithoutData,
-  PERSON_QUERY,
-};
+export { TemplateWithoutData, PERSON_QUERY };

@@ -1,14 +1,9 @@
-
 import avatar from "./avatar";
 import upload from "./upload";
-
 
 export default {
   avatar,
   upload,
 };
 
-export {
-  avatar,
-  upload,
-};
+export { avatar, upload };

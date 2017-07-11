@@ -43,7 +43,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -52,39 +52,49 @@ it("renders with props", () => {
 });
 
 it("works with nickName", () => {
-  const wrapper = shallow(generateComponent({
-    person: {
-      nickName: "jimothy",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      person: {
+        nickName: "jimothy",
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("works without recoverableSchedules", () => {
-  const wrapper = shallow(generateComponent({
-    recoverableSchedules: [],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      recoverableSchedules: [],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders loading if accounts not ready", () => {
-  const wrapper = shallow(generateComponent({
-    accountsReady: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      accountsReady: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders loading if no accounts", () => {
-  const wrapper = shallow(generateComponent({
-    accounts: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      accounts: null,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders loading if no accounts", () => {
-  const wrapper = shallow(generateComponent({
-    accounts: [],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      accounts: [],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -96,18 +106,22 @@ it("renders sign in message if no user", () => {
 });
 
 it("renders loading if no schedules", () => {
-  const wrapper = shallow(generateComponent({
-    schedules: [],
-    schedulesReady: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      schedules: [],
+      schedulesReady: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders no schedules message", () => {
-  const wrapper = shallow(generateComponent({
-    schedules: [],
-    schedulesReady: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      schedules: [],
+      schedulesReady: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -272,7 +286,6 @@ it("doesn't render one time completed schedule if no details account", () => {
   const wrapper = shallow(generateComponent(props));
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
-
 
 it("doesn't render incompleted schedule as completed schedule", () => {
   const props = {

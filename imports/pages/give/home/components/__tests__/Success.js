@@ -13,7 +13,7 @@ describe("Success", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Success { ...newProps }/>
+    return <Success {...newProps} />;
   };
 
   it("renders with default props", () => {
@@ -28,9 +28,11 @@ describe("Success", () => {
 
   it("calls onClick when you click", () => {
     const mockOnClick = jest.fn();
-    const wrapper = shallow(generateComponent({
-      onClick: mockOnClick,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        onClick: mockOnClick,
+      }),
+    );
 
     expect(mockOnClick).not.toHaveBeenCalled();
     wrapper.find("button").simulate("click");
@@ -39,23 +41,19 @@ describe("Success", () => {
 });
 
 describe("ContactLink", () => {
-  const generateComponent = () => (
-    <ContactLink />
-  );
+  const generateComponent = () => <ContactLink />;
 
   it("renders", () => {
     const wrapper = shallow(generateComponent());
     expect(shallowToJson(wrapper)).toMatchSnapshot();
-  })
+  });
 });
 
 describe("ContactUs", () => {
-  const generateComponent = () => (
-    <ContactUs />
-  );
+  const generateComponent = () => <ContactUs />;
 
   it("renders", () => {
     const wrapper = shallow(generateComponent());
     expect(shallowToJson(wrapper)).toMatchSnapshot();
-  })
-})
+  });
+});

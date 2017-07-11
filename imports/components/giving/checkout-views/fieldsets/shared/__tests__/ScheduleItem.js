@@ -15,7 +15,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <ScheduleItem { ...newProps } />;
+  return <ScheduleItem {...newProps} />;
 };
 
 it("should render with props", () => {

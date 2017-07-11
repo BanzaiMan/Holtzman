@@ -12,13 +12,12 @@ import liveActions from "../../../../data/store/live";
 import { canSee } from "../../../@enhancers/security-roles";
 
 class LiveWithoutData extends Component {
-
   static propTypes = {
     live: PropTypes.object, // eslint-disable-line
     dispatch: PropTypes.func,
     data: PropTypes.object, // eslint-disable-line
     person: PropTypes.object,
-  }
+  };
 
   componentWillUpdate(nextProps, nextState) {
     this.handleLiveChange(nextProps, nextState);
@@ -43,7 +42,7 @@ class LiveWithoutData extends Component {
     }
 
     return classes.join(" ");
-  }
+  };
 
   getTextClasses = () => {
     const classes = [
@@ -54,9 +53,9 @@ class LiveWithoutData extends Component {
     ];
 
     return classes.join(" ");
-  }
+  };
 
-  handleLiveChange = (nextProps) => {
+  handleLiveChange = nextProps => {
     const { live } = nextProps.data;
     if (!live) return;
 
@@ -75,7 +74,7 @@ class LiveWithoutData extends Component {
     } else {
       this.props.dispatch(liveActions.reset());
     }
-  }
+  };
 
   getLink() {
     const { embedCode } = this.props.live;
@@ -88,7 +87,7 @@ class LiveWithoutData extends Component {
     // );
     // return shouldShowBetaLink ? "/wowza" : `/video/${embedCode}`;
     // make wowza default for everyone watching live
-    return "/wowza"
+    return "/wowza";
   }
 
   render() {
@@ -100,11 +99,8 @@ class LiveWithoutData extends Component {
     const link = this.getLink();
 
     return (
-      <Motion
-        defaultStyle={{ height: 0 }}
-        style={{ height: spring(40) }}
-      >
-        {(interpolatingStyle) =>
+      <Motion defaultStyle={{ height: 0 }} style={{ height: spring(40) }}>
+        {interpolatingStyle =>
           <Link
             to={link}
             className={this.getClasses()}
@@ -113,8 +109,7 @@ class LiveWithoutData extends Component {
             <h7 className={this.getTextClasses()}>
               NewSpring Church Live, Watch Now!
             </h7>
-          </Link>
-        }
+          </Link>}
       </Motion>
     );
   }
@@ -151,14 +146,7 @@ const withLive = graphql(LIVE_QUERY, {
 // });
 
 export default withRedux(
-  withLive(
-    canSee(["RSR - Beta Testers"])(LiveWithoutData)
-  )
+  withLive(canSee(["RSR - Beta Testers"])(LiveWithoutData)),
 );
 
-export {
-  LiveWithoutData,
-  LIVE_QUERY,
-  withRedux,
-  withLive,
-};
+export { LiveWithoutData, LIVE_QUERY, withRedux, withLive };

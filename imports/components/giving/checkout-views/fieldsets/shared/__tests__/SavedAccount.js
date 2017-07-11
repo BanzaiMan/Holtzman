@@ -21,7 +21,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SavedAccount { ...newProps } />;
+  return <SavedAccount {...newProps} />;
 };
 
 it("renders and checked false when savedAccount is not account", () => {
@@ -30,10 +30,12 @@ it("renders and checked false when savedAccount is not account", () => {
 });
 
 it("renders and checked true when savedAccount is account", () => {
-  const result = renderer.create(generateComponent({
-    savedAccount: {
-      id: "1",
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      savedAccount: {
+        id: "1",
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });

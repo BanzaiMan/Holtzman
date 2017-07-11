@@ -13,7 +13,7 @@ const generateComponent = (additionalProps = {}) => {
     ...additionalProps,
   };
   return (
-    <FieldSet { ...newProps }>
+    <FieldSet {...newProps}>
       <h1>test</h1>
     </FieldSet>
   );
@@ -25,15 +25,19 @@ it("renders with props", () => {
 });
 
 it("appends classes if present", () => {
-  const wrapper = shallow(generateComponent({
-    classes: ["one", "two"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      classes: ["one", "two"],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("overrides with theme if present", () => {
-  const wrapper = shallow(generateComponent({
-    theme: "override",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      theme: "override",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

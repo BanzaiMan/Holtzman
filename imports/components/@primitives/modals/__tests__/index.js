@@ -1,9 +1,10 @@
 import { shallow, mount } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
-import { modal as modalActions, nav as navActions } from "../../../../data/store";
 import {
-  SideModalContainerWithoutData as SideModalContainer,
-} from "../";
+  modal as modalActions,
+  nav as navActions,
+} from "../../../../data/store";
+import { SideModalContainerWithoutData as SideModalContainer } from "../";
 
 jest.mock("../../../../data/store", () => ({
   modal: {
@@ -36,7 +37,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SideModalContainer { ...newProps } />;
+  return <SideModalContainer {...newProps} />;
 };
 
 it("render with props", () => {
@@ -47,16 +48,18 @@ it("render with props", () => {
 it("updates nav if not keeping the nav and modal visible", () => {
   const mockDispatch = jest.fn();
   navActions.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    modal: {
-      visible: true,
-      props: {
-        keepNav: false,
-        promptModal: false,
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      modal: {
+        visible: true,
+        props: {
+          keepNav: false,
+          promptModal: false,
+        },
       },
-    },
-  }));
+    }),
+  );
   wrapper.instance().componentDidMount();
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledTimes(1);
@@ -196,7 +199,7 @@ it("removes key bind and resets color on unmount", () => {
   expect(document.removeEventListener).toHaveBeenCalledWith(
     "keyup",
     wrapper.instance().bindEsc,
-    false
+    false,
   );
   expect(navActions.resetColor).toHaveBeenCalledTimes(1);
 });
@@ -229,11 +232,13 @@ it("handles esc key to dispatch closing the modal", () => {
   Meteor.isClient = true;
   const mockDispatch = jest.fn();
 
-  const wrapper = mount(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
-  const esc =  new CustomEvent("keydown");
+  const esc = new CustomEvent("keydown");
   esc.keyCode = 27;
 
   document.dispatchEvent(esc);
@@ -242,14 +247,16 @@ it("handles esc key to dispatch closing the modal", () => {
 
 it("handles esc key to dispatch closing the modal", () => {
   const mockDispatch = jest.fn();
-  const wrapper = mount(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   const { handleKeyPress } = wrapper.instance();
 
   handleKeyPress({ keyCode: 27 });
-   expect(mockDispatch).toBeCalledWith(modalActions.hide());
+  expect(mockDispatch).toBeCalledWith(modalActions.hide());
 });
 
 it("handles down key to scroll within the component", () => {

@@ -13,7 +13,7 @@ describe("RenderIcon", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <RenderIcon { ...newProps } />;
+    return <RenderIcon {...newProps} />;
   };
 
   it("should not render if no accountNumber or cardNumber", () => {
@@ -22,50 +22,60 @@ describe("RenderIcon", () => {
   });
 
   it("should not render if ach but no accountNumber", () => {
-    const result = renderer.create(generateComponent({
-      payment: {
-        type: "ach",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        payment: {
+          type: "ach",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 
   it("should not render if card by no cardNumber", () => {
-    const result = renderer.create(generateComponent({
-      payment: {
-        type: "cc",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        payment: {
+          type: "cc",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 
   it("should not render if no returned card type", () => {
-    const result = renderer.create(generateComponent({
-      payment: {
-        type: "cc",
-        cardNumber: "0",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        payment: {
+          type: "cc",
+          cardNumber: "0",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 
   it("should render if ach and accountNumber", () => {
-    const result = renderer.create(generateComponent({
-      payment: {
-        type: "ach",
-        accountNumber: "123456789",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        payment: {
+          type: "ach",
+          accountNumber: "123456789",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 
   it("should render if card and cardNumber and cardType returns", () => {
-    const result = renderer.create(generateComponent({
-      payment: {
-        type: "cc",
-        cardNumber: "4111-1111-1111-1111",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        payment: {
+          type: "cc",
+          cardNumber: "4111-1111-1111-1111",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
@@ -84,26 +94,30 @@ describe("CardFields", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <CardFields { ...newProps } />;
+    return <CardFields {...newProps} />;
   };
 
   it("should not render if type is ach", () => {
-    const result = renderer.create(generateComponent({
-      payment: {
-        type: "ach",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        payment: {
+          type: "ach",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
   it("should render with props", () => {
-    const result = renderer.create(generateComponent({
-      payment: {
-        type: "cc",
-        cardNumber: "4111-1111-1111-1111",
-        expiration: "11/22",
-        ccv: "111",
-      },
-    }));
+    const result = renderer.create(
+      generateComponent({
+        payment: {
+          type: "cc",
+          cardNumber: "4111-1111-1111-1111",
+          expiration: "11/22",
+          ccv: "111",
+        },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });

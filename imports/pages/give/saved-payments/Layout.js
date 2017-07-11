@@ -1,8 +1,11 @@
 // @flow
-import Split, { Left, Right } from "../../../components/@primitives/layout/split";
+import Split, {
+  Left,
+  Right,
+} from "../../../components/@primitives/layout/split";
 import Meta from "../../../components/shared/meta";
 
-const Layout = () => (
+const Layout = () =>
   <div>
     <Split nav classes={["background--light-primary"]}>
       <Meta title="Edit Saved Payment" />
@@ -14,7 +17,6 @@ const Layout = () => (
     <Left scroll ref="container" classes={["background--light-secondary"]}>
       Edit A Saved Payment
     </Left>
-  </div>
-);
+  </div>;
 
 export default Layout;

@@ -1,9 +1,13 @@
 /* eslint-disable */
 // converted from coffeescript in old newspring core js
 let Debouncer,
-  bind = function (fn, me) { return function () { return fn.apply(me, arguments); }; };
+  bind = function(fn, me) {
+    return function() {
+      return fn.apply(me, arguments);
+    };
+  };
 
-Debouncer = (function () {
+Debouncer = (function() {
   function Debouncer(data) {
     this.data = data;
     this.handleEvent = bind(this.handleEvent, this);
@@ -15,24 +19,29 @@ Debouncer = (function () {
       return;
     }
 
-    window.requestAnimationFrame = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame;
+    window.requestAnimationFrame =
+      window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame;
     this.callback = this.data;
     this.ticking = false;
   }
 
-  Debouncer.prototype.update = function () {
+  Debouncer.prototype.update = function() {
     this.callback && this.callback();
-    return this.ticking = false;
+    return (this.ticking = false);
   };
 
-  Debouncer.prototype.requestTick = function () {
+  Debouncer.prototype.requestTick = function() {
     if (!this.ticking) {
-      requestAnimationFrame(this.rafCallback || (this.rafCallback = this.update.bind(this)));
-      return this.ticking = true;
+      requestAnimationFrame(
+        this.rafCallback || (this.rafCallback = this.update.bind(this)),
+      );
+      return (this.ticking = true);
     }
   };
 
-  Debouncer.prototype.handleEvent = function () {
+  Debouncer.prototype.handleEvent = function() {
     return this.requestTick();
   };
 

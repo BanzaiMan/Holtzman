@@ -16,7 +16,7 @@ type IPayment = {
   schedule: Object,
   back: Function,
   next: Function,
-}
+};
 
 type IPaymentState = {
   save: boolean,
@@ -28,7 +28,7 @@ export default class Payment extends Component {
 
   state = {
     save: true,
-  }
+  };
 
   savePayment = (): void => {
     this.setState(({ save }) => ({ save: !save }));
@@ -36,15 +36,15 @@ export default class Payment extends Component {
     if (this.state.save) {
       this.props.save({ payment: { name: null } });
     }
-  }
+  };
 
   saveName = (value: string): boolean => {
     if (value.length > 0) {
       this.props.save({ payment: { name: value } });
     }
 
-    return (value.length > 0);
-  }
+    return value.length > 0;
+  };
 
   validate = (value: string, target: HTMLElement): boolean => {
     const { id } = target;
@@ -52,7 +52,7 @@ export default class Payment extends Component {
     if ((id === "cardNumber" || id === "routingNumber") && !value) return true;
 
     let isValid = false;
-    const notEmpty = (inputVal) => (inputVal.length > 0);
+    const notEmpty = inputVal => inputVal.length > 0;
     const validationMap = {
       accountNumber: notEmpty,
       routingNumber: notEmpty,
@@ -66,7 +66,7 @@ export default class Payment extends Component {
     isValid = validationMap[id](value);
 
     return isValid;
-  }
+  };
 
   saveData = (value: string, target: HTMLElement) => {
     const { id } = target;
@@ -76,11 +76,11 @@ export default class Payment extends Component {
     if (isValid) {
       this.props.save({ payment: { [id]: value } });
     }
-  }
+  };
 
   // XXX move to layout, but changes to input are needed
   formatExp = (s: string, target: HTMLInputElement): string => {
-    const save = (adjusted) => {
+    const save = adjusted => {
       this.saveData(adjusted, target);
       return adjusted;
     };
@@ -116,12 +116,12 @@ export default class Payment extends Component {
     }
 
     // remove trailing `/`
-    if (str.length === 4 && (lastNumber === "/")) {
+    if (str.length === 4 && lastNumber === "/") {
       return save(str.slice(0, 3));
     }
 
     return save(str);
-  }
+  };
 
   toggle = (): void => {
     let type = "ach";
@@ -130,7 +130,7 @@ export default class Payment extends Component {
     }
 
     this.props.save({ payment: { type } });
-  }
+  };
 
   render() {
     return (
@@ -141,9 +141,7 @@ export default class Payment extends Component {
         savePayment={this.savePayment}
         toggle={this.toggle}
         validate={this.validate}
-
         shouldSaveState={this.state.save}
-
         back={this.props.back}
         header={this.props.header}
         next={this.props.next}

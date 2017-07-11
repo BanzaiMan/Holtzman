@@ -15,15 +15,9 @@ type IHeader = {
   override?: React$Element<any>,
 };
 
-const Header = ({
-  override,
-}: IHeader) => {
+const Header = ({ override }: IHeader) => {
   if (override) return override;
-  return (
-    <h4 className="text-center">
-      Payment Details
-    </h4>
-  );
+  return <h4 className="text-center">Payment Details</h4>;
 };
 
 type INextButton = {
@@ -31,18 +25,16 @@ type INextButton = {
   payment: Object,
 };
 
-const NextButton = ({
-  payment,
-  next,
-}: INextButton) => {
+const NextButton = ({ payment, next }: INextButton) => {
   const btnClasses = ["push-left"];
 
-  const ach = (payment.type === "ach" && payment.accountNumber && payment.routingNumber);
-  const cc = (
+  const ach =
+    payment.type === "ach" && payment.accountNumber && payment.routingNumber;
+  const cc =
     payment.type === "cc" &&
-      payment.cardNumber &&
-      payment.expiration && payment.ccv
-  );
+    payment.cardNumber &&
+    payment.expiration &&
+    payment.ccv;
 
   let submit = next;
   let disabled = false;
@@ -52,7 +44,7 @@ const NextButton = ({
   } else {
     btnClasses.push("btn--disabled");
     disabled = true;
-    submit = (e) => (e.preventDefault());
+    submit = e => e.preventDefault();
   }
 
   return (
@@ -103,7 +95,7 @@ const Layout = ({
   toggles,
   transactionType,
   validate,
-}: ILayout) => (
+}: ILayout) =>
   <div>
     <div className="push-double@lap-and-up push">
       <Header override={header} />
@@ -118,11 +110,7 @@ const Layout = ({
     />
 
     <div className="soft">
-      <BankFields
-        payment={payment}
-        saveData={saveData}
-        validate={validate}
-      />
+      <BankFields payment={payment} saveData={saveData} validate={validate} />
       <CardFields
         formatExp={formatExp}
         payment={payment}
@@ -130,17 +118,15 @@ const Layout = ({
         savedAccount={savedAccount}
         validate={validate}
       />
-      {
-        transactionType !== "savedPayment"
-          ? <SavePaymentCheckBox
+      {transactionType !== "savedPayment"
+        ? <SavePaymentCheckBox
             savedAccount={savedAccount}
             savePayment={savePayment}
             shouldSaveState={shouldSaveState}
             schedule={schedule}
             transactionType={transactionType}
           />
-          : null
-      }
+        : null}
       <SavePaymentInput
         saveName={saveName}
         savedAccount={savedAccount}
@@ -161,19 +147,10 @@ const Layout = ({
         Back
       </a>
 
-      <NextButton
-        payment={payment}
-        next={next}
-      />
-
+      <NextButton payment={payment} next={next} />
     </div>
-
-  </div>
-);
+  </div>;
 
 export default Layout;
 
-export {
-  Header,
-  NextButton,
-};
+export { Header, NextButton };

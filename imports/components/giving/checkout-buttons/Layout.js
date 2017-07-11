@@ -16,11 +16,7 @@ type ISecondaryLayout = {
 
 const SecondaryLayout = ({ authorized, register }: ISecondaryLayout) => {
   if (!authorized && !Meteor.userId()) {
-    return (
-      <SecondaryButton
-        onClick={register}
-      />
-    );
+    return <SecondaryButton onClick={register} />;
   }
   return null;
 };
@@ -37,12 +33,7 @@ const TertiaryLayout = ({
   giveAsGuest,
 }: ITertiaryLayout) => {
   if (!disabledGuest && !Meteor.userId()) {
-    return (
-      <TertiaryButton
-        disabled={disabled}
-        onClick={giveAsGuest}
-      />
-    );
+    return <TertiaryButton disabled={disabled} onClick={giveAsGuest} />;
   }
   return null;
 };
@@ -103,7 +94,7 @@ const Layout = ({
   theme,
   text,
   value,
-}: ILayout) => (
+}: ILayout) =>
   <span>
     <PrimaryButton
       theme={theme}
@@ -118,23 +109,14 @@ const Layout = ({
       getAccount={getAccount}
       disabled={disabled}
     />
-    <SecondaryLayout
-      authorized={authorized}
-      register={register}
-    />
+    <SecondaryLayout authorized={authorized} register={register} />
     <TertiaryLayout
       disabledGuest={disabledGuest}
       disabled={disabled}
       giveAsGuest={giveAsGuest}
     />
-  </span>
-);
-
+  </span>;
 
 export default Layout;
 
-export {
-  SecondaryLayout,
-  TertiaryLayout,
-  ChangePaymentsLayout,
-};
+export { SecondaryLayout, TertiaryLayout, ChangePaymentsLayout };

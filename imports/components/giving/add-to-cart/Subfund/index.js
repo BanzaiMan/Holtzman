@@ -1,4 +1,3 @@
-
 // @Flow
 
 import { Component } from "react";
@@ -25,17 +24,17 @@ type ISubFund = {
 class SubFund extends Component {
   props: ISubFund;
 
-  state = { active: false }
+  state = { active: false };
 
   componentWillMount() {
     if (this.props.amount) this.setState({ active: true });
   }
 
-  changeAmount = (amount) => this.props.changeAmount(amount, this.props.fundId)
-  changeFund = (fund) => {
+  changeAmount = amount => this.props.changeAmount(amount, this.props.fundId);
+  changeFund = fund => {
     this.setState({ active: !!fund });
     return this.props.changeFund(Number(fund), this.props.id);
-  }
+  };
 
   render() {
     const props = {
@@ -53,9 +52,6 @@ class SubFund extends Component {
   }
 }
 
-
 export default withRedux(SubFund);
 
-export {
-  SubFund as SubFundWithoutData,
-};
+export { SubFund as SubFundWithoutData };

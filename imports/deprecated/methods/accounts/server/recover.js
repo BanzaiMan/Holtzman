@@ -14,7 +14,9 @@ if (typeof Accounts !== "undefined") {
     const Person = api.get.sync(`People/${PersonId}`);
 
     if (!RECOVER_ACCOUNT) {
-      RECOVER_ACCOUNT = api.get.sync("SystemEmails?$filter=Title eq 'Recover Account'");
+      RECOVER_ACCOUNT = api.get.sync(
+        "SystemEmails?$filter=Title eq 'Recover Account'",
+      );
       RECOVER_ACCOUNT = RECOVER_ACCOUNT.length ? RECOVER_ACCOUNT[0].Id : false;
     }
 
@@ -28,11 +30,10 @@ if (typeof Accounts !== "undefined") {
         {
           ResetPasswordUrl: `${ROOT_URL}/_/reset-password/${token}`,
           Person,
-        }
-        , () => {}
+        },
+        () => {},
       );
     }
-
 
     return false;
   };
@@ -49,7 +50,8 @@ Meteor.methods({
     // try to create new meteor account
     try {
       const user = Accounts.findUserByEmail(email);
-      if (user && user._id) { // eslint-disable-line
+      if (user && user._id) {
+        // eslint-disable-line
         meteorUserId = user._id; // eslint-disable-line
       } else {
         meteorUserId = Accounts.createUser({
@@ -63,7 +65,7 @@ Meteor.methods({
       }
     } catch (e) {
       throw new Meteor.Error(
-        "There was a problem finishing your account, please try again or create a new account"
+        "There was a problem finishing your account, please try again or create a new account",
       );
     }
 
@@ -80,7 +82,7 @@ Meteor.methods({
     const createdUser = api.post.sync("UserLogins", user);
     if (createdUser.statusText) {
       throw new Meteor.Error(
-        "There was a problem finishing your account, please try again or create a new account"
+        "There was a problem finishing your account, please try again or create a new account",
       );
     }
 
@@ -106,7 +108,7 @@ Meteor.methods({
       // eslint-disable-next-line
       console.error("@@RECOVER_ERROR", e);
       throw new Meteor.Error(
-        "There was a problem finishing your account, please try again or create a new account"
+        "There was a problem finishing your account, please try again or create a new account",
       );
     }
   },

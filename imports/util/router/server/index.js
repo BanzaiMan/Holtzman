@@ -12,7 +12,6 @@ import InjectData from "./inject-data";
 import SSRContext from "./context";
 import patchSubscribeData from "./data";
 
-
 const ReactRouterSSR = {};
 const cache = {}; // in memory cache of static markup
 const CACHE_TTL = Meteor.settings.cacheTTL || 300000; // 5 minutes in milliseconds
@@ -37,7 +36,10 @@ function addInjectData(res, data) {
   if (condition) {
     // inject data
     const payload = InjectData._encode(res._injectPayload);
-    data = data.replace("</body>", `<script type="text/inject-data">${payload}</script></body>`);
+    data = data.replace(
+      "</body>",
+      `<script type="text/inject-data">${payload}</script></body>`,
+    );
 
     res._injected = true;
     return data;
@@ -49,8 +51,8 @@ function addInjectData(res, data) {
 // https://github.com/kadirahq/flow-router/blob/ssr/server/route.js
 function moveScripts(data) {
   const $ = Cheerio.load(data, { decodeEntities: false });
-  const heads = $("head script").not("[data-ssr-ignore=\"true\"]");
-  const bodies = $("body script").not("[data-ssr-ignore=\"true\"]");
+  const heads = $("head script").not('[data-ssr-ignore="true"]');
+  const bodies = $("body script").not('[data-ssr-ignore="true"]');
   $("body").append([...heads, ...bodies]);
 
   // Remove empty lines caused by removing scripts
@@ -61,7 +63,9 @@ function moveScripts(data) {
 
 function moveStyles(data) {
   const $ = Cheerio.load(data, { decodeEntities: false });
-  const styles = $("head link[type=\"text/css\"]").not("[data-ssr-ignore=\"true\"]");
+  const styles = $('head link[type="text/css"]').not(
+    '[data-ssr-ignore="true"]',
+  );
   $("head").append(styles);
 
   // Remove empty lines caused by removing scripts
@@ -69,7 +73,7 @@ function moveStyles(data) {
   return $.html();
 }
 
-const _getCacheKey = (url) => (`${Meteor.userId()}::${url}`);
+const _getCacheKey = url => `${Meteor.userId()}::${url}`;
 
 function generateSSRData(serverOptions, req, res, renderProps, history) {
   let html;
@@ -102,7 +106,11 @@ function generateSSRData(serverOptions, req, res, renderProps, history) {
         if (reduxStore) {
           wrapperProps.store = reduxStore;
         }
-        app = <serverOptions.wrapper {...wrapperProps}>{app}</serverOptions.wrapper>;
+        app = (
+          <serverOptions.wrapper {...wrapperProps}>
+            {app}
+          </serverOptions.wrapper>
+        );
       }
 
       // Do the rendering.
@@ -126,7 +134,11 @@ function generateSSRData(serverOptions, req, res, renderProps, history) {
         // inject-data accepts raw objects and calls JSON.stringify() on them,
         // but the _.each() done in there does not play nice if the store contains
         // ImmutableJS data. To avoid that, we serialize ourselves.
-        InjectData.pushData(res, "redux-initial-state", JSON.stringify(reduxStore.getState()));
+        InjectData.pushData(
+          res,
+          "redux-initial-state",
+          JSON.stringify(reduxStore.getState()),
+        );
       }
 
       // I'm pretty sure this could be avoided in a more elegant way?
@@ -142,7 +154,15 @@ function generateSSRData(serverOptions, req, res, renderProps, history) {
   return { html, css, head };
 }
 
-function patchResWrite(serverOptions, originalWrite, css, html, head, req, res) {
+function patchResWrite(
+  serverOptions,
+  originalWrite,
+  css,
+  html,
+  head,
+  req,
+  res,
+) {
   const cacheKey = _getCacheKey(req.url);
 
   return function patch(data) {
@@ -152,21 +172,22 @@ function patchResWrite(serverOptions, originalWrite, css, html, head, req, res) 
       data = moveScripts(data);
 
       if (css) {
-        data = data.replace("</head>",
-          `<style data-aphrodite>${css.content}</style></head>`
+        data = data.replace(
+          "</head>",
+          `<style data-aphrodite>${css.content}</style></head>`,
         );
       }
 
       if (head) {
         // Add react-helmet stuff in the header (yay SEO!)
-        data = data.replace("<head>",
-          `<head>${head.title}${head.base}${head.meta}${head.link}${head.script}`
+        data = data.replace(
+          "<head>",
+          `<head>${head.title}${head.base}${head.meta}${head.link}${head.script}`,
         );
       }
 
       data = data.replace("<body>", `<body><div id="react-app">${html}</div>`);
     }
-
 
     // store in cache based on user id and url
     // when user not logged in, it should be undefined
@@ -186,7 +207,9 @@ function sendSSRHtml(serverOptions, req, res, next, renderProps, history) {
   const cacheKey = _getCacheKey(req.url);
 
   function quickWrite(originalWrite) {
-    return function write() { originalWrite.call(this, cache[cacheKey].data); };
+    return function write() {
+      originalWrite.call(this, cache[cacheKey].data);
+    };
   }
   // if there is cached data and it's not expired
   if (cache[cacheKey]) {
@@ -195,9 +218,23 @@ function sendSSRHtml(serverOptions, req, res, next, renderProps, history) {
     return;
   }
 
-  const { css, html, head } = generateSSRData(serverOptions, req, res, renderProps, history);
+  const { css, html, head } = generateSSRData(
+    serverOptions,
+    req,
+    res,
+    renderProps,
+    history,
+  );
   // eslint-disable-next-line no-param-reassign
-  res.write = patchResWrite(serverOptions, res.write, css, html, head, req, res);
+  res.write = patchResWrite(
+    serverOptions,
+    res.write,
+    css,
+    html,
+    head,
+    req,
+    res,
+  );
 
   next();
 }
@@ -212,61 +249,69 @@ export default function run(routes, serverOptions = {}) {
     WebApp.rawConnectHandlers.use(compress());
 
     // eslint-disable-next-line
-    WebApp.connectHandlers.use(Meteor.bindEnvironment((req, res, next) => {
-      if (!isAppUrl(req)) return next();
+    WebApp.connectHandlers.use(
+      Meteor.bindEnvironment((req, res, next) => {
+        if (!isAppUrl(req)) return next();
 
-      const loginToken = req.cookies.meteor_login_token;
+        const loginToken = req.cookies.meteor_login_token;
 
-      if (!GraphQL.networkInterface._opts.headers) {
-        GraphQL.networkInterface._opts.headers = new fetch.Headers();
-      }
-      if (loginToken) {
-        GraphQL.networkInterface._opts.headers.Authorization = loginToken;
-      } else {
-        delete GraphQL.networkInterface._opts.headers.Authorization;
-      }
+        if (!GraphQL.networkInterface._opts.headers) {
+          GraphQL.networkInterface._opts.headers = new fetch.Headers();
+        }
+        if (loginToken) {
+          GraphQL.networkInterface._opts.headers.Authorization = loginToken;
+        } else {
+          delete GraphQL.networkInterface._opts.headers.Authorization;
+        }
 
+        const headers = req.headers;
+        const context = new FastRender._Context(loginToken, { headers });
 
-      const headers = req.headers;
-      const context = new FastRender._Context(loginToken, { headers });
+        FastRender.frContext.withValue(context, () => {
+          const history = createMemoryHistory(req.url);
 
-      FastRender.frContext.withValue(context, () => {
-        const history = createMemoryHistory(req.url);
-
-        match({ history, routes, location: req.url }, Meteor.bindEnvironment((
-          err,
-          redirectLocation,
-          renderProps
-        ) => {
-          if (err) {
-            res.writeHead(500);
-            res.write(err.messages);
-            res.end();
-          } else if (req.url === "/_/ping") {
-            res.writeHead(200);
-            res.write("PONG");
-            res.end();
-          } else if (redirectLocation) {
-            res.writeHead(302, {
-              Location: redirectLocation.pathname + redirectLocation.search,
-            });
-            res.end();
-          } else if (renderProps) {
-            sendSSRHtml(serverOptions, req, res, next, renderProps, history);
-            try {
-              GraphQL.store.dispatch({ type: "RESET" }); // reset store after each query
-            } catch (e) { /* console.error(e); */ }
-          } else {
-            res.writeHead(404);
-            res.write("Not found");
-            res.end();
-          }
-        }));
-      });
-    }));
+          match(
+            { history, routes, location: req.url },
+            Meteor.bindEnvironment((err, redirectLocation, renderProps) => {
+              if (err) {
+                res.writeHead(500);
+                res.write(err.messages);
+                res.end();
+              } else if (req.url === "/_/ping") {
+                res.writeHead(200);
+                res.write("PONG");
+                res.end();
+              } else if (redirectLocation) {
+                res.writeHead(302, {
+                  Location: redirectLocation.pathname + redirectLocation.search,
+                });
+                res.end();
+              } else if (renderProps) {
+                sendSSRHtml(
+                  serverOptions,
+                  req,
+                  res,
+                  next,
+                  renderProps,
+                  history,
+                );
+                try {
+                  GraphQL.store.dispatch({ type: "RESET" }); // reset store after each query
+                } catch (e) {
+                  /* console.error(e); */
+                }
+              } else {
+                res.writeHead(404);
+                res.write("Not found");
+                res.end();
+              }
+            }),
+          );
+        });
+      }),
+    );
   })();
 }
-
 
 /*
 

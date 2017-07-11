@@ -1,4 +1,3 @@
-
 export default {
   SET_VISIBILITY: "AUDIO.SET_VISIBILITY",
   SET_ORDER: "AUDIO.SET_ORDER",

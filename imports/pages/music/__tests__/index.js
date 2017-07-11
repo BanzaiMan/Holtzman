@@ -1,10 +1,7 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import { nav as navActions } from "../../../data/store";
-import {
-  TemplateWithoutData as Template,
-  ALBUMS_QUERY,
-} from "../";
+import { TemplateWithoutData as Template, ALBUMS_QUERY } from "../";
 
 jest.mock("../../../deprecated/mixins/mixins.Header", () => {});
 jest.mock("../../../deprecated/mixins/mixins.Likeable", () => {});
@@ -46,7 +43,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Template { ...newProps } />;
+  return <Template {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -55,9 +52,11 @@ it("renders with props", () => {
 });
 
 it("renders loading if no content", () => {
-  const wrapper = shallow(generateComponent({
-    data: {},
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      data: {},
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -68,9 +67,11 @@ it("parses albums query correctly", () => {
 it("sets nav level on mount", () => {
   const mockDispatch = jest.fn();
   navActions.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledWith("TOP");
@@ -78,11 +79,13 @@ it("sets nav level on mount", () => {
 
 it("handleRefresh calls refetch", () => {
   const mockRefetch = jest.fn().mockReturnValue(new Promise(r => r()));
-  const wrapper = shallow(generateComponent({
-    data: {
-      refetch: mockRefetch,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        refetch: mockRefetch,
+      },
+    }),
+  );
   wrapper.instance().handleRefresh();
   expect(mockRefetch).toHaveBeenCalledTimes(1);
 });

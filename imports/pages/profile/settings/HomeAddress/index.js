@@ -3,12 +3,13 @@ import { graphql } from "react-apollo";
 import { connect } from "react-redux";
 import gql from "graphql-tag";
 
-import {
-  nav,
-} from "../../../../data/store";
+import { nav } from "../../../../data/store";
 
 import { updateHome } from "../../../../deprecated/methods/accounts/browser";
-import { Error as Err, Loading } from "../../../../components/@primitives/UI/states";
+import {
+  Error as Err,
+  Loading,
+} from "../../../../components/@primitives/UI/states";
 
 import Success from "../Success";
 import Layout from "./Layout";
@@ -23,18 +24,17 @@ const defaultHome = {
 };
 
 class HomeAddressWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     data: PropTypes.shape({
       refetch: PropTypes.func,
       person: PropTypes.object,
     }),
-  }
+  };
 
   state = {
     state: "default",
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(nav.setLevel("BASIC_CONTENT"));
@@ -44,9 +44,9 @@ class HomeAddressWithoutData extends Component {
     this.props.dispatch(nav.setLevel("TOP"));
   }
 
-  updateAddress = (data) => {
+  updateAddress = data => {
     this.setState({ state: "loading" });
-    updateHome(data, (err) => {
+    updateHome(data, err => {
       if (err) {
         this.setState({ state: "error", err });
         setTimeout(() => {
@@ -56,12 +56,11 @@ class HomeAddressWithoutData extends Component {
       }
 
       this.setState({ state: "success" });
-      this.props.data.refetch({ cache: false })
-        .then(() => {
-          this.setState({ state: "default" });
-        });
+      this.props.data.refetch({ cache: false }).then(() => {
+        this.setState({ state: "default" });
+      });
     });
-  }
+  };
 
   render() {
     const { person } = this.props.data;
@@ -111,13 +110,6 @@ const withPersonHome = graphql(PERSON_HOME_QUERY, {
   },
 });
 
-export default connect()(
-  withPersonHome(
-    HomeAddressWithoutData
-  )
-);
+export default connect()(withPersonHome(HomeAddressWithoutData));
 
-export {
-  HomeAddressWithoutData,
-  PERSON_HOME_QUERY,
-};
+export { HomeAddressWithoutData, PERSON_HOME_QUERY };

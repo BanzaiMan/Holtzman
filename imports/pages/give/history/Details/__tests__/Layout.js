@@ -27,9 +27,7 @@ const defaultProps = {
       entryId: "1",
       title: "test",
       content: {
-        images: [
-          { url: "http://test.com/test.jpg" },
-        ],
+        images: [{ url: "http://test.com/test.jpg" }],
       },
       meta: {
         summary: "test",
@@ -39,9 +37,7 @@ const defaultProps = {
       entryId: "2",
       title: "test",
       content: {
-        images: [
-          { url: "http://test.com/test.jpg" },
-        ],
+        images: [{ url: "http://test.com/test.jpg" }],
       },
       meta: {
         summary: "test",
@@ -55,7 +51,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -64,114 +60,128 @@ it("renders with props", () => {
 });
 
 it("renders loading if loadingEntries", () => {
-  const wrapper = shallow(generateComponent({
-    loadingEntries: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      loadingEntries: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders loading if no transaction", () => {
-  const wrapper = shallow(generateComponent({
-    transaction: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      transaction: null,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("works with nickname", () => {
-  const wrapper = shallow(generateComponent({
-    transaction: {
-      details: [
-        {
-          amount: 2,
-          account: {
-            name: "test",
+  const wrapper = shallow(
+    generateComponent({
+      transaction: {
+        details: [
+          {
+            amount: 2,
+            account: {
+              name: "test",
+            },
           },
+        ],
+        person: {
+          nickName: "jimothy",
+          firstName: "jim",
+          lastName: "bob",
         },
-      ],
-      person: {
-        nickName: "jimothy",
-        firstName: "jim",
-        lastName: "bob",
+        payment: {
+          accountNumber: "1",
+          paymentType: "ACH",
+        },
       },
-      payment: {
-        accountNumber: "1",
-        paymentType: "ACH",
-      },
-    },
-  }));
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("works with credit card", () => {
-  const wrapper = shallow(generateComponent({
-    transaction: {
-      details: [
-        {
-          amount: 2,
-          account: {
-            name: "test",
+  const wrapper = shallow(
+    generateComponent({
+      transaction: {
+        details: [
+          {
+            amount: 2,
+            account: {
+              name: "test",
+            },
           },
+        ],
+        person: {
+          firstName: "jim",
+          lastName: "bob",
         },
-      ],
-      person: {
-        firstName: "jim",
-        lastName: "bob",
+        payment: {
+          accountNumber: "1",
+          paymentType: "Visa",
+        },
       },
-      payment: {
-        accountNumber: "1",
-        paymentType: "Visa",
-      },
-    },
-  }));
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("doesn't render account type if none", () => {
-  const wrapper = shallow(generateComponent({
-    transaction: {
-      details: [
-        {
-          amount: 2,
-          account: {
-            name: "test",
+  const wrapper = shallow(
+    generateComponent({
+      transaction: {
+        details: [
+          {
+            amount: 2,
+            account: {
+              name: "test",
+            },
           },
+        ],
+        person: {
+          firstName: "jim",
+          lastName: "bob",
         },
-      ],
-      person: {
-        firstName: "jim",
-        lastName: "bob",
+        payment: {
+          accountNumber: "1",
+        },
       },
-      payment: {
-        accountNumber: "1",
-      },
-    },
-  }));
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("doesn't render payment account at all if none", () => {
-  const wrapper = shallow(generateComponent({
-    transaction: {
-      details: [
-        {
-          amount: 2,
-          account: {
-            name: "test",
+  const wrapper = shallow(
+    generateComponent({
+      transaction: {
+        details: [
+          {
+            amount: 2,
+            account: {
+              name: "test",
+            },
           },
+        ],
+        person: {
+          firstName: "jim",
+          lastName: "bob",
         },
-      ],
-      person: {
-        firstName: "jim",
-        lastName: "bob",
       },
-    },
-  }));
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("doesn't render entries if there are none", () => {
-  const wrapper = shallow(generateComponent({
-    entries: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      entries: null,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

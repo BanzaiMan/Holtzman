@@ -15,7 +15,7 @@ import { GraphQL } from "../../../../data/graphql";
 // XXX Query is duplicated within profile section
 const GET_PERSON_QUERY = gql`
   query GetPerson {
-    person: currentPerson (cache: false) {
+    person: currentPerson(cache: false) {
       firstName
       nickName
     }
@@ -27,7 +27,7 @@ const withPerson = graphql(
   {
     // XXX authorized is still not returning well enough
     // skip: (ownProps) => !Meteor.userId()  !ownProps.authorized,
-  }
+  },
 );
 
 export const SAVE_DEVICE_REGISTRATION_ID = gql`
@@ -44,13 +44,13 @@ export const withSaveDeviceRegistrationId = graphql(
   SAVE_DEVICE_REGISTRATION_ID,
   {
     props: ({ mutate }) => ({
-      saveDeviceRegistrationId: (registrationId) =>
+      saveDeviceRegistrationId: registrationId =>
         mutate({
           // $FlowMeteor
           variables: { registrationId, uuid: device.uuid },
         }),
     }),
-  }
+  },
 );
 
 export const UPDATE_ATTRIBUTE_MUTATION = gql`
@@ -65,7 +65,7 @@ export const UPDATE_ATTRIBUTE_MUTATION = gql`
 
 export const withUpdatePerson = graphql(UPDATE_ATTRIBUTE_MUTATION, {
   props: ({ mutate }) => ({
-    updateNotificationIgnoreDate: (value) =>
+    updateNotificationIgnoreDate: value =>
       mutate({
         variables: { key: "NotificationIgnoreDate", value },
       }),
@@ -77,7 +77,7 @@ if (Meteor.isCordova) {
     "deviceready",
     () => {
       // $FlowMeteor
-      FCMPlugin.onTokenRefresh((token) => {
+      FCMPlugin.onTokenRefresh(token => {
         if (!token) return;
         GraphQL.mutate({
           mutation: SAVE_DEVICE_REGISTRATION_ID,
@@ -86,7 +86,7 @@ if (Meteor.isCordova) {
         });
       });
     },
-    false
+    false,
   );
 }
 
@@ -95,13 +95,13 @@ type IResult = {
     firstName: string,
     nickName: string,
   },
-}
+};
 
 type IProps = {
   dispatch: (obj: mixed) => void,
   updateNotificationIgnoreDate: (value: string) => Promise<any>,
   data: IResult,
-  saveDeviceRegistrationId: (id: string) => Promise<any>
+  saveDeviceRegistrationId: (id: string) => Promise<any>,
 };
 
 class NotificationPrompt extends Component {
@@ -111,15 +111,19 @@ class NotificationPrompt extends Component {
     // $FlowMeteor
     FCMPlugin.ready(() => {
       FCMPlugin.subscribeToTopic("newspring");
-      FCMPlugin.getToken((token) => {
+      FCMPlugin.getToken(token => {
         if (!token) return;
-        this.props
-          .saveDeviceRegistrationId(token)
-          .then(
-            ({ data: { saveDeviceRegistrationId: { success } } }) =>
-              // $FlowMeteor
-              success && NativeStorage.setItem("pushNotifications", true, console.log, console.error)
-          );
+        this.props.saveDeviceRegistrationId(token).then(
+          ({ data: { saveDeviceRegistrationId: { success } } }) =>
+            // $FlowMeteor
+            success &&
+            NativeStorage.setItem(
+              "pushNotifications",
+              true,
+              console.log,
+              console.error,
+            ),
+        );
       });
       this.close();
     });
@@ -127,7 +131,7 @@ class NotificationPrompt extends Component {
 
   notifyLater = () => {
     this.props.updateNotificationIgnoreDate(
-      moment().add(3, "months").toISOString()
+      moment().add(3, "months").toISOString(),
     );
     this.close();
   };
@@ -141,13 +145,10 @@ class NotificationPrompt extends Component {
     return (
       <div>
         <h4 className="soft-top">
-          Hi
-          {" "}
+          Hi{" "}
           {!data.person ? null : data.person.nickName || data.person.firstName}
         </h4>
-        <p>
-          Do you want us to notify you when new information is available?
-        </p>
+        <p>Do you want us to notify you when new information is available?</p>
         <button className="btn one-whole" onClick={this.prompt}>
           Notify Me
         </button>
@@ -163,5 +164,7 @@ class NotificationPrompt extends Component {
 }
 
 export default connect()(
-  withSaveDeviceRegistrationId(withUpdatePerson(withPerson(NotificationPrompt)))
+  withSaveDeviceRegistrationId(
+    withUpdatePerson(withPerson(NotificationPrompt)),
+  ),
 );

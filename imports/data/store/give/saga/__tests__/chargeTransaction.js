@@ -1,4 +1,3 @@
-
 import sagaHelper from "redux-saga-testing";
 import { takeLatest } from "redux-saga";
 import { put, select, call, cps, take } from "redux-saga/effects";
@@ -39,7 +38,7 @@ describe("successful charge without saved payment", () => {
     return initalState;
   });
 
-  it("sets the loading state", ({ PUT: { action }}) => {
+  it("sets the loading state", ({ PUT: { action } }) => {
     expect(action).toEqual(actions.loading());
   });
 
@@ -68,7 +67,7 @@ describe("successful charge without saved payment", () => {
     return null;
   });
   it("tries to submit payment details with the data and url", result => {
-    return { };
+    return {};
   });
   // DONE VALIDATING
 
@@ -76,7 +75,7 @@ describe("successful charge without saved payment", () => {
     expect(result.CALL.args[0].variables).toEqual({
       token: "TOKEN",
       name: null,
-      id: undefined
+      id: undefined,
     });
     return true;
   });
@@ -88,7 +87,6 @@ describe("successful charge without saved payment", () => {
   it("ends after a normal charge", result => {
     expect(result).toBeUndefined();
   });
-
 });
 
 describe("successful charge saved payment and schedules", () => {
@@ -106,7 +104,7 @@ describe("successful charge saved payment and schedules", () => {
     return initalState;
   });
 
-  it("sets the loading state", ({ PUT: { action }}) => {
+  it("sets the loading state", ({ PUT: { action } }) => {
     expect(action).toEqual(actions.loading());
   });
 
@@ -147,7 +145,6 @@ describe("successful charge saved payment and schedules", () => {
   it("ends after a normal charge", result => {
     expect(result).toBeUndefined();
   });
-
 });
 
 window.ga = jest.fn();
@@ -165,7 +162,7 @@ describe("successful charge using a saved payment", () => {
     return initalState;
   });
 
-  it("sets the loading state", ({ PUT: { action }}) => {
+  it("sets the loading state", ({ PUT: { action } }) => {
     expect(action).toEqual(actions.loading());
   });
 
@@ -174,29 +171,28 @@ describe("successful charge using a saved payment", () => {
     return initalState;
   });
 
-
   it("tries to submit person details to ensure a url", result => {
     expect(result.CALL.args[0].variables).toEqual({
       data: JSON.stringify({
         amount: 0,
         billing: {
-          'first-name': null,
-          'last-name': null,
+          "first-name": null,
+          "last-name": null,
           email: null,
           address1: null,
-          address2: '',
+          address2: "",
           city: null,
           state: null,
-          postal: null
+          postal: null,
         },
-        'merchant-defined-field-2': null,
+        "merchant-defined-field-2": null,
         savedAccount: 1,
-        savedAccountName: undefined
+        savedAccountName: undefined,
       }),
       id: null,
       instant: false,
     });
-    return { data: { response: { url: "http://example.com/TOKEN" }}};
+    return { data: { response: { url: "http://example.com/TOKEN" } } };
   });
 
   // BELOW IS TESTED IN ./submitPersonDetails
@@ -205,14 +201,18 @@ describe("successful charge using a saved payment", () => {
 
   it("reads from the store again after submitting person details", result => {
     expect(result.SELECT).toBeTruthy();
-    return { ...{ give: { ...initalState.give, ...{  url: "http://example.com/TOKEN" }} } };
+    return {
+      ...{
+        give: { ...initalState.give, ...{ url: "http://example.com/TOKEN" } },
+      },
+    };
   });
 
   it("tries to submit a transaction with the correct token", result => {
     expect(result.CALL.args[0].variables).toEqual({
       token: "TOKEN",
       id: undefined,
-      name: null
+      name: null,
     });
     return true;
   });
@@ -224,7 +224,7 @@ describe("successful charge using a saved payment", () => {
 
   it("ends after a normal charge", result => {
     expect(window.ga.mock.calls).toMatchSnapshot();
-    expect(window.ga).toHaveBeenCalledTimes(2)
+    expect(window.ga).toHaveBeenCalledTimes(2);
     delete window.ga;
     expect(result).toBeUndefined();
   });
@@ -235,7 +235,7 @@ describe("validating cards on saved payment creation", () => {
     personal: {},
     billing: {},
     payment: {
-      type: "cc"
+      type: "cc",
     },
   };
   const it = sagaHelper(chargeTransaction({ state: "submit" }));
@@ -261,7 +261,7 @@ describe("validating cards on saved payment creation", () => {
     give: {
       url: "URL-Mc-URLface",
       data: giveData,
-    }
+    },
   }));
 
   it("calls validation method", result => {
@@ -278,15 +278,15 @@ describe("ignoring validation for iOS giving (one time)", () => {
     personal: {},
     billing: {},
     payment: {
-      type: "cc"
+      type: "cc",
     },
   };
   const it = sagaHelper(chargeTransaction({ state: "submit" }));
   const initalState = {
     routing: {
-      location: { 
-        pathname: "/give/review?foo=bar"
-      }
+      location: {
+        pathname: "/give/review?foo=bar",
+      },
     },
     give: {
       ...initial,
@@ -308,7 +308,7 @@ describe("ignoring validation for iOS giving (one time)", () => {
     give: {
       url: "URL-Mc-URLface",
       data: giveData,
-    }
+    },
   }));
 
   it("does not call validation method", result => {

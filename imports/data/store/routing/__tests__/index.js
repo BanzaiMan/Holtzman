@@ -74,9 +74,7 @@ describe("middleware", () => {
       getState: jest.fn(() => ({
         routing: {
           location: {
-            previous: [
-              "thing",
-            ],
+            previous: ["thing"],
           },
         },
       })),
@@ -119,7 +117,7 @@ describe("listenForReplays", () => {
     mockStore.subscribe.mock.calls[0][0]();
     expect(history.replace).toHaveBeenCalledTimes(1);
     expect(history.replace).toHaveBeenCalledWith({
-      key: "1"
+      key: "1",
     });
   });
 
@@ -155,7 +153,7 @@ describe("listenForReplays", () => {
     mockStore.subscribe.mock.calls[0][0]();
     expect(history.transitionTo).toHaveBeenCalledTimes(1);
     expect(history.transitionTo).toHaveBeenCalledWith({
-      key: "2"
+      key: "2",
     });
   });
 });
@@ -175,9 +173,7 @@ describe("unsubscribe", () => {
       getState: jest.fn(() => ({
         routing: {
           location: {
-            previous: [
-              "thing",
-            ],
+            previous: ["thing"],
           },
         },
       })),

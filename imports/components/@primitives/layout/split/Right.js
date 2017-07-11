@@ -8,9 +8,10 @@ import Styles from "../../UI/loading/FeedItemSkeleton-css";
 import Hover from "./right-css";
 import PanelStyles from "./panel-css";
 
-export const DefaultWrapper = (props) => (
-  <section className={props.imageclasses.join(" ")}>{props.children}</section>
-);
+export const DefaultWrapper = props =>
+  <section className={props.imageclasses.join(" ")}>
+    {props.children}
+  </section>;
 
 DefaultWrapper.propTypes = {
   imageclasses: PropTypes.object,
@@ -18,7 +19,6 @@ DefaultWrapper.propTypes = {
 };
 
 export default class Right extends Component {
-
   static propTypes = {
     classes: PropTypes.array,
     theme: PropTypes.string,
@@ -36,7 +36,7 @@ export default class Right extends Component {
     backgroundFill: PropTypes.bool,
     ratioTheme: PropTypes.object,
     web: PropTypes.bool,
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     return !nextProps.keep;
@@ -51,10 +51,7 @@ export default class Right extends Component {
     ];
 
     if (this.props.link && (this.props.web || process.env.WEB)) {
-      classes.push(
-        css(Hover.right),
-        "transition",
-      );
+      classes.push(css(Hover.right), "transition");
     }
 
     if (this.props.mobile && !this.props.aspect) {
@@ -85,7 +82,7 @@ export default class Right extends Component {
     }
 
     return classes;
-  }
+  };
 
   styles = () => {
     if (this.props.background) {
@@ -95,7 +92,7 @@ export default class Right extends Component {
     }
 
     return {};
-  }
+  };
 
   ratioClasses = () => {
     let classes = ["ratio__item"];
@@ -105,13 +102,15 @@ export default class Right extends Component {
     }
 
     return classes.join(" ");
-  }
+  };
 
   // context from ImageLoader
   preloader() {
     return (
-      <section className={`${this.imageclasses.join(" ")} ${css(Styles["load-item"])}`}>
-        { this.children ? this.children : null }
+      <section
+        className={`${this.imageclasses.join(" ")} ${css(Styles["load-item"])}`}
+      >
+        {this.children ? this.children : null}
       </section>
     );
   }
@@ -120,7 +119,7 @@ export default class Right extends Component {
   renderElement() {
     return (
       <section className={this.imageclasses.join(" ")} style={this.style}>
-        { this.children ? this.children : null }
+        {this.children ? this.children : null}
       </section>
     );
   }
@@ -154,7 +153,10 @@ export default class Right extends Component {
 
           if (this.props.blur) {
             return (
-              <div className="locked-sides locked-ends background--fill" style={styles} />
+              <div
+                className="locked-sides locked-ends background--fill"
+                style={styles}
+              />
             );
           }
           return null;
@@ -198,12 +200,14 @@ export default class Right extends Component {
     }
 
     return (
-
       <Wrapper
         src={this.props.background}
         preloader={this.preloader}
         renderElement={this.renderElement}
-        imageclasses={(this.props.theme && this.props.theme.split(" ")) || this.layoutClasses()}
+        imageclasses={
+          (this.props.theme && this.props.theme.split(" ")) ||
+          this.layoutClasses()
+        }
         style={this.props.styles || this.styles()}
       >
         {this.renderInsideRatio()}
@@ -211,5 +215,4 @@ export default class Right extends Component {
       </Wrapper>
     );
   }
-
 }

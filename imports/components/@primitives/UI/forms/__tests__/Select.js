@@ -45,7 +45,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Select { ...newProps } />;
+  return <Select {...newProps} />;
 };
 
 beforeEach(() => {
@@ -63,9 +63,11 @@ it("renders with props", () => {
 });
 
 it("overrides with theme if present", () => {
-  const wrapper = shallow(generateComponent({
-    theme: ["override"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      theme: ["override"],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -88,62 +90,78 @@ it("has error state", () => {
 });
 
 it("appends extra classes", () => {
-  const wrapper = shallow(generateComponent({
-    classes: ["append", "me"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      classes: ["append", "me"],
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("is active if selected prop", () => {
-  const wrapper = shallow(generateComponent({
-    selected: "2",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      selected: "2",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("can hide the label", () => {
-  const wrapper = shallow(generateComponent({
-    hideLabel: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      hideLabel: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("includes placeholder", () => {
-  const wrapper = shallow(generateComponent({
-    placeholder: "myPlaceholder",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      placeholder: "myPlaceholder",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("includes blank", () => {
-  const wrapper = shallow(generateComponent({
-    includeBlank: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      includeBlank: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("allows deselect", () => {
-  const wrapper = shallow(generateComponent({
-    deselect: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      deselect: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("updates state on mount if default value", () => {
-  const wrapper = shallow(generateComponent({
-    defaultValue: "2",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      defaultValue: "2",
+    }),
+  );
   expect(wrapper.state().active).toBe(true);
 });
 
 it("calls onChange and validation function on did mount", () => {
   const mockOnChange = jest.fn();
   const mockValidation = jest.fn();
-  const wrapper = mount(generateComponent({
-    defaultValue: "2",
-    onChange: mockOnChange,
-    validation: mockValidation,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "2",
+      onChange: mockOnChange,
+      validation: mockValidation,
+    }),
+  );
   expect(mockOnChange).toHaveBeenCalledTimes(1);
   expect(mockOnChange.mock.calls[0][0]).toBe("2");
   expect(mockValidation).toHaveBeenCalledTimes(1);
@@ -151,9 +169,11 @@ it("calls onChange and validation function on did mount", () => {
 });
 
 it("updates state on will update", () => {
-  const wrapper = mount(generateComponent({
-    defaultValue: "2",
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "2",
+    }),
+  );
   const nextProps = clone(defaultProps);
   nextProps.defaultValue = "3";
   wrapper.setState({ focused: true });
@@ -171,9 +191,11 @@ it("focus changes the state", () => {
 });
 
 it("disabled returns disabled when set", () => {
-  const wrapper = shallow(generateComponent({
-    disabled: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      disabled: true,
+    }),
+  );
   const result = wrapper.instance().disabled();
   expect(result).toBe(true);
 });
@@ -191,9 +213,11 @@ it("renderHepText returns undefined when no error or status", () => {
 });
 
 it("renderHepText returns when error and error text", () => {
-  const wrapper = shallow(generateComponent({
-    errorText: "error",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      errorText: "error",
+    }),
+  );
   wrapper.setState({ error: true });
   const result = wrapper.instance().renderHelpText();
   expect(result).toMatchSnapshot();
@@ -214,10 +238,12 @@ it("change calls onCheck and validation", () => {
   };
   const mockOnChange = jest.fn();
   const mockValidation = jest.fn();
-  const wrapper = shallow(generateComponent({
-    onChange: mockOnChange,
-    validation: mockValidation,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      onChange: mockOnChange,
+      validation: mockValidation,
+    }),
+  );
   wrapper.instance().change(mockEvent);
   expect(mockOnChange).toHaveBeenCalledTimes(1);
   expect(mockOnChange).toHaveBeenCalledWith(
@@ -233,10 +259,12 @@ it("change calls onCheck and validation", () => {
 
 it("validate updates state when no value", () => {
   const mockValidation = jest.fn(() => true);
-  const wrapper = mount(generateComponent({
-    includeBlank: true,
-    validation: mockValidation,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      includeBlank: true,
+      validation: mockValidation,
+    }),
+  );
   wrapper.setState({ active: true, error: true, focused: true });
   wrapper.instance().validate();
   expect(wrapper.state().active).toBe(false);
@@ -246,10 +274,12 @@ it("validate updates state when no value", () => {
 
 it("validate sets error when invalid", () => {
   const mockValidation = jest.fn(() => false);
-  const wrapper = mount(generateComponent({
-    defaultValue: "1",
-    validation: mockValidation,
-  }));
+  const wrapper = mount(
+    generateComponent({
+      defaultValue: "1",
+      validation: mockValidation,
+    }),
+  );
   wrapper.instance().validate();
   expect(wrapper.state().error).toBe(true);
 });

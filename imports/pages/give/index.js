@@ -13,7 +13,10 @@ import TransferSchedules from "./schedules/Recover";
 import Layout from "./Layout";
 
 const Routes = [
-  { path: "give/saved-payments/edit/:id", component: EditSavedPayment.EditSavedPayment },
+  {
+    path: "give/saved-payments/edit/:id",
+    component: EditSavedPayment.EditSavedPayment,
+  },
   { path: "give/schedules/edit/:id", component: EditSchedule.EditSchedule },
   { path: "give/schedules/transfer", component: TransferSchedules.Template },
   { path: "give/schedules/:id", component: ScheduleDetails.Details },
@@ -22,7 +25,9 @@ const Routes = [
   {
     path: "give",
     component: Layout,
-    indexRoute: { onEnter: (nextState: Object, replace: Function) => replace("/give/home") },
+    indexRoute: {
+      onEnter: (nextState: Object, replace: Function) => replace("/give/home"),
+    },
     childRoutes: [
       ...History.Routes,
       ...Home.Routes,

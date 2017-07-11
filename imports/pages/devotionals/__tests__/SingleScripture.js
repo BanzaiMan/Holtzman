@@ -5,10 +5,7 @@ import DevotionsSingleScripture from "../SingleScripture";
 const defaultProps = {
   devotion: {
     content: {
-      scripture: [
-        { book: "Job", passage: "2" },
-        { book: "Job", passage: "3" },
-      ],
+      scripture: [{ book: "Job", passage: "2" }, { book: "Job", passage: "3" }],
     },
   },
   classes: [],
@@ -19,7 +16,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <DevotionsSingleScripture { ...newProps } />;
+  return <DevotionsSingleScripture {...newProps} />;
 };
 
 it("renders scriptures", () => {
@@ -34,9 +31,11 @@ it("getClasses returns default classes", () => {
 });
 
 it("getClasses appends additional classes", () => {
-  const wrapper = shallow(generateComponent({
-    classes: ["test", "test2"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      classes: ["test", "test2"],
+    }),
+  );
   const result = wrapper.instance().getClasses();
   expect(result).toMatchSnapshot();
 });

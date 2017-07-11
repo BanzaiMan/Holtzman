@@ -40,18 +40,19 @@ class MeteorDataManager {
     // In that case, we want to opt out of the normal behavior of nested
     // Computations, where if the outer one is invalidated or stopped,
     // it stops the inner one.
-    this.computation = Tracker.nonreactive(() => (
-      Tracker.autorun((c) => {
+    this.computation = Tracker.nonreactive(() =>
+      Tracker.autorun(c => {
         if (c.firstRun) {
           const savedSetState = component.setState;
           try {
             component.setState = () => {
               throw new Error(
-"Can't call `setState` inside `getMeteorData` as this could cause an endless" +
-" loop. To respond to Meteor data changing, consider making this component" +
-" a \"wrapper component\" that only fetches data and passes it in as props to" +
-" a child component. Then you can use `componentWillReceiveProps` in that" +
-" child component.");
+                "Can't call `setState` inside `getMeteorData` as this could cause an endless" +
+                  " loop. To respond to Meteor data changing, consider making this component" +
+                  ' a "wrapper component" that only fetches data and passes it in as props to' +
+                  " a child component. Then you can use `componentWillReceiveProps` in that" +
+                  " child component.",
+              );
             };
 
             data = component.getMeteorData();
@@ -72,17 +73,18 @@ class MeteorDataManager {
           // recalculates getMeteorData() and re-renders the component.
           component.forceUpdate();
         }
-      })
-    ));
+      }),
+    );
 
     if (Package.mongo && Package.mongo.Mongo) {
-      Object.keys(data).forEach((key) => {
+      Object.keys(data).forEach(key => {
         if (data[key] instanceof Package.mongo.Mongo.Cursor) {
           // eslint-disable-next-line no-console
           console.warn(
-  "Warning: you are returning a Mongo cursor from getMeteorData. This value " +
-  "will not be reactive. You probably want to call `.fetch()` on the cursor " +
-  "before returning it.");
+            "Warning: you are returning a Mongo cursor from getMeteorData. This value " +
+              "will not be reactive. You probably want to call `.fetch()` on the cursor " +
+              "before returning it.",
+          );
         }
       });
     }

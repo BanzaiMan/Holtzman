@@ -1,9 +1,7 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import { ArticlesWithoutData as Articles } from "../";
-import {
-  nav as navActions,
-} from "../../../data/store";
+import { nav as navActions } from "../../../data/store";
 
 jest.mock("../../../deprecated/mixins/mixins.Likeable", () => {});
 jest.mock("../../../deprecated/mixins/mixins.Header", () => {});
@@ -28,7 +26,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Articles { ...newProps } />;
+  return <Articles {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -37,35 +35,41 @@ it("renders with props", () => {
 });
 
 it("renders loading if no content", () => {
-  const wrapper = shallow(generateComponent({
-    data: {
-      loading: false,
-      refetch: jest.fn(),
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        loading: false,
+        refetch: jest.fn(),
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("updates the nav and header on mount", () => {
   const mockDispatch = jest.fn();
   navActions.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledWith("TOP");
 });
 
 it("handleRefresh calls refetch", () => {
-  const mockRefetch = jest.fn().mockReturnValue(new Promise((r) => r()));
-  const wrapper = shallow(generateComponent({
-    data: {
-      loading: false,
-      refetch: mockRefetch,
-      content: [{}, {}],
-    },
-  }));
+  const mockRefetch = jest.fn().mockReturnValue(new Promise(r => r()));
+  const wrapper = shallow(
+    generateComponent({
+      data: {
+        loading: false,
+        refetch: mockRefetch,
+        content: [{}, {}],
+      },
+    }),
+  );
   wrapper.instance().handleRefresh(jest.fn(), jest.fn());
   expect(mockRefetch).toHaveBeenCalledTimes(1);
   expect(mockRefetch).toHaveBeenCalledWith({ cache: false });

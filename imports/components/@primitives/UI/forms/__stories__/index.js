@@ -1,4 +1,3 @@
-
 /* eslint-disable */
 import { storiesOf } from "@kadira/storybook";
 import withReadme from "storybook-readme/with-readme";
@@ -12,5 +11,8 @@ export default storiesOf("Forms", module)
   .addDecorator(withKnobs)
   .addDecorator(centered)
   .addDecorator(backgrounds(defaultColors("light-primary", "light-secondary")))
-  .addDecorator((story) => <Provider>{story()}</Provider>)
-  ;
+  .addDecorator(story =>
+    <Provider>
+      {story()}
+    </Provider>,
+  );

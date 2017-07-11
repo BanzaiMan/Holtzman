@@ -1,4 +1,3 @@
-
 // import renderer from "react-test-renderer";
 import { shallow, mount } from "enzyme";
 import { mountToJson } from "enzyme-to-json";
@@ -11,7 +10,9 @@ it("maps savedAccount to state", () => {
     },
   };
 
-  expect(map(dummyState)).toEqual({ savedAccount: dummyState.give.savedAccount });
+  expect(map(dummyState)).toEqual({
+    savedAccount: dummyState.give.savedAccount,
+  });
 });
 
 const accountShape = [
@@ -22,7 +23,7 @@ const accountShape = [
     payment: {
       accountNumber: "4111111111111111",
       paymentType: "Visa",
-    }
+    },
   },
   {
     name: "Test Card 2",
@@ -31,25 +32,25 @@ const accountShape = [
     payment: {
       accountNumber: "4111111111111111",
       paymentType: "Visa",
-    }
-  }
+    },
+  },
 ];
 
 const currentAccount = {
-    name: "Test Card 1",
-    id: 1,
-    date: "2016-11-16T21:45:41.275Z",
-    payment: {
-      accountNumber: "4111111111111111",
-      paymentType: "Visa",
-    }
-  };
+  name: "Test Card 1",
+  id: 1,
+  date: "2016-11-16T21:45:41.275Z",
+  payment: {
+    accountNumber: "4111111111111111",
+    paymentType: "Visa",
+  },
+};
 
 const mockedEvent = {
   preventDefault: jest.fn(),
   currentTarget: {
-    id: "1"
-  }
+    id: "1",
+  },
 };
 
 let component;
@@ -61,7 +62,7 @@ beforeEach(() => {
       savedAccounts={accountShape}
       currentAccount={currentAccount}
       dispatch={jest.fn()}
-    />
+    />,
   );
 
   changeAccounts = component.instance().changeAccounts;
@@ -73,12 +74,11 @@ afterEach(() => {
 });
 
 describe("changeAccounts", () => {
-
   const mockedEvent = {
     preventDefault: jest.fn(),
   };
 
-  it("takes an event, and calls preventDefault",() => {
+  it("takes an event, and calls preventDefault", () => {
     expect(changeAccounts).toBeDefined();
     changeAccounts(mockedEvent);
     expect(mockedEvent.preventDefault).toBeCalled();
@@ -103,8 +103,7 @@ describe("changeAccounts", () => {
 });
 
 describe("choose", () => {
-
-  it("takes an event, and calls preventDefault",() => {
+  it("takes an event, and calls preventDefault", () => {
     let { choose } = component.instance();
     expect(choose).toBeDefined();
     choose(mockedEvent);
@@ -120,28 +119,27 @@ describe("choose", () => {
 });
 
 describe("renders layout", () => {
-
   it("sets selectedAccount", () => {
     const renderedLayout = mount(
       <ChangePayments
         savedAccounts={accountShape}
         currentAccount={currentAccount}
         dispatch={jest.fn()}
-      />
+      />,
     );
 
-    const selectedAccount = renderedLayout.find("Layout").get(0).props.selectedAccount;
+    const selectedAccount = renderedLayout.find("Layout").get(0).props
+      .selectedAccount;
     expect(selectedAccount).toMatchSnapshot();
   });
 
   it("correctly delivers props to layout", () => {
-
     const renderedLayout = mount(
       <ChangePayments
         savedAccounts={accountShape}
         currentAccount={currentAccount}
         dispatch={jest.fn()}
-      />
+      />,
     );
 
     expect(mountToJson(renderedLayout)).toMatchSnapshot();

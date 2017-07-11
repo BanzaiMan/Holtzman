@@ -29,7 +29,7 @@ const generateComponent = (additionalProps = {}) => {
     ...additionalProps,
   };
   return (
-    <SideBySideCard { ...newProps }>
+    <SideBySideCard {...newProps}>
       <h1>test</h1>
     </SideBySideCard>
   );
@@ -50,58 +50,72 @@ it("should render with props", () => {
 });
 
 it("overrides with theme", () => {
-  const wrapper = shallow(generateComponent({
-    theme: "override me",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      theme: "override me",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("overrides with styles", () => {
-  const wrapper = shallow(generateComponent({
-    styles: {
-      color: "orange",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      styles: {
+        color: "orange",
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("overrides item theme", () => {
-  const wrapper = shallow(generateComponent({
-    itemTheme: "myItem",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      itemTheme: "myItem",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders link version", () => {
-  const wrapper = shallow(generateComponent({
-    link: "http://test.com/link",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      link: "http://test.com/link",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders link version with theme override", () => {
-  const wrapper = shallow(generateComponent({
-    link: "http://test.com/link",
-    theme: "override link",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      link: "http://test.com/link",
+      theme: "override link",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders link version with style override", () => {
-  const wrapper = shallow(generateComponent({
-    link: "http://test.com/link",
-    styles: {
-      color: "blue",
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      link: "http://test.com/link",
+      styles: {
+        color: "blue",
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders link version with item theme override", () => {
-  const wrapper = shallow(generateComponent({
-    link: "http://test.com/link",
-    itemTheme: "myOtherItem",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      link: "http://test.com/link",
+      itemTheme: "myOtherItem",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -111,9 +125,11 @@ it("itemClasses renders defaults", () => {
 });
 
 it("itemClasses appends additional item classes", () => {
-  const wrapper = shallow(generateComponent({
-    itemClasses: ["one", "two"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      itemClasses: ["one", "two"],
+    }),
+  );
   expect(wrapper.instance().itemClasses()).toMatchSnapshot();
 });
 
@@ -123,9 +139,11 @@ it("cardClasses renders defaults", () => {
 });
 
 it("cardClasses appends additional item classes", () => {
-  const wrapper = shallow(generateComponent({
-    classes: ["three", "four"],
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      classes: ["three", "four"],
+    }),
+  );
   expect(wrapper.instance().cardClasses()).toMatchSnapshot();
 });
 
@@ -137,9 +155,11 @@ it("styles returns default", () => {
 });
 
 it("getResponsiveImage returns false if no images", () => {
-  const wrapper = shallow(generateComponent({
-    images: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      images: null,
+    }),
+  );
   expect(wrapper.instance().getResponsiveImage()).toBe(false);
 });
 
@@ -153,13 +173,13 @@ it("getResponsiveImage returns for all browser breakpoints", () => {
     // if no match found
     [false, "1:1"],
   ];
-  imageTypes.map((image) => {
-    window.matchMedia = jest.fn((media) => (
-      { matches: media === image[0] }
-    ));
+  imageTypes.map(image => {
+    window.matchMedia = jest.fn(media => ({ matches: media === image[0] }));
     const wrapper = shallow(generateComponent());
     const result = wrapper.instance().getResponsiveImage();
-    expect(result).toBe(defaultProps.images.filter((i) => i.fileLabel === image[1])[0].url);
+    expect(result).toBe(
+      defaultProps.images.filter(i => i.fileLabel === image[1])[0].url,
+    );
   });
 });
 
@@ -180,16 +200,15 @@ it("getResponsiveImage works with legacy cloudfront attribute", () => {
       { fileLabel: "1:2", cloudfront: "http://test.com/1x2.jpg" },
     ],
   };
-  imageTypes.map((image) => {
-    window.matchMedia = jest.fn((media) => (
-      { matches: media === image[0] }
-    ));
+  imageTypes.map(image => {
+    window.matchMedia = jest.fn(media => ({ matches: media === image[0] }));
     const wrapper = shallow(generateComponent(props));
     const result = wrapper.instance().getResponsiveImage();
-    expect(result).toBe(props.images.filter((i) => i.fileLabel === image[1])[0].cloudfront);
+    expect(result).toBe(
+      props.images.filter(i => i.fileLabel === image[1])[0].cloudfront,
+    );
   });
 });
-
 
 it("createImage renders default", () => {
   const wrapper = shallow(generateComponent());
@@ -197,15 +216,19 @@ it("createImage renders default", () => {
 });
 
 it("createImage uses custom ratio class", () => {
-  const wrapper = shallow(generateComponent({
-    ratio: "myRatio",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ratio: "myRatio",
+    }),
+  );
   expect(wrapper.instance().createImage()).toMatchSnapshot();
 });
 
 it("createImage uses default image if no images", () => {
-  const wrapper = shallow(generateComponent({
-    images: null,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      images: null,
+    }),
+  );
   expect(wrapper.instance().createImage()).toMatchSnapshot();
 });

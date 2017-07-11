@@ -4,7 +4,7 @@ import { SavePaymentInput } from "../";
 const defaultProps = {
   saveName: () => {},
   savedAccount: {},
-  schedule: { start: null, },
+  schedule: { start: null },
   shouldSaveState: true,
   payment: {
     type: "ach",
@@ -17,7 +17,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SavePaymentInput { ...newProps } />;
+  return <SavePaymentInput {...newProps} />;
 };
 
 it("renders default `Bank Account` if ach", () => {
@@ -26,40 +26,50 @@ it("renders default `Bank Account` if ach", () => {
 });
 
 it("renders default `Credit Card` if not ach", () => {
-  const result = renderer.create(generateComponent({
-    payment: {
-      type: "cc",
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      payment: {
+        type: "cc",
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("does not render if should not save state", () => {
-  const result = renderer.create(generateComponent({
-    shouldSaveState: false,
-  }));
+  const result = renderer.create(
+    generateComponent({
+      shouldSaveState: false,
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("does not render if using saved account", () => {
-  const result = renderer.create(generateComponent({
-    savedAccount: {
-      id: "1",
-    },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      savedAccount: {
+        id: "1",
+      },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("does not render if guest checkout", () => {
-  const result = renderer.create(generateComponent({
-    transactionType: "guest",
-  }));
+  const result = renderer.create(
+    generateComponent({
+      transactionType: "guest",
+    }),
+  );
   expect(result).toMatchSnapshot();
 });
 
 it("does not render if scheduling", () => {
-  const result = renderer.create(generateComponent({
-    schedule: { start: "now" },
-  }));
+  const result = renderer.create(
+    generateComponent({
+      schedule: { start: "now" },
+    }),
+  );
   expect(result).toMatchSnapshot();
 });

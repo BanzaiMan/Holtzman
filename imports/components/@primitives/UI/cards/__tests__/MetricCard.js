@@ -19,10 +19,7 @@ describe("MetricCard", () => {
     };
 
     const tree = renderer.create(
-      <MetricCard
-        count={cardData.count}
-        label={cardData.label}
-      />
+      <MetricCard count={cardData.count} label={cardData.label} />,
     );
     expect(tree).toMatchSnapshot();
   });

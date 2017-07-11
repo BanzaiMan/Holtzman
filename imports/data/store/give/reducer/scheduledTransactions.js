@@ -1,29 +1,23 @@
+const setRecoverableSchedule = (state, action) => ({
+  ...state,
+  ...{
+    scheduleToRecover: action.recoverableSchedule,
+  },
+});
 
+const deleteRecoverableSchedule = state => ({
+  ...state,
+  ...{
+    scheduleToRecover: null,
+  },
+});
 
-const setRecoverableSchedule = (state, action) => (
-  { ...state,
-    ...{
-      scheduleToRecover: action.recoverableSchedule,
-    },
-  }
-);
-
-const deleteRecoverableSchedule = (state) => (
-  { ...state,
-    ...{
-      scheduleToRecover: null,
-    },
-  }
-);
-
-
-const setRecoverableSchedules = (state, action) => (
-  { ...state,
-    ...{
-      recoverableSchedules: action.recoverableSchedules,
-    },
-  }
-);
+const setRecoverableSchedules = (state, action) => ({
+  ...state,
+  ...{
+    recoverableSchedules: action.recoverableSchedules,
+  },
+});
 
 const deleteRecoverableSchedules = (state, action) => {
   const { id } = action;
@@ -40,7 +34,6 @@ const deleteRecoverableSchedules = (state, action) => {
 export {
   setRecoverableSchedule,
   deleteRecoverableSchedule,
-
   setRecoverableSchedules,
   deleteRecoverableSchedules,
 };

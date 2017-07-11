@@ -2,7 +2,7 @@ import { PropTypes } from "react";
 import { Link } from "react-router";
 import Forms from "../../../components/@primitives/UI/forms";
 
-const Layout = ({ submit, save, state }) => (
+const Layout = ({ submit, save, state }) =>
   <div
     className={
       "background--light-primary one-whole text-center " +
@@ -22,9 +22,7 @@ const Layout = ({ submit, save, state }) => (
       submit={submit}
     >
       <div className="push-double">
-        <h4 className="text-center">
-          Change Password
-        </h4>
+        <h4 className="text-center">Change Password</h4>
       </div>
 
       <Forms.Input
@@ -60,15 +58,10 @@ const Layout = ({ submit, save, state }) => (
           btnClasses.push("btn");
         }
 
-        return (
-          <button className={btnClasses.join(" ")}>
-            Enter
-          </button>
-        );
+        return <button className={btnClasses.join(" ")}>Enter</button>;
       })()}
     </Forms.Form>
-  </div>
-);
+  </div>;
 
 Layout.propTypes = {
   submit: PropTypes.func.isRequired,

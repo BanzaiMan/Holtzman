@@ -1,17 +1,12 @@
-
 type ISuccess = {
   width: string,
   height: string,
   fill: string,
 };
 
-const Success = ({
-  width,
-  height,
-  fill,
-}: ISuccess) => (
+const Success = ({ width, height, fill }: ISuccess) =>
   <svg width={width} height={height} viewBox="0 0 60 61" version="1.1">
-    <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd" >
+    <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
       <g transform="translate(-90.000000, -159.000000)" fill={fill}>
         <g transform="translate(90.000000, 159.903000)">
           <path d="M25.9570657,38.8180789 L26.6666667,39.5327125 L27.3762676,38.8180789 L40.709601,25.390183 L41.4092427,24.6855792 L40.709601,23.9809754 L38.0429343,21.2953962 L37.3333333,20.5807626 L36.6237324,21.2953962 L25.9570657,32.037713 L27.3762676,32.037713 L23.3762676,28.0093442 L22.6666667,27.2947106 L21.9570657,28.0093442 L19.290399,30.6949234 L18.5907573,31.3995272 L19.290399,32.104131 L25.9570657,38.8180789 L25.9570657,38.8180789 Z" />
@@ -19,8 +14,7 @@ const Success = ({
         </g>
       </g>
     </g>
-  </svg>
-);
+  </svg>;
 
 Success.defaultProps = {
   width: "60px",

@@ -1,10 +1,8 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
-import EditSavedPayment from "../"
+import EditSavedPayment from "../";
 
-const generateComponent = () => (
-  <EditSavedPayment.EditSavedPayment />
-);
+const generateComponent = () => <EditSavedPayment.EditSavedPayment />;
 
 describe("Index", () => {
   it("renders", () => {
@@ -15,4 +13,4 @@ describe("Index", () => {
   it("has routes", () => {
     expect(EditSavedPayment.Routes).toMatchSnapshot();
   });
-})
+});

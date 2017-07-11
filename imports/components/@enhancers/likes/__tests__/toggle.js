@@ -1,4 +1,3 @@
-
 import { print } from "graphql-tag/printer";
 // import { ApolloProvider } from 'react-apollo';
 import { mount } from "enzyme";
@@ -9,16 +8,15 @@ import { Meteor } from "meteor/meteor";
 
 import { classWrapper, TOGGLE_LIKE_MUTATION } from "../toggle";
 
-const TestComponent = (props) => <div id="tester">Test</div>;
+const TestComponent = props => <div id="tester">Test</div>;
 
 const mockStore = {
   getState: jest.fn(),
   subscribe: jest.fn(),
   dispatch: jest.fn(),
   modal: { visible: false },
-  liked: { likes: [] }
+  liked: { likes: [] },
 };
-
 
 // jest.mock("react-redux", () => ({
 //   connect: jest.fn(() => (component) => <component />),
@@ -38,15 +36,20 @@ const defaultProps = {
 };
 
 const renderComponent = (additionalProps, updateNav = true) => {
-  const Wrapped = classWrapper(jest.fn(() => "12345"), updateNav)(TestComponent);
+  const Wrapped = classWrapper(jest.fn(() => "12345"), updateNav)(
+    TestComponent,
+  );
 
   return (
-    <Wrapped  { ...defaultProps} {...additionalProps } dispatch={mockStore.dispatch}/>
+    <Wrapped
+      {...defaultProps}
+      {...additionalProps}
+      dispatch={mockStore.dispatch}
+    />
   );
 };
 
 describe("Likes Wrapper", () => {
-
   it("should contain mutation", () => {
     expect(print(TOGGLE_LIKE_MUTATION)).toMatchSnapshot();
   });
@@ -57,10 +60,12 @@ describe("Likes Wrapper", () => {
   });
 
   it("should pass props to the wrapped component properly", () => {
-    const component = mount(renderComponent({
-      prop1: "hello",
-      iMiss: "harambe",
-    }));
+    const component = mount(
+      renderComponent({
+        prop1: "hello",
+        iMiss: "harambe",
+      }),
+    );
 
     const passedProps = component.find(TestComponent).props();
     expect("prop1" in passedProps).toEqual(true);
@@ -70,9 +75,10 @@ describe("Likes Wrapper", () => {
   it("should dispatch nav actions on mount", () => {
     mockStore.dispatch.mockReset();
     const component = mount(renderComponent({}, true));
-    expect(mockStore.dispatch).toHaveBeenCalledTimes(2)
+    expect(mockStore.dispatch).toHaveBeenCalledTimes(2);
     expect(mockStore.dispatch.mock.calls[0][0]).toEqual({
-      "level": "CONTENT", "type": "NAV.SET_LEVEL"
+      level: "CONTENT",
+      type: "NAV.SET_LEVEL",
     });
     expect(mockStore.dispatch.mock.calls[1][0].level).toEqual("CONTENT");
     expect(mockStore.dispatch.mock.calls[1][0].type).toEqual("NAV.SET_ACTION");
@@ -83,9 +89,10 @@ describe("Likes Wrapper", () => {
     mockStore.dispatch.mockReset();
     component.unmount();
 
-    expect(mockStore.dispatch).toHaveBeenCalledTimes(1)
+    expect(mockStore.dispatch).toHaveBeenCalledTimes(1);
     expect(mockStore.dispatch.mock.calls[0][0]).toEqual({
-      "level": "TOP", "type": "NAV.SET_LEVEL"
+      level: "TOP",
+      type: "NAV.SET_LEVEL",
     });
   });
 
@@ -97,7 +104,9 @@ describe("Likes Wrapper", () => {
     const toggle = mockStore.dispatch.mock.calls[1][0].props.action;
     toggle();
 
-    expect(mockStore.dispatch.mock.calls[2][0].type).toEqual("MODAL.SET_CONTENT");
+    expect(mockStore.dispatch.mock.calls[2][0].type).toEqual(
+      "MODAL.SET_CONTENT",
+    );
   });
 
   it("should not dispatch if updateNav is false", () => {
@@ -111,7 +120,7 @@ describe("Likes Wrapper", () => {
     mockStore.dispatch.mockReset();
     const Wrapped = classWrapper(jest.fn())(TestComponent);
     const Component = (
-      <Wrapped  { ...defaultProps} dispatch={mockStore.dispatch}/>
+      <Wrapped {...defaultProps} dispatch={mockStore.dispatch} />
     );
 
     // when mounting, it calls an action to set the trigger for toggling a like.
@@ -130,7 +139,7 @@ describe("Likes Wrapper", () => {
 
     const Wrapped = classWrapper()(TestComponent);
     const Component = (
-      <Wrapped  { ...defaultProps} dispatch={mockStore.dispatch}/>
+      <Wrapped {...defaultProps} dispatch={mockStore.dispatch} />
     );
 
     // when mounting, it calls an action to set the trigger for toggling a like.
@@ -158,7 +167,7 @@ describe("Likes Wrapper", () => {
 
     expect(mockStore.dispatch).toHaveBeenCalledTimes(3);
     expect(mockStore.dispatch.mock.calls[2][0]).toEqual({
-      props: {entryId: "12345"},
+      props: { entryId: "12345" },
       type: "LIKED.TOGGLE",
     });
     expect(mutate).toBeCalled();

@@ -1,5 +1,3 @@
-
-
 const savedAccount = (state, action) => {
   // XXX this will never work?
   if (!action.savedAccount && action.savedAccount !== "clear") {
@@ -18,7 +16,8 @@ const savedAccount = (state, action) => {
     };
   }
 
-  return { ...state,
+  return {
+    ...state,
     ...{
       savedAccount: action.savedAccount,
     },

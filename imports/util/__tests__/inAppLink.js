@@ -1,8 +1,5 @@
 import { Meteor } from "meteor/meteor";
-import inAppLink, {
-  openUrl,
-  linkListener,
-} from "../inAppLink";
+import inAppLink, { openUrl, linkListener } from "../inAppLink";
 
 describe("openUrl", () => {
   it("falls back to window open if error", () => {
@@ -12,7 +9,7 @@ describe("openUrl", () => {
     expect(window.open).toHaveBeenCalledWith(
       "http://test.com",
       "_blank",
-      "location=yes"
+      "location=yes",
     );
   });
 
@@ -30,7 +27,7 @@ describe("openUrl", () => {
     expect(window.open).toHaveBeenCalledWith(
       "http://test.com",
       "_blank",
-      "location=yes"
+      "location=yes",
     );
   });
 

@@ -16,7 +16,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <AudioTitle { ...newProps } />;
+  return <AudioTitle {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -25,9 +25,11 @@ it("renders with props", () => {
 });
 
 it("renders playing version", () => {
-  const wrapper = shallow(generateComponent({
-    isPlaying: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      isPlaying: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -62,15 +64,19 @@ it("getPrimaryTextClass has a light version", () => {
 });
 
 it("getArtistLine returns artist then title if not series", () => {
-  const wrapper = shallow(generateComponent({
-    channelName: "music",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      channelName: "music",
+    }),
+  );
   expect(wrapper.instance().getArtistLine()).toMatchSnapshot();
 });
 
 it("getArtistLine returns title then artist if series", () => {
-  const wrapper = shallow(generateComponent({
-    channelName: "series_newspring",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      channelName: "series_newspring",
+    }),
+  );
   expect(wrapper.instance().getArtistLine()).toMatchSnapshot();
 });

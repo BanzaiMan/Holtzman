@@ -24,8 +24,13 @@ import Layout from "./Layout";
 export const SAVED_ACCTS_QUERY = gql`
   query GetSavedPaymentAccounts($cache: Boolean) {
     savedPayments(cache: $cache) {
-      name, id: entityId, date,
-      payment { accountNumber, paymentType }
+      name
+      id: entityId
+      date
+      payment {
+        accountNumber
+        paymentType
+      }
     }
   }
 `;
@@ -55,9 +60,9 @@ export const withSavedPayments = graphql(SAVED_ACCTS_QUERY, {
 */
 
 type IStore = {
-  accounts: Object;
-  give: Object;
-}
+  accounts: Object,
+  give: Object,
+};
 
 export const mapStateToProps = ({ accounts, give }: IStore) => ({
   authorized: accounts.authorized,
@@ -85,16 +90,15 @@ type ICheckoutButtons = {
 };
 
 export class CheckoutButton extends Component {
-
   props: ICheckoutButtons;
 
   static defaultProps = {
     savedPayments: {},
-  }
+  };
 
   state = {
     paymentDetails: false,
-  }
+  };
 
   onClick = (e: Event) => {
     let keepGoing = true;
@@ -116,18 +120,20 @@ export class CheckoutButton extends Component {
     if (Meteor.userId() && !this.props.disabled) {
       this.props.dispatch(modal.render(Give));
     } else if (!Meteor.userId()) {
-      this.props.dispatch(modal.render(OnBoard, {
-        // XXX getPaymentDetailsAfterLogin doesn't exist
-        // onSignin: this.getPaymentDetailsAfterLogin,
-        onFinished: this.renderAfterLogin,
-        coverHeader: true,
-      }));
+      this.props.dispatch(
+        modal.render(OnBoard, {
+          // XXX getPaymentDetailsAfterLogin doesn't exist
+          // onSignin: this.getPaymentDetailsAfterLogin,
+          onFinished: this.renderAfterLogin,
+          coverHeader: true,
+        }),
+      );
 
       this.props.dispatch(accountsActions.setAccount(true));
     }
 
     this.props.dispatch(navActions.setLevel("MODAL"));
-  }
+  };
 
   getAccount = () => {
     const { savedAccount } = this.props;
@@ -139,7 +145,7 @@ export class CheckoutButton extends Component {
     if (!savedPayments || !savedPayments.length) return {};
 
     return sortBy(savedPayments, "date")[savedPayments.length - 1];
-  }
+  };
 
   giveAsGuest = () => {
     if (this.props.disabled) return;
@@ -147,40 +153,45 @@ export class CheckoutButton extends Component {
     this.props.dispatch(giveActions.setTransactionType("guest"));
     this.props.dispatch(modal.render(Give));
     // this.props.dispatch(navActions.setLevel("MODAL"))
-  }
+  };
 
   register = () => {
     this.props.dispatch(accountsActions.setAccount(false));
-    this.props.dispatch(modal.render(OnBoard, {
-      onFinished: this.renderAfterLogin,
-      coverHeader: true,
-    }));
+    this.props.dispatch(
+      modal.render(OnBoard, {
+        onFinished: this.renderAfterLogin,
+        coverHeader: true,
+      }),
+    );
     // this.props.dispatch(navActions.setLevel("MODAL"))
-  }
+  };
 
   changePayments = (e: Event) => {
     e.preventDefault();
 
-    this.props.dispatch(modal.render(ChangePayments, {
-      // onFinished: () => {},
-      savedAccounts: this.props.savedPayments.savedPayments,
-      currentAccount: this.getAccount(),
-    }));
-  }
+    this.props.dispatch(
+      modal.render(ChangePayments, {
+        // onFinished: () => {},
+        savedAccounts: this.props.savedPayments.savedPayments,
+        currentAccount: this.getAccount(),
+      }),
+    );
+  };
 
   renderAfterLogin = () => {
     if (this.props.disabled) return this.props.dispatch(modal.hide());
     // get the payment details before finishing payment
-    this.props.savedPayments.refetch()
-      .then(({ data }) => {
-        if (data.savedPayments && data.savedPayments.length) {
-          const details = sortBy(data.savedPayments, "date")[data.savedPayments.length - 1];
-          this.props.dispatch(giveActions.setAccount(details));
-        }
-        this.props.dispatch(modal.render(Give));
-      });
+    this.props.savedPayments.refetch().then(({ data }) => {
+      if (data.savedPayments && data.savedPayments.length) {
+        const details = sortBy(data.savedPayments, "date")[
+          data.savedPayments.length - 1
+        ];
+        this.props.dispatch(giveActions.setAccount(details));
+      }
+      this.props.dispatch(modal.render(Give));
+    });
     return null;
-  }
+  };
 
   render() {
     return (
@@ -191,7 +202,6 @@ export class CheckoutButton extends Component {
         register={this.register}
         changePayments={this.changePayments}
         renderAfterLogin={this.renderAfterLogin}
-
         authorized={this.props.authorized}
         classes={this.props.classes}
         disabled={this.props.disabled}

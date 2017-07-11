@@ -1,13 +1,8 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
-import Routes, {
-  LayoutWithoutData,
-  CAMPUSES_QUERY,
-} from "../";
+import Routes, { LayoutWithoutData, CAMPUSES_QUERY } from "../";
 
-const generateComponent = () => (
-  <LayoutWithoutData dispatch={jest.fn()} />
-);
+const generateComponent = () => <LayoutWithoutData dispatch={jest.fn()} />;
 
 it("renders with props", () => {
   const wrapper = shallow(generateComponent());

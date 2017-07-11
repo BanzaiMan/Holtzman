@@ -1,25 +1,27 @@
-
 import { initial as blankState } from "../../reducer";
 
-const initial = {...blankState, ...{
-  data: {
-    personal: {
-      firstName: "James", // String
-      lastName: "Baxley", // String
-      email: "james.baxley@newspring.cc", // String
-      campus: "Anderson", // String
-      campusId: 1, // Number
-    },
-    billing: {
-      streetAddress: "1 Linwa Blvd", // String
-      streetAddress2: null, // String
-      city: "Anderson", // String
-      state: "SC", // String
-      zip: 29621, // Number
-      country: "USA", // String
+const initial = {
+  ...blankState,
+  ...{
+    data: {
+      personal: {
+        firstName: "James", // String
+        lastName: "Baxley", // String
+        email: "james.baxley@newspring.cc", // String
+        campus: "Anderson", // String
+        campusId: 1, // Number
+      },
+      billing: {
+        streetAddress: "1 Linwa Blvd", // String
+        streetAddress2: null, // String
+        city: "Anderson", // String
+        state: "SC", // String
+        zip: 29621, // Number
+        country: "USA", // String
+      },
     },
   },
-}}
+};
 
 import formatPersonDetails from "../formatPersonDetails";
 
@@ -33,8 +35,10 @@ describe("schedule shapes", () => {
       ...initial,
       transactions: { 1: { value: 10 } },
       schedule: {
-        start: "20200101", payments: null, frequency: "One-Time"
-      }
+        start: "20200101",
+        payments: null,
+        frequency: "One-Time",
+      },
     };
     expect(formatPersonDetails(data)).toMatchSnapshot();
   });
@@ -44,8 +48,10 @@ describe("schedule shapes", () => {
       ...initial,
       transactions: { 1: { value: 10 }, 10: { value: 11 } },
       schedule: {
-        start: "20200101", payments: null, frequency: "One-Time"
-      }
+        start: "20200101",
+        payments: null,
+        frequency: "One-Time",
+      },
     };
     expect(formatPersonDetails(data)).toMatchSnapshot();
   });
@@ -55,8 +61,10 @@ describe("schedule shapes", () => {
       ...initial,
       transactions: { 1: { value: 10 } },
       schedule: {
-        start: "20200101", payments: null, frequency: "Weekly"
-      }
+        start: "20200101",
+        payments: null,
+        frequency: "Weekly",
+      },
     };
     expect(formatPersonDetails(data)).toMatchSnapshot();
   });
@@ -66,8 +74,10 @@ describe("schedule shapes", () => {
       ...initial,
       transactions: { 1: { value: 10 } },
       schedule: {
-        start: "20200101", payments: null, frequency: "Bi-Weekly"
-      }
+        start: "20200101",
+        payments: null,
+        frequency: "Bi-Weekly",
+      },
     };
     expect(formatPersonDetails(data)).toMatchSnapshot();
   });
@@ -77,12 +87,13 @@ describe("schedule shapes", () => {
       ...initial,
       transactions: { 1: { value: 10 } },
       schedule: {
-        start: "20200101", payments: null, frequency: "Monthly"
-      }
+        start: "20200101",
+        payments: null,
+        frequency: "Monthly",
+      },
     };
     expect(formatPersonDetails(data)).toMatchSnapshot();
   });
-
 });
 
 describe("regular transactions", () => {
@@ -99,7 +110,7 @@ describe("regular transactions", () => {
       ...initial,
       transactions: {
         1: { label: "General Fund", value: 10 },
-        2: { label: "Tesla Fund", value: 100000000 }
+        2: { label: "Tesla Fund", value: 100000000 },
       },
     };
     expect(formatPersonDetails(data)).toMatchSnapshot();
@@ -110,7 +121,7 @@ describe("savedAccount", () => {
   it("adds saved account info without a name", () => {
     const data = {
       ...initial,
-      savedAccount: { id: 4 }
+      savedAccount: { id: 4 },
     };
     expect(formatPersonDetails(data)).toMatchSnapshot();
   });

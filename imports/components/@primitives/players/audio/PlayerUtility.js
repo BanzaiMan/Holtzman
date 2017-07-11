@@ -8,7 +8,6 @@ import { actions as audioActions } from "../../../../data/store/audio";
 import Audio from "../../../../util/vendor/players/audio";
 
 class AudioPlayerUtilityWithoutData extends Component {
-
   static propTypes = {
     audio: PropTypes.object,
     loading: PropTypes.func,
@@ -27,14 +26,18 @@ class AudioPlayerUtilityWithoutData extends Component {
 
     // change of track to play
     if (audio.playing.track.title !== nextAudio.playing.track.title) {
-      this.player = this.createPlayer(nextAudio.playing.track, nextAudio.state === "playing");
+      this.player = this.createPlayer(
+        nextAudio.playing.track,
+        nextAudio.state === "playing",
+      );
     }
 
     // change of state
     if (audio.state !== nextAudio.state && audio.state !== "default") {
       // play || pause
       if (
-        (audio.state !== "next" && audio.state !== "previous") &&
+        audio.state !== "next" &&
+        audio.state !== "previous" &&
         (nextAudio.state === "playing" || nextAudio.state === "paused")
       ) {
         this.toggle(nextAudio.state);
@@ -59,10 +62,8 @@ class AudioPlayerUtilityWithoutData extends Component {
 
   tracksWithFiles = () => {
     const { playlist } = this.props.audio;
-    return _.filter(playlist, (track) => (
-      track.file
-    ));
-  }
+    return _.filter(playlist, track => track.file);
+  };
 
   createPlayer = (track, autoload) => {
     // only make sweet jams on client side
@@ -87,55 +88,63 @@ class AudioPlayerUtilityWithoutData extends Component {
     this.props.loading();
 
     // eslint-disable-next-line
-    const Player = (Meteor.isCordova && cordova.platformId === "ios") ? Media : Audio;
+    const Player =
+      Meteor.isCordova && cordova.platformId === "ios" ? Media : Audio;
     const getProps = () => this.props;
 
-    const player = new Player(track.file, () => {
-      // set ready state
-      this.props.ready();
+    const player = new Player(
+      track.file,
+      () => {
+        // set ready state
+        this.props.ready();
 
-      if (autoload) {
-        this.props.play();
-        if (Meteor.isCordova) return;
-        player.play();
-        return;
-      }
-    }, () => {}, function audioEventStream(STATUS) {
-      if (this.done) return;
-      // this === Media object
-      if (STATUS === Media.MEDIA_STOPPED) {
-        const length = this.getDuration();
-        if (length === player.getDuration()) { // reached the end of the song
-          const { audio } = getProps();
-          if (audio.repeat === "repeat-one") {
-            this.seekTo(0);
-            this.play();
-            return;
-          }
-          for (const cb of this.endedCallbacks) cb();
-          delete this.endedCallbacks;
-          this.done = true;
+        if (autoload) {
+          this.props.play();
+          if (Meteor.isCordova) return;
+          player.play();
+          return;
         }
-      }
-    });
+      },
+      () => {},
+      function audioEventStream(STATUS) {
+        if (this.done) return;
+        // this === Media object
+        if (STATUS === Media.MEDIA_STOPPED) {
+          const length = this.getDuration();
+          if (length === player.getDuration()) {
+            // reached the end of the song
+            const { audio } = getProps();
+            if (audio.repeat === "repeat-one") {
+              this.seekTo(0);
+              this.play();
+              return;
+            }
+            for (const cb of this.endedCallbacks) cb();
+            delete this.endedCallbacks;
+            this.done = true;
+          }
+        }
+      },
+    );
 
     if (autoload && Meteor.isCordova) {
       this.props.play();
       player.play();
     }
 
-    player.timeupdate((pos) => {
+    player.timeupdate(pos => {
       const [durMin, durSec] = track.duration.split(":");
-      const length = Number((durMin * 60)) + Number(durSec);
+      const length = Number(durMin * 60) + Number(durSec);
 
       const [min, sec] = pos.split(":");
-      const seekLength = Number((min * 60)) + Number(sec);
+      const seekLength = Number(min * 60) + Number(sec);
       const width = Number((length - (length - seekLength)) / length);
 
       // ensure seconds are not greater than 60
       const realSec = Number(sec) % 60;
       // if there is a minute, return that. else, caclulate minutes from seconds
-      const realMin = Number(min) > 0 ? Number(min) : Math.floor(Number(sec) / 60);
+      const realMin =
+        Number(min) > 0 ? Number(min) : Math.floor(Number(sec) / 60);
 
       // ensure minutes and seconds are 0 padded
       const formatSec = realSec < 10 ? `0${realSec}` : realSec;
@@ -154,10 +163,12 @@ class AudioPlayerUtilityWithoutData extends Component {
     });
 
     return player;
-  }
+  };
 
-  toggle = (playerState) => {
-    if (!this.player || !this.player.playPause) { return; }
+  toggle = playerState => {
+    if (!this.player || !this.player.playPause) {
+      return;
+    }
     if (playerState === "playing") {
       this.player.play();
       return;
@@ -167,21 +178,23 @@ class AudioPlayerUtilityWithoutData extends Component {
       return;
     }
     this.player.playPause();
-  }
+  };
 
-  seek = (value) => {
+  seek = value => {
     // value is percent of how far to scrub
 
-    if (!this.player || !this.player.seekTo) { return; }
+    if (!this.player || !this.player.seekTo) {
+      return;
+    }
 
     const [min, sec] = this.props.audio.playing.track.duration.split(":");
 
     // duration in milliseconds
-    const duration = (Number((min * 60)) + Number(sec)) * 1000;
+    const duration = (Number(min * 60) + Number(sec)) * 1000;
     const newPos = duration * (value / 100);
 
     this.player.seekTo(newPos);
-  }
+  };
 
   next = () => {
     const { playing, order, repeat } = this.props.audio;
@@ -205,7 +218,7 @@ class AudioPlayerUtilityWithoutData extends Component {
             next = playlist[randomId];
             break;
           default:
-            if ((playlist.length - 1) === index) {
+            if (playlist.length - 1 === index) {
               next = playlist[0];
             } else {
               next = playlist[index + 1];
@@ -231,7 +244,7 @@ class AudioPlayerUtilityWithoutData extends Component {
         break;
       }
     }
-  }
+  };
 
   previous = () => {
     const { playing, order, repeat } = this.props.audio;
@@ -249,7 +262,6 @@ class AudioPlayerUtilityWithoutData extends Component {
         switch (order) {
           // eslint-disable-next-line no-case-declarations
           case "shuffle":
-
             let randomId = Math.floor(Math.random() * playlist.length);
             while (randomId === index) {
               randomId = Math.floor(Math.random() * playlist.length);
@@ -294,8 +306,4 @@ const withRedux = connect(map, audioActions);
 
 export default withRedux(AudioPlayerUtilityWithoutData);
 
-export {
-  AudioPlayerUtilityWithoutData,
-  map,
-  withRedux,
-};
+export { AudioPlayerUtilityWithoutData, map, withRedux };

@@ -1,5 +1,3 @@
-
-
 import capitalize from "./strings";
 import toCurrency, { monetize } from "./currency";
 import toDateString from "./dates";
@@ -13,10 +11,4 @@ export default {
   creditCard,
 };
 
-export {
-  capitalize,
-  toCurrency,
-  monetize,
-  toDateString,
-  creditCard,
-};
+export { capitalize, toCurrency, monetize, toDateString, creditCard };

@@ -1,4 +1,3 @@
-
 import Layout from "../Layout";
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
@@ -6,14 +5,14 @@ import { shallowToJson } from "enzyme-to-json";
 const mockProps = {
   pathname: "/give/home",
   location: {
-    pathname: "/give/home"
+    pathname: "/give/home",
   },
   routes: [
     {
       path: "home",
-      component: <div />
-    }
-  ]
+      component: <div />,
+    },
+  ],
 };
 
 const generateComponent = (additionalProps = {}) => {
@@ -21,7 +20,11 @@ const generateComponent = (additionalProps = {}) => {
     ...mockProps,
     ...additionalProps,
   };
-  return <Layout {...newProps}><div /></Layout>;
+  return (
+    <Layout {...newProps}>
+      <div />
+    </Layout>
+  );
 };
 
 it("renders a layout", () => {

@@ -1,4 +1,3 @@
-
 import { addReducer } from "../utilities";
 import types from "./types";
 import reducer from "./reducer";
@@ -8,8 +7,4 @@ addReducer({ audio: reducer });
 
 export default actions;
 
-export {
-  types,
-  actions,
-  reducer,
-};
+export { types, actions, reducer };

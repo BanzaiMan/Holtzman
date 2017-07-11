@@ -1,17 +1,19 @@
 import { api } from "../../../util/rock";
 import makeNewGuid from "../../../util/guid";
 
-
 let HomeId = false;
 let BillingAddressId = false;
-export function upsertLocations(PersonId, doc) { // eslint-disable-line
+export function upsertLocations(PersonId, doc) {
+  // eslint-disable-line
   let Location = doc;
   if (!PersonId || !Location) return;
 
   // verify the defined values are correctly in Rock
   // if they aren't in Rock already add them
   if (!HomeId || !BillingAddressId) {
-    const locationTypes = api.get.sync("DefinedValues?$filter=DefinedTypeId eq 15");
+    const locationTypes = api.get.sync(
+      "DefinedValues?$filter=DefinedTypeId eq 15",
+    );
     for (const loc of locationTypes) {
       if (loc.Value === "Home") {
         HomeId = loc.Id;
@@ -31,11 +33,14 @@ export function upsertLocations(PersonId, doc) { // eslint-disable-line
         Value: "Billing Address",
         DefinedTypeId: 15,
         Order: 0,
-        Description: "Address created from a transaction if the used address isn't already on file",
+        Description:
+          "Address created from a transaction if the used address isn't already on file",
       };
 
-
-      BillingAddressId = api.post.sync("DefinedValues", BillingLocationDefinedValue);
+      BillingAddressId = api.post.sync(
+        "DefinedValues",
+        BillingLocationDefinedValue,
+      );
     }
   }
 
@@ -59,7 +64,6 @@ export function upsertLocations(PersonId, doc) { // eslint-disable-line
 
   // repurpose the locations variable
   locations = locations.GroupLocations;
-
 
   // see if Street1 of the location matches any on file
   let home = false;

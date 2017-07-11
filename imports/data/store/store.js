@@ -16,7 +16,8 @@ const createReduxStore = (initialState, history) => {
     delete initialState.nav; // eslint-disable-line no-param-reassign
   }
 
-  const joinedReducers = { ...reducers,
+  const joinedReducers = {
+    ...reducers,
     ...{
       routing: routeReducer,
       apollo: GraphQL.reducer(),
@@ -32,32 +33,33 @@ const createReduxStore = (initialState, history) => {
     applyMiddleware(
       ...sharedMiddlewares,
       sagaMiddleware,
-      reduxRouterMiddleware
+      reduxRouterMiddleware,
     ),
     reduxReset(),
   ];
 
   if (process.env.NODE_ENV !== "production") {
-    sharedCompose = [...sharedCompose, ...[
-      typeof window === "object" && typeof window.devToolsExtension !== "undefined" ?
-        window.devToolsExtension() :
-        (f) => f,
-    ]];
+    sharedCompose = [
+      ...sharedCompose,
+      ...[
+        typeof window === "object" &&
+        typeof window.devToolsExtension !== "undefined"
+          ? window.devToolsExtension()
+          : f => f,
+      ],
+    ];
   }
 
   const store = compose(...sharedCompose)(createStore)(
-    combineReducers(joinedReducers), initialState
+    combineReducers(joinedReducers),
+    initialState,
   );
 
-  sagas.forEach((saga) => sagaMiddleware.run(saga()));
+  sagas.forEach(saga => sagaMiddleware.run(saga()));
 
   return store;
 };
 
-
 const wrapper = ApolloProvider;
 
-export {
-  wrapper,
-  createReduxStore,
-};
+export { wrapper, createReduxStore };

@@ -20,7 +20,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Personal { ...newProps } />;
+  return <Personal {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -30,9 +30,11 @@ it("renders with props", () => {
 
 it("firstName calls clear if no value", () => {
   const mockClear = jest.fn();
-  const wrapper = shallow(generateComponent({
-    clear: mockClear,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      clear: mockClear,
+    }),
+  );
 
   const result = wrapper.instance().firstName("");
   expect(mockClear).toHaveBeenCalledTimes(1);
@@ -42,9 +44,11 @@ it("firstName calls clear if no value", () => {
 
 it("firstName calls save if value", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
 
   const result = wrapper.instance().firstName("test");
   expect(mockSave).toHaveBeenCalledTimes(1);
@@ -60,9 +64,11 @@ it("isEmail calls clear if not valid", () => {
   const mockIsEmail = jest.fn(() => false);
   Validate.isEmail = mockIsEmail;
   const mockClear = jest.fn();
-  const wrapper = shallow(generateComponent({
-    clear: mockClear,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      clear: mockClear,
+    }),
+  );
 
   const result = wrapper.instance().isEmail("");
   expect(mockClear).toHaveBeenCalledTimes(1);
@@ -76,9 +82,11 @@ it("isEmails calls save if value", () => {
   const mockIsEmail = jest.fn(() => true);
   Validate.isEmail = mockIsEmail;
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
 
   const result = wrapper.instance().isEmail("test@test.com");
   expect(mockSave).toHaveBeenCalledTimes(1);
@@ -92,9 +100,11 @@ it("isEmails calls save if value", () => {
 
 it("lastName calls clear if no value", () => {
   const mockClear = jest.fn();
-  const wrapper = shallow(generateComponent({
-    clear: mockClear,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      clear: mockClear,
+    }),
+  );
 
   const result = wrapper.instance().lastName("");
   expect(mockClear).toHaveBeenCalledTimes(1);
@@ -104,9 +114,11 @@ it("lastName calls clear if no value", () => {
 
 it("lastName calls save if value", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
 
   const result = wrapper.instance().lastName("test");
   expect(mockSave).toHaveBeenCalledTimes(1);
@@ -120,9 +132,11 @@ it("lastName calls save if value", () => {
 
 it("campus calls save with value for campusId", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      save: mockSave,
+    }),
+  );
 
   const result = wrapper.instance().campus("2");
   expect(mockSave).toHaveBeenCalledTimes(1);
@@ -136,13 +150,15 @@ it("campus calls save with value for campusId", () => {
 
 it("campus calls save with value again for campus label", () => {
   const mockSave = jest.fn();
-  const wrapper = shallow(generateComponent({
-    campuses: [
-      { value: "1", label: "Anderson" },
-      { value: "2", label: "Greenville" },
-    ],
-    save: mockSave,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      campuses: [
+        { value: "1", label: "Anderson" },
+        { value: "2", label: "Greenville" },
+      ],
+      save: mockSave,
+    }),
+  );
 
   const result = wrapper.instance().campus("2");
   expect(mockSave).toHaveBeenCalledTimes(2);
@@ -158,4 +174,3 @@ it("campus calls save with value again for campus label", () => {
   });
   expect(result).toBeTruthy();
 });
-

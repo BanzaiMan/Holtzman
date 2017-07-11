@@ -1,4 +1,3 @@
-
 import { api } from "../../../util/rock";
 import makeNewGuid from "../../../util/guid";
 import { TransactionReciepts } from "../collections/transactions";
@@ -19,15 +18,14 @@ const transactions = () => {
         // eslint-disable-next-line
         if (Transaction.__processing) return;
 
-        TransactionReciepts.update(Transaction._id, { // eslint-disable-line
+        TransactionReciepts.update(Transaction._id, {
+          // eslint-disable-line
           $set: {
             __processing: true,
           },
         });
 
-
         delete Transaction.__processing; // eslint-disable-line
-
 
         /*
 
@@ -57,7 +55,8 @@ const transactions = () => {
         delete Person.PrimaryAliasId;
 
         // Create Person
-        Person = { ...Person,
+        Person = {
+          ...Person,
           ...{
             Guid: makeNewGuid(),
             IsSystem: false,
@@ -90,20 +89,22 @@ const transactions = () => {
           console.error("@@TRANSACTION_ERROR", e, PersonId, PrimaryAliasId);
         }
 
-
         // Create FinancialPaymentDetail
-        FinancialPaymentDetail = { ...FinancialPaymentDetail,
+        FinancialPaymentDetail = {
+          ...FinancialPaymentDetail,
           ...{ Guid: makeNewGuid() },
         };
 
         const FinancialPaymentDetailId = api.post.sync(
-          "FinancialPaymentDetails", FinancialPaymentDetail
+          "FinancialPaymentDetails",
+          FinancialPaymentDetail,
         );
 
         if (FinancialPaymentDetailId.status) return;
 
         // Create Transaction
-        Transaction = { ...Transaction,
+        Transaction = {
+          ...Transaction,
           ...{
             Guid: makeNewGuid(),
             AuthorizedPersonAliasId: PrimaryAliasId,
@@ -115,13 +116,17 @@ const transactions = () => {
           },
         };
 
-        const TransactionId = api.post.sync("FinancialTransactions", Transaction);
+        const TransactionId = api.post.sync(
+          "FinancialTransactions",
+          Transaction,
+        );
 
         if (TransactionId.status) return;
 
         // Create TransactionDetails
         for (let TransactionDetail of TransactionDetails) {
-          TransactionDetail = { ...{},
+          TransactionDetail = {
+            ...{},
             ...{
               AccountId: TransactionDetail.AccountId,
               Amount: TransactionDetail.Amount,
@@ -135,21 +140,23 @@ const transactions = () => {
           api.post.sync("FinancialTransactionDetails", TransactionDetail);
         }
 
-
         if (FinancialPersonSavedAccounts) {
           // Create FinancialPaymentDetail
-          const SecondFinancialPaymentDetail = { ...FinancialPaymentDetail,
+          const SecondFinancialPaymentDetail = {
+            ...FinancialPaymentDetail,
             ...{ Guid: makeNewGuid() },
           };
 
           const SecondFinancialPaymentDetailId = api.post.sync(
-            "FinancialPaymentDetails", SecondFinancialPaymentDetail
+            "FinancialPaymentDetails",
+            SecondFinancialPaymentDetail,
           );
 
           if (SecondFinancialPaymentDetailId.status) return;
 
           // Create FinancialPersonSavedAccounts
-          FinancialPersonSavedAccounts = { ...FinancialPersonSavedAccounts,
+          FinancialPersonSavedAccounts = {
+            ...FinancialPersonSavedAccounts,
             ...{
               Guid: makeNewGuid(),
               PersonAliasId: PrimaryAliasId,
@@ -163,10 +170,12 @@ const transactions = () => {
             // @TODO we need a way to let the UI know if this worked or not
             // if we start getting reports of people not being able to save accounts
             // look here first
-            api.post.sync("FinancialPersonSavedAccounts", FinancialPersonSavedAccounts);
+            api.post.sync(
+              "FinancialPersonSavedAccounts",
+              FinancialPersonSavedAccounts,
+            );
           }
         }
-
 
         if (TransactionId && !TransactionId.statusText) {
           // taken from https://github.com/SparkDevNetwork/Rock/blob/cb8cb69aff36cf182b5d35c6e14c8a344b035a90/Rock/Transactions/SendPaymentReciepts.cs
@@ -190,7 +199,6 @@ const transactions = () => {
             totalAmount += detail.Amount;
           }
 
-
           mergeFields.TotalAmount = totalAmount;
           mergeFields.GaveAnonymous = isGuest;
           mergeFields.ReceiptEmail = Person.Email;
@@ -199,13 +207,17 @@ const transactions = () => {
           mergeFields.FirstNames = Person.NickName || Person.FirstName;
           mergeFields.TransactionCode = Transaction.TransactionCode;
           mergeFields.Amounts = accountAmounts;
-          mergeFields.AccountNumberMasked = FinancialPaymentDetail.AccountNumberMasked.slice(-4);
+          mergeFields.AccountNumberMasked = FinancialPaymentDetail.AccountNumberMasked.slice(
+            -4,
+          );
 
           // remove record
-          TransactionReciepts.remove(_id, (err) => {
+          TransactionReciepts.remove(_id, err => {
             if (!err) {
               if (!GIVING_EMAIL_ID) {
-                GIVING_EMAIL_ID = api.get.sync("SystemEmails?$filter=Title eq 'Giving Receipt'");
+                GIVING_EMAIL_ID = api.get.sync(
+                  "SystemEmails?$filter=Title eq 'Giving Receipt'",
+                );
                 GIVING_EMAIL_ID = GIVING_EMAIL_ID[0].Id;
               }
 
@@ -216,7 +228,7 @@ const transactions = () => {
                 mergeFields,
                 () => {
                   // async stub
-                }
+                },
               );
             }
           });

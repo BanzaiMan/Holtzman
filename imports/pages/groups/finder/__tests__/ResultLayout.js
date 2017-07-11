@@ -24,7 +24,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -35,7 +35,7 @@ it("renders with props", () => {
 it("renders spinner when loading is true", () => {
   const someProps = {
     loading: true,
-  }
+  };
   const wrapper = shallow(generateComponent(someProps));
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
@@ -49,9 +49,11 @@ it("shows up arrow on filter tag when tags are shown", () => {
 });
 
 it("shows down arrow on filter tag when tag drawer is closed", () => {
-  const wrapper = shallow(generateComponent({
-    showTags: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      showTags: false,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 
   const iconTag = getSingleSpecWrapper(wrapper, "iconTag").props();

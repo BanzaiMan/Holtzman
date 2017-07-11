@@ -9,10 +9,7 @@ import Headerable from "../../deprecated/mixins/mixins.Header";
 
 import modal from "../../data/store/modal";
 
-import {
-  search as searchActions,
-  nav as navActions,
-} from "../../data/store";
+import { search as searchActions, nav as navActions } from "../../data/store";
 
 import Layout from "./Layout";
 
@@ -37,12 +34,11 @@ const SEARCH_QUERY = gql`
 `;
 
 class SearchContainerWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     search: PropTypes.object.isRequired,
     client: PropTypes.object,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(navActions.setLevel("TOP"));
@@ -54,10 +50,13 @@ class SearchContainerWithoutData extends Component {
       this.lockHeader("DiscoverModal");
     }
     if (this.headerAction) {
-      this.headerAction({
-        isSearch: true,
-        searchSubmit: this.searchSubmit,
-      }, "DiscoverModal");
+      this.headerAction(
+        {
+          isSearch: true,
+          searchSubmit: this.searchSubmit,
+        },
+        "DiscoverModal",
+      );
     }
   }
 
@@ -68,7 +67,6 @@ class SearchContainerWithoutData extends Component {
       this.unlockHeader();
     }
   }
-
 
   getSearch() {
     const { dispatch } = this.props;
@@ -81,7 +79,8 @@ class SearchContainerWithoutData extends Component {
       site: "https://newspring.cc",
     };
 
-    this.props.client.query({ query: SEARCH_QUERY, variables, forceFetch: true })
+    this.props.client
+      .query({ query: SEARCH_QUERY, variables, forceFetch: true })
       .then(({ data }) => {
         const { search } = data;
         const propsSearch = this.props.search;
@@ -91,17 +90,19 @@ class SearchContainerWithoutData extends Component {
         if (search.total === 0) {
           dispatch(searchActions.none(true));
         }
-        if (!propsSearch || !propsSearch.items || propsSearch.items.length >= search.total) {
+        if (
+          !propsSearch ||
+          !propsSearch.items ||
+          propsSearch.items.length >= search.total
+        ) {
           dispatch(searchActions.done(true));
         }
       });
   }
 
-  hide = () => (
-    this.props.dispatch(modal.hide())
-  )
+  hide = () => this.props.dispatch(modal.hide());
 
-  searchSubmit = (event) => {
+  searchSubmit = event => {
     event.preventDefault();
     document.getElementById("search").blur();
     const { dispatch } = this.props;
@@ -115,39 +116,27 @@ class SearchContainerWithoutData extends Component {
     ]).then(() => {
       this.getSearch();
     });
-  }
+  };
 
-  loadMore = (event) => {
+  loadMore = event => {
     event.preventDefault();
     const { dispatch } = this.props;
 
     dispatch(searchActions.toggleLoading());
     this.getSearch();
-  }
+  };
 
   render() {
     const search = this.props.search;
 
-    return (
-      <Layout
-        loadMore={this.loadMore}
-        search={search}
-        hide={this.hide}
-      />
-    );
+    return <Layout loadMore={this.loadMore} search={search} hide={this.hide} />;
   }
 }
 
-const map = (state) => ({ search: state.search });
+const map = state => ({ search: state.search });
 const withRedux = connect(map);
 const withHeader = ReactMixin.decorate(Headerable);
 
 export default withApollo(withRedux(withHeader(SearchContainerWithoutData)));
 
-export {
-  SearchContainerWithoutData,
-  SEARCH_QUERY,
-  map,
-  withRedux,
-  withHeader,
-};
+export { SearchContainerWithoutData, SEARCH_QUERY, map, withRedux, withHeader };

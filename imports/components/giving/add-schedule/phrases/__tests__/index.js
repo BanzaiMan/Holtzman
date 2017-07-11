@@ -12,7 +12,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaulProps,
     ...additionalProps,
   };
-  return <TertiaryPhrase { ...newProps } />;
+  return <TertiaryPhrase {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -21,8 +21,10 @@ it("renders with props", () => {
 });
 
 it("appends additional classes", () => {
-  const wrapper = shallow(generateComponent({
-    additionalClasses: "one two three",
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      additionalClasses: "one two three",
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

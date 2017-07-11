@@ -1,15 +1,13 @@
 import { shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import { FollowingContainer } from "../";
-import {
-  topics as topicActions,
-} from "../../../../../data/store";
+import { topics as topicActions } from "../../../../../data/store";
 import { canSee } from "../../../../../components/@enhancers/security-roles";
 
 jest.mock("../../../../../data/store", () => ({
   topics: {
     toggle: jest.fn(),
-  }
+  },
 }));
 
 describe("Following", () => {
@@ -36,15 +34,13 @@ describe("Following", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return (
-    <FollowingContainer { ...newProps } />
-    );
+    return <FollowingContainer {...newProps} />;
   };
 
   it("renders the 'following' items with authorization", () => {
     const wrapper = shallow(generateComponent());
     expect(shallowToJson(wrapper)).toMatchSnapshot();
-  })
+  });
 
   it("renders the 'following' items without authorization", () => {
     const someProps = {
@@ -55,5 +51,5 @@ describe("Following", () => {
 
     const wrapper = shallow(generateComponent(someProps));
     expect(shallowToJson(wrapper)).toMatchSnapshot();
-  })
-})
+  });
+});

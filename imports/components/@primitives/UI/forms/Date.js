@@ -1,4 +1,3 @@
-
 import { Component, PropTypes } from "react";
 import DayPicker, { DateUtils } from "react-day-picker";
 // import Moment from "moment";
@@ -8,9 +7,7 @@ import Input from "./Input";
 // global styles
 import Styles from "./styles/date";
 
-
 export default class DateComponent extends Component {
-
   static propTypes = {
     format: PropTypes.func,
     defaultValue: PropTypes.string,
@@ -21,7 +18,7 @@ export default class DateComponent extends Component {
   state = {
     showDatePicker: false,
     selectedDay: null,
-  }
+  };
 
   componentDidMount() {
     window.addEventListener("resize", this.fixPickerPosition);
@@ -34,7 +31,7 @@ export default class DateComponent extends Component {
   onDayClick = (e, day, { selected, disabled }) => {
     if (disabled) return;
     this.setState({ selectedDay: selected ? null : day });
-  }
+  };
 
   fixPickerPosition = () => {
     const picker = document.getElementById("datepicker");
@@ -48,36 +45,56 @@ export default class DateComponent extends Component {
         child.style.marginTop = "-250px";
       }
     }
-  }
+  };
 
   toggle = () => {
     this.setState({ showDatePicker: !this.state.showDatePicker });
     setTimeout(() => {
       this.fixPickerPosition();
     }, 200);
-  }
-
+  };
 
   render() {
     const { selectedDay } = this.state;
 
     const WEEKDAYS_LONG = {
-      en: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      en: [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
     };
     const MONTHS = {
-      en: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+      en: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
     };
     const WEEKDAYS_SHORT = {
       en: ["S", "M", "T", "W", "T", "F", "S"],
     };
 
-
     const localUtils = {
-      formatMonthTitle: (d, locale) => `${MONTHS[locale][d.getMonth()]} ${d.getFullYear()}`,
+      formatMonthTitle: (d, locale) =>
+        `${MONTHS[locale][d.getMonth()]} ${d.getFullYear()}`,
       formatWeekdayShort: (i, locale) => WEEKDAYS_SHORT[locale][i],
       formatWeekdayLong: (i, locale) => WEEKDAYS_LONG[locale][i],
       getFirstDayOfWeek: () => 0,
-      formatDay: (d) => d.toDateString(),
+      formatDay: d => d.toDateString(),
     };
 
     let formattedDay = selectedDay && selectedDay.toLocaleDateString();
@@ -89,21 +106,15 @@ export default class DateComponent extends Component {
       formattedDay = this.props.format(this.props.defaultValue);
     }
 
-
     return (
       <div className="display-inline-block" style={{ position: "relative" }}>
         <Styles />
         <div style={{ position: "relative" }}>
-          <Input
-            {...this.props}
-            defaultValue={formattedDay}
-            ref="input"
-          />
+          <Input {...this.props} defaultValue={formattedDay} ref="input" />
           {/* eslint-disable */}
           <div className="locked-ends locked-sides" onClick={this.toggle} />
           {/* eslint-enable */}
         </div>
-
 
         {(() => {
           if (this.state.showDatePicker) {
@@ -127,18 +138,22 @@ export default class DateComponent extends Component {
                     locale="en"
                     localeUtils={localUtils}
                     modifiers={{
-                      selected: (day) => DateUtils.isSameDay(selectedDay, day),
-                      disabled: (day) =>
-                        (
-                          (this.props.past === false && DateUtils.isPastDay(day)) ||
-                          (this.props.today === false && DateUtils.isSameDay(day, new Date()))
-                        )
-                      ,
+                      selected: day => DateUtils.isSameDay(selectedDay, day),
+                      disabled: day =>
+                        (this.props.past === false &&
+                          DateUtils.isPastDay(day)) ||
+                        (this.props.today === false &&
+                          DateUtils.isSameDay(day, new Date())),
                     }}
                     onDayClick={this.onDayClick}
                   />
                   <div className="background--light-secondary soft text-center">
-                    <button className="btn flush btn--small" onClick={this.toggle}>Done</button>
+                    <button
+                      className="btn flush btn--small"
+                      onClick={this.toggle}
+                    >
+                      Done
+                    </button>
                   </div>
                 </div>
 
@@ -157,7 +172,6 @@ export default class DateComponent extends Component {
                 />
                 {/* eslint-enable */}
               </div>
-
             );
           }
           return undefined;

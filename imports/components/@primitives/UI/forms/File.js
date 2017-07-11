@@ -3,7 +3,6 @@ import { Component, PropTypes } from "react";
 import Label from "./Label";
 
 export default class File extends Component {
-
   static propTypes = {
     defaultValue: PropTypes.string,
     autofocus: PropTypes.bool,
@@ -12,10 +11,7 @@ export default class File extends Component {
     disabled: PropTypes.bool,
     errorText: PropTypes.string,
     theme: PropTypes.string,
-    classes: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.array,
-    ]),
+    classes: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
     style: PropTypes.object, // eslint-disable-line
     id: PropTypes.string,
     name: PropTypes.string,
@@ -23,14 +19,14 @@ export default class File extends Component {
     hideLabel: PropTypes.string,
     placeholder: PropTypes.string,
     inputClasses: PropTypes.array, // eslint-disable-line
-  }
+  };
 
   state = {
     active: false,
     focused: false,
     error: false,
     status: "",
-  }
+  };
 
   componentWillMount() {
     if (this.props.defaultValue) {
@@ -51,16 +47,16 @@ export default class File extends Component {
     }
   }
 
-
-  format = (e) => { // eslint-disable-line
+  format = e => {
+    // eslint-disable-line
     const target = this.node;
     const value = this.node.value;
 
-    if (this.props.format && typeof (this.props.format) === "function") {
+    if (this.props.format && typeof this.props.format === "function") {
       const newValue = this.props.format(value, target, e);
       target.value = newValue;
     }
-  }
+  };
 
   validate = () => {
     const target = this.node;
@@ -77,12 +73,12 @@ export default class File extends Component {
       focused: false,
     });
 
-    if (this.props.validation && typeof (this.props.validation) === "function") {
+    if (this.props.validation && typeof this.props.validation === "function") {
       this.setState({
         error: !this.props.validation(value, target),
       });
     }
-  }
+  };
 
   focus = () => {
     this.setState({
@@ -90,17 +86,16 @@ export default class File extends Component {
       error: false,
       focused: true,
     });
-  }
+  };
 
-  setValue = (value) => {
+  setValue = value => {
     const node = this.node;
     node.value = value;
     this.focus();
     this.validate();
-  }
+  };
 
-  getValue = () =>
-    this.node.value;
+  getValue = () => this.node.value;
 
   renderHelpText = () => {
     if ((this.state.error && this.props.errorText) || this.state.status) {
@@ -111,7 +106,7 @@ export default class File extends Component {
       );
     }
     return undefined;
-  }
+  };
 
   style = () => {
     if (this.props.disabled) {
@@ -121,22 +116,29 @@ export default class File extends Component {
     }
 
     return {};
-  }
-
+  };
 
   render() {
-    let inputclasses = [
-      "input",
-    ];
+    let inputclasses = ["input"];
 
     // theme overwrite
-    if (this.props.theme) { inputclasses = this.props.theme; }
+    if (this.props.theme) {
+      inputclasses = this.props.theme;
+    }
     // state mangaged classes
-    if (this.state.active) { inputclasses.push("input--active"); }
-    if (this.state.focused) { inputclasses.push("input--focused"); }
-    if (this.state.error) { inputclasses.push("input--alert"); }
+    if (this.state.active) {
+      inputclasses.push("input--active");
+    }
+    if (this.state.focused) {
+      inputclasses.push("input--focused");
+    }
+    if (this.state.error) {
+      inputclasses.push("input--alert");
+    }
     // custom added classes
-    if (this.props.classes) { inputclasses = inputclasses.concat(this.props.classes); }
+    if (this.props.classes) {
+      inputclasses = inputclasses.concat(this.props.classes);
+    }
 
     return (
       <div className={inputclasses.join(" ")} style={this.props.style || {}}>
@@ -144,12 +146,8 @@ export default class File extends Component {
           if (!this.props.hideLabel) {
             return (
               <Label
-                labelFor={
-                  this.props.id || this.props.name || this.props.label
-                }
-                labelName={
-                  this.props.label || this.props.name
-                }
+                labelFor={this.props.id || this.props.name || this.props.label}
+                labelName={this.props.label || this.props.name}
                 disabed={this.props.disabled ? this.props.disabled : false}
               />
             );
@@ -157,9 +155,8 @@ export default class File extends Component {
           return undefined;
         })()}
 
-
         <input
-          ref={(node) => (this.node = node)}
+          ref={node => (this.node = node)}
           id={this.props.id || this.props.name || this.props.label}
           type="file"
           placeholder={this.props.placeholder || this.props.label}
@@ -175,9 +172,7 @@ export default class File extends Component {
         />
 
         {this.renderHelpText()}
-
       </div>
     );
   }
-
 }

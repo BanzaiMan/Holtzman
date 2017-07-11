@@ -61,7 +61,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Template { ...newProps } />;
+  return <Template {...newProps} />;
 };
 
 window.matchMedia = jest.fn().mockReturnValue({
@@ -94,9 +94,11 @@ it("renders without map on server", () => {
 it("updates search state and sets nav level on mount", () => {
   const mockDispatch = jest.fn();
   navActions.setLevel = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   expect(wrapper.state().showSearch).toBe(true);
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(navActions.setLevel).toHaveBeenCalledTimes(1);
@@ -122,7 +124,9 @@ it("onMarkerHover updates state from marker", () => {
 
 it("getMarkers returns markers", () => {
   const wrapper = shallow(generateComponent());
-  const result = wrapper.instance().getMarkers(defaultProps.data.groups.results);
+  const result = wrapper
+    .instance()
+    .getMarkers(defaultProps.data.groups.results);
   const group1 = defaultProps.data.groups.results[0];
   const group2 = defaultProps.data.groups.results[1];
   expect(result).toEqual([
@@ -169,12 +173,14 @@ it("removeQueryString calls preventDefault", () => {
 it("removeQueryString updates router with blank object", () => {
   const mockCreatePath = jest.fn().mockReturnValue("newPath");
   const mockReplace = jest.fn();
-  const wrapper = shallow(generateComponent({
-    router: {
-      createPath: mockCreatePath,
-      replace: mockReplace,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      router: {
+        createPath: mockCreatePath,
+        replace: mockReplace,
+      },
+    }),
+  );
   wrapper.instance().removeQueryString();
   expect(mockCreatePath).toHaveBeenCalledTimes(1);
   expect(mockCreatePath).toHaveBeenCalledWith({});

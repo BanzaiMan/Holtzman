@@ -6,9 +6,7 @@ import SeriesHero from "../Hero";
 const defaultProps = {
   series: {
     content: {
-      colors: [
-        { description: "primary", value: "0000ff" },
-      ],
+      colors: [{ description: "primary", value: "0000ff" }],
       images: [
         {
           fileLabel: "1:1",
@@ -25,7 +23,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <SeriesHero { ...newProps } />;
+  return <SeriesHero {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -49,7 +47,7 @@ it("renders close trailer button when playing", () => {
 it("backgroundClasses returns css class string", () => {
   const wrapper = shallow(generateComponent());
   const result = wrapper.instance().backgroundClasses();
-  expect(result).toMatchSnapshot()
+  expect(result).toMatchSnapshot();
 });
 
 it("ready sets the player", () => {

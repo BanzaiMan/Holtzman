@@ -6,33 +6,35 @@ import Headerable from "../../../deprecated/mixins/mixins.Header";
 
 import modal from "../../../data/store/modal";
 
-import {
-  nav as navActions,
-} from "../../../data/store";
+import { nav as navActions } from "../../../data/store";
 
 import Groups from "./Groups";
 
 class SectionsContainerWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     sections: PropTypes.object.isRequired,
     web: PropTypes.bool,
-  }
+  };
 
   componentDidMount() {
     this.props.dispatch(navActions.setLevel("TOP"));
     if (this.props.web || process.env.WEB) {
-      this.props.dispatch(modal.update({
-        keepNav: true,
-        modalBackground: "light",
-      }));
+      this.props.dispatch(
+        modal.update({
+          keepNav: true,
+          modalBackground: "light",
+        }),
+      );
     }
 
     this.lockHeader("SectionsContainer");
-    this.headerAction({
-      title: "Sections",
-    }, "SectionsContainer");
+    this.headerAction(
+      {
+        title: "Sections",
+      },
+      "SectionsContainer",
+    );
   }
 
   componentWillUnmount() {
@@ -40,7 +42,7 @@ class SectionsContainerWithoutData extends Component {
     this.unlockHeader();
   }
 
-  hide = () => (this.props.dispatch(modal.hide()))
+  hide = () => this.props.dispatch(modal.hide());
 
   render() {
     const { content } = this.props.sections;
@@ -65,14 +67,9 @@ class SectionsContainerWithoutData extends Component {
   }
 }
 
-const map = (state) => ({ sections: state.sections });
+const map = state => ({ sections: state.sections });
 const withRedux = connect(map);
 const withHeader = ReactMixin.decorate(Headerable);
 export default withRedux(withHeader(SectionsContainerWithoutData));
 
-export {
-  SectionsContainerWithoutData,
-  map,
-  withRedux,
-  withHeader,
-};
+export { SectionsContainerWithoutData, map, withRedux, withHeader };

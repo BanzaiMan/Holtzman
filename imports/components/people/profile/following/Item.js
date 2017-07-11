@@ -2,9 +2,11 @@ import { PropTypes } from "react";
 
 import Toggle from "../../../@primitives/UI/toggle/Toggle";
 
-const FollowingItem = ({ item, changed, switchId, active }) => (
+const FollowingItem = ({ item, changed, switchId, active }) =>
   <div className="push-left soft-ends soft-right text-left floating outlined--light outlined--bottom">
-    <h6 className="soft-half-left three-quarters flush floating__item">{item}</h6>
+    <h6 className="soft-half-left three-quarters flush floating__item">
+      {item}
+    </h6>
     <Toggle
       id={switchId}
       containerClasses="one-quarter floating__item"
@@ -12,8 +14,7 @@ const FollowingItem = ({ item, changed, switchId, active }) => (
       changed={changed}
       active={active}
     />
-  </div>
-);
+  </div>;
 
 FollowingItem.propTypes = {
   item: PropTypes.string.isRequired,

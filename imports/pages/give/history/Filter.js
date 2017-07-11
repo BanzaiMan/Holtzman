@@ -51,7 +51,7 @@ export default class Filter extends Component {
 
   componentWillReceiveProps(nextProps: Object) {
     if (this.props.family.length !== nextProps.family.length) {
-      this.setState({ people: nextProps.family.map((x) => x.person.id) });
+      this.setState({ people: nextProps.family.map(x => x.person.id) });
     }
   }
 
@@ -118,21 +118,18 @@ export default class Filter extends Component {
   };
 
   fixPickerPosition = () => {
-    const interval = setInterval(
-      () => {
-        const picker = document.getElementById("datepicker");
-        if (!picker) return;
+    const interval = setInterval(() => {
+      const picker = document.getElementById("datepicker");
+      if (!picker) return;
 
-        clearInterval(interval);
-        const child = picker.children[0];
-        const globalTop = Number(child.getBoundingClientRect().top);
-        if (globalTop < 0) {
-          const marginTop = Number(child.style.marginTop.slice(0, -2)) + 40;
-          child.style.marginTop = `${marginTop + Math.abs(globalTop)}px`;
-        }
-      },
-      50,
-    );
+      clearInterval(interval);
+      const child = picker.children[0];
+      const globalTop = Number(child.getBoundingClientRect().top);
+      if (globalTop < 0) {
+        const marginTop = Number(child.style.marginTop.slice(0, -2)) + 40;
+        child.style.marginTop = `${marginTop + Math.abs(globalTop)}px`;
+      }
+    }, 50);
   };
 
   toggleStartDatePicker = () => {
@@ -235,18 +232,16 @@ export default class Filter extends Component {
           onClick={this.toggle}
           className={
             "one-whole background--light-primary " +
-              "soft-half-ends soft-sides soft-double-sides@lap-and-up"
+            "soft-half-ends soft-sides soft-double-sides@lap-and-up"
           }
         >
-          <h7
-            className="text-dark-secondary flush-bottom push-half-left display-inline-block"
-          >
+          <h7 className="text-dark-secondary flush-bottom push-half-left display-inline-block">
             Filter Transactions
           </h7>
           <span
-            className={
-              `float-right flush ${expanded ? "icon-close" : "icon-filter"}`
-            }
+            className={`float-right flush ${expanded
+              ? "icon-close"
+              : "icon-filter"}`}
             style={{ marginTop: expanded ? "0px" : "0px", cursor: "pointer" }}
           />
         </div>
@@ -255,15 +250,13 @@ export default class Filter extends Component {
           <div
             className={
               "one-whole outlined--light outlined--bottom background--light-primary " +
-                "soft-half-ends soft-sides soft-double-sides@lap-and-up push-half-left"
+              "soft-half-ends soft-sides soft-double-sides@lap-and-up push-half-left"
             }
           >
             {family &&
               family.length > 1 &&
               <div>
-                <h7
-                  className="push-top text-dark-secondary display-inline-block"
-                >
+                <h7 className="push-top text-dark-secondary display-inline-block">
                   Family Members
                 </h7>
 
@@ -279,7 +272,7 @@ export default class Filter extends Component {
                       <div
                         className={
                           `${active ? "checkbox-checked" : ""} ` +
-                            "display-inline-block outlined checkbox"
+                          "display-inline-block outlined checkbox"
                         }
                       />
                       <h6 className="soft-half-left display-inline-block">
@@ -290,9 +283,7 @@ export default class Filter extends Component {
                 })}
               </div>}
 
-            <h7
-              className="soft-half-top push-half-top text-dark-secondary display-inline-block"
-            >
+            <h7 className="soft-half-top push-half-top text-dark-secondary display-inline-block">
               Date Range
             </h7>
             <div className="grid one-whole flush-left@palm">
@@ -306,9 +297,7 @@ export default class Filter extends Component {
               </div>
             </div>
 
-            <h7
-              className="soft-half-top push-half-top text-dark-secondary display-inline-block"
-            >
+            <h7 className="soft-half-top push-half-top text-dark-secondary display-inline-block">
               Custom Dates
             </h7>
             <div className="grid one-whole flush-left@palm">
@@ -324,14 +313,14 @@ export default class Filter extends Component {
                   onClick={this.startClick}
                   active={
                     this.state.customStartLabel !== "Start Date" &&
-                      this.state.customStartActive
+                    this.state.customStartActive
                   }
                   className={this.state.customDateDisabled && "tag--disabled"}
                   icon={
                     this.state.customStartLabel === "Start Date" &&
-                      !this.state.showStartDatePicker &&
-                      !this.state.customStartActive &&
-                      scheduleIcon
+                    !this.state.showStartDatePicker &&
+                    !this.state.customStartActive &&
+                    scheduleIcon
                   }
                   clickAble={!this.state.dateRangeActive}
                 />
@@ -342,14 +331,14 @@ export default class Filter extends Component {
                   onClick={this.startClick}
                   active={
                     this.state.customEndLabel !== "End Date" &&
-                      this.state.customEndActive
+                    this.state.customEndActive
                   }
                   className={this.state.customDateDisabled && "tag--disabled"}
                   icon={
                     this.state.customEndLabel === "End Date" &&
-                      !this.state.showEndDatePicker &&
-                      !this.state.customEndActive &&
-                      scheduleIcon
+                    !this.state.showEndDatePicker &&
+                    !this.state.customEndActive &&
+                    scheduleIcon
                   }
                   clickAble={!this.state.dateRangeActive}
                 />

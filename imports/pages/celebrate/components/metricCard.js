@@ -6,11 +6,8 @@ type IMetricCard = {
   label: string,
 };
 
-const MetricCard = ({
-  count,
-  label,
-}: IMetricCard) => (
-  <div className="floating__item one-whole soft" >
+const MetricCard = ({ count, label }: IMetricCard) =>
+  <div className="floating__item one-whole soft">
     <FitText compressor={0.5}>
       <h1
         className="uppercase flush-bottom soft-half-bottom"
@@ -24,7 +21,6 @@ const MetricCard = ({
     <h4 className="flush-bottom">
       {label}
     </h4>
-  </div>
-);
+  </div>;
 
 export default MetricCard;

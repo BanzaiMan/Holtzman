@@ -1,9 +1,6 @@
 /* eslint-disable */
 import { storiesOf } from "@kadira/storybook";
-import {
-  withKnobs,
-  boolean,
-} from "@kadira/storybook-addon-knobs";
+import { withKnobs, boolean } from "@kadira/storybook-addon-knobs";
 import withReadme from "storybook-readme/with-readme";
 import backgrounds from "react-storybook-addon-backgrounds";
 import centered from "/.storybook/decorators/centered";
@@ -15,13 +12,16 @@ import SecondaryButton from "../Secondary";
 const story = storiesOf("Buttons", module)
   .addDecorator(withKnobs)
   .addDecorator(centered)
-  .addDecorator(backgrounds(defaultColors("light-primary", "light-secondary")))
-  ;
+  .addDecorator(backgrounds(defaultColors("light-primary", "light-secondary")));
 
-story
-  .add("Secondary", withReadme(Readme, () => (
+story.add(
+  "Secondary",
+  withReadme(Readme, () =>
     <SecondaryButton
       disabled={boolean("disabled", false)}
-      onClick={() => { alert("clicked"); }}
-    />
-  )));
+      onClick={() => {
+        alert("clicked");
+      }}
+    />,
+  ),
+);

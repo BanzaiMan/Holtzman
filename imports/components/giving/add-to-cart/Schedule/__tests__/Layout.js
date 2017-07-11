@@ -21,7 +21,7 @@ const generateComponent = (additionalProps = {}) => {
     toggleSchedule: jest.fn(),
   };
 
-  return <Layout {...defaultProps} {...additionalProps} />
+  return <Layout {...defaultProps} {...additionalProps} />;
 };
 
 beforeEach(() => {
@@ -44,6 +44,8 @@ it("should render schedule options if checked", () => {
 });
 
 it("should render the date picker if told to", () => {
-  const component = shallow(generateComponent({ checked: true, showDatePicker: true }));
+  const component = shallow(
+    generateComponent({ checked: true, showDatePicker: true }),
+  );
   expect(shallowToJson(component)).toMatchSnapshot();
 });

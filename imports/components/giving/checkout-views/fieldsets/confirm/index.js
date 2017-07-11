@@ -28,14 +28,14 @@ type IConfirm = {
   transactions: Object,
   transactionType: string,
   url: string,
-}
+};
 
 export default class Confirm extends Component {
   props: IConfirm;
 
   state = {
     changePayments: false,
-  }
+  };
 
   completeGift = (e: Event) => {
     e.preventDefault();
@@ -46,7 +46,8 @@ export default class Confirm extends Component {
 
     const name = data.payment.name;
     // remove sensitive information
-    delete data.billing; delete data.payment;
+    delete data.billing;
+    delete data.payment;
 
     // add name in for saving the account
     data.payment = { name };
@@ -61,7 +62,7 @@ export default class Confirm extends Component {
         total,
         data,
         userId: Meteor.userId(),
-      })
+      }),
     );
 
     // ensure trailing slash
@@ -71,14 +72,17 @@ export default class Confirm extends Component {
       rootUrl = `${rootUrl}/`;
     }
 
-    const giveUrl = `${Meteor.settings.public.giveUrl}give/review?giveData=${giveData}`;
+    const giveUrl = `${Meteor.settings.public
+      .giveUrl}give/review?giveData=${giveData}`;
     openUrl(
       giveUrl,
       null,
-      () => { this.props.clearData(); },
-      null
+      () => {
+        this.props.clearData();
+      },
+      null,
     );
-  }
+  };
 
   choose = (e: any) => {
     e.preventDefault();
@@ -94,7 +98,7 @@ export default class Confirm extends Component {
     }
 
     this.props.changeSavedAccount(act);
-  }
+  };
 
   changeAccounts = (e: Event) => {
     e.preventDefault();
@@ -102,7 +106,7 @@ export default class Confirm extends Component {
     this.setState({
       changePayments: !this.state.changePayments,
     });
-  }
+  };
 
   render() {
     if (this.state.changePayments) {
@@ -110,7 +114,6 @@ export default class Confirm extends Component {
         <PaymentOptionsLayout
           changeAccounts={this.changeAccounts}
           choose={this.choose}
-
           goToStepOne={this.props.goToStepOne}
           savedAccount={this.props.savedAccount}
           savedAccounts={this.props.savedAccounts}
@@ -129,14 +132,13 @@ export default class Confirm extends Component {
       );
     }
 
-    const transactions = Object.keys(this.props.transactions).map((t) => (
-      this.props.transactions[t]
-    ));
+    const transactions = Object.keys(this.props.transactions).map(
+      t => this.props.transactions[t],
+    );
     return (
       <TransactionLayout
         changeAccounts={this.changeAccounts}
         completeGift={this.completeGift}
-
         back={this.props.back}
         goToStepOne={this.props.goToStepOne}
         header={this.props.header}

@@ -16,11 +16,13 @@ const DiscoverWithoutData = ({
   discover,
   recentLikes,
 }: IDiscoverWithoutData) => {
-  const featured = discover.items && discover.items
-    .filter((x) => (x.status.toLowerCase() === "featured"));
+  const featured =
+    discover.items &&
+    discover.items.filter(x => x.status.toLowerCase() === "featured");
 
-  const open = discover.items && discover.items
-    .filter((x) => (x.status.toLowerCase() === "open"));
+  const open =
+    discover.items &&
+    discover.items.filter(x => x.status.toLowerCase() === "open");
 
   return (
     <Layout
@@ -70,9 +72,4 @@ const withRedux = connect();
 
 export default withRedux(withDiscover(withRecentLikes(DiscoverWithoutData)));
 
-export {
-  DiscoverWithoutData,
-  DISCOVER_QUERY,
-  withDiscover,
-  withRedux,
-};
+export { DiscoverWithoutData, DISCOVER_QUERY, withDiscover, withRedux };

@@ -23,11 +23,10 @@ import SingleVideoPlayer from "../../components/@primitives/players/video";
 const defaultArray = [];
 
 class EventSingleWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     event: PropTypes.object.isRequired,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(navActions.setLevel("BASIC_CONTENT"));
@@ -59,9 +58,7 @@ class EventSingleWithoutData extends Component {
           title={event.title}
           image={photo}
           id={event.id}
-          meta={[
-            { property: "og:type", content: "article" },
-          ]}
+          meta={[{ property: "og:type", content: "article" }]}
         />
         <Split nav classes={["background--light-primary"]}>
           {(() => {
@@ -71,14 +68,21 @@ class EventSingleWithoutData extends Component {
                   mobile
                   background={photo}
                   classes={["floating--bottom", "overlay--gradient@lap-and-up"]}
-                  ratioClasses={["floating__item", "overlay__item", "one-whole", "soft@lap-and-up"]}
+                  ratioClasses={[
+                    "floating__item",
+                    "overlay__item",
+                    "one-whole",
+                    "soft@lap-and-up",
+                  ]}
                   aspect="square"
                 />
               );
             }
             // set the correct ooyala id based on live
             let ooyalaId = event.content.ooyalaId;
-            if (live.live) { ooyalaId = live.embedCode; }
+            if (live.live) {
+              ooyalaId = live.embedCode;
+            }
             return <SingleVideoPlayer id={ooyalaId} autoplay="false" />;
           })()}
         </Split>
@@ -90,7 +94,9 @@ class EventSingleWithoutData extends Component {
                 "soft-double@lap-wide-and-up push-top push-double-top@lap-and-up"
               }
             >
-              <h2 className="capitalize">{event.title}</h2>
+              <h2 className="capitalize">
+                {event.title}
+              </h2>
               <div dangerouslySetInnerHTML={react.markup(event)} />
             </section>
             <RelatedContent
@@ -141,20 +147,13 @@ const GET_EVENT_QUERY = gql`
 
 const withEvent = graphql(GET_EVENT_QUERY, {
   name: "event",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { id: ownProps.params.id },
   }),
 });
 
 export default connect()(
-  withEvent(
-    ReactMixin.decorate(Headerable)(
-      EventSingleWithoutData
-    )
-  )
+  withEvent(ReactMixin.decorate(Headerable)(EventSingleWithoutData)),
 );
 
-export {
-  EventSingleWithoutData,
-  GET_EVENT_QUERY,
-};
+export { EventSingleWithoutData, GET_EVENT_QUERY };

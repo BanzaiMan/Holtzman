@@ -25,7 +25,7 @@ export const ACTIVITY_QUERY = gql`
         description
       }
     }
-    savedPayments(cache: false){
+    savedPayments(cache: false) {
       id: entityId
       name
       payment {
@@ -66,14 +66,13 @@ const withData = graphql(ACTIVITY_QUERY, {
   },
 });
 
-
-const Layout = withData(({ data }) => (
+const Layout = withData(({ data }) =>
   <div className="soft-double-bottom@lap-and-up soft-bottom">
     <Meta title="Giving Dashboard" />
     <Activity feed={data} />
     <Schedules schedules={data} />
     <SavedPayments payments={data} />
-  </div>
-));
+  </div>,
+);
 
 export default Layout;

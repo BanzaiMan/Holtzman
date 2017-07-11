@@ -1,4 +1,3 @@
-
 import { Component, PropTypes } from "react";
 import { graphql } from "react-apollo";
 import { connect } from "react-redux";
@@ -13,12 +12,11 @@ import {
 import Layout from "./Layout";
 
 class DetailsWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
     entries: PropTypes.object,
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(navActions.setLevel("BASIC_CONTENT"));
@@ -43,20 +41,26 @@ class DetailsWithoutData extends Component {
     const { entries, loading } = this.props.entries;
     // if (loading) return <Loading /> // XXX
 
-    return (<Layout
-      transaction={transaction}
-      entries={entries}
-      loadingEntries={loading}
-    />);
+    return (
+      <Layout
+        transaction={transaction}
+        entries={entries}
+        loadingEntries={loading}
+      />
+    );
   }
 }
 
 const ENTRIES_QUERY = gql`
-  query GetTaggedContent($tagName: String!, $limit: Int, $includeChannels: [String]) {
+  query GetTaggedContent(
+    $tagName: String!
+    $limit: Int
+    $includeChannels: [String]
+  ) {
     entries: taggedContent(
-      tagName: $tagName,
-      limit: $limit,
-      includeChannels: $includeChannels,
+      tagName: $tagName
+      limit: $limit
+      includeChannels: $includeChannels
       cache: false
     ) {
       entryId: id
@@ -122,20 +126,14 @@ const TRANSACTIONS_QUERY = gql`
 `;
 
 const withTransactions = graphql(TRANSACTIONS_QUERY, {
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: {
       transactionId: ownProps.params.id,
     },
   }),
 });
 
-const Details = connect()(
-  withEntries(
-    withTransactions(
-      DetailsWithoutData
-    )
-  )
-);
+const Details = connect()(withEntries(withTransactions(DetailsWithoutData)));
 
 const Routes = [
   {
@@ -150,6 +148,4 @@ export default {
   Routes,
 };
 
-export {
-  DetailsWithoutData,
-};
+export { DetailsWithoutData };

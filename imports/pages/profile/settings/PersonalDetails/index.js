@@ -4,19 +4,19 @@ import { connect } from "react-redux";
 import gql from "graphql-tag";
 import moment from "moment";
 
-import {
-  nav,
-} from "../../../../data/store";
+import { nav } from "../../../../data/store";
 
 import { update } from "../../../../deprecated/methods/accounts/browser";
 
-import { Loading, Error as Err } from "../../../../components/@primitives/UI/states";
+import {
+  Loading,
+  Error as Err,
+} from "../../../../components/@primitives/UI/states";
 
 import Success from "../Success";
 import Layout from "./Layout";
 
 class PersonalDetailsWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     person: PropTypes.shape({
@@ -26,12 +26,12 @@ class PersonalDetailsWithoutData extends Component {
     campuses: PropTypes.shape({
       campuses: PropTypes.array,
     }),
-  }
+  };
 
   state = {
     month: null,
     state: "default",
-  }
+  };
 
   componentWillMount() {
     this.props.dispatch(nav.setLevel("BASIC_CONTENT"));
@@ -52,53 +52,53 @@ class PersonalDetailsWithoutData extends Component {
       arr.push({ label: i + 1, value: i + 1 });
     }
     return arr;
-  }
+  };
 
-  getMonths = () => (
-    moment.monthsShort().map((month, i) => (
-      { label: month, value: i + 1 }
-    ))
-  )
+  getMonths = () =>
+    moment.monthsShort().map((month, i) => ({ label: month, value: i + 1 }));
 
   getYears = () => {
     const now = new Date().getFullYear();
 
     const arr = [];
     for (let i = 0; i < 150; i += 1) {
-      arr.push({ label: (now - i), value: (now - i) });
+      arr.push({ label: now - i, value: now - i });
     }
 
     return arr;
-  }
+  };
 
-  saveMonth = (value) => {
+  saveMonth = value => {
     this.setState({ month: value });
 
     return true;
-  }
+  };
 
-  updatePerson = (data) => {
+  updatePerson = data => {
     this.setState({ state: "loading" });
 
-    update(data, (err) => {
+    update(data, err => {
       if (err) {
         this.setState({ state: "error", err });
         setTimeout(() => this.setState({ state: "default" }), 3000);
         return;
       }
 
-
       this.setState({ state: "success" });
-      this.props.person.refetch({ cache: false })
+      this.props.person
+        .refetch({ cache: false })
         .then(() => this.setState({ state: "default" }));
     });
-  }
+  };
 
   render() {
     let { campuses } = this.props.campuses;
-    campuses = campuses && campuses.map((campus) => ({
-      label: campus.name, value: campus.id,
-    }));
+    campuses =
+      campuses &&
+      campuses.map(campus => ({
+        label: campus.name,
+        value: campus.id,
+      }));
     const { state, err } = this.state;
 
     switch (state) {
@@ -148,7 +148,9 @@ const withCampuses = graphql(CAMPUSES_QUERY, { name: "campuses" });
 const PERSON_QUERY = gql`
   query GetPersonForSettings($cache: Boolean) {
     person: currentPerson(cache: $cache) {
-      campus(cache: $cache) { id: entityId }
+      campus(cache: $cache) {
+        id: entityId
+      }
       firstName
       lastName
       nickName
@@ -161,7 +163,7 @@ const PERSON_QUERY = gql`
 `;
 const withPerson = graphql(PERSON_QUERY, {
   name: "person",
-  skip: (ownProps) => !ownProps.authorized,
+  skip: ownProps => !ownProps.authorized,
   options: () => ({
     variables: { cache: false },
     forceFetch: true,
@@ -173,15 +175,7 @@ export const mapStateToProps = ({ accounts }) => ({
 });
 
 export default withCampuses(
-  connect(mapStateToProps)(
-    withPerson(
-      PersonalDetailsWithoutData
-    )
-  )
+  connect(mapStateToProps)(withPerson(PersonalDetailsWithoutData)),
 );
 
-export {
-  PersonalDetailsWithoutData,
-  CAMPUSES_QUERY,
-  PERSON_QUERY,
-};
+export { PersonalDetailsWithoutData, CAMPUSES_QUERY, PERSON_QUERY };

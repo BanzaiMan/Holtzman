@@ -7,9 +7,8 @@ const defaultProps = {
   hide: jest.fn(),
 };
 
-const generateComponent = (additionalProps = {}) => (
-  <Groups { ...defaultProps } />
-);
+const generateComponent = (additionalProps = {}) =>
+  <Groups {...defaultProps} />;
 
 it("renders with props", () => {
   const wrapper = shallow(generateComponent());

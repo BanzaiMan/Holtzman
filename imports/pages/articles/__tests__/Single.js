@@ -31,7 +31,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <ArticlesSingle { ...newProps } />;
+  return <ArticlesSingle {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -40,24 +40,28 @@ it("renders with props", () => {
 });
 
 it("renders loading if no content", () => {
-  const wrapper = shallow(generateComponent({
-    article: {},
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      article: {},
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
 it("renders video if ooyalaId", () => {
-  const wrapper = shallow(generateComponent({
-    article: {
-      content: {
-        id: "1",
+  const wrapper = shallow(
+    generateComponent({
+      article: {
         content: {
-          body: "<h1>article</h1>",
-          images: [],
-          ooyalaId: "id",
+          id: "1",
+          content: {
+            body: "<h1>article</h1>",
+            images: [],
+            ooyalaId: "id",
+          },
         },
       },
-    },
-  }));
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

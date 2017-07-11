@@ -7,20 +7,23 @@ it("has a known initial state", () => {
   expect(initial).toMatchSnapshot();
 });
 
-const changed = reducer(initial, actions.save({
-  person: {
-    firstName: "Jeff",
-    lastName: "Goldblum"
-  },
-  age: 55,
-}));
+const changed = reducer(
+  initial,
+  actions.save({
+    person: {
+      firstName: "Jeff",
+      lastName: "Goldblum",
+    },
+    age: 55,
+  }),
+);
 
 it("allows saving data", () => {
   expect(changed).toMatchSnapshot();
 });
 
 it("doesn't change state when removing if missing info", () => {
-  const cleared = reducer(changed, actions.clear("person", "firstNme" ));
+  const cleared = reducer(changed, actions.clear("person", "firstNme"));
   expect(cleared).toMatchSnapshot();
   expect(cleared).toEqual(changed);
 });
@@ -48,7 +51,7 @@ it("saves indiviual data about a person", () => {
   expect(changed.data.email).toBeFalsy();
   const disable = reducer(changed, actions.save({ email: "web@newspring.cc" }));
   expect(disable).toMatchSnapshot();
-  expect(disable.data.email).toEqual("web@newspring.cc")
+  expect(disable.data.email).toEqual("web@newspring.cc");
 });
 
 it("can remove data from a persons account", () => {
@@ -58,22 +61,22 @@ it("can remove data from a persons account", () => {
 });
 
 it("will save an error to the state", () => {
-  const errors = { tooslow: { message: "must go faster" }};
+  const errors = { tooslow: { message: "must go faster" } };
   const error = reducer(initial, actions.error({ errors }));
   expect(error).toMatchSnapshot();
 });
 
 it("can remove errors from the state", () => {
-  const errors = { tooslow: { message: "must go faster" }};
-  const data = { ...changed, ...{errors: errors}};
+  const errors = { tooslow: { message: "must go faster" } };
+  const data = { ...changed, ...{ errors: errors } };
   const error = reducer(data, actions.fix("tooslow"));
   expect(error).toMatchSnapshot();
   expect(error.errors).toEqual({});
 });
 
 it("it can clear all errors from the state", () => {
-  const errors = { tooslow: { message: "must go faster" }};
-  const data = { ...changed, ...{ errors: errors }};
+  const errors = { tooslow: { message: "must go faster" } };
+  const data = { ...changed, ...{ errors: errors } };
   const error = reducer(data, actions.reset());
   expect(error).toMatchSnapshot();
   expect(error.errors).toEqual({});

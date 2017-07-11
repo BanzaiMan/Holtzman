@@ -29,7 +29,11 @@ const renderLikes = (likes: [Object]) => {
       // if the item has an image, default to it. If not, use the parent.
       // if the parent doesn't have images, pass empty array to getImage()
       let images;
-      if (!item.content || !item.content.images || item.content.images.length === 0) {
+      if (
+        !item.content ||
+        !item.content.images ||
+        item.content.images.length === 0
+      ) {
         if (item.parent && item.parent.content && item.parent.content.images) {
           images = item.parent.content.images;
         } else {
@@ -86,11 +90,10 @@ const renderLikes = (likes: [Object]) => {
   ]
 */
 type ILikesList = {
-  likes: [Object]
+  likes: [Object],
 };
 
-export default (props: ILikesList) => (
+export default (props: ILikesList) =>
   <div>
     {renderLikes(props.likes)}
-  </div>
-);
+  </div>;

@@ -1,4 +1,3 @@
-
 function categoryName(contentItem) {
   const category = contentItem.channelName;
   let contentCategory = category.charAt(0).toUpperCase();

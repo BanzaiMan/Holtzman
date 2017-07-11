@@ -11,7 +11,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Loading { ...newProps } />;
+  return <Loading {...newProps} />;
 };
 
 it("renders no account version", () => {
@@ -20,8 +20,10 @@ it("renders no account version", () => {
 });
 
 it("renders account version", () => {
-  const wrapper = shallow(generateComponent({
-    account: true,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      account: true,
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

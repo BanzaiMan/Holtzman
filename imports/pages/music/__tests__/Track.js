@@ -39,7 +39,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <AudioTrack { ...newProps } />;
+  return <AudioTrack {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -50,9 +50,11 @@ it("renders with props", () => {
 it("ListDetail renders the modal", () => {
   const mockDispatch = jest.fn();
   modal.render = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().ListDetail();
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(modal.render).toHaveBeenCalledTimes(1);
@@ -67,9 +69,11 @@ it("trackClasses returns active classes", () => {
 });
 
 it("trackClasses returns inactive classes", () => {
-  const wrapper = shallow(generateComponent({
-    active: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      active: false,
+    }),
+  );
   const result = wrapper.instance().trackClasses();
   expect(result).toMatchSnapshot();
 });
@@ -81,9 +85,11 @@ it("textClasses returns active classes", () => {
 });
 
 it("textClasses returns inactive classes", () => {
-  const wrapper = shallow(generateComponent({
-    active: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      active: false,
+    }),
+  );
   const result = wrapper.instance().textClasses();
   expect(result).toMatchSnapshot();
 });
@@ -93,9 +99,11 @@ it("play prevents default and updates audio store", () => {
   const mockDispatch = jest.fn();
   audioActions.setPlaying = jest.fn();
   audioActions.setPlaylist = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().play({
     preventDefault: mockPreventDefault,
   });
@@ -114,10 +122,12 @@ it("play does nothing if no file", () => {
   audioActions.setPlaylist = jest.fn();
   const props = clone(defaultProps);
   props.album.content.tracks[2].file = null;
-  const wrapper = shallow(generateComponent({
-    album: props.album,
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      album: props.album,
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().play({
     preventDefault: mockPreventDefault,
   });

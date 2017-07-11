@@ -1,10 +1,7 @@
 import { mount, shallow } from "enzyme";
 import { shallowToJson } from "enzyme-to-json";
 import { serverWatch } from "meteor/bjwiley2:server-watch";
-import {
-  PageWithoutData as Page,
-  IsAlive,
-} from "../";
+import { PageWithoutData as Page, IsAlive } from "../";
 
 describe("Page", () => {
   const defaultProps = {
@@ -17,7 +14,7 @@ describe("Page", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Page { ...newProps } />
+    return <Page {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -27,12 +24,14 @@ describe("Page", () => {
 
   it("mounts and unmounts correctly", () => {
     const mockSetRightProps = jest.fn();
-    const wrapper = mount(generateComponent({
-      setRightProps: mockSetRightProps,
-      accounts: {
-        loading: false,
-      },
-    }));
+    const wrapper = mount(
+      generateComponent({
+        setRightProps: mockSetRightProps,
+        accounts: {
+          loading: false,
+        },
+      }),
+    );
     expect(mockSetRightProps).toHaveBeenCalledTimes(1);
     wrapper.unmount();
     expect(mockSetRightProps).toHaveBeenCalledTimes(2);
@@ -57,7 +56,9 @@ describe("TemplateWithData", () => {
   });
 
   it("catches errros from serverWatch", () => {
-    serverWatch.isAlive = jest.fn(() => { throw "Error" });
+    serverWatch.isAlive = jest.fn(() => {
+      throw "Error";
+    });
     const result = IsAlive();
     expect(result).toEqual({
       alive: true,

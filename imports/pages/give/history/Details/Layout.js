@@ -3,7 +3,10 @@ import { Component, PropTypes } from "react";
 import moment from "moment";
 import { Link } from "react-router";
 
-import Split, { Left, Right } from "../../../../components/@primitives/layout/split";
+import Split, {
+  Left,
+  Right,
+} from "../../../../components/@primitives/layout/split";
 
 import { Spinner } from "../../../../components/@primitives/UI/loading";
 import Currency from "../../../../components/@primitives/typography/currency";
@@ -12,16 +15,13 @@ import Meta from "../../../../components/shared/meta";
 import AccountType from "../../../../components/giving/account-type";
 
 export default class Layout extends Component {
-
   static propTypes = {
     loadingEntries: PropTypes.bool,
     entries: PropTypes.array,
     transaction: PropTypes.object,
-  }
+  };
 
-  formatDate = (date) => (
-    moment(new Date(date)).format("MMM D, YYYY")
-  )
+  formatDate = date => moment(new Date(date)).format("MMM D, YYYY");
 
   /* eslint-disable max-len */
   render() {
@@ -89,9 +89,13 @@ export default class Layout extends Component {
                   return (
                     <div className="text-center">
                       <p className="push-half-bottom">
-                        <em>{this.formatDate(transaction.date)}</em>
+                        <em>
+                          {this.formatDate(transaction.date)}
+                        </em>
                       </p>
-                      <h3 className="text-dark-secondary">{account.name}</h3>
+                      <h3 className="text-dark-secondary">
+                        {account.name}
+                      </h3>
 
                       <Currency
                         amount={transaction.details[0].amount.toFixed(2)}
@@ -109,11 +113,17 @@ export default class Layout extends Component {
                           return (
                             <h4 className="text-dark-secondary">
                               {detail.accountNumber.slice(-4)}&nbsp;
-
                               {(() => {
-                                if (detail.paymentType && detail.paymentType === "ACH") {
+                                if (
+                                  detail.paymentType &&
+                                  detail.paymentType === "ACH"
+                                ) {
                                   return (
-                                    <AccountType width="30px" height="20px" type="Bank" />
+                                    <AccountType
+                                      width="30px"
+                                      height="20px"
+                                      type="Bank"
+                                    />
                                   );
                                 } else if (detail.paymentType) {
                                   return (
@@ -126,7 +136,6 @@ export default class Layout extends Component {
                                 }
                                 return null;
                               })()}
-
                             </h4>
                           );
                         }
@@ -138,7 +147,9 @@ export default class Layout extends Component {
                           "flush-bottom soft-ends soft-sides@portable"
                         }
                       >
-                        Thank you for your contribution to NewSpring Church. Because you are obedient in giving, we&#39;ll be able to connect more people to Jesus and each other.
+                        Thank you for your contribution to NewSpring Church.
+                        Because you are obedient in giving, we&#39;ll be able to
+                        connect more people to Jesus and each other.
                       </p>
                     </div>
                   );
@@ -147,79 +158,86 @@ export default class Layout extends Component {
             </div>
           </div>
           <div className="soft-half soft-sides@portable soft-double-sides@anchored">
-
             <h4 className="soft soft-double-ends text-center@lap-and-up flush-bottom">
               Recent Articles About Giving
             </h4>
             {(() => {
               if (loadingEntries) {
-                return <div className="one-whole soft text-center"><Spinner /></div>;
+                return (
+                  <div className="one-whole soft text-center">
+                    <Spinner />
+                  </div>
+                );
               }
               return (
                 <div className="grid">
-                  {entries && entries.map((entry, key) => (
-                    <div
-                      key={key}
-                      className={
-                        "grid__item one-whole push-half-bottom push-bottom@portable hard-bottom"
-                      }
-                    >
-                      <SideBySide
-                        classes={["push-bottom@lap-and-up"]}
-                        images={entry.content.images}
-                        defaultImage={entry.content.images[0].url}
+                  {entries &&
+                    entries.map((entry, key) =>
+                      <div
+                        key={key}
+                        className={
+                          "grid__item one-whole push-half-bottom push-bottom@portable hard-bottom"
+                        }
                       >
-                        <h4 className="push-half-top@portable push-top@anchored">
-                          {entry.title}
-                        </h4>
+                        <SideBySide
+                          classes={["push-bottom@lap-and-up"]}
+                          images={entry.content.images}
+                          defaultImage={entry.content.images[0].url}
+                        >
+                          <h4 className="push-half-top@portable push-top@anchored">
+                            {entry.title}
+                          </h4>
 
-                        <p><small dangerouslySetInnerHTML={{ __html: entry.meta.summary }} /></p>
-                        {(() => {
-                          if (process.env.WEB) {
-                            return (
-                              <a
-                                rel="noopener noreferrer"
-                                target="_blank"
-                                href={`https://newspring.cc/articles/${entry.meta.urlTitle}`}
-                                className={
-                                  "h6 btn--small btn--dark-tertiary " +
-                                  "soft-sides@portable one-whole@handheld"
-                                }
-                              >
-                                Read more
-                              </a>
-                            );
-                          }
+                          <p>
+                            <small
+                              dangerouslySetInnerHTML={{
+                                __html: entry.meta.summary,
+                              }}
+                            />
+                          </p>
+                          {(() => {
+                            if (process.env.WEB) {
+                              return (
+                                <a
+                                  rel="noopener noreferrer"
+                                  target="_blank"
+                                  href={`https://newspring.cc/articles/${entry
+                                    .meta.urlTitle}`}
+                                  className={
+                                    "h6 btn--small btn--dark-tertiary " +
+                                    "soft-sides@portable one-whole@handheld"
+                                  }
+                                >
+                                  Read more
+                                </a>
+                              );
+                            }
 
-                          if (process.env.NATIVE) {
-                            return (
-                              <Link
-                                to={`/articles/${entry.entryId}`}
-                                className={
-                                  "h6 btn--small btn--dark-tertiary " +
-                                  "soft-sides@portable one-whole@handheld"
-                                }
-                              >
-                                Read more
-                              </Link>
-                            );
-                          }
+                            if (process.env.NATIVE) {
+                              return (
+                                <Link
+                                  to={`/articles/${entry.entryId}`}
+                                  className={
+                                    "h6 btn--small btn--dark-tertiary " +
+                                    "soft-sides@portable one-whole@handheld"
+                                  }
+                                >
+                                  Read more
+                                </Link>
+                              );
+                            }
 
-                          return null;
-                        })()}
-
-
-                      </SideBySide>
-                    </div>
-                  ))}
+                            return null;
+                          })()}
+                        </SideBySide>
+                      </div>,
+                    )}
                 </div>
               );
             })()}
-
           </div>
         </Left>
       </div>
-
     );
   }
   /* eslint-enable max-len */

@@ -12,29 +12,23 @@ import canLike from "../../components/@enhancers/likes/toggle";
 import Shareable from "../../deprecated/mixins/mixins.Shareable";
 
 // action helpers
-import {
-  audio as audioActions,
-} from "../../data/store";
+import { audio as audioActions } from "../../data/store";
 
 import Track from "./Track";
 
 class MusicAlbumWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    album: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.object,
-    ]).isRequired,
+    album: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
     modalVisible: PropTypes.bool,
     albumArtist: PropTypes.string,
-  }
+  };
 
   state = {
     currentTrack: null,
     repeatPattern: "next",
     force: false,
-  }
+  };
 
   componentWillUnmount() {
     this.props.dispatch(audioActions.dock());
@@ -46,7 +40,7 @@ class MusicAlbumWithoutData extends Component {
       return;
     }
     this.setState({ repeatPattern: "shuffle" });
-  }
+  };
 
   repeat = () => {
     if (this.state.repeatPattern === "repeat") {
@@ -60,7 +54,7 @@ class MusicAlbumWithoutData extends Component {
     }
 
     this.setState({ repeatPattern: "repeat" });
-  }
+  };
 
   render() {
     const { content } = this.props.album;
@@ -86,7 +80,7 @@ class MusicAlbumWithoutData extends Component {
       return {};
     };
 
-    const getUrl = (image) => {
+    const getUrl = image => {
       let url = image.url;
 
       if (!url) {
@@ -101,14 +95,16 @@ class MusicAlbumWithoutData extends Component {
     };
 
     const album = content;
-    const tracks = _.filter(album.content.tracks, (track) => (!!track.file));
+    const tracks = _.filter(album.content.tracks, track => !!track.file);
 
-    const xsmallBlurImage = _.find(album.content.images, (image) => (
-      image.fileName.indexOf("blur") > -1 && image.size === "xsmall"
-    ));
-    const mediumImage = _.find(album.content.images, (image) => (
-      image.fileName.indexOf("blur") === -1 && image.size === "medium"
-    ));
+    const xsmallBlurImage = _.find(
+      album.content.images,
+      image => image.fileName.indexOf("blur") > -1 && image.size === "xsmall",
+    );
+    const mediumImage = _.find(
+      album.content.images,
+      image => image.fileName.indexOf("blur") === -1 && image.size === "medium",
+    );
 
     return (
       <section className="hard background--light-primary" style={getStyle()}>
@@ -139,8 +135,12 @@ class MusicAlbumWithoutData extends Component {
               "two-thirds text-light-primary"
             }
           >
-            <h5>{album.title}</h5>
-            <h7>{this.props.albumArtist || "NewSpring"}</h7>
+            <h5>
+              {album.title}
+            </h5>
+            <h7>
+              {this.props.albumArtist || "NewSpring"}
+            </h7>
           </div>
         </div>
         <div className="background--light-primary one-whole">
@@ -150,14 +150,9 @@ class MusicAlbumWithoutData extends Component {
               "soft-ends@palm-wide-and-up soft-half-ends push-bottom"
             }
           >
-            {tracks.map((track, i) => (
-              <Track
-                track={track}
-                album={album}
-                key={i}
-                trackNumber={i}
-              />
-            ))}
+            {tracks.map((track, i) =>
+              <Track track={track} album={album} key={i} trackNumber={i} />,
+            )}
           </div>
         </div>
       </section>
@@ -206,7 +201,7 @@ const ALBUM_QUERY = gql`
 
 const withAlbum = graphql(ALBUM_QUERY, {
   name: "album",
-  options: (ownProps) => ({
+  options: ownProps => ({
     variables: { id: ownProps.params.id },
   }),
 });
@@ -215,15 +210,12 @@ export default connect()(
   withAlbum(
     ReactMixin.decorate(Shareable)(
       ReactMixin.decorate(Headerable)(
-        canLike(
-          (props) => (props.album.loading ? null : props.album.content.id)
-        )(MusicAlbumWithoutData)
-      )
-    )
-  )
+        canLike(props => (props.album.loading ? null : props.album.content.id))(
+          MusicAlbumWithoutData,
+        ),
+      ),
+    ),
+  ),
 );
 
-export {
-  MusicAlbumWithoutData,
-  ALBUM_QUERY,
-};
+export { MusicAlbumWithoutData, ALBUM_QUERY };

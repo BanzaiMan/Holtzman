@@ -42,7 +42,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Template { ...newProps } />;
+  return <Template {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -60,9 +60,11 @@ it("confirm sets the recoverable schedule", () => {
   };
   const mockDispatch = jest.fn();
   giveActions.setRecoverableSchedule = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   const result = wrapper.instance().confirm(mockEvent);
 
@@ -84,9 +86,11 @@ it("cancel deletes the recoverable schedule", () => {
   modalActions.render = jest.fn();
   giveActions.deleteSchedule = jest.fn();
   Meteor.call = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
 
   wrapper.instance().cancel(mockEvent);
 

@@ -8,7 +8,6 @@ import content from "../../util/content";
 import categories from "../../util/categories";
 
 const Likeable = {
-
   componentWillMount() {
     this.likeableAction = this.onClickAction.bind(this);
   },
@@ -17,15 +16,16 @@ const Likeable = {
     const entry = this.getLikableEntry();
 
     if (!Meteor.userId()) {
-      this.props.dispatch(modal.render(OnBoard, {
-        coverHeader: true,
-        modalBackground: "light",
-      }));
+      this.props.dispatch(
+        modal.render(OnBoard, {
+          coverHeader: true,
+          modalBackground: "light",
+        }),
+      );
     } else {
       this.updateRedux(entry);
       this.updateDatabase(entry);
     }
-
 
     return {
       type: "FALSY",
@@ -48,9 +48,11 @@ const Likeable = {
   },
 
   updateRedux(entry) {
-    this.props.dispatch(likedActions.toggle({
-      entryId: entry.id || entry.entryId,
-    }));
+    this.props.dispatch(
+      likedActions.toggle({
+        entryId: entry.id || entry.entryId,
+      }),
+    );
   },
 
   updateDatabase(entry) {
@@ -103,7 +105,6 @@ const Likeable = {
       });
     }
   },
-
 };
 
 export default Likeable;

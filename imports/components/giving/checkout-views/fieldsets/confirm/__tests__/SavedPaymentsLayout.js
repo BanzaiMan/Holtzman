@@ -1,4 +1,3 @@
-
 import { mount } from "enzyme";
 import { mountToJson } from "enzyme-to-json";
 
@@ -11,7 +10,7 @@ const mockData = {
     streetAddress: "Harambe's old place",
     city: "Cincinnati",
     state: "OH",
-    zip: "12345"
+    zip: "12345",
   },
   payment: {
     card: {
@@ -24,12 +23,12 @@ const mockData = {
       accountNumber: "1010101010",
       routingNumber: "123456789",
       name: "Harambe's Account",
-    }
+    },
   },
 };
 
-const generateComponent = (additionalProps) =>
-  <SavedPaymentLayout {...additionalProps}/>
+const generateComponent = additionalProps =>
+  <SavedPaymentLayout {...additionalProps} />;
 
 it("should render with minimal props", () => {
   const component = mount(generateComponent());
@@ -37,6 +36,11 @@ it("should render with minimal props", () => {
 });
 
 it("should accept billing and payment props", () => {
-  const component = mount(generateComponent({ billing: mockData.billing, payment: mockData.payment.card }));
+  const component = mount(
+    generateComponent({
+      billing: mockData.billing,
+      payment: mockData.payment.card,
+    }),
+  );
   expect(mountToJson(component)).toMatchSnapshot();
 });

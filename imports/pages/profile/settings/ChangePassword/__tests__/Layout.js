@@ -17,7 +17,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Layout { ...newProps } />;
+  return <Layout {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -26,10 +26,12 @@ it("renders with props", () => {
 });
 
 it("renders disabled if missing prop", () => {
-  const wrapper = shallow(generateComponent({
-    state: {
-      current: null,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      state: {
+        current: null,
+      },
+    }),
+  );
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });

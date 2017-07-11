@@ -1,4 +1,3 @@
-
 import sagaHelper from "redux-saga-testing";
 import { takeLatest } from "redux-saga";
 import { put, select, call, cps, take } from "redux-saga/effects";
@@ -39,7 +38,7 @@ describe("normal submit", () => {
         address2: "",
         city: null,
         state: null,
-        postal: null
+        postal: null,
       },
       "merchant-defined-field-2": null,
     };
@@ -58,16 +57,13 @@ describe("normal submit", () => {
   it("should have ended", result => {
     expect(result).toBeUndefined();
   });
-
 });
-
 
 describe("normal submit with an error", () => {
   const initalState = { ...initial };
   const it = sagaHelper(submitPersonDetails(initalState));
 
   it("should try and call 'order' with the formated data", result => {
-
     const formattedData = {
       amount: 0,
       billing: {
@@ -78,7 +74,7 @@ describe("normal submit with an error", () => {
         address2: "",
         city: null,
         state: null,
-        postal: null
+        postal: null,
       },
       "merchant-defined-field-2": null,
     };
@@ -97,7 +93,6 @@ describe("normal submit with an error", () => {
   it("should have ended", result => {
     expect(result).toBeUndefined();
   });
-
 });
 
 describe("submit with a saved payment", () => {
@@ -115,7 +110,7 @@ describe("submit with a saved payment", () => {
         address2: "",
         city: null,
         state: null,
-        postal: null
+        postal: null,
       },
       "merchant-defined-field-2": null,
     };
@@ -148,5 +143,4 @@ describe("submit with a saved payment", () => {
   it("should have ended", result => {
     expect(result).toBeUndefined();
   });
-
 });

@@ -20,7 +20,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <Confirm { ...newProps } />
+  return <Confirm {...newProps} />;
 };
 
 it("render with props", () => {
@@ -31,9 +31,11 @@ it("render with props", () => {
 it("back hides modal", () => {
   const mockDispatch = jest.fn();
   modalActions.hide = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().back();
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(modalActions.hide).toHaveBeenCalledTimes(1);
@@ -43,10 +45,12 @@ it("onClick calls onFinished, and thus dipatch and back", () => {
   const mockDispatch = jest.fn();
   const mockOnFinished = jest.fn();
   modalActions.hide = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-    onFinished: mockOnFinished,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+      onFinished: mockOnFinished,
+    }),
+  );
   wrapper.instance().onClick();
   expect(mockOnFinished).toHaveBeenCalledTimes(1);
   expect(mockDispatch).toHaveBeenCalledTimes(1);

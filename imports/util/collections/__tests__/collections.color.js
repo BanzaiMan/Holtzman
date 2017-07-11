@@ -21,9 +21,7 @@ it("tries to return `primary` color if colors present", () => {
 it("should return any color if no `primary`", () => {
   const contentItem = {
     content: {
-      colors: [
-        { description: "secondary", value: "ff0000" },
-      ],
+      colors: [{ description: "secondary", value: "ff0000" }],
     },
   };
   const result = collectionColor(contentItem);

@@ -38,7 +38,7 @@ describe("Layout", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <Layout { ...newProps } />;
+    return <Layout {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -50,9 +50,7 @@ describe("Layout", () => {
     const transactions = [
       {
         date: "2012-12-12",
-        details: [
-          { account: "test", amount: -1 },
-        ],
+        details: [{ account: "test", amount: -1 }],
       },
       {
         date: "2012-12-12",
@@ -67,17 +65,21 @@ describe("Layout", () => {
   });
 
   it("renders reloading version", () => {
-    const wrapper = shallow(generateComponent({
-      reloading: true,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        reloading: true,
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it("renders reloading if no transactions and not ready", () => {
-    const wrapper = shallow(generateComponent({
-      transactions: [],
-      ready: false,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        transactions: [],
+        ready: false,
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
@@ -85,9 +87,7 @@ describe("Layout", () => {
     const transactions = [
       {
         date: "2012-12-12",
-        details: [
-          { account: "test", amount: -1 },
-        ],
+        details: [{ account: "test", amount: -1 }],
       },
       {
         date: "2012-12-12",
@@ -105,9 +105,7 @@ describe("Layout", () => {
     const transactions = [
       {
         date: "2012-12-12",
-        details: [
-          { account: "test", amount: -1 },
-        ],
+        details: [{ account: "test", amount: -1 }],
       },
       {
         date: "2012-12-12",
@@ -117,18 +115,22 @@ describe("Layout", () => {
         ],
       },
     ];
-    const wrapper = shallow(generateComponent({
-      transactions,
-      printLoading: true
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        transactions,
+        printLoading: true,
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
   it("renders no transactions if there are none and ready", () => {
-    const wrapper = shallow(generateComponent({
-      transactions: [],
-      ready: true,
-    }));
+    const wrapper = shallow(
+      generateComponent({
+        transactions: [],
+        ready: true,
+      }),
+    );
     expect(shallowToJson(wrapper)).toMatchSnapshot();
   });
 
@@ -136,7 +138,7 @@ describe("Layout", () => {
     const transactions = [
       {
         date: "2012-12-12",
-        person: {nickname: "1", photo:"1",firstName:"1",lastName:"1"},
+        person: { nickname: "1", photo: "1", firstName: "1", lastName: "1" },
         details: [
           { account: "test", amount: 2 },
           { account: "test", amount: 2 },
@@ -144,7 +146,7 @@ describe("Layout", () => {
       },
       {
         date: "2013-12-12",
-        person: {nickname: "1", photo:"1",firstName:"1",lastName:"1"},
+        person: { nickname: "1", photo: "1", firstName: "1", lastName: "1" },
         details: [
           { account: "Other Test", amount: 2 },
           { account: "Third Test", amount: 2 },
@@ -181,7 +183,7 @@ describe("TransactionList", () => {
       ...defaultProps,
       ...additionalProps,
     };
-    return <TransactionList { ...newProps } />;
+    return <TransactionList {...newProps} />;
   };
 
   it("renders with props", () => {
@@ -193,7 +195,7 @@ describe("TransactionList", () => {
     const transactions = [
       {
         date: "2012-12-12",
-        person: {nickname: "1", photo:"1",firstName:"1",lastName:"1"},
+        person: { nickname: "1", photo: "1", firstName: "1", lastName: "1" },
         details: [
           { account: "test", amount: 1 },
           { account: "test", amount: 2 },
@@ -201,7 +203,7 @@ describe("TransactionList", () => {
       },
       {
         date: "2013-12-12",
-        person: {nickname: "1", photo:"1",firstName:"1",lastName:"1"},
+        person: { nickname: "1", photo: "1", firstName: "1", lastName: "1" },
         details: [
           { account: "test", amount: 3 },
           { account: "test", amount: 4 },
@@ -216,7 +218,7 @@ describe("TransactionList", () => {
     const transactions = [
       {
         date: "2012-12-12",
-        person: {nickname: "1", photo:"1",firstName:"1",lastName:"1"},
+        person: { nickname: "1", photo: "1", firstName: "1", lastName: "1" },
         details: [
           { account: "test", amount: 0 },
           { account: "test", amount: 1 },

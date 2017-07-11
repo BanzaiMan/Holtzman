@@ -27,7 +27,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <CWithHeader { ...newProps } />;
+  return <CWithHeader {...newProps} />;
 };
 
 it("has default vars", () => {
@@ -49,11 +49,13 @@ it("calls getContent when recieving props", () => {
 });
 
 it("unlocks header and sets header details if modal closing", () => {
-  const wrapper = shallow(generateComponent({
-    modal: {
-      visible: true,
-    },
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      modal: {
+        visible: true,
+      },
+    }),
+  );
   const mockUnlockHeader = jest.fn();
   const mockSetHeaderDetails = jest.fn();
   wrapper.instance().unlockHeader = mockUnlockHeader;
@@ -67,7 +69,7 @@ it("unlocks header and sets header details if modal closing", () => {
   expect(mockSetHeaderDetails).toHaveBeenCalledTimes(1);
   expect(mockSetHeaderDetails).toHaveBeenCalledWith(
     wrapper.instance().savedDataOptions,
-    wrapper.instance().savedDataRequestee
+    wrapper.instance().savedDataRequestee,
   );
 });
 
@@ -173,7 +175,7 @@ it("getEntry returns for all entry types", () => {
     "album",
     "news",
   ];
-  entryTypes.map((entry) => {
+  entryTypes.map(entry => {
     const result = wrapper.instance().getEntry({
       [entry]: {
         content: {},
@@ -200,7 +202,7 @@ it("getHeaderTitle returns string for possible entry types", () => {
     ["album", "Music"],
     ["news", "News"],
   ];
-  entryTypes.map((entry) => {
+  entryTypes.map(entry => {
     const result = wrapper.instance().getHeaderTitle({
       [entry[0]]: {},
     });
@@ -211,9 +213,11 @@ it("getHeaderTitle returns string for possible entry types", () => {
 it("lockHeader locks the header with the requestee", () => {
   const mockDispatch = jest.fn();
   headerActions.lock = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().lockHeader("test");
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(headerActions.lock).toHaveBeenCalledTimes(1);
@@ -223,9 +227,11 @@ it("lockHeader locks the header with the requestee", () => {
 it("unlockHeader unlocks the header", () => {
   const mockDispatch = jest.fn();
   headerActions.unlock = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().unlockHeader();
   expect(mockDispatch).toHaveBeenCalledTimes(1);
   expect(headerActions.unlock).toHaveBeenCalledTimes(1);
@@ -234,9 +240,11 @@ it("unlockHeader unlocks the header", () => {
 it("setHeaderDetails updates variables, the header, and state", () => {
   const mockDispatch = jest.fn();
   headerActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.setState({ __headerSet: false });
   wrapper.instance().setHeaderDetails("myOptions", "me");
   expect(wrapper.instance().savedDataOptions).toBe("myOptions");
@@ -250,9 +258,11 @@ it("setHeaderDetails updates variables, the header, and state", () => {
 it("setHeaderDetails updates variables, but returns early if no options", () => {
   const mockDispatch = jest.fn();
   headerActions.set = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.setState({ __headerSet: false });
   wrapper.instance().setHeaderDetails(null, "me");
   expect(wrapper.instance().savedDataOptions).toBe(null);

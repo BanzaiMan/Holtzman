@@ -1,14 +1,12 @@
 import { Component, PropTypes } from "react";
 
 export default class ProgressStep extends Component {
-
   static propTypes = {
     steps: PropTypes.number.isRequired,
     active: PropTypes.number.isRequired,
-  }
+  };
 
-  getLayer = (count) =>
-    ((this.props.steps + 2) - count);
+  getLayer = count => this.props.steps + 2 - count;
 
   steps = () => {
     const { steps } = this.props;
@@ -18,10 +16,8 @@ export default class ProgressStep extends Component {
       stepsArray.push(i);
     }
 
-    return stepsArray.map((value, count) =>
-      ({ count })
-    );
-  }
+    return stepsArray.map((value, count) => ({ count }));
+  };
 
   render() {
     const steps = this.steps();
@@ -29,7 +25,6 @@ export default class ProgressStep extends Component {
     return (
       <div className="progress-bar text-center">
         <div className="progress">
-
           {steps.map((step, key) => {
             const classes = [];
             const style = { zIndex: 1 };
@@ -41,14 +36,9 @@ export default class ProgressStep extends Component {
             }
 
             return (
-              <div
-                className={classes.join(" ")}
-                style={style}
-                key={key}
-              />
+              <div className={classes.join(" ")} style={style} key={key} />
             );
           })}
-
         </div>
         <p className="flush-bottom">
           <small className="italic display-inline-block push-half-top">

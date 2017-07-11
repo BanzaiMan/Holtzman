@@ -4,9 +4,7 @@ import { clone } from "ramda";
 import ListDetail from "../../../../../pages/music/ListDetail";
 import { actions as audioActions } from "../../../../../data/store/audio";
 import { modal, nav as navActions } from "../../../../../data/store";
-import {
-  AudioControlsWithoutData as AudioControls,
-} from "../Controls";
+import { AudioControlsWithoutData as AudioControls } from "../Controls";
 
 jest.mock("../../../../../data/store/audio", () => ({
   actions: {
@@ -66,7 +64,7 @@ const generateComponent = (additionalProps = {}) => {
     ...defaultProps,
     ...additionalProps,
   };
-  return <AudioControls { ...newProps } />;
+  return <AudioControls {...newProps} />;
 };
 
 it("renders with props", () => {
@@ -77,7 +75,7 @@ it("renders with props", () => {
 it("renders dock version", () => {
   const props = clone(defaultProps);
   props.audio.visibility = "dock";
-  const wrapper = shallow(generateComponent(props))
+  const wrapper = shallow(generateComponent(props));
   expect(shallowToJson(wrapper)).toMatchSnapshot();
 });
 
@@ -98,9 +96,11 @@ it("getPrimaryTextColor returns different versions for light and dark", () => {
 });
 
 it("getTertiaryTextClass returns different versions for light and dark", () => {
-  const wrapper = shallow(generateComponent({
-    isLight: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      isLight: false,
+    }),
+  );
   // dark
   expect(wrapper.instance().getTertiaryTextClass()).toBe("text-light-tertiary");
   // light
@@ -109,20 +109,26 @@ it("getTertiaryTextClass returns different versions for light and dark", () => {
 });
 
 it("getSecondayTextClass returns different versions for light and dark", () => {
-  const wrapper = shallow(generateComponent({
-    isLight: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      isLight: false,
+    }),
+  );
   // dark
-  expect(wrapper.instance().getSecondayTextClass()).toBe("text-light-secondary");
+  expect(wrapper.instance().getSecondayTextClass()).toBe(
+    "text-light-secondary",
+  );
   // light
   wrapper.setProps({ isLight: true });
   expect(wrapper.instance().getSecondayTextClass()).toBe("text-dark-secondary");
 });
 
 it("getPrimaryTextClass returns different versions for light and dark", () => {
-  const wrapper = shallow(generateComponent({
-    isLight: false,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      isLight: false,
+    }),
+  );
   // dark
   expect(wrapper.instance().getPrimaryTextClass()).toBe("text-light-primary");
   // light
@@ -203,9 +209,11 @@ it("listDetail triggers modal", () => {
   modal.render = jest.fn();
   modal.setRetrigger = jest.fn();
   navActions.setColor = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().listDetail();
 
   expect(mockDispatch).toHaveBeenCalledTimes(3);
@@ -274,9 +282,11 @@ it("toggle calls preventDefault and play if not playing", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   audioActions.play = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().toggle({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -294,10 +304,12 @@ it("toggle calls preventDefault and pause if playing", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   audioActions.pause = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().toggle({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -313,9 +325,11 @@ it("next calls preventDefault and next if not series", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   audioActions.next = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().next({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -333,10 +347,12 @@ it("next calls preventDefault and seek if series", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   audioActions.seek = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().next({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -353,9 +369,11 @@ it("back calls preventDefault and previous if not series", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   audioActions.previous = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().back({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -373,10 +391,12 @@ it("back calls preventDefault and seek if series", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   audioActions.seek = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().back({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -393,9 +413,11 @@ it("repeat calls preventDefault and repeat if default", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   audioActions.repeat = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().repeat({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -413,10 +435,12 @@ it("repeat calls preventDefault and repeatOne if default", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   audioActions.repeatOne = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().repeat({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -434,10 +458,12 @@ it("repeat calls preventDefault and resetRepeat if default", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   audioActions.resetRepeat = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().repeat({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -453,9 +479,11 @@ it("shuffle calls preventDefault and shuffle if default", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   audioActions.shuffle = jest.fn();
-  const wrapper = shallow(generateComponent({
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().shuffle({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,
@@ -473,10 +501,12 @@ it("shuffle calls preventDefault and shuffle if default", () => {
   const mockPreventDefault = jest.fn();
   const mockStopPropagation = jest.fn();
   audioActions.resetOrder = jest.fn();
-  const wrapper = shallow(generateComponent({
-    ...props,
-    dispatch: mockDispatch,
-  }));
+  const wrapper = shallow(
+    generateComponent({
+      ...props,
+      dispatch: mockDispatch,
+    }),
+  );
   wrapper.instance().shuffle({
     preventDefault: mockPreventDefault,
     stopPropagation: mockStopPropagation,

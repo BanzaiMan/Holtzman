@@ -1,13 +1,12 @@
-
 import collectionClass from "../collections/collections.class";
 import collectionColor from "../collections/collections.color";
 
 /* eslint-disable */
-const hexToRGB = (hex) => {
+const hexToRGB = hex => {
   hex = parseInt(hex, 16);
   const r = hex >> 16;
-  const g = hex >> 8 & 0xFF;
-  const b = hex & 0xFF;
+  const g = (hex >> 8) & 0xff;
+  const b = hex & 0xff;
   return [r, g, b];
 };
 /* eslint-enable */

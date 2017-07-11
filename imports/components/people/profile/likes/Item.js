@@ -9,28 +9,20 @@ import LoadingStyles from "../../../@primitives/UI/loading/FeedItemSkeleton-css"
 import inAppLink from "../../../../util/inAppLink";
 
 export default class LikesItem extends Component {
-
   static propTypes = {
     like: PropTypes.object.isRequired,
     native: PropTypes.bool,
-  }
+  };
 
   // eslint-disable-next-line react/sort-comp
   backgroundStyles = {
     backgroundImage: `url('${this.props.like.image}')`,
   };
 
-  imageclasses = [
-    "background--fill",
-    "card__image",
-    "ratio--landscape",
-  ];
+  imageclasses = ["background--fill", "card__image", "ratio--landscape"];
 
   containerClasses = () => {
-    const classes = [
-      "grid__item",
-      "one-whole",
-    ];
+    const classes = ["grid__item", "one-whole"];
     if (this.props.native || process.env.NATIVE) {
       classes.push("one-half@palm-wide-and-up");
     }
@@ -38,31 +30,28 @@ export default class LikesItem extends Component {
   };
 
   // context from ImageLoader
-  preloader = () => (
+  preloader = () =>
     <div
-      className={`${this.imageclasses.join(" ")} ${css(LoadingStyles["load-item"])}`}
+      className={`${this.imageclasses.join(" ")} ${css(
+        LoadingStyles["load-item"],
+      )}`}
     >
       {this.children}
-    </div>
-  )
+    </div>;
 
   // context from ImageLoader
-  renderElement = () => (
-    <div
-      className={this.imageclasses.join(" ")}
-      style={this.backgroundStyles}
-    >
+  renderElement = () =>
+    <div className={this.imageclasses.join(" ")} style={this.backgroundStyles}>
       {this.children}
-    </div>
-  )
+    </div>;
 
-  onClick = (e) => {
+  onClick = e => {
     const targetLink = e.currentTarget.href;
     // direct to in app helper unless it's an internal link
     if (targetLink.match(/^(http|https):\/\/localhost.*/) === null) {
       inAppLink(e);
     }
-  }
+  };
 
   getDate(entry) {
     const date = new Date(entry.date);
@@ -76,7 +65,7 @@ export default class LikesItem extends Component {
     return moment(time).format("MMM D, YYYY");
   }
 
-  iconClasses = `${this.props.like.icon} soft-half-right`
+  iconClasses = `${this.props.like.icon} soft-half-right`;
 
   render() {
     const like = this.props.like;
@@ -92,15 +81,20 @@ export default class LikesItem extends Component {
               imageclasses={this.iamgeclasses}
             />
             <div className="card__item soft text-dark-tertiary">
-              <h4 className="text-dark-primary capitalize">{like.title}</h4>
+              <h4 className="text-dark-primary capitalize">
+                {like.title}
+              </h4>
               <i className={this.iconClasses} />
-              <h7>{like.category}</h7>
-              <h7 className="text-right float-right">{this.getDate(like)}</h7>
+              <h7>
+                {like.category}
+              </h7>
+              <h7 className="text-right float-right">
+                {this.getDate(like)}
+              </h7>
             </div>
           </Link>
         </div>
       </div>
     );
   }
-
 }

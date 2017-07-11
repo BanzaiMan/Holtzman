@@ -5,16 +5,15 @@ import collections from "../../util/collections";
 import backgrounds from "../../util/backgrounds";
 
 export default class SeriesHero extends Component {
-
   static propTypes = {
     series: PropTypes.object.isRequired,
-  }
+  };
 
   state = {
     playing: false,
-  }
+  };
 
-  backgroundClasses = () => (
+  backgroundClasses = () =>
     [
       "one-whole",
       "overlay--gradient",
@@ -22,8 +21,7 @@ export default class SeriesHero extends Component {
       "ratio--landscape@palm-wide",
       "background--fill",
       collections.classes(this.props.series),
-    ].join(" ")
-  )
+    ].join(" ");
 
   play = () => {
     if (this.player) {
@@ -32,25 +30,30 @@ export default class SeriesHero extends Component {
     } else {
       setTimeout(this.play, 250);
     }
-  }
+  };
 
   stop = () => {
     if (this.player) {
       this.player.hide();
     }
     this.setState({ playing: false });
-  }
+  };
 
-  ready = (player) => {
+  ready = player => {
     this.player = player;
-  }
+  };
 
   button = () => {
     if (!this.props.series.content.ooyalaId) return null;
     const { isLight } = this.props.series.content;
     if (this.state.playing) {
       return (
-        <button className={`${!isLight ? "btn--light" : "btn--dark-secondary"} push-double-top@palm-wide-and-up display-inline-block one-whole@palm`} onClick={this.stop}>
+        <button
+          className={`${!isLight
+            ? "btn--light"
+            : "btn--dark-secondary"} push-double-top@palm-wide-and-up display-inline-block one-whole@palm`}
+          onClick={this.stop}
+        >
           <i className="icon-close soft-half-right" />
           Close The Trailer
         </button>
@@ -58,12 +61,17 @@ export default class SeriesHero extends Component {
     }
 
     return (
-      <button className={`${!isLight ? "btn--light" : "btn--dark-secondary"} display-inline-block one-whole@palm`} onClick={this.play}>
+      <button
+        className={`${!isLight
+          ? "btn--light"
+          : "btn--dark-secondary"} display-inline-block one-whole@palm`}
+        onClick={this.play}
+      >
         <i className="icon-play soft-half-right" />
         Watch The Trailer
       </button>
     );
-  }
+  };
 
   render() {
     const series = this.props.series;
@@ -89,7 +97,6 @@ export default class SeriesHero extends Component {
                 />
               );
             })()}
-
           </div>
         </div>
         {(() => {
@@ -107,7 +114,11 @@ export default class SeriesHero extends Component {
           className={this.backgroundClasses()}
           style={backgrounds.styles(series, imageLabel)}
         >
-          <div className={`overlay__item ${series.content.isLight ? "text-light-primary" : "text-dark-primary"} text-center soft-sides push-top`}>
+          <div
+            className={`overlay__item ${series.content.isLight
+              ? "text-light-primary"
+              : "text-dark-primary"} text-center soft-sides push-top`}
+          >
             {this.button()}
           </div>
         </div>

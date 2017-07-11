@@ -8,10 +8,9 @@ import Layout from "./Layout";
 import { header as headerActions } from "../../data/store";
 
 class LayoutWithoutData extends Component {
-
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-  }
+  };
 
   componentDidMount() {
     if (process.env.NATIVE) {
@@ -46,13 +45,7 @@ const CAMPUSES_QUERY = gql`
 
 const withCampuses = graphql(CAMPUSES_QUERY);
 
-const LayoutWithData = connect()(
-  withApollo(
-    withCampuses(
-      LayoutWithoutData
-    )
-  )
-);
+const LayoutWithData = connect()(withApollo(withCampuses(LayoutWithoutData)));
 
 const Routes = [
   {
@@ -65,7 +58,4 @@ export default {
   Routes,
 };
 
-export {
-  LayoutWithoutData,
-  CAMPUSES_QUERY,
-};
+export { LayoutWithoutData, CAMPUSES_QUERY };

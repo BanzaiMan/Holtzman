@@ -1,4 +1,3 @@
-
 /* global Meteor, check */
 
 import { api } from "../../../../util/rock";
@@ -31,7 +30,6 @@ Meteor.methods({
     try {
       api.delete(`BinaryFiles/${PhotoId}`);
     } catch (e) {} // eslint-disable-line
-
 
     return true;
   },

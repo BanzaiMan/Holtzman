@@ -1,8 +1,8 @@
 import renderer from "react-test-renderer";
 import TransactionLayout, { Header } from "../TransactionLayout";
 
-jest.mock("moment", () => (date) => ({
-  format: (format) => `${date} formatted as ${format}`,
+jest.mock("moment", () => date => ({
+  format: format => `${date} formatted as ${format}`,
 }));
 
 describe("Header", () => {
@@ -19,7 +19,7 @@ describe("Header", () => {
       ...additionalProps,
     };
 
-    return <Header { ...newProps } />;
+    return <Header {...newProps} />;
   };
 
   it("renders default if no override", () => {
@@ -28,9 +28,11 @@ describe("Header", () => {
   });
 
   it("renders override if override", () => {
-    const result = renderer.create(generateComponent({
-      override: <span>hey</span>,
-    }));
+    const result = renderer.create(
+      generateComponent({
+        override: <span>hey</span>,
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });
@@ -53,10 +55,7 @@ describe("TransactionLayout", () => {
     schedule: { start: null },
     scheduleToRecover: false,
     total: 12,
-    transactions: [
-      { label: "123", value: 5 },
-      { label: "234", value: 7 },
-    ],
+    transactions: [{ label: "123", value: 5 }, { label: "234", value: 7 }],
   };
 
   const generateComponent = (additionalProps = {}) => {
@@ -65,7 +64,7 @@ describe("TransactionLayout", () => {
       ...additionalProps,
     };
 
-    return <TransactionLayout { ...newProps } />;
+    return <TransactionLayout {...newProps} />;
   };
 
   it("should render with props", () => {
@@ -74,9 +73,11 @@ describe("TransactionLayout", () => {
   });
 
   it("should render with a schedule props", () => {
-    const result = renderer.create(generateComponent({
-      schedule: { start: "now", frequency: "who wants to know" }
-    }));
+    const result = renderer.create(
+      generateComponent({
+        schedule: { start: "now", frequency: "who wants to know" },
+      }),
+    );
     expect(result).toMatchSnapshot();
   });
 });

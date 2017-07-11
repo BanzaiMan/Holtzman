@@ -12,10 +12,7 @@ const Guest = function Guest({
   onClick,
   text = "Give as Guest",
 }: IGuest): Object {
-  const classes = [
-    "outlined--bottom",
-    "outlined--light",
-  ];
+  const classes = ["outlined--bottom", "outlined--light"];
 
   let style = {
     display: "inline",

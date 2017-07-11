@@ -26,7 +26,6 @@ export {
   submitPersonDetails,
 };
 
-
 // transaction processing flow controller
 function* createOrder() {
   /*
@@ -49,14 +48,13 @@ function* createOrder() {
 
   */
   const { give } = yield select();
-  if ((give.step - 1) === 2) {
+  if (give.step - 1 === 2) {
     // set people data and store transaction id
     yield* submitPersonDetails(give, false);
-  } else if ((give.step - 1) === 3) {
+  } else if (give.step - 1 === 3) {
     yield* submitPaymentDetails(give.data, give.url);
   }
 }
-
 
 /*
 
@@ -93,10 +91,17 @@ function* recoverTransactions() {
         next
         gateway
         date
-        schedule { value, description }
+        schedule {
+          value
+          description
+        }
         details {
           amount
-          account { name, id, description }
+          account {
+            name
+            id
+            description
+          }
         }
       }
     }
@@ -110,7 +115,7 @@ function* recoverTransactions() {
   if (!schedules) schedules = [];
   hasRecovered = true;
   const bulkUpdate = {};
-  schedules = schedules.filter((x) => !x.gateway);
+  schedules = schedules.filter(x => !x.gateway);
   if (schedules.length) {
     for (const schedule of schedules) {
       // only recover schedules that are missing info (i.e. not turned off in Rock)
@@ -131,7 +136,7 @@ function* recoverTransactions() {
     yield put(actions.saveSchedules(bulkUpdate));
 
     // delay to wait for published meteor user
-    yield call(() => new Promise((r) => setTimeout(r, 1000)));
+    yield call(() => new Promise(r => setTimeout(r, 1000)));
     user = Meteor.user();
     if (user && user.profile && user.profile.reminderDate) {
       yield put(actions.setReminder(user.profile.reminderDate));
@@ -144,7 +149,10 @@ function* recoverTransactions() {
     const state = yield select();
     const { pathname } = state.routing.location;
 
-    if (pathname.split("/").length === 4 && pathname.split("/")[3] === "recover") {
+    if (
+      pathname.split("/").length === 4 &&
+      pathname.split("/")[3] === "recover"
+    ) {
       return;
     }
 
@@ -162,7 +170,6 @@ function* watchRoute({ payload }) {
 
   if (isGive(payload.pathname)) yield* recoverTransactions();
 }
-
 
 // clear out data on user change
 export function* clearGiveData({ authorized }) {
