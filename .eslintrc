@@ -34,25 +34,21 @@
     "device": true
   },
   "plugins": [
+    "compat",
     "jsx-a11y",
-    "compat"
+    "prettier"
   ],
   "rules": {
     "arrow-parens": [2, "always"],
-    "quotes": [2, "double"],
+    "class-methods-use-this": 0,
+    "compat/compat": 1,
     "import/extensions": 0,
     "import/no-absolute-path": 0,
+    "import/no-extraneous-dependencies": [1],
     "import/no-unresolved": [2, { "ignore": [
       "^meteor/*", "^/imports/*"
     ] }],
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/react-in-jsx-scope": 0,
-    "react/no-string-refs": 0,
-    "react/forbid-prop-types": 0,
-    "class-methods-use-this": 0,
-    # "jsx-a11y/accessible-emoji": 1,
     "jsx-a11y/anchor-has-content": 1,
-    # "jsx-a11y/aria-activedescendant-has-tabindex": 1,
     "jsx-a11y/aria-props": 1,
     "jsx-a11y/aria-proptypes": 1,
     "jsx-a11y/aria-role": 1,
@@ -61,15 +57,12 @@
     "jsx-a11y/heading-has-content": 1,
     "jsx-a11y/href-no-hash": 1,
     "jsx-a11y/html-has-lang": 1,
-    # "jsx-a11y/iframe-has-title": 1,
     "jsx-a11y/img-has-alt": 1,
     "jsx-a11y/img-redundant-alt": 1,
     "jsx-a11y/label-has-for": 1,
     "jsx-a11y/lang": 1,
     "jsx-a11y/mouse-events-have-key-events": 1,
     "jsx-a11y/no-access-key": 1,
-    # "jsx-a11y/no-autofocus": 1,
-    # "jsx-a11y/no-distracting-elements": 1,
     "jsx-a11y/no-onchange": 1,
     "jsx-a11y/no-static-element-interactions": 1,
     "jsx-a11y/onclick-has-focus": 1,
@@ -78,6 +71,14 @@
     "jsx-a11y/role-supports-aria-props": 1,
     "jsx-a11y/scope": 1,
     "jsx-a11y/tabindex-no-positive": 1,
+    "no-useless-escape": 0,
+    "no-cond-assign": 0,
+    "prettier/prettier": 2,
+    "quotes": [2, "double"],
+    "react/forbid-prop-types": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/no-string-refs": 0,
+    "react/react-in-jsx-scope": 0,
     "react/sort-comp": [1, {
       order: [
         'type-annotations',
@@ -87,10 +88,6 @@
         'render',
       ],
     }],
-    "import/no-extraneous-dependencies": [1],
-    "no-useless-escape": 0,
-    "no-cond-assign": 0,
-    "compat/compat": 1,
   },
   "settings": {
     "import/core-modules": [

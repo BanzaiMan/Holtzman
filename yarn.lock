@@ -3446,6 +3446,13 @@ eslint-plugin-jsx@0.0.2:
     html-tags "1"
     svg-tags "1"
 
+eslint-plugin-prettier@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-2.1.2.tgz#4b90f4ee7f92bfbe2e926017e1ca40eb628965ea"
+  dependencies:
+    fast-diff "^1.1.1"
+    jest-docblock "^20.0.1"
+
 eslint-plugin-react@3.4.2:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-3.4.2.tgz#9e6ef8a8054f8ac3b87b97236e7b849e5835dc6c"
@@ -3716,6 +3723,10 @@ fancy-log@^1.1.0:
   dependencies:
     chalk "^1.1.1"
     time-stamp "^1.0.0"
+
+fast-diff@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.1.1.tgz#0aea0e4e605b6a2189f0e936d4b7fbaf1b7cfd9b"
 
 fast-levenshtein@~2.0.4:
   version "2.0.5"
@@ -5076,6 +5087,10 @@ jest-diff@^19.0.0:
     diff "^3.0.0"
     jest-matcher-utils "^19.0.0"
     pretty-format "^19.0.0"
+
+jest-docblock@^20.0.1:
+  version "20.0.3"
+  resolved "https://registry.yarnpkg.com/jest-docblock/-/jest-docblock-20.0.3.tgz#17bea984342cc33d83c50fbe1545ea0efaa44712"
 
 jest-environment-jsdom@^17.0.2:
   version "17.0.2"
@@ -7406,6 +7421,10 @@ prepend-http@^1.0.0:
 preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
+
+prettier@^1.5.2:
+  version "1.5.2"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.5.2.tgz#7ea0751da27b93bfb6cecfcec509994f52d83bb3"
 
 pretty-format@^19.0.0:
   version "19.0.0"
