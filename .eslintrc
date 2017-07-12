@@ -39,7 +39,7 @@
     "prettier"
   ],
   "rules": {
-    "arrow-parens": [2, "always"],
+    "arrow-parens": 0,
     "class-methods-use-this": 0,
     "compat/compat": 1,
     "import/extensions": 0,
@@ -73,7 +73,9 @@
     "jsx-a11y/tabindex-no-positive": 1,
     "no-useless-escape": 0,
     "no-cond-assign": 0,
-    "prettier/prettier": 2,
+    "prettier/prettier": [2,
+      "trailingComma": "all",
+    ],
     "quotes": [2, "double"],
     "react/forbid-prop-types": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],

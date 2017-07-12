@@ -57,8 +57,9 @@ export const classWrapper = (
     }
 
     componentWillUnmount() {
-      if (!process.env.WEB && updateNav)
+      if (!process.env.WEB && updateNav) {
         this.props.dispatch(navActions.setLevel("TOP"));
+      }
     }
 
     // has a default propsReducer that returns null if not passed
@@ -67,8 +68,9 @@ export const classWrapper = (
     toggleLike = () => {
       const { dispatch, mutate } = this.props;
       // may still be open from user logging in.
-      if (Meteor.userId() && this.props.modal && this.props.modal.visible)
+      if (Meteor.userId() && this.props.modal && this.props.modal.visible) {
         dispatch(modal.hide());
+      }
 
       if (!Meteor.userId()) {
         // if not logged in, show login modal

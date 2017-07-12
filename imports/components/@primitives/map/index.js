@@ -62,10 +62,12 @@ export default class Map extends Component {
 
       if (markers.length && markers.length > 1) {
         this.map.fitBounds(
-          markers.reduce((bounds, marker) => {
-            // eslint-disable-line
-            return bounds.extend(marker);
-          }, new google.maps.LatLngBounds()),
+          markers.reduce(
+            (bounds, marker) =>
+              // eslint-disable-line
+              bounds.extend(marker),
+            new google.maps.LatLngBounds(),
+          ),
         );
       }
     }
@@ -169,10 +171,12 @@ export default class Map extends Component {
 
               if (markers.length > 1) {
                 this.map.fitBounds(
-                  markers.reduce((bounds, marker) => {
-                    // eslint-disable-line
-                    return bounds.extend(marker);
-                  }, new google.maps.LatLngBounds()),
+                  markers.reduce(
+                    (bounds, marker) =>
+                      // eslint-disable-line
+                      bounds.extend(marker),
+                    new google.maps.LatLngBounds(),
+                  ),
                 );
               }
             }}

@@ -9,7 +9,7 @@ export default (reducer = defaultReducer, options) => WrappedComponent => {
   class InfiniteScrollContainer extends Component {
     static propTypes = {
       loading: PropTypes.bool, // eslint-disable-line
-      done: PropTypes.bool, // eslint-disable-line
+      done: PropTypes.bool // eslint-disable-line
     };
 
     state = { loading: false };

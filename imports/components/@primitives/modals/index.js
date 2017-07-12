@@ -95,12 +95,14 @@ class SideModalContainerWithoutData extends Component {
     if (keyCode === 27) this.props.dispatch(modalActions.hide());
 
     // down arrow
-    if (keyCode === 40 && this.scrollElement)
+    if (keyCode === 40 && this.scrollElement) {
       this.scrollElement.scrollTop += 10;
+    }
 
     // up arrow
-    if (keyCode === 38 && this.scrollElement)
+    if (keyCode === 38 && this.scrollElement) {
       this.scrollElement.scrollTop -= 10;
+    }
   };
 
   close = e => {
